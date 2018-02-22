@@ -4,16 +4,21 @@ $(document).ready(function(){
     //     $( "#cpfOdont" ).addClass( "hide" )
     //     return false;
     // });
-	$("#btnkeyOdont").click(function(){
-       $( "#keyOdont" ).addClass( "hide" )
-       $( "#termoOdont" ).removeClass( "hide" )
-       return false;
-   });
-   $("#btnTermo").click(function(){
-       $( "#termoOdont" ).addClass( "hide" )
-       $( "#cadastroSucesso" ).removeClass( "hide" )
-       return false;
-   });
+    $("#btnCelOdont").click(function(){
+        $( "#celOdont" ).addClass( "hide" )
+        $( "#keyOdont" ).removeClass( "hide" )
+        return false;
+    });
+    $("#btnkeyOdont").click(function(){
+        $( "#keyOdont" ).addClass( "hide" )
+        $( "#termoOdont" ).removeClass( "hide" )
+        return false;
+    });
+    $("#btnTermo").click(function(){
+        $( "#termoOdont" ).addClass( "hide" )
+        $( "#cadastroSucesso" ).removeClass( "hide" )
+        return false;
+    });
 
     // $("#btnCpfOdont").click(function(){
     //     $( "#celOdontCorretora" ).removeClass( "hide" )

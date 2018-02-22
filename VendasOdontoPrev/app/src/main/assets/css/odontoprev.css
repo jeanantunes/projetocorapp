@@ -54,7 +54,8 @@
 /*********************************** End Imagem Usuário ****************************************/
 
 .boxLabInput{
-    padding-bottom: 10%;
+    margin-bottom: 10%;
+    margin-top: 5%;
 }
 
 .boxList{
@@ -911,9 +912,8 @@ h5, .subListBox{
     font-size: 10pt;
     background-color: #FF4141;
     padding: 20px;
-    margin-top: 14px;
+    margin-top: 20%;
     border-radius: 10px;
-    /* margin-bottom: 20%; */
     text-align: center;
     display: inline-block;
     width: 150px;
@@ -1774,16 +1774,11 @@ input[type=checkbox] {
     border-radius: 
     8px;
     
-        -webkit-box-shadow: 
-    inset 0 
-    0 6px rgba(0,0,0,0.5);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
     
-        border: 
-    1px solid 
-    #2B6DC9;
+        border: 1px solid #2B6DC9;
     
-        background: 
-    #F5FFFF;
+        background: #F5FFFF;
     
     }
 

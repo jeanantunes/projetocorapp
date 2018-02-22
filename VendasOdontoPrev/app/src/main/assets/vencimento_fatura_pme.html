@@ -53,27 +53,31 @@
         <span class="btnMenu" onclick="openNav()">&#9776;</span>
       </div>
     </div>
-    <div class="col-md-12 odontBoxCenter">
+
       <div class="row">
-        <h1 class="titleOdont text-center">
-            VENCIMENTO DA FATURA
-        </h1>
-      </div>
-        <div class="row boxLabInput">
-          <div class="form-group">
-            <label for="" class="label-parentesco labelOdontBlur">Data de vencimento da fatura</label>
-            <select class="form-control parentesco selectListBlur" id="">
-              <option></option>
-              <option>05</option>
-              <option>10</option>
-              <option>15</option>
-            </select>
+        <div class="col-md-12 odontBoxCenter">
+          <h1 class="titleOdont text-center">
+              VENCIMENTO DA FATURA
+          </h1>
+        
+          <div class="boxLabInput">
+            <div class="form-group">
+              <label for="" class="label-parentesco labelOdontBlur">Data de vencimento da fatura</label>
+              <select class="form-control parentesco selectListBlur" id="vencOdont">
+                <option></option>
+                <option>05</option>
+                <option>10</option>
+                <option>15</option>
+              </select>
+            </div>
           </div>
+
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-12">	 
-          <a class="btn btn-lg btn-block btnOdont" href="" role="button">CONTINUAR</a>
+          <a class="btn btn-lg btn-block btnOdont disabled" href="" id="bntVenc" role="button">CONTINUAR</a>
         </div>
       </div>
     </div>

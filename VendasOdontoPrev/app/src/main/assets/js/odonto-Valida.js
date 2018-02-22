@@ -415,7 +415,7 @@ function validaCnpj(str){
                     }
                 });
 
-                //Veirica se o checkbox esta ativo e retira o "disabled"//
+                //Verica se o checkbox esta ativo e retira o "disabled"//
 
                 $(document).ready(function () {
                     $("#squaredOne").click(function(e){
@@ -429,7 +429,22 @@ function validaCnpj(str){
                         });
                     });
 
-                //Veirica se o checkbox esta ativo e retira o "disabled"//
+                //Verica se o checkbox esta ativo e retira o "disabled"//
+
+                //Verica se o select option esta selecionado e retira o "disabled"//
+                $(document).ready(function () {
+                    $("#vencOdont").click(function(e){
+                        if($('#vencOdont :selected').text())
+                            {
+                                
+                                $("#bntVenc").removeClass("disabled");
+                            } else{
+                                $("#bntVenc").addClass("disabled");
+                            }
+                        });
+                    });
+
+                //Verica se o select option esta selecionado e retira o "disabled"//
 
                  // INSCRIÇÃO ESTADUAL
 
