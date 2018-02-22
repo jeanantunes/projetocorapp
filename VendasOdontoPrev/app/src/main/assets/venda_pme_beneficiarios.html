@@ -13,7 +13,7 @@
 		<link href="css/odontoprev.css" rel="stylesheet">
 	</head>
 	
-  <body>   
+  <body onload="inicializarPagina()">   
 	<!-- Menu -->
 	  <div class="closeNav hide" onclick="closeNav()"></div>
 	  <div id="mySidenav" class="sidenav">
@@ -34,12 +34,12 @@
 		  </div>
 		  <a href="logado.html" class="linkMenu"><img src="img/menu-home.png" align="center">TELA INICIAL</a>
 		  <a href="venda_index_pf.html" class="linkMenu"><img src="img/menu-vender-pf.png" align="center">VENDER PESSOA FÍSICA</a>
-		  <a href="venda_index_pme.html" class="linkMenu"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
+		  <a href="venda_index_pme.html" class="linkMenu colorActive"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
 		  <a href="rede_credenciada.html" class="linkMenu"><img src="img/menu-rede-credenciada.png" align="center">BUSCAR REDE CREDENCIADA</a>
-		  <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">LISTA DE PROPOSTA</a>
-		  <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a>
-		  <a href="#" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
-		  <a href="#" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
+		  <a href="lista_proposta.html" class="linkMenu"><img src="img/menu-listas.png" align="center">LISTA DE PROPOSTA</a>
+		  <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
+		  <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
+		  <a href="fale_conosco.html" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
 		  <a href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
 	  </div>
 	<!-- End Menu -->
@@ -66,7 +66,8 @@
 							</h2>
 						</div>
 						<div class="row nomeRazaSocial">
-							<h4>Toca da Raposa ME</h4>
+							<h4 id="razaoSocial"></h4>
+							<h4 id="cnpjEmpresa"></h4>
 						</div>
 					</div>
 				</div>
@@ -94,7 +95,9 @@
 				</div>
 				<!-- End BOX mostra quando adicionado um Beneficiário -->
 				
+
 				<div class="row boxDependente">
+					<form id="formulario_benefeciario">
 					<div>
 						<label class="labelBlue">NOVO BENEFICIÁRIO</label>
 					</div>
@@ -102,18 +105,18 @@
 						<label class="label-nome labelOdontBlur">Nome</label>
 					</div>
 					<div>
-						<input type="text" class=" nome inputLabelBlur">
+						<input type="text" class=" nome inputLabelBlur form-group" id="nome-beneficiario" name="nomeBeneficiario">
 					</div>
 					<div>
 						<label class="label-sexo labelOdontBlur">Sexo</label>
 					</div>
 					<div>
 						<div class="radio">
-							<input id="radio-1" name="radio" type="radio" class="sexo">
+							<input id="radio-1" name="sexo" type="radio" class="sexo" value="Feminino">
 							<label for="radio-1" class=" radio-inline radio-label label-sexo labelOdontBlur">Feminino</label>
 						</div>
 						<div class="radio">
-							<input id="radio-2" name="radio" type="radio" class="sexo">
+							<input id="radio-2" name="sexo" type="radio" class="sexo" value="Masculino">
 							<label for="radio-2" class="radio-inline radio-label label-sexo labelOdontBlur">Masculino</label>
 						</div>
 					</div>
@@ -121,48 +124,56 @@
 						<label class="label-nascimento labelOdontBlur">Data de nascimento</label>
 					</div>
 					<div>
-						<input type="text" class="nascimento data inputLabelBlur">
+						<input type="text" class="nascimento data inputLabelBlur" name="dataNascimento">
 					</div>
 					<div>
 						<label class="label-cpf labelOdontBlur">CPF</label>
 					</div>
 					<div>
-						<input type="text" class=" cpf inputLabelBlur">
+						<input type="text" class=" cpf inputLabelBlur" name="">
 					</div>
 					<div>
 						<label class="label-nome-mae labelOdontBlur">Nome da mãe</label>
 					</div>
 					<div>
-						<input type="text" class=" nome-mae inputLabelBlur">
+						<input type="text" class=" nome-mae inputLabelBlur" name="nomeMae">
 					</div>
 					<div>
 						<label class="label-cep labelOdontBlur">CEP</label>
 					</div>
 					<div>
-						<input type="text" class=" cep inputLabelBlur">
+						<input type="text" class=" cep inputLabelBlur" name="cep">
 					</div>
 					<div class="form-group">
 						<label for="" class="label-plano labelOdontBlur">Plano</label>
-						<select class="form-control plano selectListBlur" id="">
-							<option></option>
+						<select class="form-control plano selectListBlur" id="" name="plano">
 							<option>Integral DOC LE</option>
 							<option>Master LALE</option>
 						</select>
 					</div>
 					<div class="form-group">
 						<label for="" class="label-dependentes labelOdontBlur">Dependentes</label>
-						<select class="form-control dependentes selectListBlur" id="">
-							<option></option>
+						<select class="form-control dependentes selectListBlur" id="dependentesPME" name="dependentes">
 							<option>0</option>
 							<option>1</option>
 							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
 						</select>
 					</div>
+					</form>
+
+
 
 					<!-- Botão só mostra quando adiciona um Beneficiário -->
 					<div class="row">
 						<div class="col-md-12 btnPadBtmTop">	 
-							<a href="" class="btn btn-lg btn-block btnOdont" id="" role="button">SALVAR</a>
+							<a class="btn btn-lg btn-block btnOdont" id="salvarBeneficiario" role="button" onclick="validarDependentes()">SALVAR</a>
 						</div>
 					</div>
 					<!-- End Botão só mostra quando adiciona um Beneficiário -->
@@ -172,7 +183,7 @@
 				<!-- Se ele tiver Dependentes abrir a tela href="venda_pme_dependentes.html" se não esconde os campos e habilita o Botão Continuar -->
 				<div class="row">
 					<div class="col-md-12 btnPadBtm">	 
-						<a href="" class="btn btn-lg btn-block btnOdont" id="" role="button">ADICIONAR BENEFICIÁRIOS</a>
+						<button class="btn btn-lg btn-block btnOdont hide" id="adicionarBeneficiario" role="button" onclick="">ADICIONAR BENEFICIÁRIOS</buttpn>
 					</div>
 				</div>
 				<!-- End Condição ao clicar Adicionar Beneficiário esconde os campos e mostra o Box de Beneficiário -->
@@ -180,7 +191,7 @@
 				<!-- Botão mostra quando adicionado um Beneficiário -->
 				<div class="row hide">
 					<div class="col-md-12 btnPadBtm">	 
-						<a href="vencimento_fatura_pme.html" class="btn btn-lg btn-block btnOdont" id="" role="button">CONTINUAR</a>
+						<a href="vencimento_fatura_pme.html" class="btn btn-lg btn-block btnOdont" id="" role="button" >CONTINUAR</a>
 					</div>
 				</div>
 				<!--End Botão mostra quando adicionado um Beneficiário -->
@@ -195,5 +206,84 @@
 		<script src="js/jquery.3.2.1.js"></script>
 		<script src="js/jquery.mask.min.js"></script>
 		<script src="js/odonto-Valida.js"></script>
+
+		<script type="text/javascript">
+
+			$("#salvarBeneficiario").click(function(){
+
+				$("#adicionarBeneficiario").removeClass("hide");
+
+			});
+			function inicializarPagina()
+			{
+				var json = window.localStorage.getItem('Proposta');
+				obj = JSON.parse(json);
+				document.getElementById('razaoSocial').innerHTML = obj[1].value;
+				document.getElementById('cnpjEmpresa').innerHTML = "CNPJ: " + obj[0].value;				
+    			console.log(obj);
+			}
+			
+			function validarDependentes()
+			{
+				if ($("#dependentesPME").val() > 0) 
+				{					
+					var jsonBeneficiario = JSON.stringify($("#formulario_benefeciario").serializeArray());
+
+					var proposta = window.localStorage.getItem('Proposta');
+
+					var quantidadeBeneficiarios = (parseInt(window.localStorage.getItem('quantidadeBeneficiarios')) + 1);
+
+					var objetoProposta = JSON.parse(proposta);
+
+					var beneficiarios = [];
+
+					//beneficiarios.push(jsonBeneficiario);
+
+					console.log(beneficiarios);
+
+					//beneficiarios.push(JSON.parse(jsonBeneficiario));
+
+					var checkLocalStorage;
+
+					try
+					{
+						checkLocalStorage = window.localStorage.getItem('jsonBene');
+
+						console.log(checkLocalStorage);
+
+					} 
+					catch (Exception){}
+					
+					if(checkLocalStorage == null)
+					{
+						console.log("Entrou no if");
+						beneficiarios.push(jsonBeneficiario);
+						console.log(jsonBeneficiario);
+					} else
+					{
+						console.log("Entrou no else");
+
+						beneficiarios.push(checkLocalStorage);
+						beneficiarios.push(jsonBeneficiario);
+					}
+
+					window.localStorage.setItem('jsonBene', beneficiarios);
+
+					window.localStorage.setItem('quantidadeBeneficiarios', quantidadeBeneficiarios);
+
+					
+
+					console.log(objetoProposta);
+
+					//console.log(objT[18].length);
+					//console.log(jsonBeneficiario);
+					//obj = JSON.parse(json);
+					window.localStorage.setItem('Beneficiario', jsonBeneficiario);
+					window.location="venda_pme_dependentes.html";
+				}
+				else console.log("Aqui terá que a abrir a page");
+			}
+
+		</script>
   </body>
 </html>

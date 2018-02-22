@@ -1,96 +1,91 @@
 
+    
+     $(document).ready(function() {
 
-        $(document).ready(function() {
 
-            function limpa_formulário_cep() {
-                // Limpa valores do formulário de cep.
-                $("#rua").val("");
-                $("#bairro").val("");
-                $("#cidade").val("");
-                $("#uf").val("");
-            }
+              function validarDependentes()
+              {
+                var myJSON = JSON.stringify($("#meu_formulario").serializeArray());
+                window.localStorage.setItem('Beneficiario', myJSON);
+                window.location="venda_pme_dependentes.html";
+              }
 
-            var typingTimer; //timer identifier
-            var doneTypingInterval = 500; //time in ms, 5 second for example
 
-            //on keyup, start the countdown
-        $('#cep').keyup(function() {
-            clearTimeout(typingTimer);
-            if ($('#cep').val) {
-            typingTimer = setTimeout(doneTyping, doneTypingInterval);
-            }
-        });
-
-        function doneTyping() {
-            validar();
+        function limpa_formulário_cep() {
+            // Limpa valores do formulário de cep.
+            $("#rua").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+            $("#uf").val("");
         }
-
-        function validar()
-        {
-            //Nova variável "cep" somente com dígitos.
-            var cep = $('#cep').val().replace(/\D/g, '');
-
-            //Verifica se campo cep possui valor informado.
-            if (cep != "" && cep.length == 8) {
-
-            //Expressão regular para validar o CEP.
-            var validacep = /^[0-9]{8}$/;
-
-            //Valida o formato do CEP.
-            if(validacep.test(cep)) {
-
-            //Preenche os campos com "..." enquanto consulta webservice.
-                $("#rua").val("");
-                $("#bairro").val("");
-                $("#cidade").val("");
-                $("#uf").val("");
-
-                callToken(function (dataToken)
-                {
-                    callCep(function (dataCep) {
-                		$("#bairro").val(dataCep[0].bairro);
-                        $("#cidade").val(dataCep[0].cidade);
-                        $("#rua").val(dataCep[0].logradouro);
-                        $("#uf").val(dataCep[0].estado);
-
-                		}, dataToken.access_token, cep);
-                });
-
-                //Consulta o webservice viacep.com.br/
-                //$.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados)
-                //{
-                //    if (!("erro" in dados)) {
-                //    //Atualiza os campos com os valores da consulta.
-                //        $("#rua").val(dados.logradouro);
-                //        $("#bairro").val(dados.bairro);
-                //        $("#cidade").val(dados.localidade);
-                //        $("#uf").val(dados.uf);
-                //    } //end if.
-                //    else {
-                //        //CEP pesquisado não foi encontrado.
-                //        limpa_formulário_cep();
-                //        alert("CEP não encontrado.");
-                //    }
-                //});
-            } //end if.
-            else {
-                //cep é inválido.
-                limpa_formulário_cep();
-                alert("Formato de CEP inválido.");
-                }
-            } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep();
-                }
+        var typingTimer; //timer identifier
+        var doneTypingInterval = 500; //time in ms, 5 second for example
+        //on keyup, start the countdown
+    $('#cep').keyup(function() {
+        clearTimeout(typingTimer);
+        if ($('#cep').val) {
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        }
+    });
+    function doneTyping() {
+        validar();
+    }
+    function validar()
+    {
+        //Nova variável "cep" somente com dígitos.
+        var cep = $('#cep').val().replace(/\D/g, '');
+        //Verifica se campo cep possui valor informado.
+        if (cep != "" && cep.length == 8) {
+        //Expressão regular para validar o CEP.
+        var validacep = /^[0-9]{8}$/;
+        //Valida o formato do CEP.
+        if(validacep.test(cep)) {
+        //Preenche os campos com "..." enquanto consulta webservice.
+            $("#rua").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+            $("#uf").val("");
+            callToken(function (dataToken)
+            {
+                callCep(function (dataCep) {
+                    $("#bairro").val(dataCep[0].bairro);
+                    $("#cidade").val(dataCep[0].cidade);
+                    $("#rua").val(dataCep[0].logradouro);
+                    $("#uf").val(dataCep[0].estado);
+                    }, dataToken.access_token, cep);
+            });
+            //Consulta o webservice viacep.com.br/
+            //$.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados)
+            //{
+            //    if (!("erro" in dados)) {
+            //    //Atualiza os campos com os valores da consulta.
+            //        $("#rua").val(dados.logradouro);
+            //        $("#bairro").val(dados.bairro);
+            //        $("#cidade").val(dados.localidade);
+            //        $("#uf").val(dados.uf);
+            //    } //end if.
+            //    else {
+            //        //CEP pesquisado não foi encontrado.
+            //        limpa_formulário_cep();
+            //        alert("CEP não encontrado.");
+            //    }
+            //});
+        } //end if.
+        else {
+            //cep é inválido.
+            limpa_formulário_cep();
+            alert("Formato de CEP inválido.");
             }
+        } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        }
+        //Quando o campo cep perde o foco.
+    });
 
-            //Quando o campo cep perde o foco.
-
-        });
-
-        function callToken(callback) {
-
+    function callToken(callback) {
                     $.ajax({
                         async: true,
                         url: "https://api.odontoprev.com.br:8243/token/",
@@ -108,9 +103,7 @@
                         },
                     });
                 }
-
         function callCep(callback, token, cep) {
-
             $.ajax({
                 async: true,
                 url: "https://api.odontoprev.com.br:8243/cep/1.1/por/cep/" + cep,
@@ -125,7 +118,6 @@
                 },
             });
         }
-
     
 
 
@@ -138,7 +130,9 @@
         var Soma;
         var Resto;
         Soma = 0;
-      if (strCPF == "00000000000" || strCPF == "11111111111" || strCPF == "22222222222" || strCPF == "33333333333" || strCPF == "44444444444" || strCPF == "55555555555" || strCPF == "66666666666" || strCPF == "77777777777" || strCPF == "88888888888" || strCPF == "99999999999") return false;
+
+        strCPF = strCPF.replace(/\D/g, '');
+        if (strCPF == "00000000000" || strCPF == "11111111111" || strCPF == "22222222222" || strCPF == "33333333333" || strCPF == "44444444444" || strCPF == "55555555555" || strCPF == "66666666666" || strCPF == "77777777777" || strCPF == "88888888888" || strCPF == "99999999999") return false;
         
       for (i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
       Resto = (Soma * 10) % 11;
@@ -157,6 +151,58 @@
 
    
 // <!--Mascara -->
+
+function validaCnpj(str){
+    str = str.replace('.','');
+    str = str.replace('.','');
+    str = str.replace('.','');
+    str = str.replace('-','');
+    str = str.replace('/','');
+    cnpj = str;
+    var numeros, digitos, soma, i, resultado, pos, tamanho, digitos_iguais;
+    digitos_iguais = 1;
+    if (cnpj.length < 14 && cnpj.length < 15)
+        return false;
+    for (i = 0; i < cnpj.length - 1; i++)
+        if (cnpj.charAt(i) != cnpj.charAt(i + 1))
+    {
+        digitos_iguais = 0;
+        break;
+    }
+    if (!digitos_iguais)
+    {
+        tamanho = cnpj.length - 2
+        numeros = cnpj.substring(0,tamanho);
+        digitos = cnpj.substring(tamanho);
+        soma = 0;
+        pos = tamanho - 7;
+        for (i = tamanho; i >= 1; i--)
+        {
+            soma += numeros.charAt(tamanho - i) * pos--;
+            if (pos < 2)
+                pos = 9;
+        }
+        resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+        if (resultado != digitos.charAt(0))
+            return false;
+        tamanho = tamanho + 1;
+        numeros = cnpj.substring(0,tamanho);
+        soma = 0;
+        pos = tamanho - 7;
+        for (i = tamanho; i >= 1; i--)
+        {
+            soma += numeros.charAt(tamanho - i) * pos--;
+            if (pos < 2)
+                pos = 9;
+        }
+        resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+        if (resultado != digitos.charAt(1))
+            return false;
+        return true;
+    }
+    else
+        return false;
+}
    
         $(document).ready(function(){
              $('.data').mask('00/00/0000');
@@ -238,10 +284,11 @@
              });
 
             $(".cnpj").blur(function(){
-            if($(this).val() == "")
-                 {
+            if($(this).val() == "" || validaCnpj($(".cnpj").val()) == false)
+                 {					 
                      $(this).css({"border-color" : "#F00"});
                      $(".label-cnpj").css("color", "red");
+					 $(".cnpj").css("color", "red");
                  }
              });
 
@@ -337,6 +384,52 @@
                         $(".ramo-atividade").css("color", "#3A94FB");
                     }
                 });
+
+                // MENSAGEM 
+
+              $(".mensagem").focus(function(){
+                if($(this).val() == "")
+                    {
+                        $(this).css({"border-color" : "blue"});
+                        $(".mensagem").css("color", "#1974CE");
+                        $(".label-mensagem").css("color", "#1974CE");
+                    }
+                });
+   
+               $(".mensagem").blur(function(){
+               if($(this).val() == "")
+                    {
+                        $(this).css({"border-color" : "#F00"});
+                        $(".label-mensagem").css("color", "red");
+                        $("#enviar").addClass("disabled");
+                    }
+                });
+   
+               $(".mensagem").keyup(function(){
+                if($(this).val() != "")
+                    {
+                        $(this).css({"border-color" : "#3A94FB"});
+                        $(".mensagem").css("color", "#3A94FB");
+                        $(".mensagem").css("color", "#3A94FB");
+                        $("#enviar").removeClass("disabled");
+                    }
+                });
+
+                //Veirica se o checkbox esta ativo e retira o "disabled"//
+
+                $(document).ready(function () {
+                    $("#squaredOne").click(function(e){
+                        if($("#squaredOne").is(":checked"))
+                            {
+                                
+                                $("#btnTermo").removeClass("disabled");
+                            } else{
+                                $("#btnTermo").addClass("disabled");
+                            }
+                        });
+                    });
+
+                //Veirica se o checkbox esta ativo e retira o "disabled"//
 
                  // INSCRIÇÃO ESTADUAL
 
@@ -1067,52 +1160,98 @@
              $(".password").focus(function(){
              if($(this).val() == "")
                  {
-                     $(this).css({"border-color" : "blue"});
+                     $(this).css({"border-color" : "1974CE"});
                      $(".password").css("color", "#1974CE");
                      $(".label-password").css("color", "#1974CE");
                  }
              });
 
-             $(".password").blur(function(){
-                 if($(this).val() == "")
-                     {
-                         $(this).css({"border-color" : "#F00"});
-                         $(".label-password").css("color", "red");
-                     }
-                });
+            // $(".password").blur(function(){
+            //      if($(this).val() == "")
+            //          {
+            //              $(this).css({"border-color" : "#F00"});
+            //              $(".label-password").css("color", "red");
+            //          }
+            //     });
 
-             $(".password").keyup(function(){
-             if($(this).val() != "")
-                 {
-                     $(this).css({"border-color" : "#3A94FB"});
-                     $(".password").css("color", "#3A94FB");
-                     $(".label-password").css("color", "#3A94FB");
-                 }
-             });
+            //  $(".password").keyup(function(){
+            //  if($(this).val() != "")
+            //      {
+            //          $(this).css({"border-color" : "#3A94FB"});
+            //          $(".password").css("color", "#3A94FB");
+            //          $(".label-password").css("color", "#3A94FB");
+            //      }
+            //  });
 
               // sennha corfimar
+
               $(".password-confirm").focus(function(){
                 if($(this).val() == "")
                     {
-                        $(this).css({"border-color" : "blue"});
-                        $(".password").css("color", "#1974CE");
+                        $(this).css({"border-color" : "3A94FB"});
+                        $(".password").css("color", "#1974CE"); // se clicar dentro fica azul
                         $(".label-password-confirm").css("color", "#1974CE");
                     }
                 });
    
-                $(".password-confirm").blur(function(){
-                    if($(this).val() == "")
-                        {
-                            $(this).css({"border-color" : "#F00"});
-                            $(".label-password-confirm").css("color", "red");
-                        }
-                   });
+            //    $(".password-confirm").blur(function(){
+            //        if($(this).val() == "" || $(this).val() != $(".password").val())
+            //            {
+            //                $(this).css({"border-color" : "#F00"});
+            //                $(".label-password-confirm").css("color", "red"); // se estiver vazio fica vermelho
+            //            }
+            //       });
    
-                $(".password-confirm").keyup(function(){
-                if($(this).val() != "")
+            //    $(".password-confirm").keyup(function(){
+            //    if($(this).val() != "" && $(this).val() == $(".password").val())
+            //        {
+            //            $(this).css({"border-color" : "#3A94FB"});
+            //            $(".password-confirm").css("color", "#3A94FB");// se nao tiver vazio, fica azul
+            //            $(".label-password-confirm").css("color", "#3A94FB");
+            //        }
+            //    });
+
+                $("#senhaCpfTrue").blur(function(){
+                    
+                    console.log("executou keyup");
+
+                    if($(this).val().length < 8)
+                    {
+                        console.log("TesteKeyUp");
+
+                        $(this).css({"border-color" : "#F00"});
+                        $(".password").css("color", "red");
+                        $(".label-password").css("color", "red");
+                        $(".label-password-confirm-8").css("color", "red");
+                    }
+                    else
                     {
                         $(this).css({"border-color" : "#3A94FB"});
-                        $(".password-confirm").css("color", "#3A94FB");
+                        $(".password").css("color", "#3A94FB");
+                        $(".label-password").css("color", "#3A94FB");
+                        $(".label-password-confirm-8").css("color", "#3A94FB");
+                        
+                    }
+                });
+
+
+
+
+
+                $("#confirmar-senhaCpfTrue").blur(function(){
+                    
+                    if($(this).val() != $("#senhaCpfTrue").val())
+                    {
+                        console.log("Teste Valor incorreto");
+                        $(this).css({"border-color" : "#F00"});
+                        $(".password-confirm").css("color", "red");
+                        $(".label-password-confirm").css("color", "red");
+
+                    } else
+                    {
+                        console.log("Teste Valor correto");
+                        $(this).css({"border-color" : "#3A94FB"});
+                        $(this).css("color", "#3A94FB");// se nao tiver vazio, fica azul
                         $(".label-password-confirm").css("color", "#3A94FB");
                     }
                 });
