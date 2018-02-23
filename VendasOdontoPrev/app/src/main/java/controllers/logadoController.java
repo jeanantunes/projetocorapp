@@ -22,6 +22,7 @@ import models.ForcaVenda;
 public class logadoController {
 
     Context context;
+    DataBase db;
 
     public String getBase64() {
         return base64;
@@ -37,6 +38,7 @@ public class logadoController {
 
     public logadoController(Context context) {
         this.context = context;
+        db = new DataBase(context);
     }
 
     @JavascriptInterface
@@ -92,13 +94,14 @@ public class logadoController {
         sql.append("FROM Login ");
         sql.append("WHERE IdLogin = " + codigo);
 
-        DataBase db = new DataBase(context);
+
 
         SQLiteDatabase dbs = db.getReadableDatabase();
 
         Cursor resultado = dbs.rawQuery(sql.toString(), null);
 
-        if (resultado.getCount() > 0) {
+        if (resultado.getCount() > 0)
+        {
             resultado.moveToFirst();
 
             forca.setCargo(resultado.getString( resultado.getColumnIndexOrThrow("cargo")));
@@ -110,17 +113,31 @@ public class logadoController {
 
             Log.i("MeuLog", "" + forca.getNomeEmpresa());
             return forca;
-
         }
         return null;
     }
 
-    ////////////////////////////////////////////////
     @JavascriptInterface
-    public void imprimirOmeuSaco()
+    public void sairDaConta()
     {
-        Log.d("MeuLog", "Entrou no metodo imprimirOmeuSaco");
-        Log.d("MeuLog", "Base 64" + getBase64());
+        Log.d("MeuLog", "Sair da conta executado com sucesso");
+
+        SairDaConta sair = new SairDaConta(context);
+
+        sair.removerRegistroLogin();
     }
+
+    @JavascriptInterface
+    public void deslogar()
+    {
+        Log.d("MeuLog", "Log executado com sucesso!");
+
+        Log.d("MeuLog", "Sair da conta executado com sucesso");
+
+        SairDaConta sair = new SairDaConta(context);
+
+        sair.removerRegistroLogin();
+    }
+
 
 }

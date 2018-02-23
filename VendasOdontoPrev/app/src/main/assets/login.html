@@ -15,6 +15,11 @@
   <body>
 <!-- Bloco 1 -->
   <div class="container-fluid">
+      <div class="row loadingBack hide" id="divLoading">
+          <div class="col-md-12 loading">
+            <img src="img/loading.gif" class="" id="" align="center">
+          </div>
+        </div>
     <div class="row">
       <div class="col-md-12 boxHeader">
         <div class="col-md-12 text-center imgLogoODPVHeader">
@@ -187,8 +192,11 @@
 
         console.log(cpfTratado);
 
+        $("divLoading").removeClass('hide');
+
           callLogin(function (dataLogin)
           {
+
             //ob.imprimirSucess();
             //console.log(dataUsuarios);
 
@@ -210,7 +218,7 @@
 
               window.localStorage.setItem('DadosUsuarios', dataDadosUsuario);
 
-              window.location = "logado.html";
+              //window.location = "logado.html";
               
             }, cpfTratado);
 

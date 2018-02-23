@@ -1,5 +1,6 @@
 package controllers;
 
+import android.arch.core.internal.SafeIterableMap;
 import android.content.Context;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
@@ -47,12 +48,5 @@ public class loginController {
         modelLogin.insertLogin(forcaVenda);
 
         Log.i("MeuLog", "" + jsonDadosUsuario);
-    }
-
-    public String selectDadosUsuario()
-    {
-
-
-        return "kjkj";
     }
 }

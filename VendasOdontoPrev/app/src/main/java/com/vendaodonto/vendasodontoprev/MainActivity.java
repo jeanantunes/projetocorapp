@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         String urlAssets = "file:///android_asset/";
+
         myWebView = (CustomWebView) this.findViewById(R.id.webView);
         myWebView.setWebViewClient(new CustomWebViewClient(ctx));
 
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         //tableLogin tb = new tableLogin(this);
         //tb.insertTeste();
         try {
+
             Log.e("MeuLog", "======================");
             AssetManager assetManager = this.getAssets();
             InputStream stream = assetManager.open("index.html");

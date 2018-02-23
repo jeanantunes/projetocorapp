@@ -1857,5 +1857,18 @@ input[type=checkbox] {
     right: 0;
     top: 0;
 }
+
+.loading{
+    text-align: center;
+    margin-top: 50%;
+    margin-bottom: 50%;
+ }
+
+ .loadingBack{
+    position: relative;
+    z-index: 9999;
+    background-color: black;
+    opacity: 0.5;
+ }
 /*********************************** End Dropdown ****************************************/
     

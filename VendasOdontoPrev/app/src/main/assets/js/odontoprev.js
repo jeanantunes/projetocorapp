@@ -4,6 +4,12 @@ $(document).ready(function(){
     //     $( "#cpfOdont" ).addClass( "hide" )
     //     return false;
     // });
+
+
+    $(".sair").click(function(){
+      SairDaConta.removerRegistroLogin();       
+    });
+
     $("#btnCelOdont").click(function(){
         $( "#celOdont" ).addClass( "hide" )
         $( "#keyOdont" ).removeClass( "hide" )
