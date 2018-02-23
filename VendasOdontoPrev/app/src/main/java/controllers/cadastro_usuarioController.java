@@ -61,43 +61,6 @@ public class cadastro_usuarioController
     }
 
     @JavascriptInterface
-    public void imprimir()
-    {
-        Log.d("MeuLog", "Executou o metodo imprimir");
-        Intent intent = new Intent(context, GaleriaActivity.class);
-        context.startActivity(intent);
-    }
-
-    @JavascriptInterface
-    private void abrirgaleria()
-    {
-        Log.d("MeuLog", "Executou o metodo");
-    }
-
-    private void criarConexao()
-    {
-        try
-        {
-            //dadosOpenHelper = new DadosOpenHelper(ctx);
-
-            Log.d("MeuLog", "Erro!");
-
-            //conexao = dadosOpenHelper.getWritableDatabase();
-
-            Log.d("MeuLog", "Erro 2");
-
-            //Cad = new CadastroCliente(conexao);
-
-            Log.d("MeuLog", "Instanciou objeto Cadastro com sucesso!");
-
-        }
-        catch (SQLException ex)
-        {
-            Log.d("MeuLog", "Erro");
-        }
-    }
-
-    @JavascriptInterface
     private void inserirUsuario(Cliente cliente)
     {
         Log.d("MeuLog", "Foi " + cliente.getNome() + " " + cliente.getCelular() + " " + cliente.getEmail() + " " + cliente.getCpf());

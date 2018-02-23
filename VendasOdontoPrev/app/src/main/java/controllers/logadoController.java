@@ -2,11 +2,17 @@ package controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import com.google.gson.Gson;
 import com.vendaodonto.vendasodontoprev.GaleriaActivity;
 import com.vendaodonto.vendasodontoprev.MainActivity;
+
+import models.DataBase;
+import models.ForcaVenda;
 
 
 /**
@@ -62,6 +68,51 @@ public class logadoController {
         Log.d("MeuLog", "Base 64" + getBase64());
         Log.d("MeuLog", "entrou no log retorno");
         return base64;
+    }
+
+    @JavascriptInterface
+    public String getDadosUsuarios()
+    {
+        ForcaVenda getDados = buscar(1);
+
+        Gson gson = new Gson();
+
+        Log.d("MeuLog", "" + gson.toJson(getDados));
+
+        return gson.toJson(getDados);
+    }
+
+    public ForcaVenda buscar(int codigo) {
+
+        ForcaVenda forca = new ForcaVenda();
+
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("SELECT * ");
+        sql.append("FROM Login ");
+        sql.append("WHERE IdLogin = " + codigo);
+
+        DataBase db = new DataBase(context);
+
+        SQLiteDatabase dbs = db.getReadableDatabase();
+
+        Cursor resultado = dbs.rawQuery(sql.toString(), null);
+
+        if (resultado.getCount() > 0) {
+            resultado.moveToFirst();
+
+            forca.setCargo(resultado.getString( resultado.getColumnIndexOrThrow("cargo")));
+            forca.setCpf(resultado.getString( resultado.getColumnIndexOrThrow("cpf")));
+            forca.setLogado(resultado.getString( resultado.getColumnIndexOrThrow("logado")));
+            forca.setEmail(resultado.getString(resultado.getColumnIndexOrThrow("email")));
+            forca.setNome(resultado.getString(resultado.getColumnIndexOrThrow("nome")));
+            forca.setNomeEmpresa(resultado.getString(resultado.getColumnIndexOrThrow("nomeEmpresa")));
+
+            Log.i("MeuLog", "" + forca.getNomeEmpresa());
+            return forca;
+
+        }
+        return null;
     }
 
     ////////////////////////////////////////////////

@@ -4,21 +4,25 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import models.Cliente;
 import models.DataBase;
+import models.ForcaVenda;
 import models.tableCorretora;
 import models.tableEndereco;
 import models.tableForcaVendas;
+import models.tableLogin;
 import models.tableStatusForcaVendas;
 import utils.CustomWebView;
 import utils.CustomWebViewClient;
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     CustomWebView myWebView;
 
-    DataBase db = new DataBase(this);
+    DataBase db;
 
     public static Context ctx;
 
@@ -43,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("JavascriptInterface")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        db = new DataBase(this);
 
         super.onCreate(savedInstanceState);
 
@@ -68,8 +74,11 @@ public class MainActivity extends AppCompatActivity {
 //            Log.e("MYAPP", "exception", e);
 //        }
 
-        int qt = 0;
+        //getContact(1);
 
+        int qt = 0;
+        //tableLogin tb = new tableLogin(this);
+        //tb.insertTeste();
         try {
             Log.e("MeuLog", "======================");
             AssetManager assetManager = this.getAssets();
@@ -77,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             BufferedReader r = new BufferedReader(new InputStreamReader(stream));
             StringBuilder total = new StringBuilder();
             String line;
+
             while ((line = r.readLine()) != null) {
                 total.append(line).append("\n");
                 qt ++;
@@ -87,7 +97,30 @@ public class MainActivity extends AppCompatActivity {
 
             //myWebView.loadUrl("https://imobottst5.mybluemix.net");
 
-            myWebView.loadUrl("file:///android_asset/index.html");
+            ForcaVenda forcaLogin = buscar(1);
+
+            tableLogin tb = new tableLogin(this);
+
+            //Log.d("MeuLog", "Cadastro id: " + forcaLogin.getLogado());
+
+            //if (forcaLogin == null)
+            //{
+            //    Log.d("MeuLog","forcaLogin == null");
+            //    tb.insertTeste();
+            //}
+
+            //forcaLogin = buscar(1);
+
+            if(forcaLogin != null)
+            {
+                myWebView.loadUrl("file:///android_asset/anteriorLogado.html");
+            }
+            else
+            {
+                Log.d("MeuLog", "Nâo existe cadastro salvo");
+                myWebView.loadUrl("file:///android_asset/index.html");
+           }
+
 
             //myWebView.loadDataWithBaseURL("file:///android_asset/", total.toString(), "text/html", "UTF-8", null);
 
@@ -95,9 +128,15 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this.getBaseContext(), "" + qt, Toast.LENGTH_LONG).show();
 
+            //selectTableLogin();
+
+
+
         } catch (Exception xxx) {
             Log.e("MeuLog", "Load assets ", xxx);
         }
+
+
 
         // TESTE CRUD
 
@@ -107,27 +146,38 @@ public class MainActivity extends AppCompatActivity {
 
         ///////////////////////////////////////////////
 
-        tableStatusForcaVendas insert = new tableStatusForcaVendas(ctx);
+    }
 
-        insert.insertStatus();
+    public ForcaVenda buscar(int codigo) {
 
-        ///////////////////////////////////////////
+        ForcaVenda forca = new ForcaVenda();
 
-        tableEndereco insertEndereco = new tableEndereco(ctx);
+        StringBuilder sql = new StringBuilder();
 
-        insertEndereco.insertEndereco();
+        sql.append("SELECT * ");
+        sql.append("FROM Login ");
+        sql.append("WHERE IdLogin = " + codigo);
 
-        /////////////////////////////////////////////
+        SQLiteDatabase dbs = db.getReadableDatabase();
 
-        tableCorretora insertCorretora = new tableCorretora(ctx);
+        Cursor resultado = dbs.rawQuery(sql.toString(), null);
 
-        insertCorretora.insertCorretora();
+        if (resultado.getCount() > 0) {
+            resultado.moveToFirst();
 
-        //////////////////////////////////////////
+            forca.setCargo(resultado.getString( resultado.getColumnIndexOrThrow("cargo")));
+            forca.setCpf(resultado.getString( resultado.getColumnIndexOrThrow("cpf")));
+            forca.setLogado(resultado.getString( resultado.getColumnIndexOrThrow("logado")));
+            forca.setEmail(resultado.getString(resultado.getColumnIndexOrThrow("email")));
+            forca.setNome(resultado.getString(resultado.getColumnIndexOrThrow("nome")));
+            forca.setNomeEmpresa(resultado.getString(resultado.getColumnIndexOrThrow("nomeEmpresa")));
 
-        tableForcaVendas insertForcaVendas = new tableForcaVendas(ctx);
-        insertForcaVendas.insertForcaVendas();
 
+            Log.i("MeuLog", "Executou BuscarEmpresa");
+            return forca;
+        }
+
+        return null;
     }
 
     @Override

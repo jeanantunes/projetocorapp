@@ -31,7 +31,9 @@
         <h2 class="subTitleOdont text-center">
             ao sistema de venda odonto
         </h2>
-        <div class="boxLabInput">
+
+        <form id="login">
+          <div class="boxLabInput">
             <div>
               <label class="label-cpf labelOdontBlur">CPF</label>
             </div>
@@ -42,15 +44,22 @@
               <label class="label-password labelOdontBlur">SENHA</label>
             </div>
             <div>
-              <input type="password" class="password inputLabelBlur" id="password" name="password">
+              <input type="password" class="password inputLabelBlur" id="password" name="password" maxlength="12">
             </div>
+
+            <div>
+              <label class="hide" id="loginIncorreto">CPF ou senha incorreta.</label>
+            </div>
+
           </div>
+        </form>
+
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-12">	 
-          <a class="btn btn-lg btn-block btnOdont" href="logado.html" role="button">CONTINUAR</a>
+          <button class="btn btn-lg btn-block btnOdont" disabled id = "continuarLogin" role="button">CONTINUAR</button>
             <!-- <div class="text-center">
               <a href=""><label for="senha" class="linkOdont">Esqueci minha senha</label></a>
             </div> -->
@@ -65,6 +74,150 @@
     <script src="js/jquery.3.2.1.js"></script>
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
+
+    <script type="text/javascript">
+
+        function callLogin(callback, login, password) {
+
+          $.ajax({
+            async: true,
+            url: "https://api-it1.odontoprev.com.br:8243/dcss/login/1.0/",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Cache-Control": "no-cache"             
+            },
+            processData: false,
+            data: "{\n    \"login\": \"" + login + "\",\n    \"senha\": \"" + password +"\"\n}",
+            success: function (resp) {
+              callback(resp)
+            }, 
+            error:function (resp){
+              //console.log(JSON.stringify(resp.statusText));
+              ob.imprimirAlgo(JSON.stringify(resp.statusText));
+            }
+          });
+        }
+
+        function callToken(callback) {
+
+          $.ajax({
+            async: true,
+            url: "https://api.odontoprev.com.br:8243/token/",
+            method: "POST",
+            headers: {
+              "Authorization": "Basic Y3hHZXBoTzFkcERDd3U0VHlfRExWTWxXQ0R3YTp0WlJtSUN1eUJWajJZRVczRjdaNXdWM2E0YVlh",
+              "Cache-Control": "no-cache",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+              "grant_type": "client_credentials"
+            },
+            success: function (resp) {
+              callback(resp)
+            },
+            error:function (resp){
+              //console.log(JSON.stringify(resp.statusText));
+              $("#loginIncorreto").removeClass('hide')
+
+              ob.imprimirAlgo(JSON.stringify(resp.statusText));
+            }
+          });
+        }
+
+        function callDadosUsuarios(callback, cpf) {
+
+          $.ajax({
+            async: true,
+            url: "https://api-it1.odontoprev.com.br:8243/dcss/usuario/1.0/cpf/" + cpf,
+            method: "GET",
+            headers: {
+              "Cache-Control": "no-cache"
+            },
+            success: function (resp) {
+              callback(resp)
+            },  
+            error:function (resp){
+              //console.log(JSON.stringify(resp.statusText));
+              ob.imprimirAlgo(JSON.stringify(resp.statusText));
+            }
+          });
+        }       
+
+			// Mantém os inputs em cache:
+			var inputs = $('input');
+
+			// Chama a função de verificação quando as entradas forem modificadas
+			// Usei o 'keyup', mas 'change' ou 'keydown' são também eventos úteis aqui
+			inputs.on('keyup', verificarInputs);
+
+			function verificarInputs() 
+			{
+        var preenchidos = true;  // assumir que estão preenchidos
+        
+    		inputs.each(function () {
+
+        // verificar um a um e passar a false se algum falhar
+				// no lugar do if pode-se usar alguma função de validação, regex ou outros
+				  var id = this.id;
+          if (!this.value || !TestaCPF($("#cpf").val() ) || $("#password").val().length < 8){//|| !TestaCPF($("#cpf").val()) || $("#password").val().length < 8){// || $("#password").val().length < 8){//|| !TestaCPF($("#cpf").val()) || $("#password").val().length < 8 ) {
+						  preenchidos = false;
+						  $('button').prop('disabled', preenchidos);
+          		// parar o loop, evitando que mais inputs sejam verificados sem necessidade
+          		return false;
+				  }
+    		});
+    		// Habilite, ou não, o <button>, dependendo da variável:
+				$('button').prop('disabled', !preenchidos); //,
+				return true; 
+      }
+      
+      
+      $("#continuarLogin").click(function(){
+
+        logarETrazerDadosUsuario();
+
+        //window.location = "logado.html";
+
+      });
+
+      function logarETrazerDadosUsuario()
+      {
+        var cpfTratado = $("#cpf").val().replace(/\D/g, '');
+
+        console.log(cpfTratado);
+
+          callLogin(function (dataLogin)
+          {
+            //ob.imprimirSucess();
+            //console.log(dataUsuarios);
+
+            //var teste = dataUsuarios.status;
+
+            //console.log(teste);
+
+            callDadosUsuarios(function(dataDadosUsuario)
+            {
+              //console.log(dataDadosUsuario);
+              console.log(dataDadosUsuario);
+              //ob.imprimirSucess();
+              //console.log(dataDadosUsuario);
+
+              //console.log(JSON.stringify(dataDadosUsuario));
+              //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
+              ob.salvarDadosUsuario(JSON.stringify(dataDadosUsuario));
+              //ob.salvarDadosUsuario();
+
+              window.localStorage.setItem('DadosUsuarios', dataDadosUsuario);
+
+              window.location = "logado.html";
+              
+            }, cpfTratado);
+
+          }, cpfTratado, $("#password").val());
+      }
+    
+    </script>
 
   </body>
 </html>

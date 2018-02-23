@@ -12,7 +12,7 @@
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/odontoprev.css" rel="stylesheet">
   </head>
-  <body>
+  <body onload="setarDados()">
 	  <!-- Menu -->
 	  <div class="closeNav hide" onclick="closeNav()"></div>
 	  <div id="mySidenav" class="sidenav">
@@ -22,10 +22,10 @@
 					  <div class="perfilMenu">
 						  <img src="img/icone_325x325.png" class="imgPerfil" alt="" id="imageePerfil">
 						  <div>
-							  <label class="labelOdontMenu">Rosário Lopes</label>
+							  <label class="labelOdontMenu" id="nomeCorretorMenu"></label>
 						  </div>
 						  <div>
-							  <label class="subLabelOdontMenu">Corretora XPTO</label>
+							  <label class="subLabelOdontMenu" id="nomeCorretoraMenu"></label>
 						  </div>
 					  </div>
 				  </div>
@@ -64,18 +64,18 @@
 			<div class="row">
 				<div class="text-center">
 					<div>
-						<label class="labelOdont">Rosário Lopes</label>
+						<label class="labelOdont" id="nomeCorretor"></label>
 					</div>
 					<div>
-						<label class="subLabelOdont">Corretora XPTO</label>
+						<label class="subLabelOdont" id="nomeCorretora"></label>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-					<div class="col-md-12 btnOdontEnter">
+					<div class="btnOdontEnter">
 						<a class="btn btn-lg btn-block btnPinkOdont" style="margin-bottom: 10%;" href="venda_index_pf.html" role="button">VENDER PARA PESSOA FÍSICA</a>
 					</div>
-					<div class="col-md-12 btnPadBtm">
+					<div class="btnPadBtm">
 						<a class="btn btn-lg btn-block btnOdont" href="venda_index_pme.html" role="button">VENDER PARA PME</a>
 					</div>
 				</div>
@@ -105,6 +105,13 @@
 			<div class="row">
 				<div class="boxVendas">
 					<label class="labelBlue">VENDAS</label>
+					<div class="dropdown">
+                        <button class="btnDropOdont dropdown-toggle" type="button" data-toggle="dropdown">Valor R$/mês
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">...</a></li>
+                        </ul>
+                    </div>
 					<section class="grafico-barras">
 						<ul>
 							<span class="barra-fondo">
@@ -158,6 +165,22 @@
 
 			$("#imagePerfil").attr('src', 'data:image/jpg;base64,' + base64);
 			$("#imageePerfil").attr('src', 'data:image/jpg;base64,' + base64);
+		}
+
+		function setarDados()
+		{
+			var dados = ob.getDadosUsuarios();
+
+			var dadosTratados = JSON.parse(dados);
+
+			window.localStorage.setItem('DadosUsuario', dados);
+
+			document.getElementById('nomeCorretor').innerHTML = "" + dadosTratados.nome;
+			document.getElementById('nomeCorretora').innerHTML = "" + dadosTratados.nomeEmpresa;
+			document.getElementById('nomeCorretorMenu').innerHTML = "" + dadosTratados.nome;
+			document.getElementById('nomeCorretoraMenu').innerHTML = "" + dadosTratados.nomeEmpresa;
+			//document.getElementsByClassName('.nomeCorretor').innerHTML = "" + dadosTratados.nome;
+		
 		}
 	</script>
 

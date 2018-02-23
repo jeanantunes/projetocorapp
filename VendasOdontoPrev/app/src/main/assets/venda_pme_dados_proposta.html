@@ -86,7 +86,7 @@
 				</div>
 
 				<form id="formulario-proposta" name="dadosProposta">
-				<div class="row boxLabInput">
+				<div class="boxDependente">
 					<div>
 						<label class="labelBlue">DADOS DA EMPRESA</label>
 					</div>
@@ -227,8 +227,17 @@
 							</span>
 						</label>
 					</div>
-				</div>
 				</form>
+				<div class="row">
+					<div class="col-md-12 btnPadBtm">	 
+						<button class="btn btn-lg btn-block btnOdont" id="" role="button" disabled>SALVAR</button>
+					</div>
+				</div>
+				</div>
+			
+
+
+				
 
 				<!-- Buscar CNPJ se estiver Online e trás dados pré preenchidos -->
 				<div class="row hide">
@@ -239,11 +248,7 @@
 				<!-- End Buscar CNPJ se estiver Online e trás dados pré preenchidos -->
 
 				<!-- Offline habilita este botão e esconde os outros  -->
-				<div class="row hide">
-					<div class="col-md-12 btnPadBtm">	 
-						<a href="" class="btn btn-lg btn-block btnOdont" id="" role="button">SALVAR</a>
-					</div>
-				</div>
+
 				<!-- End Offline habilita este botão e esconde os outros  -->
 
 				<div class="row">
@@ -278,7 +283,7 @@
         		// verificar um a um e passar a false se algum falhar
 				// no lugar do if pode-se usar alguma função de validação, regex ou outros
 				var id = this.id;
-				console.log(id);
+				//console.log(id);
 				if(id != "razao-social" && id != "nome-fantasia" && id != "ramo-atividade" && id != "inscricao-estadual" && id != "representante-legal"
 				&& id != "cpf-representante")
 				{

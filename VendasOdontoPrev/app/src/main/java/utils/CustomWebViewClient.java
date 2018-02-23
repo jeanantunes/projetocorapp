@@ -45,6 +45,7 @@ public class CustomWebViewClient extends WebViewClient {
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         final Uri uri = Uri.parse(url);
         try {
+            Log.d("MeuLog", "Instanciou Logado");
             return handleUri(view, url);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
