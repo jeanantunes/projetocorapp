@@ -1,0 +1,27 @@
+﻿{
+  "cdVida": 0,
+  "cdTitular": 0,
+  "cnpj": 0,
+  "celular": "",
+  "cpf": "",
+  "dataNascimento": "",
+  "email": "",
+  "nome": "",
+  "nomeMae": "",
+  "pfPj": "f",
+  "sexo": "m",
+  "cdPlano": 1,
+  "cdVenda": 0,
+  "endereco": {
+    "cep": "",
+    "endereco": "",
+    "numero": "",
+    "complemento": "",
+    "bairro": "",
+    "cidade": "",
+    "estado": ""
+  },
+  "dependentes": [
+
+  ]
+}
