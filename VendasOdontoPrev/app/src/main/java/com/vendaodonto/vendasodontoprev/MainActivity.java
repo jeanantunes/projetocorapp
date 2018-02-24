@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //Toast.makeText(this.getBaseContext(), String.valueOf(qt), Toast.LENGTH_SHORT).show();
-            Toast.makeText(this.getBaseContext(), "" + qt, Toast.LENGTH_SHORT).show();
 
             //myWebView.loadUrl("https://imobottst5.mybluemix.net");
 
@@ -131,8 +130,6 @@ public class MainActivity extends AppCompatActivity {
             //myWebView.loadDataWithBaseURL("file:///android_asset/", total.toString(), "text/html", "UTF-8", null);
 
             Log.d("MeuLog", "Classe instanciada");
-
-            Toast.makeText(this.getBaseContext(), "" + qt, Toast.LENGTH_LONG).show();
 
             //selectTableLogin();
 
@@ -194,13 +191,15 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MeuLog", url);
 
             //this.myWebView.goBack();
-
-            if (url.equals("file:///android_asset/index.html"))
+            if(url.equals("file:///android_asset/logado.html")){
+                this.moveTaskToBack(true);
+            }
+            else if (url.equals("file:///android_asset/index.html"))
             {
-//
                 Log.d("MeuLog", "Close WebView");
+
                 this.finish();
-//
+
             } else this.myWebView.goBack();
 
         } else {

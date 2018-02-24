@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="utf-8">
@@ -76,6 +76,7 @@
     <script src="js/jquery.3.2.1.js"></script>
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
+    <script src="app/coordenador.js"></script>
 
     <script type="text/javascript">
 
@@ -238,7 +239,7 @@
             callDadosUsuarios(function(dataDadosUsuario)
             {
               //console.log(dataDadosUsuario);
-              console.log(dataDadosUsuario);
+              console.log(JSON.stringify(dataDadosUsuario));
               //ob.imprimirSucess();
               //console.log(dataDadosUsuario);
 
@@ -247,7 +248,7 @@
               ob.salvarDadosUsuario(JSON.stringify(dataDadosUsuario));
               //ob.salvarDadosUsuario();
 
-              window.localStorage.setItem('DadosUsuarios', dataDadosUsuario);
+              put("dadosUsuario", JSON.stringify(dataDadosUsuario));
 
               window.location = "logado.html";
               

@@ -22,6 +22,7 @@ public class SairDaConta {
         db = new DataBase(context);
     }
 
+    @JavascriptInterface
     public void removerRegistroLogin()
     {
         Log.d("MeuLog", "Iniciou metodo removerRegistro");

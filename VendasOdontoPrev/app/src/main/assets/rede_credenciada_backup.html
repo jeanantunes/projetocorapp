@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
 <head>
 	<meta charset="utf-8">
@@ -31,10 +31,10 @@
 				<div class="perfilMenu">
 					<img src="img/icone_325x325.png" class="imgPerfil" alt="">
 					<div>
-						<label class="labelOdontMenu">Rosário Lopes</label>
+						<label class="labelOdontMenu" id="nomeCorretor"></label>
 					</div>
 					<div>
-						<label class="subLabelOdontMenu">Corretora XPTO</label>
+						<label class="subLabelOdontMenu" id="nomeCorretora"></label>
 					</div>
 				</div>
 			</div>
@@ -129,81 +129,78 @@
 
 
 <!-- End Bloco 1 -->
-<button type="button" class="btnModal" id="btnModal" data-toggle="modal" data-target="#myModal"BotaoModal</button>
 <!-- Modal -->git pull
 <div class="modal fade" id="myModal" role="dialog">
-	<div class="modal-dialog modalConteiner">
-		<div class="modal-content">
-			<div class="modal-header-OdontMed">
-				<div class"row">
-				<div class="">
-					<span class="labelBoldModal"><h2 id="nomeDentista"></h2></span>
-				</div>
-				<div>
-					<span class="labelLightModal">CRO:<h5 id="croDentista"></h5></span>
-					<label class="labelLightModal"><h5 id="tipoPessoaDentista"></h5></label>
-					<!--<span class="labelLightModal">Pessoa Física</span>-->
-				</div>
-			</div>
-		</div>
-		<div class="col-md-12 labelBoldModalPlano"><span></span></div>
-		<div class="modal-body-OdontMed">
-			<div class="row">
-				<label class="labelBoldTitleModal">Especialidades</label>
+    <div class="modal-dialog modalConteiner">
+        <div class="modal-content">
+            <div class="modal-header-OdontMed">
+                <div class"row">
+                    <div class="">
+                        <span class="labelBoldModal"><h2 id="nomeDentista"></h2></span>
+                    </div>
+                    <div>
+                        <span class="labelLightModal">CRO:<h5 id="croDentista"></h5></span>
+                        <label class="labelLightModal"><h5 id="tipoPessoaDentista"></h5></label>
+                        <!--<span class="labelLightModal">Pessoa Física</span>-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 labelBoldModalPlano"><span></span></div>
+            <div class="modal-body-OdontMed">
+                <div class="row">
+                    <label class="labelBoldTitleModal">Especialidades</label>
 
-				<div class="text-center">
-					<label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista1"style="color:gray"></h5></p></label>
-					<!--<label><img src="img/Ortodontia.png" class="" alt=""><p>_</p></label>-->
-					<!--<label><img src="img/Consulta.png" class="" alt=""><p>_</p></label>-->
-					<!--<label><img src="img/Cirurgia.png" class="" alt=""><p>_</p></label>-->
-				</div>
-			</div>
-		</div>
-		<div class="modal-footer-OdontMed">
-			<div>
-				<label class="labelBoldPink">Endereço</label>
-				<p class="labelBold"><h5 id="enderecoDentista"style="color:gray"></h5></p>
-				<p class="labelBold"><h5 id="cepDentista"style="color:gray"></h5></p>
-			</div>
-			<div>
-				<label class="labelBoldPink">Contato</label>
-				<p class="labelBold"><h5 id="telefoneDentista"style="color:gray"></h5></p>
-				<!--<p class="labelBold">contato@doutorajuliana.com.br</p>-->
-				<!--<p class="labelBold">www.doutorajuliana.com.br</p>-->
-			</div>
-		</div>
-	</div>
-</div>
-<!-- End Modal -->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
-<script src="js/odontoprev.js"></script>
-<script src="js/jquery.3.2.1.js"></script>
-<script src="js/jquery.mask.min.js"></script>
-<script src="js/odonto-Valida.js"></script>
-<!--<script src="C:\Users\Treinamento6\Downloads\Jquery.js"></script>-->
-
-
-
-<script type="text/javascript">
+                    <div class="text-center">
+                        <label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista1" style="color:gray"></h5></p></label>
+                        <!--<label><img src="img/Ortodontia.png" class="" alt=""><p>_</p></label>-->
+                        <!--<label><img src="img/Consulta.png" class="" alt=""><p>_</p></label>-->
+                        <!--<label><img src="img/Cirurgia.png" class="" alt=""><p>_</p></label>-->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer-OdontMed">
+                <div>
+                    <label class="labelBoldPink">Endereço</label>
+                    <p class="labelBold"><h5 id="enderecoDentista" style="color:gray"></h5></p>
+                    <p class="labelBold"><h5 id="cepDentista" style="color:gray"></h5></p>
+                </div>
+                <div>
+                    <label class="labelBoldPink">Contato</label>
+                    <p class="labelBold"><h5 id="telefoneDentista" style="color:gray"></h5></p>
+                    <!--<p class="labelBold">contato@doutorajuliana.com.br</p>-->
+                    <!--<p class="labelBold">www.doutorajuliana.com.br</p>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="js/jquery.3.2.1.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
+    <script src="js/odonto-Valida.js"></script>
+    <script src="app/coordenador.js"></script>
+    <!--<script src="C:\Users\Treinamento6\Downloads\Jquery.js"></script>-->
 
 
 
-        function modal(){
+    <script type="text/javascript">
+
+
+
+        function modal() {
             //var modal = document.getElementById('myModal');
             //modal.style.display = "block";
             $('#loginmodal').modal('show')
-      }
+        }
 
 
 
-		function especialidades()
-		{
-			callToken(function (dataToken)
-			{
-            	callEspecialidades(function (dataEspecialidades)
-                {
+        function especialidades() {
+            callToken(function (dataToken) {
+                callEspecialidades(function (dataEspecialidades) {
                     console.log(dataEspecialidades);
 
                     var sel = document.getElementById('especs');
@@ -219,15 +216,15 @@
                     }
 
                     var especialidade = 1;
-					document.getElementById('especs').value = especialidade;
+                    document.getElementById('especs').value = especialidade;
 
-            	},dataToken.access_token);
+                }, dataToken.access_token);
             });
-		}
+        }
 
         function mapa(abc) {
 
-           
+
 
             var latlng = { lat: -23.5432147, lng: -46.7356894 };
             //initMap(latlng);
@@ -240,11 +237,11 @@
                 });
             }
             else if (abc != null) {
-                     map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 11,
-                        center: { lat: parseFloat(abc.dentistas[0].endereco.cidade.latitude), lng: parseFloat(abc.dentistas[0].endereco.cidade.longitude) },
-                        disableDefaultUI: true
-                    });
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 11,
+                    center: { lat: parseFloat(abc.dentistas[0].endereco.cidade.latitude), lng: parseFloat(abc.dentistas[0].endereco.cidade.longitude) },
+                    disableDefaultUI: true
+                });
 
                 for (var i = 0; i < abc.dentistas.length; i++) {
                     var latlng2 = new google.maps.LatLng((abc.dentistas[i].endereco.cidade.latitude), (abc.dentistas[i].endereco.cidade.longitude));
@@ -255,33 +252,29 @@
                         center: latlng2
                     });
 
-            
-            var infowindow = new google.maps.InfoWindow();
-            
 
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                //console.log("Dentro da funcão Click:  " + contentString[i]);
-                //infowindow.setContent('<div><strong>' + abc.dentistas[i].nomeDentista + '</strong><br>');
-                //infowindow.open(map, marker);
-                document.getElementById('nomeDentista').innerHTML=abc.dentistas[i].nomeDentista;         
-                document.getElementById('croDentista').innerHTML=abc.dentistas[i].numeroCRO;
-                document.getElementById('especialidadeDentista1').innerHTML=abc.dentistas[i].especialidade.descricaoEspecialidade;
-                document.getElementById('especialidadeDentista1').innerHTML=abc.dentistas[i].especialidade.descricaoEspecialidade;
-                document.getElementById('enderecoDentista').innerHTML=abc.dentistas[i].endereco.enderecoCompleto;
-                document.getElementById('cepDentista').innerHTML=abc.dentistas[i].endereco.cep;
-                document.getElementById('telefoneDentista').innerHTML=abc.dentistas[i].numeroFone;
-                document.getElementById('tipoPessoaDentista').innerHTML=abc.dentistas[i].tipoPrestador;
+                    var infowindow = new google.maps.InfoWindow();
 
-                $("#btnModal").click();
-             }
-        })(marker, i));
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            //console.log("Dentro da funcão Click:  " + contentString[i]);
+                            //infowindow.setContent('<div><strong>' + abc.dentistas[i].nomeDentista + '</strong><br>');
+                            //infowindow.open(map, marker);
+                            document.getElementById('nomeDentista').innerHTML = abc.dentistas[i].nomeDentista;
+                            document.getElementById('croDentista').innerHTML = abc.dentistas[i].numeroCRO;
+                            document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
+                            document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
+                            document.getElementById('enderecoDentista').innerHTML = abc.dentistas[i].endereco.enderecoCompleto;
+                            document.getElementById('cepDentista').innerHTML = abc.dentistas[i].endereco.cep;
+                            document.getElementById('telefoneDentista').innerHTML = abc.dentistas[i].numeroFone;
+                            document.getElementById('tipoPessoaDentista').innerHTML = abc.dentistas[i].tipoPrestador;
+
+                            $("#btnModal").click();
+                        }
+                    })(marker, i));
                 }
             }
-
-   
-
-
         }
 
         var t;
@@ -363,7 +356,7 @@
 
             $.ajax({
                 async: true,
-                url: "https://api.odontoprev.com.br:8243/cep/1.1/bairros?uf="+ uf +"&codigoCidade=" + codigoCidade +"&codigoBeneficiario="+ codigoBeneficiario,
+                url: "https://api.odontoprev.com.br:8243/cep/1.1/bairros?uf=" + uf + "&codigoCidade=" + codigoCidade + "&codigoBeneficiario=" + codigoBeneficiario,
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -386,8 +379,8 @@
             $.ajax({
                 async: true,
                 url: "https://api.odontoprev.com.br:8243/dcms/redecredenciada/1.0/dentistas?codigoBeneficiario=" + CodBeneficiario
-                    + "&siglaUf=" + uf + "&codigoEspecialidade=" + codigoEspecialidade + "&codigoRegiao=" + codigoMicroregiao + "&privian=" + privian + "&codigoMarca=" +
-                    codigoMarca + "&codigoBairro=" + codigoBairro,
+                + "&siglaUf=" + uf + "&codigoEspecialidade=" + codigoEspecialidade + "&codigoRegiao=" + codigoMicroregiao + "&privian=" + privian + "&codigoMarca=" +
+                codigoMarca + "&codigoBairro=" + codigoBairro,
                 //url: "https://api.odontoprev.com.br:8243/cep/1.1/bairros?uf=" + uf + "&codigoCidade=" + codigoCidade + "&codigoBeneficiario=" + codigoBeneficiario,
                 method: "GET",
                 headers: {
@@ -424,22 +417,20 @@
             return string;
         }
 
-        function callTokenBack()
-        {
+        function callTokenBack() {
 
             ob.logString("Foi");
-            callToken(function (dataToken)
-            {
+            callToken(function (dataToken) {
                 ob.logString("Foi dnv");
             });
         }
 
 
-         $(document).ready(function () {
+        $(document).ready(function () {
             var t1;
 
-            $("#btnTeste").click(function (e) {                
-                
+            $("#btnTeste").click(function (e) {
+
 
                 var cep = $("#cep").val().replace(/\D/g, '');
 
@@ -466,19 +457,18 @@
 
                                 //var bairro = dataCep[0].bairro.toUpperCase();
 
-                                var codigoBairro = $.grep(dataBairro, function (e) 
-                                { 
-                                    if(dataCep[0].bairro != null){
+                                var codigoBairro = $.grep(dataBairro, function (e) {
+                                    if (dataCep[0].bairro != null) {
                                         return e.nome == dataCep[0].bairro.toUpperCase()
-                                    }else{
+                                    } else {
                                         return e.nome == dataCep[0].cidade.toUpperCase()
                                     }
-                                     
+
                                 });
-                                
-                                if(codigoBairro == null){
+
+                                if (codigoBairro == null) {
                                     codigoBairro = "";
-                                } 
+                                }
 
                                 console.log(codigoBairro);
                                 console.log(result[0].codigoMicroregiao);
@@ -509,7 +499,7 @@
         });
 
 
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             function limpa_formulário_cep() {
                 // Limpa valores do formulário de cep.
@@ -521,73 +511,71 @@
             var doneTypingInterval = 500; //time in ms, 5 second for example
 
             //on keyup, start the countdown
-        $('#cepRedeCredenciada').keyup(function() {
-            clearTimeout(typingTimer);
-            if ($('#cepRedeCredenciada').val) {
-            typingTimer = setTimeout(doneTyping, doneTypingInterval);
-            }
-        });
-
-        function doneTyping() {
-            validar();
-        }
-
-        function validar()
-        {
-            //Nova variável "cep" somente com dígitos.
-            var cep = $('#cepRedeCredencida').val().replace(/\D/g, '');
-
-            //Verifica se campo cep possui valor informado.
-            if (cep != "" && cep.length == 8) {
-
-            //Expressão regular para validar o CEP.
-            var validacep = /^[0-9]{8}$/;
-
-            //Valida o formato do CEP.
-            if(validacep.test(cep)) {
-
-            //Preenche os campos com "..." enquanto consulta webservice.
-                $("#bairro").val("");
-                $("#cidade").val("");
-
-			$("#cepRedeCredenciada").val("00000-000");
-            callToken(function (dataToken)
-			{
-				callCep(function (dataCep) {
-						$("#cepRedeCredenciada").val("00000-000");
-				        $("#bairroRedeCredenciada").val(dataCep[0].bairro);
-                        $("#cidadeRedeCredenciada").val(dataCep[0].cidade);
-
-				}, dataToken.access_token, cep);
-			});
-
-            //    //Consulta o webservice viacep.com.br/
-            //    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados)
-            //    {
-            //        if (!("erro" in dados)) {
-            //        //Atualiza os campos com os valores da consulta.
-            //            $("#rua").val(dados.logradouro);
-            //            $("#bairro").val(dados.bairro);
-            //            $("#cidade").val(dados.localidade);
-            //            $("#uf").val(dados.uf);
-            //        } //end if.
-            //        else {
-            //            //CEP pesquisado não foi encontrado.
-            //            limpa_formulário_cep();
-            //            alert("CEP não encontrado.");
-            //        }
-            //    });
-
-
-
-
-            } //end if.
-            else {
-                //cep é inválido.
-                limpa_formulário_cep();
-                alert("Formato de CEP inválido.");
+            $('#cepRedeCredenciada').keyup(function () {
+                clearTimeout(typingTimer);
+                if ($('#cepRedeCredenciada').val) {
+                    typingTimer = setTimeout(doneTyping, doneTypingInterval);
                 }
-            } //end if.
+            });
+
+            function doneTyping() {
+                validar();
+            }
+
+            function validar() {
+                //Nova variável "cep" somente com dígitos.
+                var cep = $('#cepRedeCredencida').val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "" && cep.length == 8) {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if (validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#bairro").val("");
+                        $("#cidade").val("");
+
+                        $("#cepRedeCredenciada").val("00000-000");
+                        callToken(function (dataToken) {
+                            callCep(function (dataCep) {
+                                $("#cepRedeCredenciada").val("00000-000");
+                                $("#bairroRedeCredenciada").val(dataCep[0].bairro);
+                                $("#cidadeRedeCredenciada").val(dataCep[0].cidade);
+
+                            }, dataToken.access_token, cep);
+                        });
+
+                        //    //Consulta o webservice viacep.com.br/
+                        //    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados)
+                        //    {
+                        //        if (!("erro" in dados)) {
+                        //        //Atualiza os campos com os valores da consulta.
+                        //            $("#rua").val(dados.logradouro);
+                        //            $("#bairro").val(dados.bairro);
+                        //            $("#cidade").val(dados.localidade);
+                        //            $("#uf").val(dados.uf);
+                        //        } //end if.
+                        //        else {
+                        //            //CEP pesquisado não foi encontrado.
+                        //            limpa_formulário_cep();
+                        //            alert("CEP não encontrado.");
+                        //        }
+                        //    });
+
+
+
+
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
                 else {
                     //cep sem valor, limpa formulário.
                     limpa_formulário_cep();
@@ -598,7 +586,7 @@
 
         });
 
-        </script>
+    </script>
 
 
 

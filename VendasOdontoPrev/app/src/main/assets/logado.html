@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
   <head>
 	<meta charset="utf-8">
@@ -39,7 +39,7 @@
 		  <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
 		  <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
 		  <a href="fale_conosco.html" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
-		  <a onclick = "deslogar()" href = "index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
+		  <a id = "logout" href = "index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
 	  </div>
 	  <!-- End Menu -->
 
@@ -155,6 +155,7 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script src="js/odontoprev.js"></script>
+    <script src="app/coordenador.js"></script>
 
 	<script type="text/javascript">
 
@@ -176,17 +177,17 @@
 
 		function setarDados()
 		{
-			var dados = ob.getDadosUsuarios();
-
-			var dadosTratados = JSON.parse(dados);
-
-			window.localStorage.setItem('DadosUsuario', dados);
-
-			document.getElementById('nomeCorretor').innerHTML = "" + dadosTratados.nome;
-			document.getElementById('nomeCorretora').innerHTML = "" + dadosTratados.nomeEmpresa;
-			document.getElementById('nomeCorretorMenu').innerHTML = "" + dadosTratados.nome;
-			document.getElementById('nomeCorretoraMenu').innerHTML = "" + dadosTratados.nomeEmpresa;
-			
+			//var dados = ob.getDadosUsuarios();
+            //
+			//var dadosTratados = JSON.parse(dados);
+            //
+			//window.localStorage.setItem('DadosUsuario', dados);
+            //
+			//document.getElementById('nomeCorretor').innerHTML = "" + dadosTratados.nome;
+			//document.getElementById('nomeCorretora').innerHTML = "" + dadosTratados.nomeEmpresa;
+			//document.getElementById('nomeCorretorMenu').innerHTML = "" + dadosTratados.nome;
+			//document.getElementById('nomeCorretoraMenu').innerHTML = "" + dadosTratados.nomeEmpresa;
+			//
 			//document.getElementsByClassName('.nomeCorretor').innerHTML = "" + dadosTratados.nome;
 		
 		}

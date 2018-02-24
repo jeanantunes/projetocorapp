@@ -65,12 +65,6 @@ public class CustomWebViewClient extends WebViewClient {
     @SuppressLint("JavascriptInterface")
     private boolean handleUri(WebView view, String uri) throws ClassNotFoundException
     {
-//        String host = uri.getHost();
-//        String scheme = uri.getScheme();
-
-//        Log.i("BAGO", "host =" + host);
-//        Log.i("BAGO", "scheme =" + scheme);
-
         Log.d("MeuLog", "scheme =" + uri);
 
         String arquivo = uri.replace("file:///android_asset/", "");
@@ -107,9 +101,9 @@ public class CustomWebViewClient extends WebViewClient {
 
         view.addJavascriptInterface(classeInstanciada, "ob");
 
-        SairDaConta deslogar = new SairDaConta(context);
+        SairDaConta logout = new SairDaConta(context);
 
-        view.addJavascriptInterface(deslogar, "SairDaConta");
+        view.addJavascriptInterface(logout, "logout");
 
         Log.d("MeuLog", "Classe instanciada");
 

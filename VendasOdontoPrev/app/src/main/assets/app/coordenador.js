@@ -4,6 +4,12 @@ var compName = "";
 
 $(document).ready(function () {
     setPlanos();
+    carregarDadosUsuario();
+
+    $("#logout").click(function () {
+        logout.removerRegistroLogin();
+    });
+
 });
 
 
@@ -81,4 +87,16 @@ function get(localName, obj) {
         return null;
 
     return JSON.parse(o);
+}
+
+function carregarDadosUsuario()
+{
+    var carregarDados = get("dadosUsuario");
+    console.log("teste");
+    $("#nomeCorretorMenu").html(carregarDados.nome);
+    $("#nomeCorretoraMenu").html(carregarDados.nomeEmpresa);
+    $("#nomeCorretor").html(carregarDados.nome);
+    $("#nomeCorretora").html(carregarDados.nomeEmpresa);
+    $("#emailCorretor").html(carregarDados.email);
+    $("#numeroCorretor").html(carregarDados.telefone);
 }
