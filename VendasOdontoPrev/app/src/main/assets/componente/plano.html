@@ -1,14 +1,14 @@
-﻿<div class="row div-excluir">
+﻿<div class="row div-excluir" data-id="{CDPLANO}">
     <div class="imgBtnExcluir">
-        <img src="img/btn-excluir.png" class="btnExcluir" alt="" onclick="ExcluirPlano({CDPLANO})">
+        <img src="img/btn-excluir.png" class="btnExcluir" alt="" onclick="excluirPlano($(this))" data-id="{CDPLANO-BT}">
     </div>
     <div class="col-md-12 boxDadosProposta">
         <div class="col-md-6 text-left">
-            <label class="labelFormPag colorSlick3">{NOME}</label>
+            <label class="labelFormPag {CSS}">{NOME}</label>
             <label class="labelTipo">{DESC}</label>
         </div>
         <div class="col-md-6 text-right">
-            <label class="formPagVal colorSlick3 font-moeda">R$ {VALOR},<span class="font-cent">{CENTAVO}</span></label>
+            <label class="formPagVal {CSSVALOR} font-moeda">R$ {VALOR},<span class="font-cent">{CENTAVO}</span></label>
         </div>
     </div>
 </div>
