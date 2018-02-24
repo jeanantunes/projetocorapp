@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
     buscarPlanosSelecionados();
+    carregarProposta();
 });
 
 function buscarPlanosSelecionados() {
@@ -81,13 +82,13 @@ function verificarInputs() {
     return true;
 }
 
-
 function callSerasa(callback, cnpj) {
     //swal("Aguarde!", "Estamos buscando seus dados.");
     swal({
         title: "Aguarde",
         text: 'Estamos procurando seus dados',
         content: "input",
+        imageUrl: "img/load.gif",
         showCancelButton: false,
         showConfirmButton: false,
         icon: "info",
@@ -148,54 +149,53 @@ function salvarRascunho() {
         return;
     }
 
-     if ($("#telefone").val() == "") {
+    if ($("#telefone").val() == "") {
         swal("Ops!", "Preencha o telefone", "error");
         return;
     }
 
     if ($("#celular").val() == "") {
-        swal("Ops!", "Preencha o telefone", "error");
+        swal("Ops!", "Preencha o celular", "error");
         return;
     }
 
-
     if ($("#email").val() == "") {
-        swal("Ops!", "Preencha o telefone", "error");
+        swal("Ops!", "Preencha o email", "error");
         return;
     }
 
     if ($("#cep").val() == "") {
-        swal("Ops!", "Preencha o telefone", "error");
+        swal("Ops!", "Preencha o cep", "error");
         return;
     }
 
     if ($("#rua").val() == "") {
-        swal("Ops!", "Preencha o telefone", "error");
+        swal("Ops!", "Preencha o endereço", "error");
         return;
     }
 
     if ($("#numeroEndereco").val() == "") {
-        swal("Ops!", "Preencha o telefone", "error");
+        swal("Ops!", "Preencha o número do endereço", "error");
         return;
     }
 
     if ($("#complemento").val() == "") {
-        swal("Ops!", "Preencha o telefone", "error");
+        swal("Ops!", "Preencha o complemento", "error");
         return;
     }
 
     if ($("#bairro").val() == "") {
-        swal("Ops!", "Preencha o telefone", "error");
+        swal("Ops!", "Preencha o bairro", "error");
         return;
     }
 
     if ($("#cidade").val() == "") {
-        swal("Ops!", "Preencha o telefone", "error");
+        swal("Ops!", "Preencha o cidade", "error");
         return;
     }
 
     if ($("#estado").val() == "") {
-        swal("Ops!", "Preencha o telefone", "error");
+        swal("Ops!", "Preencha o estado", "error");
         return;
     }
 
@@ -219,23 +219,62 @@ function salvarRascunho() {
     proposta.enderecoEmpresa.complemento = $("#complemento").val();
     proposta.enderecoEmpresa.bairro = $("#bairro").val();
     proposta.enderecoEmpresa.cidade = $("#cidade").val();
-    proposta.enderecoEmpresa.estado = $("#estado").val();
+    proposta.enderecoEmpresa.estado = $("#uf").val();
 
 
     var empresas = get("empresas");
 
     if (empresas == null) {
-        empresas = getRepository("proposta");
+        empresas = [];
+        empresas.push(proposta);
+    }
+    else {
+        var propostas = empresas.filter(function (x) { return x.cnpj != proposta.cnpj });
+        empresas = []; //limpar
+
+        if (propostas.length != 0)
+            empresas.push(propostas);
+
+        empresas.push(proposta);
     }
 
-    empresas.push(proposta);
 
-    put("empresas", empresas);
 
-    swal("Feito!", "Sua proposta foi salva", "success");
+    put("empresas", JSON.stringify(empresas));
+    put("proposta", JSON.stringify(proposta));
+
+    swal("Feito!", "Sua proposta foi Salva", "success");
 
     //window.location = "venda_pme_beneficiarios.html";
 
     //href="venda_pme_beneficiarios.html" 
 
+}
+
+function carregarProposta() {
+    var proposta = get("proposta");
+    $("#cnpjEmpresa").val(proposta.cnpj);
+    $("#razao-social").val(proposta.razaoSocial);
+    $("#inscricao-estadual").val(proposta.incEstadual);
+    $("#ramo-atividade").val(proposta.ramoAtividade);
+    $("#nome-fantasia").val(proposta.nomeFantasia);
+    $("#representante-legal").val(proposta.representanteLegal);
+
+     if (proposta.contatoEmpresa) {
+         $("#squaredOne").attr("checked", true);
+     }
+     else {
+         $("#squaredOne").attr("checked", false);
+     }
+
+     $("#telefone").val(proposta.telefone);
+     $("#celular").val(proposta.celular);
+     $("#email").val(proposta.email);
+     $("#cep").val(proposta.enderecoEmpresa.cep);
+     $("#rua").val(proposta.enderecoEmpresa.endereco);
+     $("#numeroEndereco").val(proposta.enderecoEmpresa.numero);
+     $("#complemento").val(proposta.enderecoEmpresa.complemento);
+     $("#bairro").val(proposta.enderecoEmpresa.bairro);
+     $("#cidade").val(proposta.enderecoEmpresa.cidade);
+     $("#uf").val(proposta.enderecoEmpresa.estado);
 }
