@@ -1,5 +1,6 @@
 ﻿var jsonName = "";
 var pdata = "";
+var compName = "";
 
 $(document).ready(function () {
     setPlanos();
@@ -15,7 +16,7 @@ function setPlanos() {
     plano.valor = "37";
     plano.centavo = "82";
     plano.desc = "Modalidade Livre Adesão";
-
+    plano.css = "colorSlick3";
     planos.push(plano);
 
     plano = getRepository("plano");
@@ -24,16 +25,29 @@ function setPlanos() {
     plano.valor = "14";
     plano.centavo = "98";
     plano.desc = "Modalidade TODO";
+    plano.css = "colorSlick2";
 
     planos.push(plano);
 
     put("planos", JSON.stringify(planos));
 }
 
-function getComponent(compName) {
-    $.get("componente/" + compName + ".html", function (data) {
-        return data;
+function getComponent(pCompName) {
+    compName = pCompName;
+
+    $.ajax({
+        url: "componente/" + compName + ".html",
+        type: "get",
+        async: false,
+        success: function (result) {
+            pdata = result;
+        },
+        error: function () {
+
+        }
     });
+
+    return pdata;
 }
 
 function getRepository(pJsonName) {
@@ -61,5 +75,10 @@ function put(localName, obj)
 }
 
 function get(localName, obj) {
-    return JSON.parse(localStorage.getItem(localName));
+    var o = localStorage.getItem(localName);
+
+    if (o == null)
+        return null;
+
+    return JSON.parse(o);
 }

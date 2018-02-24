@@ -11,6 +11,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -67,12 +68,12 @@
                 </div>
             </div>
 
-            <div id="planos">
+            <div id="planos" style="margin-bottom:20px;">
                
             </div>
 
             <div class="text-center">
-                <a href="venda_index_pme.html"><label for="senha" class="linkOdontAddPlanos colorSlick3">+ ADICIONAR MAIS PLANOS</label></a>
+                <a href="venda_pme_addPlano.html"><label for="senha" class="linkOdontAddPlanos colorSlick3">+ ADICIONAR MAIS PLANOS</label></a>
             </div>
 
             <form id="formulario-proposta" name="dadosProposta">
@@ -90,51 +91,51 @@
                         <label class="label-razao-social labelOdontBlur">Razão social</label>
                     </div>
                     <div>
-                        <input type="text" class="razao-social inputLabelBlur" id="razao-social" name="razaoSocial">
+                        <input type="text" disabled class="razao-social inputLabelBlur" id="razao-social" name="razaoSocial">
                     </div>
                     <div>
                         <label class="label-nome-fantasia labelOdontBlur">Nome fantasia</label>
                     </div>
                     <div>
-                        <input type="text" class="nome-fantasia inputLabelBlur" id="nome-fantasia" name="nomeFantasia">
+                        <input type="text" disabled class="nome-fantasia inputLabelBlur" id="nome-fantasia" name="nomeFantasia">
                     </div>
                     <div>
                         <label class="label-ramo-atividade labelOdontBlur">Ramo de atividade</label>
                     </div>
                     <div>
-                        <input type="text" class="ramo-atividade inputLabelBlur" id="ramo-atividade" name="ramoAtividade">
+                        <input type="text" disabled class="ramo-atividade inputLabelBlur" id="ramo-atividade" name="ramoAtividade">
                     </div>
                     <div>
                         <label class="label-inscricao-estadual labelOdontBlur">Inscrição estadual</label>
                     </div>
                     <div>
-                        <input type="text" class="inscricao-estadual inputLabelBlur" id="inscricao-estadual" maxlength="14" name="inscricaoEstadual">
+                        <input type="text" disabled class="inscricao-estadual inputLabelBlur" id="inscricao-estadual" maxlength="14" name="inscricaoEstadual">
                     </div>
                     <div>
                         <label class="label-representante-legal labelOdontBlur">Representante legal</label>
                     </div>
                     <div>
-                        <input type="text" class="representante-legal inputLabelBlur" id="representante-legal" name="representanteLegal">
+                        <input type="text" disabled class="representante-legal inputLabelBlur" id="representante-legal" name="representanteLegal">
                     </div>
                     <div>
                         <label class="label-cpf labelOdontBlur">CPF</label>
                     </div>
                     <div>
-                        <input type="text" class="cpf inputLabelBlur" id="cpf-representante" name="cpfRepresentante">
+                        <input type="text" disabled class="cpf inputLabelBlur" id="cpf-representante" name="cpfRepresentante">
                     </div>
                     <div>
                         <label class="label-telefone labelOdontBlur">Telefone</label>
                         <img src="img/editar.png" width="20px" height="20px" class="edit" alt="Editar">
                     </div>
                     <div>
-                        <input type="text" class="telefone inputLabelBlur" name="telefone">
+                        <input type="text" class="telefone inputLabelBlur" id="telefone" name="telefone">
                     </div>
                     <div>
                         <label class="label-celular labelOdontBlur">Celular</label>
                         <img src="img/editar.png" width="20px" height="20px" class="edit" alt="Editar">
                     </div>
                     <div>
-                        <input type="text" class="celular inputLabelBlur" name="celular">
+                        <input type="text" class="celular inputLabelBlur"  id="celular" name="celular">
                     </div>
                     <div>
                         <label class="label-email labelOdontBlur">E-mail</label>
@@ -179,14 +180,14 @@
                         <img src="img/editar.png" width="20px" height="20px" class="edit" alt="Editar">
                     </div>
                     <div>
-                        <input type="number" class="numero inputLabelBlur" name="numeroEndereco">
+                        <input type="number" class="numero inputLabelBlur" id="numeroEndereco" name="numeroEndereco">
                     </div>
                     <div>
                         <label class="label-complemento labelOdontBlur">Complemento</label>
                         <img src="img/editar.png" width="20px" height="20px" class="edit" alt="Editar">
                     </div>
                     <div>
-                        <input type="text" class="complemento inputLabelBlur" name="complemento">
+                        <input type="text" class="complemento inputLabelBlur" name="complemento" id="complemento">
                     </div>
                     <div>
                         <label class="label-bairro labelOdontBlur">Bairro</label>
@@ -220,7 +221,7 @@
             </form>
             <div class="row">
                 <div class="col-md-12 btnPadBtm">
-                    <button class="btn btn-lg btn-block btnOdont" id="" role="button" disabled>SALVAR</button>
+                    <button class="btn btn-lg btn-block btnOdont" id="#adicionar-beneficiario" role="button" onclick="validarProposta()">ADICIONAR BENEFICIÁRIOS</button>
                 </div>
             </div>
         </div>
@@ -241,7 +242,14 @@
 
         <div class="row">
             <div class="col-md-12 btnPadBtm">
-                <button class="btn btn-lg btn-block btnOdont" disabled id="#adicionar-beneficiario" role="button" onclick="validarProposta()">ADICIONAR BENEFICIÁRIOS</button>
+                <button class="btn btn-lg btn-block btnOdont" id="" role="button" onclick="salvarRascunho()">SALVAR E CONTINUAR DEPOIS</button>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12 btnPadBtm">
+                <button class="btn btn-lg btn-block btnOdont" style="background:#7ad635" id="finalizar" role="button" onclick="validarProposta()">FINALIZAR VENDA</button>
             </div>
         </div>
     </div>
@@ -253,6 +261,7 @@
     <script src="js/odontoprev.js"></script>
     <script src="js/jquery.3.2.1.js"></script>
     <script src="js/jquery.mask.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
     <script src="app/coordenador.js"></script>
     <script src="app/pmeCadastroController.js"></script>

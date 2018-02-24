@@ -4,11 +4,12 @@
 
 function iniciarProposta(cdPlano) {
 
-    var proposta = JSON.parse(getRepository("proposta"));
+    var proposta = getRepository("proposta");
 
-    plano = JSON.parse(getRepository("plano"));
+    plano = getRepository("plano");
     plano.cdPlano = cdPlano;
 
+    proposta.planos = [];
     proposta.planos.push(plano);
 
     put("proposta", JSON.stringify(proposta));
