@@ -2,6 +2,7 @@ package models;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -73,6 +74,45 @@ public class DataBase extends SQLiteOpenHelper {
 
         Log.d("MeuLog", "Salvo!!!");
         db.close();
+    }
+
+    public void addInsert(String tabela, ContentValues values) throws Exception
+    {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.insert(tabela, null, values);
+
+        Log.d("MeuLog", "Salvo!!!");
+        db.close();
+    }
+
+    public Cursor buscarTable(String tabela,String nomcoluna, String id){
+        try{
+            Plano plano = new Plano();
+
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("SELECT * ");
+            sql.append("FROM " + tabela + " ");
+            sql.append("WHERE "+ nomcoluna + " = " + id);
+
+            SQLiteDatabase dbs = getReadableDatabase();
+
+            Cursor resultado = dbs.rawQuery(sql.toString(), null);
+
+            if (resultado.getCount() > 0) {
+
+                Log.i("MeuLog", "Executou Buscar "+ tabela + " id = "+ id);
+                return resultado;
+            } else {
+                Log.i("MeuLog", "Nenhum dado");
+                return null;
+            }
+
+        }catch (Exception e){
+            return null;
+        }
     }
 
     public void addEndereco(Endereco endereco) {

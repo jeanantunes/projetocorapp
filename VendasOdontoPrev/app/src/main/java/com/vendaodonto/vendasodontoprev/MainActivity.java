@@ -16,13 +16,17 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import controllers.cadastro_planoController;
 import models.Cliente;
 import models.DataBase;
 import models.ForcaVenda;
+import models.Plano;
 import models.tableCorretora;
 import models.tableEndereco;
 import models.tableForcaVendas;
 import models.tableLogin;
+import models.tablePlanos;
 import models.tableStatusForcaVendas;
 import utils.CustomWebView;
 import utils.CustomWebViewClient;
