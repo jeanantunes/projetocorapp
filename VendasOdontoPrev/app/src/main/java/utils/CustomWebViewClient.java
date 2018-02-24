@@ -10,6 +10,8 @@ import android.webkit.WebViewClient;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import controllers.SairDaConta;
+
 /**
  * Created by freejack on 06/01/2018.
  */
@@ -22,7 +24,6 @@ public class CustomWebViewClient extends WebViewClient {
 
     public CustomWebViewClient(Context ctx)
     {
-
         this.context = ctx;
         // do nothing
     }
@@ -70,13 +71,12 @@ public class CustomWebViewClient extends WebViewClient {
 //        Log.i("BAGO", "host =" + host);
 //        Log.i("BAGO", "scheme =" + scheme);
 
-          Log.d("MeuLog", "scheme =" + uri);
+        Log.d("MeuLog", "scheme =" + uri);
 
         String arquivo = uri.replace("file:///android_asset/", "");
         arquivo = arquivo.replace(".html", "");
 
         Object classeInstanciada = null;
-
 
         //Constructor c = Class.forName("Foo").getConstructor(String.class, Integer.TYPE);
         //Foo foo = (Foo) c.newInstance("example", 34);
@@ -105,9 +105,11 @@ public class CustomWebViewClient extends WebViewClient {
 
         Log.d("MeuLog", "Arquivo: " + arquivo);
 
-
-
         view.addJavascriptInterface(classeInstanciada, "ob");
+
+        SairDaConta deslogar = new SairDaConta(context);
+
+        view.addJavascriptInterface(deslogar, "SairDaConta");
 
         Log.d("MeuLog", "Classe instanciada");
 
