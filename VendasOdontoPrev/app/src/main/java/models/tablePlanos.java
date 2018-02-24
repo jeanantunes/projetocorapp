@@ -34,6 +34,8 @@ public class tablePlanos {
                 "[Titulo] varchar(50) COLLATE NOCASE, [Tipo] char(10) COLLATE NOCASE, [ValorMensal] numeric, [ValorAnual] numeric, " +
                 "[Ativo] bit, PRIMARY KEY ([IdPlanos]) )";
 
+        //String tablePlanos =
+
         return tablePlanos;
     }
 

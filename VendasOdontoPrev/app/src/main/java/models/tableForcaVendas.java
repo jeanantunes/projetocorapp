@@ -51,7 +51,6 @@ public class tableForcaVendas
             values.put("Sexo", "M");
             values.put("DataNascimento", "27/04/1998");
 
-
             dbs.insert("ForcaVendas", null, values);
 
             Log.d("MeuLog", "ForcaVendas inserida!");

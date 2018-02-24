@@ -15,8 +15,8 @@
   <body>
 <!-- Bloco 1 -->
   <div class="container-fluid">
-      <div class="row loadingBack hide" id="divLoading">
-          <div class="col-md-12 loading">
+      <div class="row loadingBack hide" id="loadingLogin">
+          <div class="col-md-12">
             <img src="img/loading.gif" class="" id="" align="center">
           </div>
         </div>
@@ -50,10 +50,7 @@
             </div>
             <div>
               <input type="password" class="password inputLabelBlur" id="password" name="password" maxlength="12">
-            </div>
-
-            <div>
-              <label class="hide" id="loginIncorreto">CPF ou senha incorreta.</label>
+              <label class = "hide erro-login" id="erroLogin"></label>
             </div>
 
           </div>
@@ -96,10 +93,23 @@
             data: "{\n    \"login\": \"" + login + "\",\n    \"senha\": \"" + password +"\"\n}",
             success: function (resp) {
               callback(resp)
+
             }, 
-            error:function (resp){
+            error:function (xhr){
               //console.log(JSON.stringify(resp.statusText));
-              ob.imprimirAlgo(JSON.stringify(resp.statusText));
+              //ob.imprimirAlgo(JSON.stringify(resp.statusText));
+              console.log(xhr.status);
+              $("#loadingLogin").addClass('hide');
+              
+              if(xhr.status == 403)
+              {
+                $("#erroLogin").removeClass('hide');
+                $("#erroLogin").html("CPF ou senha inválida.");
+              } else if (xhr.status == 0)
+              {
+                $("#erroLogin").removeClass('hide');
+                $("#erroLogin").html("Sem conexâo, tente novamente.");
+              }
             }
           });
         }
@@ -119,13 +129,13 @@
               "grant_type": "client_credentials"
             },
             success: function (resp) {
+              $("#loadingLogin").addClass('hide');
               callback(resp)
             },
             error:function (resp){
               //console.log(JSON.stringify(resp.statusText));
-              $("#loginIncorreto").removeClass('hide')
 
-              ob.imprimirAlgo(JSON.stringify(resp.statusText));
+              //ob.imprimirAlgo(JSON.stringify(resp.statusText));
             }
           });
         }
@@ -140,11 +150,19 @@
               "Cache-Control": "no-cache"
             },
             success: function (resp) {
+              $("#loadingLogin").addClass('hide');
               callback(resp)
             },  
-            error:function (resp){
+            error:function (xhr){
+              $("#loadingLogin").addClass('hide');
+              if (xhr.status == 0)
+              {
+                $("#erroLogin").removeClass('hide');
+                $("#erroLogin").html("Sem conexâo, tente novamente.");
+              }
               //console.log(JSON.stringify(resp.statusText));
-              ob.imprimirAlgo(JSON.stringify(resp.statusText));
+              //ob.imprimirAlgo(JSON.stringify(resp.statusText));
+
             }
           });
         }       
@@ -188,10 +206,23 @@
 
       function logarETrazerDadosUsuario()
       {
+
+        $("#loadingLogin").removeClass('hide');
+
+        var online = navigator.onLine;
+        if(!online)
+        {
+          $("#loadingLogin").addClass('hide');
+          console.log("teste");
+          $("#erroLogin").removeClass('hide');
+          $("#erroLogin").html("Sem conexâo, tente novamente.");
+          return;
+        }
         var cpfTratado = $("#cpf").val().replace(/\D/g, '');
 
         console.log(cpfTratado);
 
+        
         $("divLoading").removeClass('hide');
 
           callLogin(function (dataLogin)
@@ -218,12 +249,13 @@
 
               window.localStorage.setItem('DadosUsuarios', dataDadosUsuario);
 
-              //window.location = "logado.html";
+              window.location = "logado.html";
               
             }, cpfTratado);
 
           }, cpfTratado, $("#password").val());
-      }
+        }
+      
     
     </script>
 
