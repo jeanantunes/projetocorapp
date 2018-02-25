@@ -49,6 +49,19 @@ function callLogin(callback, login, password) {
     });
 }
 
+$("#cpf").blur(function () {
+
+    if (!TestaCPF($("#cpf").val()))
+    {
+        $("#erroCpf").removeClass('hide');
+        $("#erroCpf").html("CPF inválido.");
+
+        return;
+    }
+
+    $("#erroCpf").addClass('hide');
+});
+
 function callDadosUsuarios(callback, cpf) {
 
     $.ajax({
