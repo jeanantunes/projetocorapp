@@ -5,6 +5,11 @@ $(document).ready(function () {
     carregarProposta();
 });
 
+function addBenef() {
+    salvarRascunhoMemoria();
+    window.location = "venda_pme_beneficiarios_lista.html";
+}
+
 function buscarPlanosSelecionados() {
 
     var proposta = get("proposta");
@@ -49,7 +54,6 @@ function excluirPlano(obj) {
     container.remove();
 }
 
-
 // Mantém os inputs em cache:
 var inputs = $('input');
 
@@ -83,6 +87,10 @@ function verificarInputs() {
 }
 
 function callSerasa(callback, cnpj) {
+
+    if (cnpj.length < 14)
+        return;
+
     //swal("Aguarde!", "Estamos buscando seus dados.");
     swal({
         title: "Aguarde",
@@ -199,8 +207,17 @@ function salvarRascunho() {
         return;
     }
 
+    salvarRascunhoMemoria();
 
+    swal("Feito!", "Sua proposta foi Salva", "success");
 
+    //window.location = "venda_pme_beneficiarios.html";
+
+    //href="venda_pme_beneficiarios.html" 
+
+}
+
+function salvarRascunhoMemoria() {
     var proposta = get("proposta");
     proposta.status = "DIGITANDO";
     proposta.cnpj = $("#cnpjEmpresa").val();
@@ -242,13 +259,6 @@ function salvarRascunho() {
 
     put("empresas", JSON.stringify(empresas));
     put("proposta", JSON.stringify(proposta));
-
-    swal("Feito!", "Sua proposta foi Salva", "success");
-
-    //window.location = "venda_pme_beneficiarios.html";
-
-    //href="venda_pme_beneficiarios.html" 
-
 }
 
 function carregarProposta() {
