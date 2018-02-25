@@ -1,17 +1,16 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Language" content="pt-br">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
-
     <title>Odontoprev</title>
-
     <link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
-  </head>
+    <link href="css/sweetalert.css" rel="stylesheet" />
+</head>
   <body>
 <!-- Bloco 1 -->
   <div class="container-fluid">
@@ -77,188 +76,8 @@
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
     <script src="app/coordenador.js"></script>
-
-    <script type="text/javascript">
-
-        function callLogin(callback, login, password) {
-
-          $.ajax({
-            async: true,
-            url: "https://api-it1.odontoprev.com.br:8243/dcss/login/1.0/",
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Cache-Control": "no-cache"             
-            },
-            processData: false,
-            data: "{\n    \"login\": \"" + login + "\",\n    \"senha\": \"" + password +"\"\n}",
-            success: function (resp) {
-              callback(resp)
-
-            }, 
-            error:function (xhr){
-              //console.log(JSON.stringify(resp.statusText));
-              //ob.imprimirAlgo(JSON.stringify(resp.statusText));
-              console.log(xhr.status);
-              $("#loadingLogin").addClass('hide');
-              
-              if(xhr.status == 403)
-              {
-                $("#erroLogin").removeClass('hide');
-                $("#erroLogin").html("CPF ou senha inválida.");
-              } else if (xhr.status == 0)
-              {
-                $("#erroLogin").removeClass('hide');
-                $("#erroLogin").html("Sem conexâo, tente novamente.");
-              }
-            }
-          });
-        }
-
-        function callToken(callback) {
-
-          $.ajax({
-            async: true,
-            url: "https://api.odontoprev.com.br:8243/token/",
-            method: "POST",
-            headers: {
-              "Authorization": "Basic Y3hHZXBoTzFkcERDd3U0VHlfRExWTWxXQ0R3YTp0WlJtSUN1eUJWajJZRVczRjdaNXdWM2E0YVlh",
-              "Cache-Control": "no-cache",
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-            data: {
-              "grant_type": "client_credentials"
-            },
-            success: function (resp) {
-              $("#loadingLogin").addClass('hide');
-              callback(resp)
-            },
-            error:function (resp){
-              //console.log(JSON.stringify(resp.statusText));
-
-              //ob.imprimirAlgo(JSON.stringify(resp.statusText));
-            }
-          });
-        }
-
-        function callDadosUsuarios(callback, cpf) {
-
-          $.ajax({
-            async: true,
-            url: "https://api-it1.odontoprev.com.br:8243/dcss/usuario/1.0/cpf/" + cpf,
-            method: "GET",
-            headers: {
-              "Cache-Control": "no-cache"
-            },
-            success: function (resp) {
-              $("#loadingLogin").addClass('hide');
-              callback(resp)
-            },  
-            error:function (xhr){
-              $("#loadingLogin").addClass('hide');
-              if (xhr.status == 0)
-              {
-                $("#erroLogin").removeClass('hide');
-                $("#erroLogin").html("Sem conexâo, tente novamente.");
-              }
-              //console.log(JSON.stringify(resp.statusText));
-              //ob.imprimirAlgo(JSON.stringify(resp.statusText));
-
-            }
-          });
-        }       
-
-			// Mantém os inputs em cache:
-			var inputs = $('input');
-
-			// Chama a função de verificação quando as entradas forem modificadas
-			// Usei o 'keyup', mas 'change' ou 'keydown' são também eventos úteis aqui
-			inputs.on('keyup', verificarInputs);
-
-			function verificarInputs() 
-			{
-        var preenchidos = true;  // assumir que estão preenchidos
-        
-    		inputs.each(function () {
-
-        // verificar um a um e passar a false se algum falhar
-				// no lugar do if pode-se usar alguma função de validação, regex ou outros
-				  var id = this.id;
-          if (!this.value || !TestaCPF($("#cpf").val() ) || $("#password").val().length < 8){//|| !TestaCPF($("#cpf").val()) || $("#password").val().length < 8){// || $("#password").val().length < 8){//|| !TestaCPF($("#cpf").val()) || $("#password").val().length < 8 ) {
-						  preenchidos = false;
-						  $('button').prop('disabled', preenchidos);
-          		// parar o loop, evitando que mais inputs sejam verificados sem necessidade
-          		return false;
-				  }
-    		});
-    		// Habilite, ou não, o <button>, dependendo da variável:
-				$('button').prop('disabled', !preenchidos); //,
-				return true; 
-      }
-      
-      
-      $("#continuarLogin").click(function(){
-
-        logarETrazerDadosUsuario();
-
-        //window.location = "logado.html";
-
-      });
-
-      function logarETrazerDadosUsuario()
-      {
-
-        $("#loadingLogin").removeClass('hide');
-
-        var online = navigator.onLine;
-        if(!online)
-        {
-          $("#loadingLogin").addClass('hide');
-          console.log("teste");
-          $("#erroLogin").removeClass('hide');
-          $("#erroLogin").html("Sem conexâo, tente novamente.");
-          return;
-        }
-        var cpfTratado = $("#cpf").val().replace(/\D/g, '');
-
-        console.log(cpfTratado);
-
-        
-        $("divLoading").removeClass('hide');
-
-          callLogin(function (dataLogin)
-          {
-
-            //ob.imprimirSucess();
-            //console.log(dataUsuarios);
-
-            //var teste = dataUsuarios.status;
-
-            //console.log(teste);
-
-            callDadosUsuarios(function(dataDadosUsuario)
-            {
-              //console.log(dataDadosUsuario);
-              console.log(JSON.stringify(dataDadosUsuario));
-              //ob.imprimirSucess();
-              //console.log(dataDadosUsuario);
-
-              //console.log(JSON.stringify(dataDadosUsuario));
-              //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
-              ob.salvarDadosUsuario(JSON.stringify(dataDadosUsuario));
-              //ob.salvarDadosUsuario();
-
-              put("dadosUsuario", JSON.stringify(dataDadosUsuario));
-
-              window.location = "logado.html";
-              
-            }, cpfTratado);
-
-          }, cpfTratado, $("#password").val());
-        }
-      
-    
-    </script>
+    <script charset="ISO-8859-1" src="app/loginController.js"></script>
+    <script charset="ISO-8859-1" src="js/sweetalert.min.js"></script>
 
   </body>
 </html>

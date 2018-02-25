@@ -11,7 +11,6 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/odontoprev.css" rel="stylesheet">
-    <link href="css/sweetalert.css" rel="stylesheet" />
 
 	<script type="text/javascript">
 
@@ -78,7 +77,6 @@
             <div class="boxLabInput">
                 <div>
                     <label class="label-cep labelOdontBlur">CEP</label>
-                    <label class="col-md-6 text-right"><span class=""><h5 id="labelCep"></h5></span></label>
                 </div>
                 <div>
                     <input type="text" class=" cep inputLabelBlur" id="cep">
@@ -131,15 +129,13 @@
 
 
 <!-- End Bloco 1 -->
-<button type="button" class="btnModal" data-backdrop="static" style="border:1px solid white; background-color: transparent;" id="btnModal" data-toggle="modal" data-target="#myModal" BotaoModal</button>
-<!-- Modal -->
+<button type="button" class="btnModal" id="btnModal" data-toggle="modal" data-target="#myModal"BotaoModal</button>
+<!-- Modal -->git pull
 <div class="modal fade" id="myModal" role="dialog">
 	<div class="modal-dialog modalConteiner">
-        <div class="imgBtnExcluir">
-			<img src="img/btn-excluir.png" class="btnExcluir" alt="">
-		</div>
 		<div class="modal-content">
 			<div class="modal-header-OdontMed">
+				<div class"row">
 				<div class="">
 					<span class="labelBoldModal"><h2 id="nomeDentista"></h2></span>
 				</div>
@@ -154,6 +150,7 @@
 		<div class="modal-body-OdontMed">
 			<div class="row">
 				<label class="labelBoldTitleModal">Especialidades</label>
+
 				<div class="text-center">
 					<label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista1"style="color:gray"></h5></p></label>
 					<!--<label><img src="img/Ortodontia.png" class="" alt=""><p>_</p></label>-->
@@ -185,7 +182,6 @@
 <script src="js/jquery.3.2.1.js"></script>
 <script src="js/jquery.mask.min.js"></script>
 <script src="js/odonto-Valida.js"></script>
-<script src="js/sweetalert.min.js"></script>
 <!--<script src="C:\Users\Treinamento6\Downloads\Jquery.js"></script>-->
 
 
@@ -194,11 +190,13 @@
 
 
 
-      //  function modal(){
+        function modal(){
             //var modal = document.getElementById('myModal');
             //modal.style.display = "block";
-     //       $('#loginmodal').modal('show')
-     // }
+            $('#loginmodal').modal('show')
+      }
+
+
 
 		function especialidades()
 		{
@@ -206,16 +204,16 @@
 			{
             	callEspecialidades(function (dataEspecialidades)
                 {
-                    //console.log(dataEspecialidades);
+                    console.log(dataEspecialidades);
 
                     var sel = document.getElementById('especs');
 
                     for (var i = 0; i < dataEspecialidades.length; i++) {
 
                         var opt = document.createElement('option');
-                        //console.log(dataEspecialidades[i].descricao);
+                        console.log(dataEspecialidades[i].descricao);
                         opt.setAttribute('value', dataEspecialidades[i].codigo);
-                        //console.log(dataEspecialidades[i].codigo);
+                        console.log(dataEspecialidades[i].codigo);
                         opt.appendChild(document.createTextNode(dataEspecialidades[i].descricao));
                         sel.appendChild(opt);
                     }
@@ -277,7 +275,7 @@
 
                 $("#btnModal").click();
              }
-                })(marker, i));
+        })(marker, i));
                 }
             }
 
@@ -303,26 +301,12 @@
                     "grant_type": "client_credentials"
                 },
                 success: function (resp) {
-                    swal.close();
                     callback(resp)
                 },
             });
         }
 
         function callCep(callback, token, cep) {
-
-            swal({
-                 title: "Aguarde",
-                 text: 'Estamos procurando seus dados',
-                  content: "input",
-                    showCancelButton: false,
-                 showConfirmButton: false,
-                    icon: "info",
-                    button: {
-                       text: "...",
-                       closeModal: false,
-                    },
-                })
 
             $.ajax({
                 async: true,
@@ -334,24 +318,12 @@
                     "Content-Type": "application/json"
                 },
                 success: function (resp) {
-                    document.getElementById('labelCep').style.display = 'none';
-                    swal.close();
                     callback(resp)
                 },
-
-                error:function(xhr){
-                    if(xhr.status == 500){
-                            swal.close();
-                            console.log("CEP INVALIDO");
-                            document.getElementById('labelCep').style.display = 'block';
-                            document.getElementById('labelCep').innerHTML="CEP não foi encontrado";
-                    }
-                }
             });
         }
 
         function callEspecialidades(callback, token) {
-
 
             $.ajax({
                 async: true,
@@ -363,7 +335,6 @@
                     "Content-Type": "application/json"
                 },
                 success: function (resp) {
-                    swal.close();
                     callback(resp)
                 },
             });
@@ -381,12 +352,14 @@
                     "Content-Type": "application/json"
                 },
                 success: function (resp) {
+
                     callback(resp)
                 },
             });
         }
 
         function callBairro(callback, token, uf, codigoCidade, codigoBeneficiario) {
+
 
             $.ajax({
                 async: true,
@@ -400,27 +373,15 @@
 
                 },
                 success: function (resp) {
+
                     callback(resp)
+
                 },
-                error: function (xhr){
-                }
             });
         }
 
         function callRedeCredenciada(callback, token, CodBeneficiario, uf, codigoEspecialidade, codigoMicroregiao, privian, codigoMarca, codigoBairro) {
 
-            swal({
-                 title: "Aguarde",
-                 text: 'Estamos procurando seus dados',
-                  content: "input",
-                    showCancelButton: false,
-                 showConfirmButton: false,
-                    icon: "info",
-                    button: {
-                       text: "...",
-                       closeModal: false,
-                    },
-                })
 
             $.ajax({
                 async: true,
@@ -434,15 +395,11 @@
                     "Authorization": "Bearer " + token,
                     "Cache-Control": "no-cache"
                 },
-
                 success: function (resp) {
-                    swal.close();
+
                     callback(resp)
 
                 },
-                error: function (xhr){
-                    swal("Erro!", "Rede credenciada não encontrada", "error");
-                }
             });
         }
 
@@ -493,9 +450,6 @@
                         var teste = removerAcentos(dataCep[0].cidade);
                         teste = teste.toUpperCase();
 
-                        
-
-
 
                         callCidade(function (dataCidade) {
                             var result = $.grep(dataCidade, function (e) { return e.nome == removerAcentos(dataCep[0].cidade).toUpperCase(); });
@@ -526,13 +480,13 @@
                                     codigoBairro = "";
                                 } 
 
-                                //console.log(codigoBairro);
-                                //console.log(result[0].codigoMicroregiao);
+                                console.log(codigoBairro);
+                                console.log(result[0].codigoMicroregiao);
 
 
                                 if (codigoBairro.length == 0) {
                                     callRedeCredenciada(function (dataRedeCredenciada) {
-                                        //console.log(dataRedeCredenciada);
+                                        console.log(dataRedeCredenciada);
                                         initMap(dataRedeCredenciada);
 
                                     }, dataToken.access_token, CodBeneficiario, dataCep[0].estado, codigoEspecialidade, result[0].codigoMicroregiao, privian, codigoMarca, "0");

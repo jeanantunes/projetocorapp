@@ -27,7 +27,7 @@
         typingTimer = setTimeout(doneTyping, doneTypingInterval);
         }
     });
-    function doneTyping() {
+    function doneTyping() {        
         validar();
     }
     function validar()
@@ -45,6 +45,21 @@
             $("#bairro").val("");
             $("#cidade").val("");
             $("#uf").val("");
+
+            swal({
+                title: "Aguarde",
+                text: 'Estamos procurando seus dados',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            })
+
             callToken(function (dataToken)
             {
                 callCep(function (dataCep) {
@@ -115,7 +130,11 @@
                 },
                 success: function (resp) {
                     callback(resp)
+                    swal.close();
                 },
+                error: function () {
+                    swal.close();
+                }
             });
         }
     
