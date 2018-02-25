@@ -53,3 +53,8 @@ function excluirBenef(obj) {
         $("#lista").html("Você ainda não possui beneficiários cadastrados");
     }
 }
+
+function adicionarBenef() {
+    localStorage.removeItem("beneficiario");
+    window.location.href = "venda_pme_beneficiarios.html";
+}

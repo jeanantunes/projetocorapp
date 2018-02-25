@@ -12,10 +12,10 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
     <link href="css/odontoprev-dependente.css" rel="stylesheet" />
-
+    <link href="css/sweetalert.css" rel="stylesheet" />
 </head>
 
-<body onload="onloadd()">
+<body>
     <!-- Menu -->
     <div class="closeNav hide" onclick="closeNav()"></div>
     <div id="mySidenav" class="sidenav">
@@ -34,6 +34,7 @@
                 </div>
             </div>
         </div>
+
         <a href="logado.html" class="linkMenu"><img src="img/menu-home.png" align="center">TELA INICIAL</a>
         <a href="venda_index_pf.html" class="linkMenu"><img src="img/menu-vender-pf.png" align="center">VENDER PESSOA FÍSICA</a>
         <a href="venda_index_pme.html" class="linkMenu colorActive"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
@@ -72,71 +73,11 @@
                 </div>
             </div>
 
-            <div style="display:none;">
-                <form id="formulario">
-                    <div class="row boxDependente" id="dependente1">
-                        <div>
-                            <label class="labelBlue" id="label-dependente">DEPENDENTE 1</label>
-                        </div>
-                        <div>
-                            <label class="label-nome-dependente labelOdontBlur">Nome do dependente</label>
-                        </div>
-                        <div>
-                            <input type="text" class=" nome-dependente inputLabelBlur" id="nome-dependente1">
-                        </div>
-                        <div>
-                            <label class="label-sexo labelOdontBlur">Sexo</label>
-                        </div>
-                        <div>
-                            <div class="radio">
-                                <input id="radio-1" name="radio1" type="radio" class="sexo">
-                                <label for="radio-1" class=" radio-inline radio-label label-sexo labelOdontBlur">Feminino</label>
-                            </div>
-                            <div class="radio">
-                                <input id="radio-2" name="radio1" type="radio" class="sexo">
-                                <label for="radio-2" class="radio-inline radio-label label-sexo labelOdontBlur">Masculino</label>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="label-nascimento labelOdontBlur">Data de nascimento</label>
-                        </div>
-                        <div>
-                            <input type="text" class="nascimento data inputLabelBlur" id="data-nascimento1">
-                        </div>
-                        <div>
-                            <label class="label-cpf labelOdontBlur">CPF</label>
-                        </div>
-                        <div>
-                            <input type="text" class=" cpf inputLabelBlur" id="cpf-dependente1">
-                        </div>
-                        <div>
-                            <label class="label-nome-mae labelOdontBlur">Nome da mãe</label>
-                        </div>
-                        <div>
-                            <input type="text" class=" nome-mae inputLabelBlur" id="nome-mae1">
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="label-parentesco labelOdontBlur">Grau de parentescodo títular</label>
-                            <select class="form-control parentesco selectListBlur" id="parentesco-dependente1">
-                                <option>Mãe</option>
-                                <option>Pai</option>
-                                <option>Filho</option>
-                                <option>Irmão</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
+            <div id="lista"></div>
 
-                <div class="row">
-                    <div class="col-md-12 btnPadBtmTop">
-                        <a href="" class="btn btn-lg btn-block btnOdont" id="" role="button">SALVAR</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="row">
-                 
+            <div class="row">
+                <div class="col-md-12 btnPadBtmTop">
+                    <button href="" class="btn btn-lg btn-block btnOdont" id="salvar" role="button" onclick="SalvarDependentes()">SALVAR</button>
                 </div>
             </div>
         </div>
@@ -151,7 +92,8 @@
     <script src="js/jquery.3.2.1.js"></script>
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
-    <script src="js/componenteFactory.js"></script>
-    <script src="js/odonto-pme-dependente.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="app/coordenador.js"></script>
+    <script src="app/pmeDependenteController.js"></script>
 </body>
 </html>
