@@ -11,63 +11,58 @@
     <link href="css/odontoprev.css" rel="stylesheet">
     <link href="css/sweetalert.css" rel="stylesheet" />
 </head>
-  <body>
-<!-- Bloco 1 -->
-  <div class="container-fluid">
-      <div class="row loadingBack hide" id="loadingLogin">
-          <div class="col-md-12">
-            <img src="img/loading.gif" class="" id="" align="center">
-          </div>
+<body>
+    <!-- Bloco 1 -->
+    <div class="container-fluid">
+        <div class="row loadingBack hide" id="loadingLogin">
+            <div class="col-md-12">
+                <img src="img/loading.gif" class="" id="" align="center">
+            </div>
         </div>
-    <div class="row">
-      <div class="col-md-12 boxHeader">
-        <div class="col-md-12 text-center imgLogoODPVHeader">
-          <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    BEM VINDO
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    ao sistema de venda odonto
+                </h2>
+                <form id="login">
+                    <div class="boxLabInput">
+                        <div>
+                            <label class="label-cpf labelOdontBlur">CPF</label>
+                        </div>
+                        <div>
+                            <input id="cpf" name="cpf" type="text" class="cpf inputLabelBlur">
+                        </div>
+                        <div>
+                            <label class="label-password labelOdontBlur">SENHA</label>
+                        </div>
+                        <div>
+                            <input type="password" class="password inputLabelBlur" id="password" name="password" maxlength="12">
+                            <label class="hide erro-login" id="erroLogin"></label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-lg btn-block btnOdont" disabled id="continuarLogin" role="button">CONTINUAR</button>
+                <!-- <div class="text-center">
+                  <a href=""><label for="senha" class="linkOdont">Esqueci minha senha</label></a>
+                </div> -->
+            </div>
+        </div>
     </div>
-
-    <div class="row">
-      <div class="col-md-12 odontBoxCenter">
-        <h1 class="titleOdont text-center">
-            BEM VINDO
-        </h1>
-        <h2 class="subTitleOdont text-center">
-            ao sistema de venda odonto
-        </h2>
-
-        <form id="login">
-          <div class="boxLabInput">
-            <div>
-              <label class="label-cpf labelOdontBlur">CPF</label>
-            </div>
-            <div>
-              <input id="cpf" name="cpf" type="text" class="cpf inputLabelBlur">
-            </div>
-            <div>
-              <label class="label-password labelOdontBlur">SENHA</label>
-            </div>
-            <div>
-              <input type="password" class="password inputLabelBlur" id="password" name="password" maxlength="12">
-              <label class = "hide erro-login" id="erroLogin"></label>
-            </div>
-
-          </div>
-        </form>
-
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">	 
-          <button class="btn btn-lg btn-block btnOdont" disabled id = "continuarLogin" role="button">CONTINUAR</button>
-            <!-- <div class="text-center">
-              <a href=""><label for="senha" class="linkOdont">Esqueci minha senha</label></a>
-            </div> -->
-        </div>
-      </div>
-    </div>
-<!-- End Bloco 1 -->
+    <!-- End Bloco 1 -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
@@ -78,6 +73,5 @@
     <script src="app/coordenador.js"></script>
     <script charset="ISO-8859-1" src="app/loginController.js"></script>
     <script charset="ISO-8859-1" src="js/sweetalert.min.js"></script>
-
-  </body>
+</body>
 </html>

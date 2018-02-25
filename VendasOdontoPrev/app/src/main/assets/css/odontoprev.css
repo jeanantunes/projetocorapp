@@ -1856,23 +1856,17 @@ input[type=checkbox] {
     top: 0;
 }
 
-.loadingBack{
-    z-index: 9999999;
+.loading{
+    text-align: center;
+    margin-top: 50%;
+    margin-bottom: 50%;
+ }
+
+ .loadingBack{
+    position: relative;
+    z-index: 9999;
     background-color: black;
     opacity: 0.5;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    text-align: center;
-    padding-top: 50%;
-    padding-bottom: 50%;
-}
-
- .erro-login
- {
-    font-family: Roboto-Light;
-    color: red;
  }
 /*********************************** End Dropdown ****************************************/
     

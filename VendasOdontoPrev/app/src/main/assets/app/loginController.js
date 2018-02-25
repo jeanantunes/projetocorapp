@@ -29,7 +29,7 @@ function callLogin(callback, login, password) {
         },
         error: function (xhr) {
 
-            
+
             //console.log(JSON.stringify(resp.statusText));
             //ob.imprimirAlgo(JSON.stringify(resp.statusText));
             console.log(xhr.status);
@@ -42,7 +42,7 @@ function callLogin(callback, login, password) {
             } else if (xhr.status == 0) {
                 swal("Ops!", "Você está sem conexão, tente novamente.", "error");
                 $("#erroLogin").removeClass('hide');
-                $("#erroLogin").html("Você está sem conexão, tente novamente.");
+                $("#erroLogin").html("Erro na conexão, tente novamente.");
                 //swal.close();
             }
         }, timeout: 15000
@@ -120,7 +120,7 @@ function logarETrazerDadosUsuario() {
         //$("#loadingLogin").addClass('hide');
         console.log("teste");
         $("#erroLogin").removeClass('hide');
-        $("#erroLogin").html("Sem conexão, tente novamente.");
+        $("#erroLogin").html("Erro na conexão, tente novamente.");
         return;
     }
     var cpfTratado = $("#cpf").val().replace(/\D/g, '');

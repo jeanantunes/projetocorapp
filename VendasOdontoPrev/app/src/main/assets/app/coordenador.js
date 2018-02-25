@@ -9,8 +9,6 @@ $(document).ready(function () {
     $("#logout").click(function () {
         logout.removerRegistroLogin();
     });
-
-    
 });
 
 
@@ -90,8 +88,7 @@ function get(localName, obj) {
     return JSON.parse(o);
 }
 
-function carregarDadosUsuario()
-{
+function carregarDadosUsuario() {
     var carregarDados = get("dadosUsuario");
     console.log("teste");
     $("#nomeCorretorMenu").html(carregarDados.nome);

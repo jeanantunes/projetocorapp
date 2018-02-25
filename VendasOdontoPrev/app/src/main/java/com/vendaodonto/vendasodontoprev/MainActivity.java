@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     private final int GALERIA_IMAGENS = 1;
 
-
     public Context getCtx() {
         return ctx;
     }

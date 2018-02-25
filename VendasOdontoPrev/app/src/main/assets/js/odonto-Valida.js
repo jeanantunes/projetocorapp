@@ -1319,7 +1319,82 @@ function validaCnpj(str){
                    }
                });
 
-          });
+});
+
+        // BANCOS 
+
+        $(".bancos").focus(function () {
+            if ($(this).val() == "") {
+                $(this).css({ "border-color": "blue" });
+                $(".bancos").css("color", "#1974CE");
+                $(".label-bancos").css("color", "#1974CE");
+            }
+        });
+
+        $(".bancos").blur(function () {
+            if ($(this).val() == "") {
+                $(this).css({ "border-color": "#F00" });
+                $(".label-bancos").css("color", "red");
+            }
+        });
+
+        $(".bancos").keyup(function () {
+            if ($(this).val() != "") {
+                $(this).css({ "border-color": "#3A94FB" });
+                $(".bancos").css("color", "#3A94FB");
+                $(".bancos").css("color", "#3A94FB");
+            }
+        });
+
+        // AGENCIA 
+
+        $(".agencia").focus(function () {
+            if ($(this).val() == "") {
+                $(this).css({ "border-color": "blue" });
+                $(".agencia").css("color", "#1974CE");
+                $(".label-agencia").css("color", "#1974CE");
+            }
+        });
+
+        $(".agencia").blur(function () {
+            if ($(this).val() == "") {
+                $(this).css({ "border-color": "#F00" });
+                $(".label-agencia").css("color", "red");
+            }
+        });
+
+        $(".agencia").keyup(function () {
+            if ($(this).val() != "") {
+                $(this).css({ "border-color": "#3A94FB" });
+                $(".agencia").css("color", "#3A94FB");
+                $(".agencia").css("color", "#3A94FB");
+            }
+        });
+
+        // CONTA-CORRENTE 
+
+        $(".conta-corrente").focus(function () {
+            if ($(this).val() == "") {
+                $(this).css({ "border-color": "blue" });
+                $(".conta-corrente").css("color", "#1974CE");
+                $(".label-conta-corrente").css("color", "#1974CE");
+            }
+        });
+
+        $(".conta-corrente").blur(function () {
+            if ($(this).val() == "") {
+                $(this).css({ "border-color": "#F00" });
+                $(".label-conta-corrente").css("color", "red");
+            }
+        });
+
+        $(".conta-corrente").keyup(function () {
+            if ($(this).val() != "") {
+                $(this).css({ "border-color": "#3A94FB" });
+                $(".conta-corrente").css("color", "#3A94FB");
+                $(".conta-corrente").css("color", "#3A94FB");
+            }
+        });
 
           // DATA NASCIMENTO
 
@@ -1406,4 +1481,5 @@ function validaCnpj(str){
                       $(".label-checkbox").css("color", "#3A94FB");
                   }
                   
-         });
+             });
+
