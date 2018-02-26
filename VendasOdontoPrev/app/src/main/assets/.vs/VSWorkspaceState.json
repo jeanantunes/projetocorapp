@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\app",
-    "\\componente"
+    "\\app"
   ],
-  "SelectedNode": "\\app\\coordenador.js",
+  "SelectedNode": "\\app\\pfIndexController.js",
   "PreviewInSolutionExplorer": false
 }

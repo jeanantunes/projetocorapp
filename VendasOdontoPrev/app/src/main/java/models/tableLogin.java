@@ -18,6 +18,7 @@ public class tableLogin
     String COLUNA_RG = "rg";
     String COLUNA_CARGO = "cargo";
     String COLUNA_LOGADO = "logado";
+    String COLUNA_CODIGO = "codigo";
 
     Context context;
     DataBase db;
@@ -32,7 +33,8 @@ public class tableLogin
         String tableLogin = "CREATE TABLE IF NOT EXISTS [Login] ( [IdLogin] integer NOT NULL, [cargo] varchar(20) NOT NULL, " +
                 "[cpf] varchar(11) NOT NULL, [email] varchar (80) NOT NULL, [login] varchar(11) NOT NULL, [FotoPerfilB64] BLOB, " +
                 "[nome] varchar(255) NOT NULL, [nomeEmpresa] varchar(255) NOT NULL, [nomeGerente] varchar(255) NOT NULL, " +
-                "[responsavel] varchar(255) NOT NULL, [rg] varchar(10) NOT NULL, [logado] int NOT NULL, PRIMARY KEY ([IdLogin]))";
+                "[responsavel] varchar(255) NOT NULL, [rg] varchar(10) NOT NULL, [logado] int NOT NULL, [codigo] int NOT NULL," +
+                " PRIMARY KEY ([IdLogin]))";
 
         return tableLogin;
     }
@@ -56,6 +58,7 @@ public class tableLogin
         values.put(COLUNA_RG, forcaVenda.rg);
         values.put(COLUNA_CARGO, forcaVenda.cargo);
         values.put(COLUNA_LOGADO, 1);
+        values.put(COLUNA_CODIGO, forcaVenda.codigo);
 
         dbs.insert("Login", null, values);
 

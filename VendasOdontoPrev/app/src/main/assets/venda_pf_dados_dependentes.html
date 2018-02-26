@@ -11,6 +11,7 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/style.css" rel="stylesheet">
 		<link href="css/odontoprev.css" rel="stylesheet">
+        <link href="css/sweetalert.css" rel="stylesheet" />
 	</head>
 	
     <body>
@@ -66,21 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row div-excluir">
-                    <div class="imgBtnExcluir">
-                        <img src="img/btn-excluir.png" class="btnExcluir" alt="">
-                    </div>
-                    <div class="col-md-12 boxDadosProposta">
-                        <div class="col-md-6 text-left">
-                            <label class="labelFormPag colorSlick2">Programa Dente de Leite de 0 a 7 anos</label>
-                            <label class="labelMes">Mensal</label>
-                            <label class="labelTipo">Total por ano R$ 547,20</label>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <label class="formPagVal colorSlick2 font-moeda">R$ 45,<span class="font-cent">60</span></label>
-                        </div>
-                    </div>
-                </div>
+               
                 <div class="row boxDependente">
                     <div>
                         <label class="labelBlue">DEPENDENTE</label>
@@ -95,7 +82,7 @@
                         <label class="label-email labelOdontBlur">E-mail</label>
                     </div>
                     <div>
-                        <input type="number" class="email inputLabelBlur">
+                        <input type="email" class="email inputLabelBlur">
                     </div>
                     <div>
                         <label class="label-celular labelOdontBlur">Celular</label>
@@ -132,7 +119,7 @@
                         <label class="label-nome labelOdontBlur">Nome da mãe</label>
                     </div>
                     <div>
-                        <input type="text" class="nome inputLabelBlur">
+                        <input type="text" class="nome-mae inputLabelBlur">
                     </div>
 
                     <!-- <input type="checkbox" value="" class="exemplo2 checkbox inputLabelFocus">
@@ -148,16 +135,11 @@
                             </span>
                         </label>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 btnPadBtm">
-                            <a href="" class="btn btn-lg btn-block btnOdont" id="" role="button">SALVAR</a>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 btnPadBtm">
-                    <a href="venda_index_pf.html" class="btn btn-lg btn-block btnOdont" id="" role="button">ADICIONAR DEPENDENTE</a>
+                    <div class="btn btn-lg btn-block btnOdont" id="" onclick="salvarEContinuar()" role="button">ADICIONAR OUTRO DEPENDENTE</div>
                     <!-- <div class="row">
                     <div class="text-center">
                         <a href=""><label for="senha" class="linkOdontSalvar">SALVAR E FINALIZAR PROPOSTA DEPOIS</label></a>
@@ -165,8 +147,12 @@
                 </div> -->
                 </div>
                 <div class="col-md-12 btnPadBtm">
-                    <a href="resumo_pf_proposta.html" class="btn btn-lg btn-block btnOdont" id="" role="button">CONTINUAR</a>
+                    <div class="btn btn-lg btn-block btnOdont" id="" role="button" onclick="salvarEVoltar()">SALVAR</div>
+
+                    <a href="venda_pf_dados_proposta.html" class="btn btn-lg btn-block btnOdont" style="background:#a0a0a0" id="" role="button">CANCELAR</a>
                 </div>
+
+
             </div>
         </div>
         <!-- End Bloco 1 -->
@@ -178,6 +164,8 @@
         <script src="js/jquery.3.2.1.js"></script>
         <script src="js/jquery.mask.min.js"></script>
         <script src="js/odonto-Valida.js"></script>
+        <script src="js/sweetalert.min.js"></script>
         <script src="app/coordenador.js"></script>
+        <script src="app/pfDependenteController.js"></script>
     </body>
 </html>

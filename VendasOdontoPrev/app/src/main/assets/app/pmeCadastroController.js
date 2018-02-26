@@ -52,6 +52,8 @@ function excluirPlano(obj) {
 
     put("proposta", JSON.stringify(proposta));
     container.remove();
+
+    atualizarEmpresas(proposta);
 }
 
 // Mantém os inputs em cache:
@@ -244,20 +246,12 @@ function salvarRascunhoMemoria() {
     if (empresas == null) {
         empresas = [];
         empresas.push(proposta);
+        put("empresas", JSON.stringify(empresas));
     }
     else {
-        var propostas = empresas.filter(function (x) { return x.cnpj != proposta.cnpj });
-        empresas = []; //limpar
-
-        if (propostas.length != 0)
-            empresas.push(propostas);
-
-        empresas.push(proposta);
+        atualizarEmpresas(proposta);
     }
 
-
-
-    put("empresas", JSON.stringify(empresas));
     put("proposta", JSON.stringify(proposta));
 }
 
@@ -287,4 +281,8 @@ function carregarProposta() {
      $("#bairro").val(proposta.enderecoEmpresa.bairro);
      $("#cidade").val(proposta.enderecoEmpresa.cidade);
      $("#uf").val(proposta.enderecoEmpresa.estado);
+}
+
+function validarProposta() {
+    window.location.href = "proposta_pme_enviada.html";
 }

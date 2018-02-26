@@ -1,0 +1,25 @@
+﻿{
+  "status": "",
+  "cpf": "",
+  "nome": "",
+  "nascimento": "",
+  "sexo": "",
+  "titular": true,
+  "telefone": "",
+  "celular": "",
+  "email": "",
+  "vencimentoFatura": 30,
+  "endereco": {
+    "cep": "",
+    "endereco": "",
+    "numero": "",
+    "complemento": "",
+    "bairro": "",
+    "cidade": "",
+    "estado": ""
+  },
+  "planos": [
+  ],
+  "dependentes": [
+  ]
+}

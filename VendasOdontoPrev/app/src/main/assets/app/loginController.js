@@ -49,19 +49,6 @@ function callLogin(callback, login, password) {
     });
 }
 
-$("#cpf").blur(function () {
-
-    if (!TestaCPF($("#cpf").val()))
-    {
-        $("#erroCpf").removeClass('hide');
-        $("#erroCpf").html("CPF inválido.");
-
-        return;
-    }
-
-    $("#erroCpf").addClass('hide');
-});
-
 function callDadosUsuarios(callback, cpf) {
 
     $.ajax({
@@ -154,16 +141,36 @@ function logarETrazerDadosUsuario() {
 
         callDadosUsuarios(function (dataDadosUsuario) {
             //console.log(dataDadosUsuario);
-            console.log(JSON.stringify(dataDadosUsuario));
+            //console.log(JSON.stringify(dataDadosUsuario));
             //ob.imprimirSucess();
             //console.log(dataDadosUsuario);
 
+            console.log(dataDadosUsuario);
+            var forca = getRepository("dadosUsuario");
+
+            forca.nome = dataDadosUsuario.nome;
+            forca.cargo = dataDadosUsuario.cargo;
+            forca.cpf = dataDadosUsuario.cpf;
+            forca.email = dataDadosUsuario.email;
+            forca.login = dataDadosUsuario.login;
+            forca.nomeEmpresa = dataDadosUsuario.nomeEmpresa;
+            forca.nomeGerente = dataDadosUsuario.nomeGerente;
+            forca.responsavel = dataDadosUsuario.responsavel;
+            forca.rg = dataDadosUsuario.rg;
+            forca.senha = dataDadosUsuario.senha;
+            forca.statusUsuario = dataDadosUsuario.statusUsuario;
+            forca.telefone = dataDadosUsuario.telefone;
+            forca.codigo = dataLogin.codigo;
+
+            console.log(forca);
+
+
             //console.log(JSON.stringify(dataDadosUsuario));
             //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
-            ob.salvarDadosUsuario(JSON.stringify(dataDadosUsuario));
+            //ob.salvarDadosUsuario(JSON.stringify(forca)); 
             //ob.salvarDadosUsuario();
 
-            put("dadosUsuario", JSON.stringify(dataDadosUsuario));
+            put("dadosUsuario", JSON.stringify(forca));
 
             window.location = "logado.html";
 

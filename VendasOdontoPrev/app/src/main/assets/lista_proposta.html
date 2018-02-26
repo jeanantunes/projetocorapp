@@ -11,6 +11,7 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/style.css" rel="stylesheet">
 		<link href="css/odontoprev.css" rel="stylesheet">
+        <link href="css/listaProposta.css" rel="stylesheet" />
 	</head>
 	
     <body>
@@ -65,7 +66,7 @@
                             </h2>
                         </div>
                         <div class="row nomeRazaSocial">
-                            <h1 class="titleListBox">380</h1>
+                            <h1 class="titleListBox" id="total">0</h1>
                             <h5 class="subListBox">CLIENTES EM SUA CARTEIRA</h5>
                         </div>
                     </div>
@@ -76,67 +77,14 @@
 
                     <div class="tab-content">
                         <div id="pf" class="tab-pane fade pf in active">
-                            <h1 class="colorSlick5 titleListBox">238</h1>
+                            <h1 class="colorSlick5 titleListBox" id="totalClientes">0</h1>
                             <h5 class="colorSlick5 subListBox">CLIENTES PF EM SUA CARTEIRA</h5>
-                            <div class="col-md-12 boxList">
-                                <div class="listCirc colorCirc1"></div>
-                                <span class="spanBoldListOdont">Maria Angela da Silva</span>
-                                <span class="pull-right spanLight color1">Há 16 horas</span>
-                                <div class="listBarra">
-                                    <span class="spanLightListOdont">Aguardando aprovação</span>
-                                    <label><a href="" class="linkDetailList">ver detalhes <span class="setaList">></span></a></label>
-                                </div>
-                            </div>
-                            <div class="col-md-12 boxList">
-                                <div class="listCirc colorCirc2"></div>
-                                <span class="spanBoldListOdont">Rodrigo Barcelar</span>
-                                <span class="pull-right spanLight color1">Há 16 horas</span>
-                                <div class="listBarra">
-                                    <span class="spanLightListOdont">Ativo</span>
-                                    <label><a href="" class="linkDetailList">ver detalhes <span class="setaList">></span></a></label>
-                                </div>
-                            </div>
-                            <div class="col-md-12 boxList">
-                                <div class="listCirc colorCirc3"></div>
-                                <span class="spanBoldListOdont">Daenerys Tragarien</span>
-                                <span class="pull-right spanLight color1">Há 16 horas</span>
-                                <div class="listBarra">
-                                    <span class="spanLightListOdont">Pendente finalizar cadastro</span>
-                                    <label><a href="" class="linkDetailList">ver detalhes <span class="setaList">></span></a></label>
-                                </div>
-                            </div>
+                            <div id="listaPessoas"></div>
                         </div>
                         <div id="pme" class="tab-pane pme fade">
-                            <h1 class="colorSlick6 titleListBox">142</h1>
+                            <h1 class="colorSlick6 titleListBox" id="totalEmpresas">142</h1>
                             <h5 class="colorSlick6 subListBox">CLIENTES PME EM SUA CARTEIRA</h5>
-                            <div class="col-md-12 boxList">
-                                <div class="listCirc colorCirc1"></div>
-                                <span class="spanBoldListOdont">Toca da Raposa ME</span>
-                                <span class="pull-right spanLight color1">Há 16 horas</span>
-                                <div class="listBarra">
-                                    <span class="spanLightListOdont">Aguardando aprovação</span>
-                                    <span class="spanLightListOdont">Pendente cadastro dos beneficiários</span>
-                                    <label><a href="" class="linkDetailList">ver detalhes <span class="setaList">></span></a></label>
-                                </div>
-                            </div>
-                            <div class="col-md-12 boxList">
-                                <div class="listCirc colorCirc2"></div>
-                                <span class="spanBoldListOdont">Materias Souza SA</span>
-                                <span class="pull-right spanLight color1">Há 16 horas</span>
-                                <div class="listBarra">
-                                    <span class="spanLightListOdont">Ativo</span>
-                                    <label><a href="" class="linkDetailList">ver detalhes <span class="setaList">></span></a></label>
-                                </div>
-                            </div>
-                            <div class="col-md-12 boxList">
-                                <div class="listCirc colorCirc3"></div>
-                                <span class="spanBoldListOdont">Casa de Talentos ME</span>
-                                <span class="pull-right spanLight color1">Há 16 horas</span>
-                                <div class="listBarra">
-                                    <span class="spanLightListOdont">Não Enviado</span>
-                                    <label><a href="" class="linkDetailList">ver detalhes <span class="setaList">></span></a></label>
-                                </div>
-                            </div>
+                            <div id="listaEmpresas"></div>
                         </div>
                     </div>
                 </div>
@@ -151,5 +99,6 @@
         <script src="js/jquery.mask.min.js"></script>
         <script src="js/odonto-Valida.js"></script>
         <script src="app/coordenador.js"></script>
+        <script src="app/listaPropostaController.js"></script>
     </body>
 </html>

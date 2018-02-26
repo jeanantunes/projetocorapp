@@ -96,6 +96,14 @@ public class ForcaVenda
         this.logado = logado;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     String cpf;
     String email;
     String login;
@@ -107,8 +115,9 @@ public class ForcaVenda
     String fotoPerfil;
     String cargo;
     String logado;
+    String codigo;
 
-    public ForcaVenda(String cpf, String email, String login, String nome, String nomeEmpresa, String nomeGerente, String responsavel, String rg, String fotoPerfil, String cargo) {
+    public ForcaVenda(String cpf, String email, String login, String nome, String nomeEmpresa, String nomeGerente, String responsavel, String rg, String fotoPerfil, String cargo, String codigo) {
 
         this.cpf = cpf;
         this.email = email;
@@ -120,6 +129,7 @@ public class ForcaVenda
         this.rg = rg;
         this.fotoPerfil = fotoPerfil;
         this.cargo = cargo;
+        this.codigo = codigo;
 
     }
 

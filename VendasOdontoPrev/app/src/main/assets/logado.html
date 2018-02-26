@@ -12,7 +12,7 @@
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/odontoprev.css" rel="stylesheet">
   </head>
-  <body onload="setarDados()">
+  <body>
       <!-- Menu -->
       <div class="closeNav hide" onclick="closeNav()"></div>
       <div id="mySidenav" class="sidenav">
@@ -39,7 +39,7 @@
           <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
           <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
           <a href="fale_conosco.html" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
-          <a href="index.html" id="logout" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
+          <a id="logout" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
       </div>
       <!-- End Menu -->
       <!-- Bloco 1 -->
@@ -83,26 +83,26 @@
                   <div class="text-center">
                       <div class="boxAlertIcomp">
                           <!-- <img src="img/alarm.png" class="imgAlarm" align="left"> -->
-                          <label class="label-Icomp"><p>10</p> Propostas incompletas</label>
+                          <label class="label-Icomp"><p id="digitando"></p> Propostas incompletas</label>
                       </div>
                       <div class="boxAlertCritico">
                           <!-- <img src="img/delete.png" class="imgDel" align="left"> -->
-                          <label class="label-Critico"><p>1</p> Propostas criticadas</label>
+                          <label class="label-Critico"><p id="criticada"></p> Propostas criticadas</label>
                       </div>
                   </div>
                   <div class="text-center">
                       <div class="boxAlertPendente">
                           <!-- <img src="img/alarm.png" class="imgAlarm" align="left"> -->
-                          <label class="label-Icomp"><p>10</p> Propostas não enviadas</label>
+                          <label class="label-Icomp"><p id="pronta"></p> Propostas não enviadas</label>
                       </div>
                       <div class="boxAlertSucess">
                           <!-- <img src="img/delete.png" class="imgDel" align="left"> -->
-                          <label class="label-Sucess"><p>1</p> Propostas finalizadas</label>
+                          <label class="label-Sucess"><p id="finalizada"></p> Propostas finalizadas</label>
                       </div>
                   </div>
               </div>
               <div class="row">
-                  <div class="boxVendas">
+                  <!--<div class="boxVendas">
                       <label class="labelBlue">VENDAS</label>
                       <div class="dropdown">
                           <button class="btnDropOdont dropdown-toggle" type="button" data-toggle="dropdown">
@@ -126,7 +126,7 @@
                               </span>
                           </ul>
                       </section>
-                  </div>
+                  </div>-->
               </div>
           </div>
 
@@ -157,40 +157,6 @@
       <script src="js/scripts.js"></script>
       <script src="js/odontoprev.js"></script>
       <script src="app/coordenador.js"></script>
-
-      <script type="text/javascript">
-
-          function deslogar() {
-              ob.deslogar();
-              window.location();
-          }
-
-          function abrirgaleria() {
-              ob.abrirgaleria();
-
-              var base64 = ob.retornoB64();
-
-              $("#imagePerfil").attr('src', 'data:image/jpg;base64,' + base64);
-              $("#imageePerfil").attr('src', 'data:image/jpg;base64,' + base64);
-          }
-
-          function setarDados()
-          {
-              //var dados = ob.getDadosUsuarios();
-              //
-              //var dadosTratados = JSON.parse(dados);
-              //
-              //window.localStorage.setItem('DadosUsuario', dados);
-              //
-              //document.getElementById('nomeCorretor').innerHTML = "" + dadosTratados.nome;
-              //document.getElementById('nomeCorretora').innerHTML = "" + dadosTratados.nomeEmpresa;
-              //document.getElementById('nomeCorretorMenu').innerHTML = "" + dadosTratados.nome;
-              //document.getElementById('nomeCorretoraMenu').innerHTML = "" + dadosTratados.nomeEmpresa;
-              //
-              //document.getElementsByClassName('.nomeCorretor').innerHTML = "" + dadosTratados.nome;
-
-          }
-      </script>
-
+      <script src="app/logadoController.js"></script>
   </body>
 </html>

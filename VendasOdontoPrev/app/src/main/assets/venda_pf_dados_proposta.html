@@ -11,6 +11,7 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/style.css" rel="stylesheet">
 		<link href="css/odontoprev.css" rel="stylesheet">
+        <link href="css/sweetalert.css" rel="stylesheet" />
 	</head>
 	
     <body>
@@ -66,21 +67,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="row div-excluir">
-                    <div class="imgBtnExcluir">
-                        <img src="img/btn-excluir.png" class="btnExcluir" alt="">
-                    </div>
-                    <div class="col-md-12 boxDadosProposta">
-                        <div class="col-md-6 text-left">
-                            <label class="labelFormPag colorSlick1">Dental Bem-Estar</label>
-                            <label class="labelMes">Mensal</label>
-                            <label class="labelTipo">Total por ano R$ 547,20</label>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <label class="formPagVal colorSlick1 font-moeda">R$ 45,<span class="font-cent">60</span></label>
-                        </div>
-                    </div>
+
+                <div id="planos" style="margin-bottom:20px;">
                 </div>
+
                 <div class="row boxLabInput">
                     <div>
                         <label class="labelBlue">TITULAR DO PLANO</label>
@@ -95,7 +85,7 @@
                         <label class="label-email labelOdontBlur">E-mail</label>
                     </div>
                     <div>
-                        <input type="number" class="email inputLabelBlur">
+                        <input type="email" class="email inputLabelBlur">
                     </div>
                     <div>
                         <label class="label-celular labelOdontBlur">Celular</label>
@@ -191,9 +181,15 @@
                         <input type="text" class="cidade inputLabelBlur">
                     </div>
                 </div>
+
+                <div id="listaDep"></div>
+
+                <br />
+                <br />
+
                 <div class="row">
                     <div class="col-md-12 btnPadBtm">
-                        <a href="venda_index_pf.html" class="btn btn-lg btn-block btnOdont" id="" role="button">ADICIONAR DEPENDENTE</a>
+                        <div href="venda_index_pf.html" class="btn btn-lg btn-block btnOdont" id="" onclick="addDependente()" role="button">ADICIONAR DEPENDENTE</div>
                         <!-- <div class="row">
                         <div class="text-center">
                             <a href=""><label for="senha" class="linkOdontSalvar">SALVAR E FINALIZAR PROPOSTA DEPOIS</label></a>
@@ -201,7 +197,7 @@
                     </div> -->
                     </div>
                     <div class="col-md-12 btnPadBtm">
-                        <a href="resumo_pf_proposta.html" class="btn btn-lg btn-block btnOdont" id="" role="button">CONTINUAR</a>
+                        <div class="btn btn-lg btn-block btnOdont" id="" role="button" onclick="salvarRascunho()">CONTINUAR</div>
                     </div>
                 </div>
             </div>
@@ -214,6 +210,8 @@
         <script src="js/jquery.3.2.1.js"></script>
         <script src="js/jquery.mask.min.js"></script>
         <script src="js/odonto-Valida.js"></script>
+        <script src="js/sweetalert.min.js"></script>
         <script src="app/coordenador.js"></script>
+        <script src="app/pfCadastroController.js"></script>
     </body>
 </html>

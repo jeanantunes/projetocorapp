@@ -1,6 +1,17 @@
-﻿<div class="col-md-12 boxDependente-c">
-    <div class="col-md-6 text-left">
-        <label class="labelDependente colorSlick3">Nome Dependente</label>
-        <img src="img/editar.png" width="20px" height="20px" class="edit" alt="Editar" style="margin-top:23px !important">
+﻿<div class="row div-excluir" data-id="{CPF}">
+    <div class="imgBtnEditar">
+        <img src="img/btn-excluir-bene.png" class="btnExcluir" alt="" onclick="excluirDep($(this))" data-id="{CPF-BT}">
+    </div>
+    <div class="col-md-12 boxDadosProposta" style="height:107px !important">
+        <div class="boxBeneficiario">
+            <div>
+                <label class="labelBold">Dependente:</label>
+                <label class="labelLight">{NOME}</label>
+            </div>
+            <div>
+                <label class="labelBold">CPF:</label>
+                <label class="labelLight">{CPF-DESC}</label>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Language" content="pt-br">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,494 +9,488 @@
     <title>Odontoprev</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">
-		<link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet" />
 
-  </head>
-  <body>
+</head>
+<body>
 
-<!-- Cadastro Usuário CPF cadastrado -->
-<!-- Bloco 1 -->
-  <div class="container-fluid" id="cpfOdont">
-    <div class="row">
-      <div class="col-md-12 boxHeader">
-        <div class="col-md-12 text-center imgLogoODPVHeader">
-          <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12 odontBoxCenter">
-        <h1 class="titleOdont text-center">
-            VAMOS COMEÇAR!
-        </h1>
-        <h2 class="subTitleOdont text-center">
-            Para acessar, insira os dados abaixo
-        </h2>
-
-        <div class="boxLabInput">
-          <div>
-            <label class="label-cpf labelOdontBlur">CPF</label>
-          </div>
-          <div>
-            <input type="text" id="cpf" class="cpf inputLabelBlur">
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-      <div class="row">
-        <div class="col-md-12">	 
-          <a class="btn btn-lg btn-block btnOdont" id="btnCpfOdont" role="button" onclick="validarCpf()">CONTINUAR</a>
-        </div>
-      </div>
-    </div>
-  <!-- End Bloco 1 -->
-
-  <!-- Bloco 2 -->
-    <div class="container-fluid hide" id="celOdont">
-      <div class="row">
-        <div class="col-md-12 boxHeader">
-          <div class="col-md-12 text-center imgLogoODPVHeader">
-            <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12 odontBoxCenter">
-          <h1 class="titleOdont text-center">
-              CONFIRA SEUS DADOS
-          </h1>
-          <h2 class="subTitleOdont text-center">
-              Corrija se necessário
-          </h2>
-          <div class="boxLabInput">
-            <div>
-              <label class="label-nome labelOdontFocus">Confirme seu nome</label>
+    <!-- Cadastro Usuário CPF cadastrado -->
+    <!-- Bloco 1 -->
+    <div class="container-fluid" id="cpfOdont">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
             </div>
-            <div>
-              <input type="text" class="nome inputLabelFocus" id="nome">
-            </div>
-            <div>
-              <label class="label-celular labelOdontFocus">Confira o número do seu celular</label>
-            </div>
-            <div>
-              <input type="text" class="celular inputLabelFocus" id="celular">
-            </div>
-            <div>
-              <label class="label-email labelOdontFocus"> Confira seu e-mail</label>
-            </div>
-            <div>
-              <input type="text" class="email inputLabelFocus" id="email">
-            </div>
-          </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12 btnPadBtm">  
-          <a href="" class="btn btn-lg btn-block btnOdont" id="btnCelOdont" role="button">CONTINUAR</a>
-        </div>
-      </div>
-    </div>
-  <!-- End Bloco 2 -->
-
-  <!-- Bloco 3 -->
-    <div class="container-fluid hide" id="keyOdont">
-      <div class="row">
-        <div class="col-md-12 boxHeader">
-          <div class="col-md-12 text-center imgLogoODPVHeader">
-            <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12 odontBoxCenter">
-          <h1 class="titleOdont text-center">
-              CRIE UMA SENHA
-          </h1>
-          <h2 class="subTitleOdont text-center">
-              Crie uma senha para acessar suas vendas
-          </h2>
-
-          <div class="boxLabInput">
-            <div>
-              <label class="label-password labelOdontBlur" id="senha">Criar senha</label>
-            </div>
-            <div>
-              <input type="password" class="password inputLabelBlur" maxlength="12" id="senhaCpfTrue">
-            </div>
-            <div>
-              <label class="label-password-confirm labelOdontBlur" id="">Confirmar senha</label>
-            </div>
-            <div>
-              <input type="password" class="password-confirm inputLabelBlur" maxlength="12" id="confirmar-senhaCpfTrue">
-              <label class="label-password-confirm-8 labelInfoOdontFocus" id="">Sua senha deve ter no mínimo 8 dígitos.</label>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">	 
-          <a class="btn btn-lg btn-block btnOdont" href="#" id="btnkeyOdont" role="button" onclick="formulario()">FINALIZAR</a>
-        </div>
-      </div>
-    </div>
-  <!-- End Bloco 3 -->
-
-  <!-- Bloco 4 -->
-  <div class="container-fluid hide" id="termoOdont">
-      <div class="row">
-        <div class="col-md-12 boxHeader">
-          <div class="col-md-12 text-center imgLogoODPVHeader">
-            <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
-          </div>
-        </div>
-      </div>
 
         <div class="row">
-          <div class="col-md-12 odontBoxCenter">
-            <h1 class="titleOdont text-center">
-                TERMOS DE USO
-            </h1>
-            <h2 class="subTitleOdont text-center">
-                Você precisa aceitar os termos de uso.
-            </h2>
-          
-            
-          <div class="textTermoCondicao">
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-              
-              labore et dolore magna aliqua. Sed velit dignissim sodales ut eu sem. Vitae et leo duis ut diam quam nulla
-
-              porttitor massa. Et netus et malesuada fames ac turpis egestas maecenas. Quisque non tellus orci
-
-              ac auctor augue. Diam phasellus vestibulum lorem sed risus. Turpis cursus in hac habitasse platea
-
-              dictumst quisque sagittis. Vel quam elementum pulvinar etiam non quam lacus suspendisse faucibus.
-
-              Tempor id eu nisl nunc mi ipsum. Blandit massa enim nec dui. Volutpat lacus laoreet non curabitur
-
-              gravida arcu. Eu sem integer vitae justo eget magna fermentum. Nec feugiat in fermentum posuere.
-
-              Mauris augue neque gravida in fermentum et. Eget gravida cum sociis natoque penatibus et. Leo vel
-
-              fringilla est ullamcorper eget. Eu facilisis sed odio morbi quis commodo odio aenean. Malesuada fames
-
-              ac turpis egestas maecenas pharetra. Volutpat lacus laoreet non curabitur. Quis viverra nibh cras
-
-              pulvinar mattis nunc sed blandit. Nulla aliquet porttitor lacus luctus. In aliquam sem fringilla
-
-              ut morbi tincidunt. Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pulvinar etiam
-
-              non quam lacus suspendisse faucibus interdum. Massa massa ultricies mi quis hendrerit dolor magna
-
-              eget. Massa sed elementum tempus egestas sed sed risus pretium. Morbi enim nunc faucibus a pellentesque
-
-              sit amet porttitor. Turpis in eu mi bibendum neque egestas. At tellus at urna condimentum mattis
-
-              pellentesque. Imperdiet proin fermentum leo vel orci. Nibh tortor id aliquet lectus proin nibh nisl
-
-              condimentum. Ante in nibh mauris cursus mattis molestie a iaculis. Aenean et tortor at risus viverra
-
-              adipiscing at in tellus. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus.
-
-              Tortor at auctor urna nunc. Leo vel fringilla est ullamcorper eget. Eu facilisis sed odio morbi quis
-
-              commodo odio aenean. Malesuada fames ac turpis egestas maecenas pharetra. Volutpat lacus laoreet
-
-              non curabitur. Quis viverra nibh cras pulvinar mattis nunc sed blandit. Nulla aliquet porttitor lacus
-
-              luctus. In aliquam sem fringilla ut morbi tincidunt. Tortor vitae purus faucibus ornare suspendisse
-
-              sed nisi lacus. Pulvinar etiam non quam lacus suspendisse faucibus interdum. Massa massa ultricies
-
-              mi quis hendrerit dolor magna eget. Massa sed elementum tempus egestas sed sed risus pretium. Morbi
-
-              enim nunc faucibus a pellentesque sit amet porttitor. Turpis in eu mi bibendum neque egestas. At
-
-              tellus at urna condimentum mattis pellentesque. Imperdiet proin fermentum leo vel orci. Nibh tortor
-
-              id aliquet lectus proin nibh nisl condimentum. Ante in nibh mauris cursus mattis molestie a iaculis.
-
-              Aenean et tortor at risus viverra adipiscing at in tellus. Mauris pellentesque pulvinar pellentesque
-
-              habitant morbi tristique senectus. Tortor at auctor urna nunc. Malesuada pellentesque elit eget gravida
-
-              cum sociis. Nam aliquam sem et tortor consequat id porta. In hac habitasse platea dictumst. Pulvinar
-
-              sapien et ligula ullamcorper malesuada. Tincidunt dui ut ornare lectus sit amet est placerat in.
-
-              Viverra tellus in hac habitasse. Ullamcorper dignissim cras tincidunt lobortis. Morbi tristique senectus
-
-              et netus et malesuada. Ac turpis egestas integer eget aliquet. Volutpat ac tincidunt vitae semper.
-            </p>
-          </div>
-          <div class="squaredOne">
-            <input type="checkbox" value="None" id="squaredOne" name="check" class="checkbox inputLabelCheckFocus" />
-            <label for="squaredOne" class="Label-checkbox labelCheckOdontFocus checkbox-inline">
-              <span class="spanCheckbox">
-                Aceito os termos de uso
-              </span>
-            </label>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12 btnPadBtm">	 
-          <a class="btn btn-lg btn-block btnOdont disabled" id="btnTermo" role="button">FINALIZAR</a>
-        </div>
-      </div>
-    </div>
-    <!-- End Bloco 4 -->
-
-    <!-- Bloco 5 -->
-      <div class="container-fluid hide" id="cadastroSucesso">
-        <div class="row">
-          <div class="col-md-12 boxHeader">
-            <div class="col-md-12 text-center imgLogoODPVHeader">
-              <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
-            </div>
-          </div>
-        </div>
-
-          <div class="row">
             <div class="col-md-12 odontBoxCenter">
-              <h1 class="titleOdont text-center">
-                BEM-VINDO
-              </h1>
-              <h2 class="subTitleOdont text-center">
-                Seu cadastro foi concluído com sucesso!
-              </h2>
-              
-              <div class="odontCenterIndex">
-                <p class="p-odont text-center">Seu cadastro foi efetuado com sucesso e seu usuário esta
-                  associado a corretora </p>
-                <div class="cortoraSucess">
-                  <h4 class="text-center">XPTO</h4>
+                <h1 class="titleOdont text-center">
+                    VAMOS COMEÇAR!
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Para acessar, insira os dados abaixo
+                </h2>
+
+                <div class="boxLabInput">
+                    <div>
+                        <label class="label-cpf labelOdontBlur">CPF</label>
+                    </div>
+                    <div>
+                        <input type="text" id="cpf" class="cpf inputLabelBlur">
+                    </div>
                 </div>
-              </div>
 
             </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12 btnPadBtm">	 
-              <a class="btn btn-lg btn-block btnOdont" href="logado.html" role="button">COMEÇAR A USAR</a>
-                <div class="text-center">
-                  <a href="logado.html"><label for="senha" class="linkOdontSucess">NÃO TRABALHO COM ESTA CORRETORA</label></a>
-                </div>
-            </div>
-          </div>
-        </div>             
-      <!-- End Bloco 5 --> 
-      <!-- End Cadastro Usuário CPF cadastrado -->
-
-      <!-- ****************************************************************************************** -->
-
-      <!-- Cadastro Usuário CPF não cadastrado -->
-      <!-- Bloco 1 -->
-    <div class="container-fluid hide" id="celOdontCorretora">
-        <div class="row">
-          <div class="col-md-12 boxHeader">
-            <div class="col-md-12 text-center imgLogoODPVHeader">
-              <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
-            </div>
-          </div>
         </div>
-  
-        <div class="row">
-          <div class="col-md-12 odontBoxCenter">
-            <h1 class="titleOdont text-center">
-                Preencha seus dados
-            </h1>
-            <h2 class="subTitleOdont text-center">
-                Não identificamos seu CPF nos nossos registros, por favor informe seus dados.
-            </h2>
 
-            <div class="boxLabInput">
-              <div>
-                <label class="label-nome labelOdontBlur">Nome</label>
-              </div>
-              <div>
-                <input type="text" class="nome inputLabelBlur">
-              </div>
-              <div>
-                <label class="label-celular labelOdontBlur">Celular</label>
-              </div>
-              <div>
-                <input type="text" class="celular inputLabelBlur">
-              </div>
-              <div>
-                <label class="label-email labelOdontBlur">E-mail</label>
-              </div>
-              <div>
-                <input type="text" class=" email inputLabelBlur">
-              </div>
-            </div>
-          </div>
-        </div>
-  
         <div class="row">
-          <div class="col-md-12 btnPadBtm">	 
-            <a href="" class="btn btn-lg btn-block btnOdont" id="btnCelOdontNCpf" role="button">CONTINUAR</a>
-          </div>
+            <div class="col-md-12">
+                <a class="btn btn-lg btn-block btnOdont disabled" id="btnCpfOdont" role="button">CONTINUAR</a>
+            </div>
         </div>
-      </div>
-    <!-- End Bloco 1-->
-  
+    </div>
+    <!-- End Bloco 1 -->
     <!-- Bloco 2 -->
-    <div class="container-fluid hide" id="keyOdontCorretora">
-      <div class="row">
-        <div class="col-md-12 boxHeader">
-          <div class="col-md-12 text-center imgLogoODPVHeader">
-            <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
-          </div>
+    <div class="container-fluid hide" id="celOdont">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+            </div>
         </div>
-      </div>
-  
-      <div class="row">
-        <div class="col-md-12 odontBoxCenter">
-          <h1 class="titleOdont text-center">
-              CRIE UMA SENHA
-          </h1>
-          <h2 class="subTitleOdont text-center">
-              Crie uma senha para acessar suas vendas
-          </h2>
 
-          <div class="boxLabInput">
-            <div>
-              <label class="label-password labelOdontBlur">Criar senha</label>
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    CONFIRA SEUS DADOS
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Corrija se necessário
+                </h2>
+                <div class="boxLabInput">
+                    <div>
+                        <label class="label-nome labelOdontFocus">Confirme seu nome</label>
+                    </div>
+                    <div>
+                        <input type="text" class="nome inputLabelFocus" id="nomePreCadastrado">
+                    </div>
+                    <div>
+                        <label class="label-celular labelOdontFocus">Confira o número do seu celular</label>
+                    </div>
+                    <div>
+                        <input type="text" class="celular inputLabelFocus" id="celularPreCadastrado">
+                    </div>
+                    <div>
+                        <label class="label-email labelOdontFocus"> Confira seu e-mail</label>
+                    </div>
+                    <div>
+                        <input type="text" class="email inputLabelFocus" id="emailPreCadastrado">
+                    </div>
+                </div>
             </div>
-            <div>
-              <input type="password" class="password inputLabelBlur" maxlength="12" id="senhaCpfFalse">
-            </div>
-            <div>
-                <label class="label-password-confirm labelOdontBlur" id="">Confirmar senha</label>
-            </div>
-            <div>
-              <input type="password" class="password-confirm inputLabelBlur" maxlength="12" id="confirmar-senhaCpfFalse">
-              <label class="label-password-confirm-8 labelInfoOdontFocus" id="">Sua senha deve ter no mínimo 8 dígitos.</label>
-            </div>
-          </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-12 btnPadBtm">
+                <a href="" class="btn btn-lg btn-block btnOdont" id="btnCelOdont" role="button">CONTINUAR</a>
+            </div>
         </div>
-      </div>
-  
-      <div class="row">
-        <div class="col-md-12">	 
-          <a class="btn btn-lg btn-block btnOdont" href="#" id="btnkeyOdontNCpf" role="button">FINALIZAR</a>
-        </div>
-      </div>
     </div>
     <!-- End Bloco 2 -->
-  
     <!-- Bloco 3 -->
-      <div class="container-fluid hide" id="infoCorretora">
+    <div class="container-fluid hide" id="keyOdont">
         <div class="row">
-          <div class="col-md-12 boxHeader">
-            <div class="col-md-12 text-center imgLogoODPVHeader">
-              <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
             </div>
-          </div>
         </div>
-  
-        <div class="row">
-          <div class="col-md-12 odontBoxCenter">
-            <h1 class="titleOdont text-center">
-                Informe sua corretora
-            </h1>
-            <h2 class="subTitleOdont text-center">
-                Você precisa estar associado a uma corretora para ter acesso à plataforma.
-            </h2>
 
-            <div class="boxLabInput">
-              <div>
-                <label class="label-cnpj labelOdontBlur">CNPJ</label>
-              </div>
-              <div>
-                <input type="text" class="cnpj inputLabelBlur">
-              </div>
-            </div>
-          </div>
-        </div>
-  
         <div class="row">
-          <div class="col-md-12 btnPadBtm">	 
-            <a href="" class="btn btn-lg btn-block btnOdont" id="btnInfoCorretoraNCpf" role="button">CONTINUAR</a>
-              <div class="text-center">
-                <a href="" id="linkBuscarCorretora" data-toggle="modal" data-target="#myModal">
-                  <label for="senha" class="linkOdont">
-                    NÃO TENHO UMA CORRETORA
-                  </label>
-                </a>
-              </div>
-          </div>
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    CRIE UMA SENHA
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Crie uma senha para acessar suas vendas
+                </h2>
+
+                <div class="boxLabInput">
+                    <div>
+                        <label class="label-password labelOdontBlur" id="senha">Criar senha</label>
+                    </div>
+                    <div>
+                        <input type="password" class="password inputLabelBlur" maxlength="12" id="senhaCpfTrue">
+                    </div>
+                    <div>
+                        <label class="label-password-confirm labelOdontBlur" id="">Confirmar senha</label>
+                    </div>
+                    <div>
+                        <input type="password" class="password-confirm inputLabelBlur" maxlength="12" id="confirmar-senhaCpfTrue">
+                        <label class="label-password-confirm-8 labelInfoOdontFocus" id="">Sua senha deve ter no mínimo 8 dígitos.</label>
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-lg btn-block btnOdont" href="#" id="btnkeyOdont" role="button" onclick="formulario()">FINALIZAR</a>
+            </div>
+        </div>
+    </div>
     <!-- End Bloco 3 -->
-    
+    <!-- Bloco 4 -->
+    <div class="container-fluid hide" id="termoOdont">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    TERMOS DE USO
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Você precisa aceitar os termos de uso.
+                </h2>
+
+
+                <div class="textTermoCondicao">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+
+                        labore et dolore magna aliqua. Sed velit dignissim sodales ut eu sem. Vitae et leo duis ut diam quam nulla
+
+                        porttitor massa. Et netus et malesuada fames ac turpis egestas maecenas. Quisque non tellus orci
+
+                        ac auctor augue. Diam phasellus vestibulum lorem sed risus. Turpis cursus in hac habitasse platea
+
+                        dictumst quisque sagittis. Vel quam elementum pulvinar etiam non quam lacus suspendisse faucibus.
+
+                        Tempor id eu nisl nunc mi ipsum. Blandit massa enim nec dui. Volutpat lacus laoreet non curabitur
+
+                        gravida arcu. Eu sem integer vitae justo eget magna fermentum. Nec feugiat in fermentum posuere.
+
+                        Mauris augue neque gravida in fermentum et. Eget gravida cum sociis natoque penatibus et. Leo vel
+
+                        fringilla est ullamcorper eget. Eu facilisis sed odio morbi quis commodo odio aenean. Malesuada fames
+
+                        ac turpis egestas maecenas pharetra. Volutpat lacus laoreet non curabitur. Quis viverra nibh cras
+
+                        pulvinar mattis nunc sed blandit. Nulla aliquet porttitor lacus luctus. In aliquam sem fringilla
+
+                        ut morbi tincidunt. Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pulvinar etiam
+
+                        non quam lacus suspendisse faucibus interdum. Massa massa ultricies mi quis hendrerit dolor magna
+
+                        eget. Massa sed elementum tempus egestas sed sed risus pretium. Morbi enim nunc faucibus a pellentesque
+
+                        sit amet porttitor. Turpis in eu mi bibendum neque egestas. At tellus at urna condimentum mattis
+
+                        pellentesque. Imperdiet proin fermentum leo vel orci. Nibh tortor id aliquet lectus proin nibh nisl
+
+                        condimentum. Ante in nibh mauris cursus mattis molestie a iaculis. Aenean et tortor at risus viverra
+
+                        adipiscing at in tellus. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus.
+
+                        Tortor at auctor urna nunc. Leo vel fringilla est ullamcorper eget. Eu facilisis sed odio morbi quis
+
+                        commodo odio aenean. Malesuada fames ac turpis egestas maecenas pharetra. Volutpat lacus laoreet
+
+                        non curabitur. Quis viverra nibh cras pulvinar mattis nunc sed blandit. Nulla aliquet porttitor lacus
+
+                        luctus. In aliquam sem fringilla ut morbi tincidunt. Tortor vitae purus faucibus ornare suspendisse
+
+                        sed nisi lacus. Pulvinar etiam non quam lacus suspendisse faucibus interdum. Massa massa ultricies
+
+                        mi quis hendrerit dolor magna eget. Massa sed elementum tempus egestas sed sed risus pretium. Morbi
+
+                        enim nunc faucibus a pellentesque sit amet porttitor. Turpis in eu mi bibendum neque egestas. At
+
+                        tellus at urna condimentum mattis pellentesque. Imperdiet proin fermentum leo vel orci. Nibh tortor
+
+                        id aliquet lectus proin nibh nisl condimentum. Ante in nibh mauris cursus mattis molestie a iaculis.
+
+                        Aenean et tortor at risus viverra adipiscing at in tellus. Mauris pellentesque pulvinar pellentesque
+
+                        habitant morbi tristique senectus. Tortor at auctor urna nunc. Malesuada pellentesque elit eget gravida
+
+                        cum sociis. Nam aliquam sem et tortor consequat id porta. In hac habitasse platea dictumst. Pulvinar
+
+                        sapien et ligula ullamcorper malesuada. Tincidunt dui ut ornare lectus sit amet est placerat in.
+
+                        Viverra tellus in hac habitasse. Ullamcorper dignissim cras tincidunt lobortis. Morbi tristique senectus
+
+                        et netus et malesuada. Ac turpis egestas integer eget aliquet. Volutpat ac tincidunt vitae semper.
+                    </p>
+                </div>
+                <div class="squaredOne">
+                    <input type="checkbox" value="None" id="squaredOne" name="check" class="checkbox inputLabelCheckFocus" />
+                    <label for="squaredOne" class="Label-checkbox labelCheckOdontFocus checkbox-inline">
+                        <span class="spanCheckbox">
+                            Aceito os termos de uso
+                        </span>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 btnPadBtm">
+                <a class="btn btn-lg btn-block btnOdont disabled" id="btnTermo" role="button">FINALIZAR</a>
+            </div>
+        </div>
+    </div>
+    <!-- End Bloco 4 -->
+    <!-- Bloco 5 -->
+    <div class="container-fluid hide" id="cadastroSucesso">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    BEM-VINDO
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Seu cadastro foi concluído com sucesso!
+                </h2>
+
+                <div class="odontCenterIndex">
+                    <p class="p-odont text-center">
+                        Seu cadastro foi efetuado com sucesso e seu usuário esta
+                        associado a corretora
+                    </p>
+                    <div class="cortoraSucess">
+                        <h4 class="text-center">XPTO</h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 btnPadBtm">
+                <a class="btn btn-lg btn-block btnOdont" href="logado.html" role="button">COMEÇAR A USAR</a>
+                <div class="text-center">
+                    <a href="logado.html"><label for="senha" class="linkOdontSucess">NÃO TRABALHO COM ESTA CORRETORA</label></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Bloco 5 -->
+    <!-- End Cadastro Usuário CPF cadastrado -->
+    <!-- ****************************************************************************************** -->
+    <!-- Cadastro Usuário CPF não cadastrado -->
+    <!-- Bloco 1 -->
+    <div class="container-fluid hide" id="celOdontCorretora">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    Preencha seus dados
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Não identificamos seu CPF nos nossos registros, por favor informe seus dados.
+                </h2>
+
+                <div class="boxLabInput">
+                    <div>
+                        <label class="label-nome labelOdontBlur">Nome</label>
+                    </div>
+                    <div>
+                        <input type="text" class="nome inputLabelBlur" id="nomeNaoCadastrado">
+                    </div>
+                    <div>
+                        <label class="label-celular labelOdontBlur">Celular</label>
+                    </div>
+                    <div>
+                        <input type="text" class="celular inputLabelBlur" id="celularNaoCadastrado">
+                    </div>
+                    <div>
+                        <label class="label-email labelOdontBlur">E-mail</label>
+                    </div>
+                    <div>
+                        <input type="text" class="email inputLabelBlur" id="emailNaoCadastrado">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 btnPadBtm">
+                <a href="" class="btn btn-lg btn-block btnOdont disabled" id="btnCelOdontNCpf" role="button">CONTINUAR</a>
+            </div>
+        </div>
+    </div>
+    <!-- End Bloco 1-->
+    <!-- Bloco 2 -->
+    <div class="container-fluid hide" id="keyOdontCorretora">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    CRIE UMA SENHA
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Crie uma senha para acessar suas vendas
+                </h2>
+
+                <div class="boxLabInput">
+                    <div>
+                        <label class="label-password labelOdontBlur">Criar senha</label>
+                    </div>
+                    <div>
+                        <input type="password" class="password inputLabelBlur" maxlength="12" id="senhaCpfFalse">
+                    </div>
+                    <div>
+                        <label class="label-password-confirm labelOdontBlur" id="">Confirmar senha</label>
+                    </div>
+                    <div>
+                        <input type="password" class="password-confirm inputLabelBlur" maxlength="12" id="confirmar-senhaCpfFalse">
+                        <label class="label-password-confirm-8 labelInfoOdontFocus" id="">Sua senha deve ter no mínimo 8 dígitos.</label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-lg btn-block btnOdont disabled" href="#" id="btnkeyOdontNCpf" role="button">FINALIZAR</a>
+            </div>
+        </div>
+    </div>
+    <!-- End Bloco 2 -->
+    <!-- Bloco 3 -->
+    <div class="container-fluid hide" id="infoCorretora">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    Informe sua corretora
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Você precisa estar associado a uma corretora para ter acesso à plataforma.
+                </h2>
+
+                <div class="boxLabInput">
+                    <div>
+                        <label class="label-cnpj labelOdontBlur">CNPJ</label>
+                    </div>
+                    <div>
+                        <input type="text" class="cnpj inputLabelBlur" id="cnpjNaoCadastrado">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 btnPadBtm">
+                <a href="" class="btn btn-lg btn-block btnOdont disabled" id="btnInfoCorretoraNCpf" role="button">CONTINUAR</a>
+                <div class="text-center">
+                    <a href="" id="linkBuscarCorretora" data-toggle="modal" data-target="#myModal">
+                        <label for="senha" class="linkOdont">
+                            NÃO TENHO UMA CORRETORA
+                        </label>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Bloco 3 -->
     <!-- Bloco 4 -->
     <div class="container-fluid hide" id="cadastroSucessoCorretora">
         <div class="row">
-          <div class="col-md-12 boxHeader">
-            <div class="col-md-12 text-center imgLogoODPVHeader">
-              <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
             </div>
-          </div>
         </div>
-  
+
         <div class="row">
-          <div class="col-md-12 odontBoxCenter">
-            <h1 class="titleOdont text-center">
-                Cadastro realizado com sucesso
-            </h1>
-            <h2 class="subTitleOdont text-center">
-                Seu acesso está pendente a aprovação da corretora.
-            </h2>
-            <h3 class="subTitleOdonth3 text-center">
-                Você receberá uma notificação assim que a corretora aprovar seu acesso.
-            </h3>
-            <div class="boxLabInput">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    Cadastro realizado com sucesso
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Seu acesso está pendente a aprovação da corretora.
+                </h2>
+                <h3 class="subTitleOdonth3 text-center">
+                    Você receberá uma notificação assim que a corretora aprovar seu acesso.
+                </h3>
+                <div class="boxLabInput">
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
     <!-- End Bloco 4 -->
-  
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modalConteiner">
-          <div class="modal-content">
-            <div class="modal-body modalBoxCenter">
-                <img src="img/btn-excluir.png" class="closeModal" data-dismiss="modal" class="btnExcluir" alt="">
-                <div class="row">
-                  <h1 class="titleOdont text-center">
-                      ATENÇÃO
-                  </h1>
-                  <h2 class="subTitleOdont text-center">
-                    <p>
-                      Você precisa estar associado a uma corretora para ter acesso à platoforma.
-                    </p>
-                    <p>
-                      Preencha o CNPJ para finalizar o seu cadastro.
-                    </p>
-                  </h2>
+            <div class="modal-content">
+                <div class="modal-body modalBoxCenter">
+                    <img src="img/btn-excluir.png" class="closeModal" data-dismiss="modal" class="btnExcluir" alt="">
+                    <div class="row">
+                        <h1 class="titleOdont text-center">
+                            ATENÇÃO
+                        </h1>
+                        <h2 class="subTitleOdont text-center">
+                            <p>
+                                Você precisa estar associado a uma corretora para ter acesso à platoforma.
+                            </p>
+                            <p>
+                                Preencha o CNPJ para finalizar o seu cadastro.
+                            </p>
+                        </h2>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
-      </div>
-      <!-- End Modal -->
-      <!-- End Cadastro Usuário CPF não cadastrado -->
+    </div>
+    <!-- End Modal -->
+    <!-- End Cadastro Usuário CPF não cadastrado -->
 
     <script src="js/jquery.3.2.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -504,23 +498,8 @@
     <script src="js/odontoprev.js"></script>
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
+    <script charset="ISO-8859-1" src="app/cadastroUsuarioController.js"></script>
+    <script charset="ISO-8859-1" src="js/sweetalert.min.js"></script>
 
-    <script type="text/javascript">
-        function formulario()
-        {
-          var obj = new Object();
-
-          obj.nome = document.getElementById('nome').value;
-          obj.cpf  = document.getElementById('cpf').value;
-          obj.celular = document.getElementById('celular').value;
-          obj.email = document.getElementById('email').value;
-          obj.senha = document.getElementById('senha').value;
-
-          var jsonString= JSON.stringify(obj);
-
-          ob.ClienteFromJSON(jsonString);
-        }
-    </script>
-
-  </body>
+</body>
 </html>

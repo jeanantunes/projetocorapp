@@ -15,7 +15,6 @@ $(document).ready(function(){
         $( "#keyOdont" ).removeClass( "hide" )
         return false;
     });
-
     $("#btnkeyOdont").click(function(){
         $( "#keyOdont" ).addClass( "hide" )
         $( "#termoOdont" ).removeClass( "hide" )
