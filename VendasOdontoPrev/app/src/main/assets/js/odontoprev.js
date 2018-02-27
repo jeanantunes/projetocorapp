@@ -46,16 +46,74 @@ $(document).ready(function(){
         $( "#infoCorretora" ).removeClass( "hide" )
         return false;
     });
-    $("#btnInfoCorretoraNCpf").click(function(){
-        $( "#infoCorretora" ).addClass( "hide" )
-        $( "#cadastroSucessoCorretora" ).removeClass( "hide" )
-        return false;
-    });
+
+
 });
 
 $(".btnExcluir").click(function(){
     $( ".div-excluir" ).remove();
 });
+
+//Meus Dados//
+
+$("#editMeusDados1").click(function () {
+    $("#imgEmail").removeClass("hide")
+    $("#imgCel").removeClass("hide")
+    $("#emailInput").removeClass("hide")
+    $("#celInput").removeClass("hide")
+
+    $("#emailLabel").addClass("hide")
+    $("#imgLabEmail").addClass("hide")
+    $("#celLabel").addClass("hide")
+    $("#imgLabCel").addClass("hide")
+    return false;
+});
+
+$("#editMeusDados2").click(function () {
+    $("#imgEmail").removeClass("hide")
+    $("#imgCel").removeClass("hide")
+    $("#emailInput").removeClass("hide")
+    $("#celInput").removeClass("hide")
+
+    $("#emailLabel").addClass("hide")
+    $("#imgLabEmail").addClass("hide")
+    $("#celLabel").addClass("hide")
+    $("#imgLabCel").addClass("hide")
+    return false;
+});
+
+$("#editMeusDados1").click(function () {
+    $("#salvarEditDados").removeClass("disabled")
+    $("#editMeusDados1").addClass("hide")
+    $("#editMeusDados2").addClass("hide")
+    return false;
+});
+
+$("#editMeusDados2").click(function () {
+    $("#salvarEditDados").removeClass("disabled")
+    $("#editMeusDados1").addClass("hide")
+    $("#editMeusDados2").addClass("hide")
+    return false;
+});
+
+
+$("#salvarEditDados").click(function () {
+    $("#salvarEditDados").addClass("disabled")
+
+    $("#imgEmail").addClass("hide")
+    $("#imgCel").addClass("hide")
+    $("#emailInput").addClass("hide")
+    $("#celInput").addClass("hide")
+
+    $("#emailLabel").removeClass("hide")
+    $("#imgLabEmail").removeClass("hide")
+    $("#celLabel").removeClass("hide")
+    $("#imgLabCel").removeClass("hide")
+    return false;
+    return false;
+});
+
+//End Meus Dados//
 
 // Menu //
 

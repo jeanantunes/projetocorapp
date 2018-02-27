@@ -1268,6 +1268,11 @@ h5, .subListBox{
     text-align: center;
 }
 
+.editDados {
+    width: 80%;
+    font-size: 16pt;
+}
+
 .modal-footer-OdontMed{
     padding: 0px;
     text-align: right;
