@@ -2,7 +2,12 @@
     
      $(document).ready(function() {
 
-
+         function validaNome(campo) {
+             var regex = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\ \s]+$/;
+             if (campo.match(regex)) {
+                 return false;
+             } else { return true; }
+         }
               function validarDependentes()
               {
                 var myJSON = JSON.stringify($("#meu_formulario").serializeArray());
