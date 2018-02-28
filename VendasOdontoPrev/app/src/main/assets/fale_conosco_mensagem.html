@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Language" content="pt-br">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,95 +9,98 @@
     <title>Odontoprev</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
-  </head>
-  <body>
-      <!-- Menu -->
-      <div class="closeNav hide" onclick="closeNav()"></div>
-      <div id="mySidenav" class="sidenav">
-          <div class="row">
-              <div class="col-md-12 userLog">
-                  <div class="col-md-12">
-                      <div class="perfilMenu">
-                          <img src="img/icone_325x325.png" class="imgPerfil" alt="" id="imageePerfil">
-                          <div>
-                              <label class="labelOdontMenu" id="nomeCorretorMenu"></label>
-                          </div>
-                          <div>
-                              <label class="subLabelOdontMenu" id="nomeCorretoraMenu"></label>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <a href="logado.html" class="linkMenu"><img src="img/menu-home.png" align="center">TELA INICIAL</a>
-          <a href="venda_index_pf.html" class="linkMenu"><img src="img/menu-vender-pf.png" align="center">VENDER PESSOA FÍSICA</a>
-          <a href="venda_index_pme.html" class="linkMenu"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
-          <a href="rede_credenciada.html" class="linkMenu"><img src="img/menu-rede-credenciada.png" align="center">BUSCAR REDE CREDENCIADA</a>
-          <a href="lista_proposta.html" class="linkMenu"><img src="img/menu-listas.png" align="center">LISTA DE PROPOSTA</a>
-          <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
-          <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
-          <a href="fale_conosco.html" class="linkMenu colorActive"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
-          <a id="logout" href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
-      </div>
-      <!-- End Menu -->
-      <!-- Bloco 1 -->
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-md-12 boxHeader">
-                  <div class="col-md-12 text-center imgLogoODPVHeader">
-                      <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
-                  </div>
-                  <span class="btnMenu" onclick="openNav()">&#9776;</span>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12 odontBoxCenter">
-                  <h1 class="titleOdont text-center">
-                      FALE CONOSCO
-                  </h1>
-                  <h2 class="subTitleOdont text-center">
-                      Escreva a mensagem
-                  </h2>
-              </div>
-          </div>
+    <link href="css/sweetalert.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Menu -->
+    <div class="closeNav hide" onclick="closeNav()"></div>
+    <div id="mySidenav" class="sidenav">
+        <div class="row">
+            <div class="col-md-12 userLog">
+                <div class="col-md-12">
+                    <div class="perfilMenu">
+                        <img src="img/icone_325x325.png" class="imgPerfil" alt="" id="imageePerfil">
+                        <div>
+                            <label class="labelOdontMenu" id="nomeCorretorMenu"></label>
+                        </div>
+                        <div>
+                            <label class="subLabelOdontMenu" id="nomeCorretoraMenu"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="logado.html" class="linkMenu"><img src="img/menu-home.png" align="center">TELA INICIAL</a>
+        <a href="venda_index_pf.html" class="linkMenu"><img src="img/menu-vender-pf.png" align="center">VENDER PESSOA FÍSICA</a>
+        <a href="venda_index_pme.html" class="linkMenu"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
+        <a href="rede_credenciada.html" class="linkMenu"><img src="img/menu-rede-credenciada.png" align="center">BUSCAR REDE CREDENCIADA</a>
+        <a href="lista_proposta.html" class="linkMenu"><img src="img/menu-listas.png" align="center">LISTA DE PROPOSTA</a>
+        <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
+        <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
+        <a href="fale_conosco.html" class="linkMenu colorActive"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
+        <a id="logout" href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
+    </div>
+    <!-- End Menu -->
+    <!-- Bloco 1 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-center imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+                <span class="btnMenu" onclick="openNav()">&#9776;</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    FALE CONOSCO
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Escreva a mensagem
+                </h2>
+            </div>
+        </div>
 
-          <div class="row">
-              <div class="col-md-12 btnPadBtm">
-                  <div class="form-group">
-                      <label class="labelOdontBlur label-mensagem" for="">Mensagem</label>
-                      <textarea class="form-control noresize mensagem inputLabelBlur" id="faleConoscoMsg" rows="4" maxlength="255"></textarea>
-                  </div>
-                  <a class="btn btn-lg btn-block btnOdont disabled" id="enviar" href="#" role="button">ENVIAR</a>
-              </div>
-          </div>
+        <div class="row">
+            <div class="col-md-12 btnPadBtm">
+                <div class="form-group">
+                    <label class="labelOdontBlur label-mensagem" for="">Mensagem</label>
+                    <textarea class="form-control noresize mensagem inputLabelBlur" id="faleConoscoMsg" rows="4" maxlength="255"></textarea>
+                </div>
+                <a class="btn btn-lg btn-block btnOdont disabled" id="enviar" href="#" role="button">ENVIAR</a>
+            </div>
+        </div>
 
-          <div class="row">
-              <div class="col-md-12 footerContato">
-                  <div class="footerImg">
-                      <img src="img/loja_protegida.png" class="" alt="Loja Protegida">
-                      <img src="img/ans_codigo.png" class="ans" alt="ANS Código">
-                  </div>
-                  <span class="color2">
-                      <p>© OdontoPrev. S/A - CNPJ: 58.119.199/0001-51</p>
-                      <p>Av. Marcos Penteado de Ulhoa Rodrigues, 939-14</p>
-                      <p>andar-Edifício Jatoba Torre 2-Barueri-SP</p>
-                      <p>CEP-06460-040</p><br>
-                      <p>OdontoPrev – CRO/SP nº 2728 | RT: J. M. Benozatti –</p>CRO/SP nº 19009
-                  </span>
-              </div>
-          </div>
-      </div>
-      <!-- End Bloco 1 -->
-      <script src="js/jquery.min.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-      <script src="js/scripts.js"></script>
-      <script src="js/odontoprev.js"></script>
-      <script src="js/jquery.3.2.1.js"></script>
-      <script src="js/jquery.mask.min.js"></script>
-      <script src="js/odonto-Valida.js"></script>
-      <script src="app/coordenador.js"></script>
+        <div class="row">
+            <div class="col-md-12 footerContato">
+                <div class="footerImg">
+                    <img src="img/loja_protegida.png" class="" alt="Loja Protegida">
+                    <img src="img/ans_codigo.png" class="ans" alt="ANS Código">
+                </div>
+                <span class="color2">
+                    <p>© OdontoPrev. S/A - CNPJ: 58.119.199/0001-51</p>
+                    <p>Av. Marcos Penteado de Ulhoa Rodrigues, 939-14</p>
+                    <p>andar-Edifício Jatoba Torre 2-Barueri-SP</p>
+                    <p>CEP-06460-040</p><br>
+                    <p>OdontoPrev – CRO/SP nº 2728 | RT: J. M. Benozatti –</p>CRO/SP nº 19009
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- End Bloco 1 -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="js/jquery.3.2.1.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
+    <script src="js/odonto-Valida.js"></script>
+    <script src="app/coordenador.js"></script>
+    <script src="app/fale_conosco_mensagemController.js"></script>
+    <script charset="ISO-8859-1" src="js/sweetalert.min.js"></script>
 
-  </body>
+</body>
 </html>
