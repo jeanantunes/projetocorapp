@@ -224,13 +224,12 @@ function carregarDadosUsuario() {
     if (carregarDados == null)
         return;
 
-    console.log("teste");
     $("#nomeCorretorMenu").html(carregarDados.nome);
     $("#nomeCorretoraMenu").html(carregarDados.nomeEmpresa);
     $("#nomeCorretor").html(carregarDados.nome);
     $("#nomeCorretora").html(carregarDados.nomeEmpresa);
-    $("#emailCorretor").html(carregarDados.email);
-    $("#numeroCorretor").html(carregarDados.telefone);
+    $("#emailCorretor").val(carregarDados.email);
+    $("#numeroCorretor").val(carregarDados.telefone);
 }
 
 function getUrlParameter(sParam) {

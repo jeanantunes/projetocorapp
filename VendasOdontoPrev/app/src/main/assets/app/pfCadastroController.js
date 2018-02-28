@@ -36,6 +36,14 @@ function buscarPlanosSelecionados() {
     });
 }
 
+$("#cpf").blur(function () {
+
+    console.log("teste");
+    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+        swal("Ops", "CPF inválido", "error");
+    }
+});
+
 function excluirPlano(obj) {
 
     var container = $(".div-excluir[data-id=" + $(obj).attr("data-id") + "]");
@@ -255,4 +263,36 @@ function excluirDep(obj) {
     container.remove();
 
     atualizarPessoas(proposta);
+}
+
+
+// Mantém os inputs em cache:
+var inputs = $('input');
+
+// Chama a função de verificação quando as entradas forem modificadas
+// Usei o 'keyup', mas 'change' ou 'keydown' são também eventos úteis aqui
+inputs.on('keyup', verificarInputs);
+
+function verificarInputs() {
+    inputs.each(function () {
+        // verificar um a um e passar a false se algum falhar
+        // no lugar do if pode-se usar alguma função de validação, regex ou outros
+        var id = this.id;
+        //console.log(id);
+
+            if (!this.value) {
+                preenchidos = false;
+                //swal("Ops!", "Por Favor preencha todos os Dados");
+
+                // parar o loop, evitando que mais inputs sejam verificados sem necessidade
+                return false;
+            }
+
+    });
+
+    preenchidos = true;  // assumir que estão preenchidos
+
+    // Habilite, ou não, o <button>, dependendo da variável:
+    $("#continuarVendaPf").removeClass('disabled'); //,
+    return true;
 }

@@ -22,10 +22,10 @@
 					  <div class="perfilMenu">
 						  <img src="img/icone_325x325.png" class="imgPerfil" alt="" id="imageePerfil">
 						  <div>
-							  <label class="labelOdontMenu">Rosário Lopes</label>
+							  <label class="labelOdontMenu" id="nomeCorretorMenu"></label>
 						  </div>
 						  <div>
-							  <label class="subLabelOdontMenu">Corretora XPTO</label>
+							  <label class="subLabelOdontMenu" id="nomeCorretoraMenu"></label>
 						  </div>
 					  </div>
 				  </div>
@@ -39,7 +39,7 @@
 		  <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
 		  <a href="meus_dados.html" class="linkMenu colorActive"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
 		  <a href="fale_conosco.html" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
-		  <a href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
+		  <a id ="logout" href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
 	  </div>
 	  <!-- End Menu -->
 
@@ -64,30 +64,30 @@
 				
 					<div class="text-center">
 						<div>
-							<label class="labelOdont">Rosário Lopes</label>
+							<label class="labelOdont" id="nomeCorretor"></label>
 						</div>
 						<div>
-							<label class="subLabelOdont">Corretora XPTO</label>
+							<label class="subLabelOdont" id="nomeCorretora"></label>
 						</div>
 					</div>
 				
 					<div class="boxDados">
 						<div>
 							<img src="img/email.png" id="imgLabEmail" align="center">
-							<input type="text" class="email inputLabelBlur editDados" disabled value="rosariolopes@gmail.com" id="emailLabel">
+							<input type="text" class="email inputLabelBlur editDados" disabled value="" id="emailCorretor">
 							<img src="img/btn-editar.png" id="editMeusDados1" width="20px" height="20px" class="" alt="Editar"></input>
 
 							<img src="img/email.png" class="hide" id="imgEmail" align="center">
-							<input type="text" class="email inputLabelBlur editDados hide" value="rosariolopes@gmail.com" id="emailInput">
+							<input type="text" class="email inputLabelBlur editDados hide" value="" id="emailCorretor">
 							</input>
 						</div>
 						<div>
 							<img src="img/celular.png" id="imgLabCel" align="center">
-							<input type="text" class="celular inputLabelBlur editDados" disabled value="(11) 99944-5000" id="celLabel">
+							<input type="text" class="celular inputLabelBlur editDados" disabled value="" id="numeroCorretor">
 							<img src="img/btn-editar.png" id="editMeusDados2" width="20px" height="20px" class="" alt="Editar"></input>
 
 							<img src="img/celular.png" class="hide" id="imgCel" align="center">
-							<input type="text" class="celular inputLabelBlur editDados hide" value="(11) 99944-5000" id="celInput">
+							<input type="text" class="celular inputLabelBlur editDados hide" value="" id="numeroCorretor">
 							</input>
 						</div>
 						<!-- <div>
@@ -136,6 +136,7 @@
 	<script src="js/odontoprev.js"></script>
 	<script src="js/jquery.mask.min.js"></script>
 	<script src="js/odonto-Valida.js"></script>
+    <script src="app/coordenador.js"></script>
 	
 	<script type="text/javascript">
 		function abrirgaleria()

@@ -435,7 +435,7 @@
 
                 },
                 error: function (xhr) {
-                    swal("Erro!", "Rede credenciada não encontrada", "error");
+                    swal(":(", "Nenhum dentista encontrado", "info");
                 }
             });
         }
@@ -475,6 +475,17 @@
 
             $("#btnTeste").click(function (e) {
 
+                if ($("#cep").val() == "")
+                {
+                    swal("Alerta", "Preencha o cep", "warning");
+
+                    $("#cep").css({ "border-color": "#F00" });
+                    $(".cep").css("color", "red");
+                    $(".label-cep").css("color", "red");
+
+                    return;
+                }
+                    
 
                 var cep = $("#cep").val().replace(/\D/g, '');
 
@@ -484,9 +495,6 @@
                     callCep(function (dataCep) {
                         var teste = removerAcentos(dataCep[0].cidade);
                         teste = teste.toUpperCase();
-
-
-
 
 
                         callCidade(function (dataCidade) {

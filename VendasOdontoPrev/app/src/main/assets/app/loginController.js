@@ -49,6 +49,14 @@ function callLogin(callback, login, password) {
     });
 }
 
+$("#cpf").blur(function () {
+
+    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, '')))
+    {
+        swal("Ops", "CPF inválido", "error");
+    }
+});
+
 function callDadosUsuarios(callback, cpf) {
 
     $.ajax({
@@ -161,9 +169,6 @@ function logarETrazerDadosUsuario() {
             forca.statusUsuario = dataDadosUsuario.statusUsuario;
             forca.telefone = dataDadosUsuario.telefone;
             forca.codigo = dataLogin.codigo;
-
-            console.log(forca);
-
 
             //console.log(JSON.stringify(dataDadosUsuario));
             //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
