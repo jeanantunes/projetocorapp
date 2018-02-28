@@ -18,6 +18,10 @@ function callToken(callback) {
         success: function (resp) {
             callback(resp);
         },
+        error: function (xhr)
+        {
+            swal("Ops!", "Erro na conexão, tente mais tarde", "error");
+        }
     });
 }
 
@@ -40,12 +44,11 @@ function callEmail(callback, token)
         },
         data: "{\r\n\r\n  \"sender\": \"" + faleConosco.emailRemetente + "\",\r\n\r\n  \"senderName\": \"" + faleConosco.nomeRemetente + "\",\r\n\r\n  \"recepients\": [\r\n\r\n    \"fernando.mota@odontoprev.com.br\"\r\n\r\n  ],\r\n\r\n  \"recepientName\": \"Fernando S.\",\r\n\r\n  \"subject\": \"" + faleConosco.subject + "\",\r\n\r\n  \"type\": \"text/html\",\r\n\r\n  \"body\": \"" + faleConosco.textoEnviado + "\"\r\n\r\n}",
         error: function (xhr) {
-
+            swal("Ops!", "Erro na conexão, tente mais tarde", "error");
         }
     });
 
 }
-
 
 $("#enviar").click(function () {
 

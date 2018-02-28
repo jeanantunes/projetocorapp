@@ -61,6 +61,14 @@ function SalvarDependente() {
     atualizarPessoas(proposta);
 }
 
+$("#cpf").blur(function () {
+
+    console.log("teste");
+    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+        swal("Ops", "CPF inválido", "error");
+    }
+});
+
 function salvarEVoltar() {
     SalvarDependente();
 

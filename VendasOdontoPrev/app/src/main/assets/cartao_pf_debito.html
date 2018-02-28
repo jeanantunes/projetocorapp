@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Language" content="pt-br">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,62 +9,65 @@
     <title>Odontoprev</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
-  </head>
-  <body>
-<!-- Bloco 1 -->
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12 boxHeader">
-        <div class="col-md-12 text-center imgLogoODPVHeader">
-          <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+</head>
+<body>
+    <!-- Bloco 1 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-left imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-12 odontBoxCenter">
-        <h1 class="titleOdont text-center">
-            CONTA DE DÉBITO
-        </h1>
-        <h2 class="subTitleOdont text-center">
-            Para finalizar a proposta, preencha os dados abaixo
-        </h2>
-        
-        <div class="boxLabInput">
-            <div class="form-group">
-              <label for="" class="label-bancos labelOdontBlur">Bancos</label>
-              <select class="form-control bancos selectListBlur" id="">
-                <option></option>
-                <option>237 - Bradesco</option>
-                <option>341 - Itaú</option>
-              </select>
-            </div>
-            <div>
-              <label class="label-agencia labelOdontBlur">Agência</label>
-            </div>
-            <div>
-              <input type="text" class="agencia inputLabelBlur" id="" name="">
-            </div>
-            <div>
-              <label class="label-conta-corrente labelOdontBlur">Conta corrente</label>
-            </div>
-            <div>
-              <input type="text" class="conta-corrente inputLabelBlur" id="" name="">
-            </div>
-            
-          </div>
-        </div>
-      </div>
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    CONTA DE DÉBITO
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Para finalizar a proposta, preencha os dados abaixo
+                </h2>
 
-      <div class="row">
-        <div class="col-md-12 btnPadBtm">	 
-          <a class="btn btn-lg btn-block btnOdont" href="compra_pf_sucesso.html" role="button">CONTINUAR</a>
+                <div class="boxLabInput">
+                    <div class="form-group">
+                        <label for="" class="label-bancos labelOdontBlur">Banco</label>
+                        <select class="form-control bancos selectListBlur" id="">
+                            <option>Selecione...</option>
+                            <option>237 - Bradesco</option>
+                            <option>341 - Itaú</option>
+                            <option>033 - Santander</option>
+                        </select>
+                    </div>
+                    <div>
+
+
+                        <label class="label-agencia labelOdontBlur">Agência</label>
+                    </div>
+                    <div>
+                        <input type="text" class="agencia inputLabelBlur" id="agenciaDebito" name="" maxlength="4">
+                    </div>
+                    <div>
+                        <label class="label-conta-corrente labelOdontBlur">Conta corrente</label>
+                    </div>
+                    <div>
+                        <input type="text" class="conta-corrente inputLabelBlur" id="contaDebito" name="" maxlength="10">
+                    </div>
+
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="row">
+            <div class="col-md-12 btnPadBtm">
+                <a class="btn btn-lg btn-block btnOdont disabled" href="compra_pf_sucesso.html" role="button" id="continuarPfDebito">CONTINUAR</a>
+            </div>
+        </div>
     </div>
-<!-- End Bloco 1 -->
+    <!-- End Bloco 1 -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
@@ -72,6 +75,7 @@
     <script src="js/jquery.3.2.1.js"></script>
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
+    <script src="app/pfCartaoDebito.js"></script>
 
-  </body>
+</body>
 </html>

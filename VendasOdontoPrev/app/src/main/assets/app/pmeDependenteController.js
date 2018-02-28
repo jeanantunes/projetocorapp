@@ -24,6 +24,15 @@ function carregarForm() {
     }
 }
 
+$("#cpf").blur(function () {
+
+    console.log("teste");
+    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+        swal("Ops", "CPF inválido", "error");
+    }
+});
+
+
 function SalvarDependentes() {
     var stop =false;
     $(".boxDependente").each(function () {

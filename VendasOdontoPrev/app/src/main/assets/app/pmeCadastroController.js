@@ -219,6 +219,95 @@ function salvarRascunho() {
 
 }
 
+function salvarRascunho() {
+
+    if ($("#cnpjEmpresa").val() == "") {
+        swal("Ops!", "Preencha o CNPJ", "error");
+        return;
+    }
+
+    if ($("#telefone").val() == "") {
+        swal("Ops!", "Preencha o telefone", "error");
+        return;
+    }
+
+    if ($("#celular").val() == "") {
+        swal("Ops!", "Preencha o celular", "error");
+        return;
+    }
+
+    if ($("#email").val() == "") {
+        swal("Ops!", "Preencha o email", "error");
+        return;
+    }
+
+    if ($("#cep").val() == "") {
+        swal("Ops!", "Preencha o cep", "error");
+        return;
+    }
+
+    if ($("#rua").val() == "") {
+        swal("Ops!", "Preencha o endereço", "error");
+        return;
+    }
+
+    if ($("#numeroEndereco").val() == "") {
+        swal("Ops!", "Preencha o número do endereço", "error");
+        return;
+    }
+
+    if ($("#complemento").val() == "") {
+        swal("Ops!", "Preencha o complemento", "error");
+        return;
+    }
+
+    if ($("#bairro").val() == "") {
+        swal("Ops!", "Preencha o bairro", "error");
+        return;
+    }
+
+    if ($("#cidade").val() == "") {
+        swal("Ops!", "Preencha o cidade", "error");
+        return;
+    }
+
+    if ($("#estado").val() == "") {
+        swal("Ops!", "Preencha o estado", "error");
+        return;
+    }
+
+    salvarRascunhoMemoria();
+
+    swal("Feito!", "Sua proposta foi Salva", "success");
+
+    //window.location = "venda_pme_beneficiarios.html";
+
+    //href="venda_pme_beneficiarios.html" 
+
+}
+
+function salvarRascunho() {
+
+    if ($("#cnpjEmpresa").val() == "") {
+        swal("Ops!", "Preencha o CNPJ", "error");
+        return;
+    }
+
+    salvarRascunhoMemoria();
+
+    swal("Feito!", "Sua proposta foi Salva", "success");
+
+    //window.location = "venda_pme_beneficiarios.html";
+
+    //href="venda_pme_beneficiarios.html" 
+
+}
+
+
+
+
+
+
 function salvarRascunhoMemoria() {
     var proposta = get("proposta");
     proposta.status = "DIGITANDO";

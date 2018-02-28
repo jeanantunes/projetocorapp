@@ -3,6 +3,7 @@
 $(document).ready(function () {
     carregarLista();
     carregarBenef();
+    carregarBoxPlanos();
 
     $(".dependentes").change(function () {
         adicionarBenefMemoria();
@@ -11,6 +12,34 @@ $(document).ready(function () {
         put("numeroDependentes", $(".dependentes").val());
     });
 });
+
+function carregarBoxPlanos()
+{
+    console.log("Executou");
+    var propostaPlanos = get("proposta");
+
+    var sel = document.getElementById('planosPme');
+
+    var planos = get("planos");
+
+    console.log(planos);
+
+    for (var i = 0; i < propostaPlanos.planos.length; i++) {
+
+        console.log(propostaPlanos.planos[i].cdPlano);
+
+        var plano = planos[i].nome;
+        var codigo = planos[i].cdPlano;
+
+        var opt = document.createElement('option');
+        ////console.log(dataEspecialidades[i].descricao);
+        opt.setAttribute('value', codigo);
+        ////console.log(dataEspecialidades[i].codigo);
+        opt.appendChild(document.createTextNode(plano));
+        sel.appendChild(opt);
+    }
+
+}
 
 function carregarLista() {
 
@@ -41,6 +70,14 @@ function salvarBenef() {
             window.location.href = "venda_pme_beneficiarios_lista.html";
         });    
 }
+
+$("#cpf").blur(function () {
+
+    console.log("teste");
+    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+        swal("Ops", "CPF inválido", "error");
+    }
+});
 
 function carregarBenef() {
     var benef = get("beneficiario");
