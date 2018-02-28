@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\css",
-    "\\js"
+    "\\js",
+    "\\validacoes"
   ],
+  "SelectedNode": "\\anteriorLogado.html",
   "PreviewInSolutionExplorer": false
 }
