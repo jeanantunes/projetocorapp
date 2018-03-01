@@ -11,6 +11,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet" />
 </head>
 <body>
     <!-- Bloco 1 -->
@@ -37,9 +38,9 @@
                         <label for="" class="label-bancos labelOdontBlur">Banco</label>
                         <select class="form-control bancos selectListBlur" id="">
                             <option>Selecione...</option>
-                            <option>237 - Bradesco</option>
-                            <option>341 - Itaú</option>
-                            <option>033 - Santander</option>
+                            <option value="237">237 - Bradesco</option>
+                            <option value="341">341 - Itaú</option>
+                            <option value="033">033 - Santander</option>
                         </select>
                     </div>
                     <div>
@@ -63,7 +64,7 @@
 
         <div class="row">
             <div class="col-md-12 btnPadBtm">
-                <a class="btn btn-lg btn-block btnOdont disabled" href="compra_pf_sucesso.html" role="button" id="continuarPfDebito">CONTINUAR</a>
+                <div class="btn btn-lg btn-block btnOdont disabled" onclick="cadastrarConta()" role="button" id="continuarPfDebito">CONTINUAR</div>
             </div>
         </div>
     </div>
@@ -75,7 +76,9 @@
     <script src="js/jquery.3.2.1.js"></script>
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
-    <script src="app/pfCartaoDebito.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script charset="ISO-8859-1" src="app/coordenador.js"></script>
+    <script charset="ISO-8859-1" src="app/pfCartaoDebito.js"></script>
 
 </body>
 </html>

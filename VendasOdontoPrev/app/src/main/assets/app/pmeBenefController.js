@@ -6,15 +6,25 @@ $(document).ready(function () {
     carregarBoxPlanos();
 
     $(".dependentes").change(function () {
+
         adicionarBenefMemoria();
+
+        if (problema)
+            return;
+
+        var proposta = get("proposta");
+        proposta.dependentes = [];
+        atualizarEmpresas(proposta);
+
+        put("proposta", JSON.stringify(proposta));
+
         window.location.href = "venda_pme_dependentes.html";
 
         put("numeroDependentes", $(".dependentes").val());
     });
 });
 
-function carregarBoxPlanos()
-{
+function carregarBoxPlanos() {
     console.log("Executou");
     var propostaPlanos = get("proposta");
 
@@ -51,7 +61,7 @@ function carregarLista() {
 }
 
 function salvarBenef() {
-   
+
     adicionarBenefMemoria();
 
     if (problema)
@@ -68,35 +78,33 @@ function salvarBenef() {
     },
         function (isConfirm) {
             window.location.href = "venda_pme_beneficiarios_lista.html";
-        });    
+        });
 }
 
-$("#cpf").blur(function () {
-
-    console.log("teste");
-    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
-        swal("Ops", "CPF inválido", "error");
-    }
-});
+//$("#cpf").blur(function () {
+//
+//    if (!TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+//        swal("Ops", "CPF inválido", "error");
+//    }
+//});
 
 function carregarBenef() {
     var benef = get("beneficiario");
 
-    if (benef == null)
-    {
+    if (benef == null) {
         return;
     }
 
-     $("#nome-beneficiario").val(benef.nome);
-     $(".nome-mae").val(benef.nomeMae);
+    $("#nome-beneficiario").val(benef.nome);
+    $(".nome-mae").val(benef.nomeMae);
 
-     $(".dependentes").val(benef.dependentes.length);
+    $(".dependentes").val(benef.dependentes.length);
 
-     if (benef.sexo == "m") {
+    if (benef.sexo == "m") {
         $("#radio-1").attr("checked", true);
     }
     else {
-         $("#radio-2").attr("checked", true);
+        $("#radio-2").attr("checked", true);
     }
 
     $(".nascimento").val(benef.dataNascimento);
@@ -106,8 +114,6 @@ function carregarBenef() {
 }
 
 function adicionarBenefMemoria() {
-
-
     var proposta = get("proposta");
 
     if ($("#nome-beneficiario").val() == "") {
@@ -128,8 +134,15 @@ function adicionarBenefMemoria() {
         return;
     }
 
-    if ($(".cpf").val() == "") {
-        swal("Ops!", "Preencha o CPF", "error");
+    //if (!isValidDate($(".nascimento").val())) {
+    //    swal("Ops!", "Data de Nascimento inválida", "error");
+    //    $(".dependentes").val(0);
+    //    return;
+    //}
+
+    if ($(".cpf").val() == "" || !TestaCPF($(".cpf").val().replace(/\D/g, ''))) {
+        console.log("Validando cpf");
+        swal("Ops!", "CPF está inválido", "error");
         $(".dependentes").val(0);
         return;
     }
@@ -148,6 +161,17 @@ function adicionarBenefMemoria() {
 
     var benef = getRepository("beneficiario");
     var benefMemoria = get("beneficiario");
+    //var benefTodos = get("beneficiarios");
+
+    //if (benefTodos != null) {
+    //    var existe = benefTodos.filter(function (x) { return x.cpf == $("#cpf").val() });
+
+    //    if (existe.length > 0) {
+    //        swal("Ops!", "Já existe um Beneficiário com este CPF", "error");
+    //        $(".dependentes").val(0);
+    //        return;
+    //    }
+    //}
 
     if (benefMemoria != null) {
         benef.dependentes = benefMemoria.dependentes;
@@ -185,3 +209,4 @@ function adicionarBenefMemoria() {
 
     return benef;
 }
+

@@ -10,6 +10,7 @@ function carregarLista() {
     $("#cnpjEmpresa").html(proposta.cnpj);
 
     var beneficiarios = get("beneficiarios");
+    beneficiarios = beneficiarios.filter(function (x) { return x.cnpj == proposta.cnpj });
 
     if (beneficiarios != null) {
         $("#lista").html("");

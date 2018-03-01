@@ -1,6 +1,7 @@
 ﻿{
   "status": "",
   "cnpj": "",
+  "cnae": "",
   "razaoSocial": "",
   "incEstadual": "",
   "ramoAtividade": "",
@@ -13,7 +14,7 @@
   "vencimentoFatura": 30,
   "enderecoEmpresa": {
     "cep": "",
-    "endereco": "",
+    "logradouro": "",
     "numero": "",
     "complemento": "",
     "bairro": "",

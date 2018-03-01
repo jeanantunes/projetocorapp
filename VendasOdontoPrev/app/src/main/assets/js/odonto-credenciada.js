@@ -79,6 +79,9 @@ function callToken(callback) {
         success: function (resp) {
             callback(resp)
         },
+        error: function (xhr) {
+            swal("Ops!", "Erro na conexão, tente mais tarde", "error");
+        }
     });
 }
 

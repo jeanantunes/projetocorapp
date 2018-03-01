@@ -24,23 +24,22 @@ function carregarForm() {
     }
 }
 
-$("#cpf").blur(function () {
-
-    console.log("teste");
-    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
-        swal("Ops", "CPF inválido", "error");
-    }
-});
+//$("#cpf").blur(function () {
+//
+//    console.log("teste");
+//    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+//        swal("Ops", "CPF inválido", "error");
+//    }
+//});
 
 
 function SalvarDependentes() {
-    var stop =false;
+    var stop = false;
     $(".boxDependente").each(function () {
         if (stop)
             return;
 
-        if ($(this).find(".nome-dependente").val() == "")
-        {
+        if ($(this).find(".nome-dependente").val() == "") {
             swal("Ops!", "Preencha o Nome do " + $(this).find(".depends").html(), "error");
             stop = true;
             return;
@@ -69,8 +68,36 @@ function SalvarDependentes() {
             stop = true;
             return;
         }
+
+        var benefTodos = get("beneficiarios");
+
+        if (benefTodos != null) {
+            var existe = benefTodos.filter(function (x) { return x.cpf == $("#cpf").val() });
+
+            if (existe.length > 0) {
+                swal("Ops!", "Já existe um Beneficiário com este CPF", "error");
+                $(".dependentes").val(0);
+                return;
+            }
+        }
+
+        //if (benefTodos != null) {
+        //    var deps = benefTodos.dependentes;
+        //    if (deps != null) {
+        //        var existe = deps.filter(function (x) { return x.cpf == $("#cpf").val() });
+
+        //        if (existe.length > 0) {
+        //            swal("Ops!", "Já existe um Dependente com este CPF", "error");
+        //            $(".dependentes").val(0);
+        //            return;
+        //        }
+        //    }
+        //}
     });
 
+
+    if (stop)
+        return;
 
     $(".boxDependente").each(function () {
 
@@ -87,9 +114,24 @@ function SalvarDependentes() {
             benef.dependentes = [];
         }
 
+        //var benefTodos = get("beneficiarios");
+
+        //if (benefTodos != null) {
+        //    var deps = benefTodos.dependentes;
+        //    if (deps != null) {
+        //        var existe = deps.filter(function (x) { return x.cpf == $("#cpf").val() });
+
+        //        if (existe.length > 0) {
+        //            swal("Ops!", "Já existe um Dependente com este CPF", "error");
+        //            $(".dependentes").val(0);
+        //            return;
+        //        }
+        //    }
+        //}
+
         benef.dependentes.push(dependente);
         put("beneficiario", JSON.stringify(benef));
     });
 
-    window.location.href = 'venda_pme_beneficiarios.html';  
+    window.location.href = 'venda_pme_beneficiarios.html';
 }

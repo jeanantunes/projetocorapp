@@ -11,6 +11,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import controllers.SairDaConta;
+import controllers.loginController;
 
 /**
  * Created by freejack on 06/01/2018.
@@ -96,6 +97,9 @@ public class CustomWebViewClient extends WebViewClient {
             Log.i("MeuLog", "InvocationTargetException arq= " + arquivo + " erro: " + e.toString() );
         }
 
+        loginController login = new loginController(context);
+
+        view.addJavascriptInterface(login, "login");
 
         Log.d("MeuLog", "Arquivo: " + arquivo);
 

@@ -11,6 +11,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/odontoprev.css" rel="stylesheet">
+      <link href="css/sweetalert.css" rel="stylesheet" />
   </head>
   <body>
       <!-- Menu -->
@@ -39,7 +40,7 @@
           <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
           <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
           <a href="fale_conosco.html" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
-          <a id="logout" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
+          <a id="logout" href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
       </div>
       <!-- End Menu -->
       <!-- Bloco 1 -->
@@ -91,18 +92,14 @@
                       </div>
                   </div>
                   <div class="text-center">
-                      <div class="boxAlertPendente">
+                      <div class="boxAlertPendente" style="float:left;margin-left:10px;" onclick="sincronizar()" >
                           <!-- <img src="img/alarm.png" class="imgAlarm" align="left"> -->
                           <label class="label-Icomp"><p id="pronta"></p> Propostas não enviadas</label>
                       </div>
-                      <div class="boxAlertSucess">
-                          <!-- <img src="img/delete.png" class="imgDel" align="left"> -->
-                          <label class="label-Sucess"><p id="finalizada"></p> Propostas finalizadas</label>
-                      </div>
                   </div>
               </div>
-              <div class="row">
-                  <div class="boxVendas">
+              <div class="row"> 
+                  <!--<div class="boxVendas">
                       <label class="labelBlue">PROPOSTAS</label>
                       <div class="dropdown">
                           <button class="btnDropOdont dropdown-toggle" type="button" data-toggle="dropdown">
@@ -126,7 +123,7 @@
                               </span>
                           </ul>
                       </section>
-                  </div>
+                  </div>-->
               </div>
           </div>
 
@@ -156,6 +153,7 @@
       <script src="js/bootstrap.min.js"></script>
       <script src="js/scripts.js"></script>
       <script src="js/odontoprev.js"></script>
+      <script src="js/sweetalert.min.js"></script>
       <script src="app/coordenador.js"></script>
       <script src="app/logadoController.js"></script>
   </body>

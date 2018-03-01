@@ -6,6 +6,90 @@ $(document).ready(function () {
 });
 
 function addDependente() {
+
+    if ($("#cpf").val() == "") {
+        swal("Ops!", "Preencha o CPF", "error");
+        return;
+    }
+
+    if (!TestaCPF($("#cpf").val())) {
+        swal("Ops!", "CPF inválido", "error");
+        return;
+    }
+
+    if ($(".nome").val() == "") {
+        swal("Ops!", "Preencha o Nome", "error");
+        return;
+    }
+
+    if ($(".email").val() == "") {
+        swal("Ops!", "Preencha o E-mail", "error");
+        return;
+    }
+
+    if ($(".celular").val() == "") {
+        swal("Ops!", "Preencha o celular", "error");
+        return;
+    }
+
+    if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+
+        $("#cpf").focus();
+        swal("Ops!", "Preencha o CPF", "error");
+        return;
+    }
+
+    if ($(".nascimento").val() == "") {
+        swal("Ops!", "Preencha a Data de Nascimento", "error");
+        return;
+    }
+
+    if ($("#radio-1").is(":checked") == false && $("#radio-2").is(":checked") == false) {
+        swal("Ops!", "Selecione o Sexo", "error");
+        $(".dependentes").val(0);
+        return;
+    }
+
+    if ($(".nome-mae").val() == "") {
+        swal("Ops!", "Preencha Nome da Mãe", "error");
+        return;
+    }
+
+    if ($(".cep").val() == "") {
+        swal("Ops!", "Preencha o cep", "error");
+        return;
+    }
+
+    if ($(".rua").val() == "") {
+        swal("Ops!", "Preencha o endereço", "error");
+        return;
+    }
+
+    if ($(".numeroEndereco").val() == "") {
+        swal("Ops!", "Preencha o número do endereço", "error");
+        return;
+    }
+
+    if ($(".complemento").val() == "") {
+        swal("Ops!", "Preencha o complemento", "error");
+        return;
+    }
+
+    if ($(".bairro").val() == "") {
+        swal("Ops!", "Preencha o bairro", "error");
+        return;
+    }
+
+    if ($(".cidade").val() == "") {
+        swal("Ops!", "Preencha o cidade", "error");
+        return;
+    }
+
+    if ($(".estado").val() == "") {
+        swal("Ops!", "Preencha o estado", "error");
+        return;
+    }
+
     salvarRascunhoMemoria();
     window.location = "venda_pf_dados_dependentes.html";
 }
@@ -36,13 +120,12 @@ function buscarPlanosSelecionados() {
     });
 }
 
-$("#cpf").blur(function () {
-
-    console.log("teste");
-    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
-        swal("Ops", "CPF inválido", "error");
-    }
-});
+//$("#cpf").blur(function () {
+//
+//    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+//        swal("Ops", "CPF inválido", "error");
+//    }
+//});
 
 function excluirPlano(obj) {
 
@@ -94,7 +177,9 @@ function salvarRascunho() {
         return;
     }
 
-    if ($(".cpf").val() == "") {
+    if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+
+        $("#cpf").focus();
         swal("Ops!", "Preencha o CPF", "error");
         return;
     }
@@ -154,6 +239,20 @@ function salvarRascunho() {
     window.location.href = "resumo_pf_proposta.html";
 }
 
+//$("#data").blur(function () {
+//
+//    var id = document.getElementById('data');
+//
+//    var RegExPattern = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])      [\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
+//
+//    if (!((id.value.match(RegExPattern)) && (id.value != ''))) {
+//        console.log("data invalida");
+//        id.focus();
+//    }
+//    else console.log("data valida");
+//
+//});
+
 function salvarRascunhoMemoria() {
     var proposta = get("propostaPf");
     proposta.status = "DIGITANDO";
@@ -165,7 +264,7 @@ function salvarRascunhoMemoria() {
     proposta.celular = $(".celular").val();
     proposta.email = $(".email").val();
     proposta.endereco.cep = $(".cep").val();
-    proposta.endereco.endereco = $(".endereco").val();
+    proposta.endereco.logradouro = $(".endereco").val();
     proposta.endereco.numero = $(".numero").val();
     proposta.endereco.complemento = $(".complemento").val();
     proposta.endereco.bairro = $(".bairro").val();
@@ -224,7 +323,7 @@ function carregarProposta() {
     $(".celular").val(proposta.celular);
     $(".email").val(proposta.email);
     $(".cep").val(proposta.endereco.cep);
-    $(".endereco").val(proposta.endereco.endereco);
+    $(".endereco").val(proposta.endereco.logradouro);
     $(".numero").val(proposta.endereco.numero);
     $(".complemento").val(proposta.endereco.complemento);
     $(".bairro").val(proposta.endereco.bairro);
@@ -280,13 +379,13 @@ function verificarInputs() {
         var id = this.id;
         //console.log(id);
 
-            if (!this.value) {
-                preenchidos = false;
-                //swal("Ops!", "Por Favor preencha todos os Dados");
+        if (!this.value) {
+            preenchidos = false;
+            //swal("Ops!", "Por Favor preencha todos os Dados");
 
-                // parar o loop, evitando que mais inputs sejam verificados sem necessidade
-                return false;
-            }
+            // parar o loop, evitando que mais inputs sejam verificados sem necessidade
+            return false;
+        }
 
     });
 

@@ -32,10 +32,10 @@
                     <div class="perfilMenu">
                         <img src="img/icone_325x325.png" class="imgPerfil" alt="">
                         <div>
-                            <label class="labelOdontMenu">Rosário Lopes</label>
+                            <label class="labelOdontMenu" id="nomeCorretorMenu"></label>
                         </div>
                         <div>
-                            <label class="subLabelOdontMenu">Corretora XPTO</label>
+                            <label class="subLabelOdontMenu" id="nomeCorretoraMenu"></label>
                         </div>
                     </div>
                 </div>
@@ -183,6 +183,7 @@
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
     <script src="js/sweetalert.min.js"></script>
+    <script src="app/coordenador.js"></script>
     <!--<script src="C:\Users\Treinamento6\Downloads\Jquery.js"></script>-->
 
 
@@ -300,6 +301,9 @@
                     swal.close();
                     callback(resp)
                 },
+                error: function (xhr) {
+                    swal("Ops!", "Erro na conexão, tente mais tarde", "error");
+                }
             });
         }
 
@@ -475,8 +479,7 @@
 
             $("#btnTeste").click(function (e) {
 
-                if ($("#cep").val() == "")
-                {
+                if ($("#cep").val() == "") {
                     swal("Alerta", "Preencha o cep", "warning");
 
                     $("#cep").css({ "border-color": "#F00" });
@@ -485,7 +488,7 @@
 
                     return;
                 }
-                    
+
 
                 var cep = $("#cep").val().replace(/\D/g, '');
 

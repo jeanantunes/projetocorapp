@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
             //forcaLogin = buscar(1);
 
+            Log.d("MeuLog", "Erro na busca do login");
+
             if(forcaLogin != null)
             {
                 myWebView.loadUrl("file:///android_asset/anteriorLogado.html");
@@ -173,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
             forca.setEmail(resultado.getString(resultado.getColumnIndexOrThrow("email")));
             forca.setNome(resultado.getString(resultado.getColumnIndexOrThrow("nome")));
             forca.setNomeEmpresa(resultado.getString(resultado.getColumnIndexOrThrow("nomeEmpresa")));
-
 
             Log.i("MeuLog", "Executou BuscarEmpresa");
             return forca;

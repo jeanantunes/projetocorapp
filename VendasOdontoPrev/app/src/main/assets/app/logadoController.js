@@ -2,7 +2,41 @@
 
 $(document).ready(function () {
     alertas();
+
+    getVersaoApp(function (dataVersao) {
+
+        var versao = dataVersao.versao;
+
+        if (versao != 1)
+        {
+            swal({
+                title: "Ops",
+                text: "Sua versão do aplicativo está desatualizada, atualize na Play Store",
+                type: "warning"
+            }, function () {
+                // Redirect the user
+                window.location = "https://play.google.com/store/apps/details?id=br.com.beneficiario.odontoprev&hl=pt_BR";
+            });
+        }
+
+    });
 });
+
+function getVersaoApp(callback) {
+    $.ajax({
+        async: true,
+        url: "https://api.odontoprev.com.br:8243/corretorapp/1.0/versao",
+        method: "GET",
+        headers: {
+            "Cache-Control": "no-cache"
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+        }
+    });
+}
 
 function alertas() {
 

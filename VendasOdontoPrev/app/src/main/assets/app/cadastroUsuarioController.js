@@ -24,8 +24,7 @@ function callForcaVenda(callback, cpf) {
             "Content-Type": "application/json",
             "Cache-Control": "no-cache"
         },
-        success: function (resp)
-        {
+        success: function (resp) {
             callback(resp);
 
 
@@ -47,7 +46,7 @@ function callDadosUsuarios(callback, cpf) {
         },
         success: function (resp) {
             //$("#loadingLogin").addClass('hide');
-            callback(resp);      
+            callback(resp);
         },
         error: function (xhr) {
             //$("#loadingLogin").addClass('hide');
@@ -61,8 +60,7 @@ function callDadosUsuarios(callback, cpf) {
     });
 }
 
-function callInputForcaVenda(callback, cpf, celular, email, corretora, nome, senha, dataNascimento)
-{
+function callInputForcaVenda(callback, cpf, celular, email, corretora, nome, senha, dataNascimento) {
     var ativo = "false";
     var departamento = "Corretor";
     var cargo = "Corretor";
@@ -86,9 +84,12 @@ function callInputForcaVenda(callback, cpf, celular, email, corretora, nome, sen
     });
 }
 
-function callPutForcaVenda(callback, codForca, nome, celular, email, senha)
-{
-    var canalVenda = 1;
+function callPutForcaVenda(callback, codForca, nome, celular, email, senha) {
+    var canalVenda = 57;
+    var nomeEmpresa = "ODONTO CORRETOR";
+    var nomeGerente = "ODONTO CORRETOR";
+    var responsavel = "ODONTO CORRETOR";
+
     $.ajax({
         async: true,
         url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/forcavenda/login",
@@ -98,7 +99,7 @@ function callPutForcaVenda(callback, codForca, nome, celular, email, senha)
             "Cache-Control": "no-cache"
         },
         processData: false,
-        data: "{\r\n\r\n    \"cdForcaVenda\": " + codForca + ",\r\n\r\n    \"nome\": \"" + nome + "\",\r\n\r\n    \"celular\": \"" + celular + "\",\r\n\r\n    \"email\": \"" + email + "\",\r\n\r\n    \"senha\": \"" + senha + "\",\r\n\r\n    \"canalVenda\": " + canalVenda + "\r\n\r\n}",
+        "data": "{\r\n\r\n    \"cdForcaVenda\": " + codForca + ",\r\n\r\n    \"nome\": \"" + nome + "\",\r\n\r\n    \"celular\": \"" + celular + "\",\r\n\r\n    \"email\": \"" + email + "\",\r\n\r\n    \"senha\": \"" + senha + "\",\r\n\r\n    \"nomeEmpresa\": \"" + nomeEmpresa + "\",\r\n\r\n    \"nomeGerente\": \"" + nomeGerente + "\",\r\n\r\n    \"responsavel\": \"" + responsavel + "\",\r\n\r\n    \"rg\": 0,\r\n\r\n    \"canalVenda\": " + canalVenda + "\r\n\r\n}",
         success: function (resp) {
             callback(resp);
         },
@@ -108,8 +109,7 @@ function callPutForcaVenda(callback, codForca, nome, celular, email, senha)
     });
 }
 
-function callCorretora(callback, cnpj)
-{
+function callCorretora(callback, cnpj) {
     swal({
         title: "Aguarde",
         text: 'Estamos buscando a corretora',
@@ -146,11 +146,9 @@ function callCorretora(callback, cnpj)
 
 $("#btnCpfOdont").click(function () {
     var cpfValidado = $("#cpf").val().replace(/\D/g, '');
-    
+
     if (TestaCPF(cpfValidado)) {
         callForcaVenda(function (dataDadosUsuario) {
-
-            console.log(dataDadosUsuario);
 
             if (dataDadosUsuario.statusForcaVenda == "Pendente") {
                 console.log("Executou swal");
@@ -171,7 +169,7 @@ $("#btnCpfOdont").click(function () {
             }
 
             if (dataDadosUsuario.cdForcaVenda != null && dataDadosUsuario.statusForcaVenda == "Pré-cadastro") {
-                
+
                 swal.close();
                 console.log(dataDadosUsuario);
                 $("#celOdont").removeClass("hide");
@@ -181,7 +179,7 @@ $("#btnCpfOdont").click(function () {
                 $("#emailPreCadastrado").val(dataDadosUsuario.email);
 
                 localStorage.setItem("dadosUsuario", JSON.stringify(dataDadosUsuario));
-                
+
             }
             else if (dataDadosUsuario.cdForcaVenda == null) {
                 swal.close();
@@ -208,6 +206,10 @@ $("#btnInfoCorretoraNCpf").click(function () {
             return;
         }
 
+        $("#infoCorretora").addClass('hide');
+        $("#termoOdontNCadastrado").removeClass('hide');
+
+
         var codCorretora = dataCorretora.cdCorretora;
         var nome = $("#nomeNaoCadastrado").val();
         var cpfTratado = $("#cpf").val().replace(/\D/g, '');
@@ -220,14 +222,20 @@ $("#btnInfoCorretoraNCpf").click(function () {
 
             console.log(dataForcaVenda);
 
-            $("#infoCorretora").addClass("hide");
-            $("#cadastroSucessoCorretora").removeClass("hide");
+
 
         }, cpfTratado, celularTratado, email, codCorretora, nome, senha, dataNascimento);
 
 
     }, cnpjValidado);
 
+
+});
+
+$("#btnTermoNCadastrado").click(function () {
+
+    $("#termoOdontNCadastrado").addClass("hide");
+    $("#cadastroSucessoCorretora").removeClass("hide");
 
 });
 
@@ -286,8 +294,7 @@ $("#emailNaoCadastrado").blur(function () {
 
     $("#btnCelOdontNCpf").addClass('disabled');
 
-    if ($(this).val() != "" && $("#celularNaoCadastrado").val().length > 14 && $("#nomeNaoCadastrado").val() != "" && validateEmail($(this).val()))
-    {
+    if ($(this).val() != "" && $("#celularNaoCadastrado").val().length > 14 && $("#nomeNaoCadastrado").val() != "" && validateEmail($(this).val())) {
         console.log("Executando validação email");
         $("#btnCelOdontNCpf").removeClass('disabled');
     }
@@ -309,22 +316,18 @@ $("#cpf").keyup(function () {
 
     $("#btnCpfOdont").addClass('disabled');
 
-    if ($("#cpf").val().length == 14 && TestaCPF($("#cpf").val().replace(/\D/g, '')))
-    {
+    if ($("#cpf").val().length == 14 && TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
         $("#btnCpfOdont").removeClass('disabled');
     }
-
-});
-
-$("#btnkeyOdont").click(function () {
-    
-
 
 });
 
 $("#btnTermo").click(function () {
 
     var dados = get("dadosUsuario");
+
+    console.log("Dados");
+    console.log(dados);
 
     var senha = $("#confirmar-senhaCpfTrue").val();
     var cpf = $("#cpf").val().replace(/\D/g, '');
@@ -335,6 +338,7 @@ $("#btnTermo").click(function () {
     var codCorretora = dados.corretora.cdCorretora;
     var cnpj = dados.corretora.cnpj;
     var nomeEmpresa = dados.corretora.razaoSocial;
+    var codigoForca = dados.cdForcaVenda;
 
     console.log(nomeEmpresa);
 
@@ -346,12 +350,43 @@ $("#btnTermo").click(function () {
         dados.email = email;
         dados.cnpj = cnpj;
 
+        put("dadosUsuario", JSON.stringify(dados));
 
-        put("dadosUsuario", JSON.parse(dados));
+        console.log(get("dadosUsuario"));
 
-        console.log(dataForcaVenda);
+        callForcaVenda(function (dataDadosUsuario) {
 
-    }, codCorretora, nome, telefone, email, senha); 
+            swal.close();
+
+            var forca = getRepository("dadosUsuario");
+
+            $("#corretoraCadastro").html(nomeEmpresa);
+
+
+
+            forca.nome = dataDadosUsuario.nome;
+            forca.cargo = dataDadosUsuario.cargo;
+            forca.cpf = dataDadosUsuario.cpf;
+            forca.email = dataDadosUsuario.email;
+            forca.login = dataDadosUsuario.login;
+            forca.nomeEmpresa = dataDadosUsuario.nomeEmpresa;
+            forca.nomeGerente = dataDadosUsuario.nomeGerente;
+            forca.responsavel = dataDadosUsuario.responsavel;
+            forca.rg = dataDadosUsuario.rg;
+            forca.senha = dataDadosUsuario.senha;
+            forca.statusUsuario = dataDadosUsuario.statusUsuario;
+            forca.telefone = dataDadosUsuario.telefone;
+            forca.codigo = dataDadosUsuario.cdForcaVenda;
+
+            put("dadosUsuario", JSON.stringify(forca));
+
+            login.salvarDadosUsuario(JSON.stringify(forca));
+
+        }, cpf);
+
+
+
+    }, codigoForca, nome, telefone, email, senha);
 
 });
 
@@ -416,17 +451,20 @@ $("#senhaCpfTrue").blur(function () {
 
     $("#btnkeyOdont").addClass('disabled');
 
-    if ($(this).val().length < 8) {
+    var confirmarSenha = $("#confirmar-senhaCpfTrue").val();
+    var senha = $("#senhaCpfTrue").val();
 
-        $(this).css({ "border-color": "#F00" });
+    if (senha.length < 8) {
+
+        $("#senhaCpfTrue").css({ "border-color": "#F00" });
         $(".password").css("color", "red");
         $(".label-password").css("color", "red");
         $(".label-password-confirm-8").css("color", "red");
 
         return;
     }
-    else if ($(this).val() > 7 && ($("#confirmar-senhaCpfTrue").val() == "")) {
-        $(this).css({ "border-color": "#3A94FB" });
+    else if (senha.length > 7 && (confirmarSenha == "")) {
+        $("#senhaCpfTrue").css({ "border-color": "#3A94FB" });
         $(".password").css("color", "#3A94FB");
         $(".label-password").css("color", "#3A94FB");
         $(".label-password-confirm-8").css("color", "#3A94FB");
@@ -452,16 +490,20 @@ $("#confirmar-senhaCpfTrue").blur(function () {
 
     $("#btnkeyOdont").addClass('disabled');
 
-    if ($(this).val() != $("#senhaCpfTrue").val() || $(this).val() < 8 || $("#senhaCpfTrue").val() < 8) {
+    var confirmarSenha = $("#confirmar-senhaCpfTrue").val();
+    var senha = $("#senhaCpfTrue").val();
 
-        $(this).css({ "border-color": "#F00" });
+    if (confirmarSenha != senha || confirmarSenha.length < 8 || senha.length < 8) {
+
+        $("#confirmar-senhaCpfTrue").css({ "border-color": "#F00" });
         $(".password-confirm").css("color", "red");
         $(".label-password-confirm").css("color", "red");
 
-    } else if ($(this).val() == $("#senhaCpfTrue").val() && $(this).val() > 7 && $("#senhaCpfTrue").val() > 7) {
+    } else if (confirmarSenha == senha && confirmarSenha.length > 7 && senha.length > 7) {
 
-        $(this).css({ "border-color": "#3A94FB" });
-        $(this).css("color", "#3A94FB");
+        console.log("Teste");
+        $("#confirmar-senhaCpfTrue").css({ "border-color": "#3A94FB" });
+        $("#confirmar-senhaCpfTrue").css("color", "#3A94FB");
         $(".label-password-confirm").css("color", "#3A94FB");
         $("#btnkeyOdont").removeClass('disabled');
     }
@@ -475,7 +517,11 @@ $("#senhaCpfFalse").blur(function () {
 
     $("#btnkeyOdontNCpf").addClass('disabled');
 
-    if ($(this).val().length < 8) {
+    var confirmarSenha = $("#confirmar-senhaCpfFalse").val();
+    var senha = $("#senhaCpfFalse").val();
+
+
+    if (senha.length < 8) {
 
         $(this).css({ "border-color": "#F00" });
         $(".password").css("color", "red");
@@ -484,15 +530,15 @@ $("#senhaCpfFalse").blur(function () {
 
         return;
     }
-    else if ($(this).val() > 7 && ($("#confirmar-senhaCpfFalse").val() == "")) {
+    else if (senha.length > 7 && (confirmarSenha == "")) {
+
         $(this).css({ "border-color": "#3A94FB" });
         $(".password").css("color", "#3A94FB");
         $(".label-password").css("color", "#3A94FB");
         $(".label-password-confirm-8").css("color", "#3A94FB");
 
         return;
-    } else
-    {
+    } else {
         $("#confirmar-senhaCpfFalse").css({ "border-color": "#F00" });
         $(".password-confirm").css("color", "red");
         $(".label-password-confirm").css("color", "red");
@@ -511,13 +557,16 @@ $("#confirmar-senhaCpfFalse").blur(function () {
 
     $("#btnkeyOdontNCpf").addClass('disabled');
 
-    if ($(this).val() != $("#senhaCpfFalse").val() || $(this).val() < 8 || $("#senhaCpfFalse").val() < 8) {
+    var confirmarSenha = $("#confirmar-senhaCpfFalse").val();
+    var senha = $("#senhaCpfFalse").val();
+
+    if (confirmarSenha != senha || confirmarSenha.length < 8 || senha.length < 8) {
 
         $(this).css({ "border-color": "#F00" });
         $(".password-confirm").css("color", "red");
         $(".label-password-confirm").css("color", "red");
 
-    } else if ($(this).val() == $("#senhaCpfFalse").val() && $(this).val() > 7 && $("#senhaCpfFalse").val() > 7) {
+    } else if (confirmarSenha == senha && confirmarSenha.length > 7 && senha.length > 7) {
 
         $(this).css({ "border-color": "#3A94FB" });
         $(this).css("color", "#3A94FB");

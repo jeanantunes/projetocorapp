@@ -16,14 +16,14 @@ function callLogin(callback, login, password) {
 
     $.ajax({
         async: true,
-        url: "https://api-it1.odontoprev.com.br:8243/dcss/login/1.0/",
+        url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/login",
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Cache-Control": "no-cache"
         },
         processData: false,
-        data: "{\n    \"login\": \"" + login + "\",\n    \"senha\": \"" + password + "\"\n}",
+        data: "{\r\n\"usuario\": \"" + login + "\",\r\n\"senha\": \"" + password +"\"\r\n}\r\n\r\n ",
         success: function (resp) {
             callback(resp)
         },
@@ -32,29 +32,43 @@ function callLogin(callback, login, password) {
 
             //console.log(JSON.stringify(resp.statusText));
             //ob.imprimirAlgo(JSON.stringify(resp.statusText));
-            console.log(xhr.status);
+            //console.log(xhr.status);
             //$("#loadingLogin").addClass('hide');
 
-            if (xhr.status == 403) {
-                swal("Ops!", "CPF ou senha inválida.", "error");
+            if (xhr.status == 400) {
+                swal("Ops!", "Login ou senha inválida.", "error");
                 $("#erroLogin").removeClass('hide');
                 $("#erroLogin").html("CPF ou senha inválida.");
+
+                return;
             } else if (xhr.status == 0) {
-                swal("Ops!", "Você está sem conexão, tente novamente.", "error");
-                $("#erroLogin").removeClass('hide');
-                $("#erroLogin").html("Erro na conexão, tente novamente.");
+                swal("Ops!", "Erro na conexão, tente novamente.", "error");
                 //swal.close();
+                return;
             }
+
         }, timeout: 15000
     });
 }
 
-$("#cpf").blur(function () {
+$("#continuarLogin").click(function () {
 
     if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, '')))
     {
         swal("Ops", "CPF inválido", "error");
+
+        return;
     }
+
+    if ($("#password").val().length < 8)
+    {
+        swal("Ops", "A senha deve conter no mínimo 8 caracteres", "error");
+
+        return;
+    }
+
+    logarETrazerDadosUsuario();
+
 });
 
 function callDadosUsuarios(callback, cpf) {
@@ -74,8 +88,8 @@ function callDadosUsuarios(callback, cpf) {
         error: function (xhr) {
             //$("#loadingLogin").addClass('hide');
             if (xhr.status == 0) {
-                $("#erroLogin").removeClass('hide');
-                $("#erroLogin").html("Sem conexão, tente novamente.");
+
+                return;
             }
             //console.log(JSON.stringify(resp.statusText));
             //ob.imprimirAlgo(JSON.stringify(resp.statusText));
@@ -111,13 +125,13 @@ function verificarInputs() {
 }
 
 
-$("#continuarLogin").click(function () {
-
-    logarETrazerDadosUsuario();
-
-    //window.location = "logado.html";
-
-});
+//$("#continuarLogin").click(function () {
+//
+//    logarETrazerDadosUsuario();
+//
+//    //window.location = "logado.html";
+//
+//});
 
 function logarETrazerDadosUsuario() {
 
@@ -126,7 +140,6 @@ function logarETrazerDadosUsuario() {
     var online = navigator.onLine;
     if (!online) {
         //$("#loadingLogin").addClass('hide');
-        console.log("teste");
         $("#erroLogin").removeClass('hide');
         $("#erroLogin").html("Erro na conexão, tente novamente.");
         return;

@@ -1,4 +1,5 @@
 ﻿var preenchidos = false;
+var cnae;
 
 $(document).ready(function () {
     buscarPlanosSelecionados();
@@ -90,8 +91,25 @@ function verificarInputs() {
 
 function callSerasa(callback, cnpj) {
 
+    console.log(cnpj);
     if (cnpj.length < 14)
         return;
+
+
+
+    if ($("#cnpjEmpresa").val() != "") {
+        var empresas = get("empresas");
+        
+        if (empresas != null) {
+            var existe = empresas.filter(function (x) { return x.cnpj == $("#cnpjEmpresa").val() });
+            
+            if (existe.length > 0) {
+                swal("Ops!", "CNPJ já cadastrado, por favor verifique.", "error");
+                $("#cnpjEmpresa").val("");
+                return;
+            }
+        }
+    }
 
     //swal("Aguarde!", "Estamos buscando seus dados.");
     swal({
@@ -119,18 +137,19 @@ function callSerasa(callback, cnpj) {
         },
         data: "<soapenv:Envelope \n\txmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" \n\txmlns:dat=\"http://services.experian.com.br/DataLicensing/DataLicensingService/\" \n\txmlns:dat1=\"http://services.experian.com.br/DataLicensing/\">\n<soapenv:Header>\n            <wsse:Security  xmlns:wsse=\n                        \"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\n            <wsse:UsernameToken>\n                        <wsse:Username>81935697</wsse:Username>\n            <wsse:Password Type=\n                        \"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Prj@2018</wsse:Password>\n            </wsse:UsernameToken>\n            </wsse:Security>\n   </soapenv:Header>\n   <soapenv:Body>\n      <dat:ConsultarPJ>\n         <parameters>\n            <cnpj>" + cnpj + "</cnpj>\n            <RetornoPJ>\n               <razaoSocial>true</razaoSocial>\n               <nomeFantasia>true</nomeFantasia>\n               <endereco>true</endereco>\n               <dataAbertura>true</dataAbertura>\n               <representanteLegal>true</representanteLegal>\n               <cnae>true</cnae>\n               <telefone>true</telefone>\n               <situacaoCadastral>ONLINE</situacaoCadastral>\n               <simplesNacional>ONLINE</simplesNacional>\n            </RetornoPJ>\n         </parameters>\n      </dat:ConsultarPJ>\n   </soapenv:Body>\n</soapenv:Envelope>",
         success: function (resp) {
+
+            
             callback(resp);
             swal.close();
         },
         error: function () {
-            swal.close();
+            swal("Falha Serasa", "Você está sem conexão de internet.", "error");
         }
     });
 }
 
 $('#cnpjEmpresa').blur(function () {
-
-    buscarEmpresa();
+        buscarEmpresa();
 });
 
 function buscarEmpresa() {
@@ -138,12 +157,17 @@ function buscarEmpresa() {
     var cnpjValidado = $('#cnpjEmpresa').val().replace(/\D/g, '');
 
     callSerasa(function (dataConsulta) {
+        console.log(dataConsulta);
         try {
-            $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent);
+
+            cnae = dataConsulta.getElementsByTagName("codigo")[0].textContent;
+
+            console.log(cnae);
             $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent);
             $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent);
             $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent);
             $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent);
+            $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent);
         }
         catch (Exception) {
             console.log(Exception);
@@ -159,72 +183,6 @@ function salvarRascunho() {
         return;
     }
 
-    if ($("#telefone").val() == "") {
-        swal("Ops!", "Preencha o telefone", "error");
-        return;
-    }
-
-    if ($("#celular").val() == "") {
-        swal("Ops!", "Preencha o celular", "error");
-        return;
-    }
-
-    if ($("#email").val() == "") {
-        swal("Ops!", "Preencha o email", "error");
-        return;
-    }
-
-    if ($("#cep").val() == "") {
-        swal("Ops!", "Preencha o cep", "error");
-        return;
-    }
-
-    if ($("#rua").val() == "") {
-        swal("Ops!", "Preencha o endereço", "error");
-        return;
-    }
-
-    if ($("#numeroEndereco").val() == "") {
-        swal("Ops!", "Preencha o número do endereço", "error");
-        return;
-    }
-
-    if ($("#complemento").val() == "") {
-        swal("Ops!", "Preencha o complemento", "error");
-        return;
-    }
-
-    if ($("#bairro").val() == "") {
-        swal("Ops!", "Preencha o bairro", "error");
-        return;
-    }
-
-    if ($("#cidade").val() == "") {
-        swal("Ops!", "Preencha o cidade", "error");
-        return;
-    }
-
-    if ($("#estado").val() == "") {
-        swal("Ops!", "Preencha o estado", "error");
-        return;
-    }
-
-    salvarRascunhoMemoria();
-
-    swal("Feito!", "Sua proposta foi Salva", "success");
-
-    //window.location = "venda_pme_beneficiarios.html";
-
-    //href="venda_pme_beneficiarios.html" 
-
-}
-
-function salvarRascunho() {
-
-    if ($("#cnpjEmpresa").val() == "") {
-        swal("Ops!", "Preencha o CNPJ", "error");
-        return;
-    }
 
     if ($("#telefone").val() == "") {
         swal("Ops!", "Preencha o telefone", "error");
@@ -276,42 +234,17 @@ function salvarRascunho() {
         return;
     }
 
-    salvarRascunhoMemoria();
-
-    swal("Feito!", "Sua proposta foi Salva", "success");
-
-    //window.location = "venda_pme_beneficiarios.html";
-
-    //href="venda_pme_beneficiarios.html" 
-
-}
-
-function salvarRascunho() {
-
-    if ($("#cnpjEmpresa").val() == "") {
-        swal("Ops!", "Preencha o CNPJ", "error");
-        return;
-    }
 
     salvarRascunhoMemoria();
 
-    swal("Feito!", "Sua proposta foi Salva", "success");
-
-    //window.location = "venda_pme_beneficiarios.html";
-
-    //href="venda_pme_beneficiarios.html" 
-
+    swal("Feito","Proposta salva com sucesso", "success")
 }
-
-
-
-
-
 
 function salvarRascunhoMemoria() {
     var proposta = get("proposta");
     proposta.status = "DIGITANDO";
     proposta.cnpj = $("#cnpjEmpresa").val();
+    proposta.cnae = cnae;
     proposta.razaoSocial = $("#razao-social").val();
     proposta.incEstadual = $("#inscricao-estadual").val();
     proposta.ramoAtividade = $("#ramo-atividade").val();
@@ -322,12 +255,14 @@ function salvarRascunhoMemoria() {
     proposta.celular = $("#celular").val();
     proposta.email = $("#email").val();
     proposta.enderecoEmpresa.cep = $("#cep").val();
-    proposta.enderecoEmpresa.endereco = $("#rua").val();
+    proposta.enderecoEmpresa.logradouro = $("#rua").val();
     proposta.enderecoEmpresa.numero = $("#numeroEndereco").val();
     proposta.enderecoEmpresa.complemento = $("#complemento").val();
     proposta.enderecoEmpresa.bairro = $("#bairro").val();
     proposta.enderecoEmpresa.cidade = $("#cidade").val();
     proposta.enderecoEmpresa.estado = $("#uf").val();
+
+    console.log(proposta);
 
 
     var empresas = get("empresas");
@@ -353,25 +288,47 @@ function carregarProposta() {
     $("#nome-fantasia").val(proposta.nomeFantasia);
     $("#representante-legal").val(proposta.representanteLegal);
 
-     if (proposta.contatoEmpresa) {
-         $("#squaredOne").attr("checked", true);
-     }
-     else {
-         $("#squaredOne").attr("checked", false);
-     }
+    if (proposta.contatoEmpresa) {
+        $("#squaredOne").attr("checked", true);
+    }
+    else {
+        $("#squaredOne").attr("checked", false);
+    }
 
-     $("#telefone").val(proposta.telefone);
-     $("#celular").val(proposta.celular);
-     $("#email").val(proposta.email);
-     $("#cep").val(proposta.enderecoEmpresa.cep);
-     $("#rua").val(proposta.enderecoEmpresa.endereco);
-     $("#numeroEndereco").val(proposta.enderecoEmpresa.numero);
-     $("#complemento").val(proposta.enderecoEmpresa.complemento);
-     $("#bairro").val(proposta.enderecoEmpresa.bairro);
-     $("#cidade").val(proposta.enderecoEmpresa.cidade);
-     $("#uf").val(proposta.enderecoEmpresa.estado);
+    $("#telefone").val(proposta.telefone);
+    $("#celular").val(proposta.celular);
+    $("#email").val(proposta.email);
+    $("#cep").val(proposta.enderecoEmpresa.cep);
+    $("#rua").val(proposta.enderecoEmpresa.logradouro);
+    $("#numeroEndereco").val(proposta.enderecoEmpresa.numero);
+    $("#complemento").val(proposta.enderecoEmpresa.complemento);
+    $("#bairro").val(proposta.enderecoEmpresa.bairro);
+    $("#cidade").val(proposta.enderecoEmpresa.cidade);
+    $("#uf").val(proposta.enderecoEmpresa.estado);
 }
 
 function validarProposta() {
-    window.location.href = "proposta_pme_enviada.html";
+    var proposta = get("proposta");
+
+    var beneficiarios = get("beneficiarios");
+    if (beneficiarios == null) {
+        swal("Ops!", "Proposta deve possuir no mínimo 3 vidas", "error");
+        return;
+    }
+
+    beneficiarios = beneficiarios.filter(function (x) { return x.cnpj == proposta.cnpj });
+    var qtdBenef = beneficiarios.length;
+    var qtdDependente = 0;
+
+    $.each(beneficiarios, function (i, item) {
+        qtdDependente = qtdDependente + item.dependentes.length;
+    });
+
+    if ((qtdBenef + qtdDependente) < 3) {
+        swal("Ops!", "Proposta deve possuir no mínimo 3 vidas", "error");
+        return;
+    }
+
+    salvarRascunho();
+    window.location.href = "vencimento_fatura_pme.html";
 }
