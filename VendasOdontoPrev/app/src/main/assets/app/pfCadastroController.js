@@ -39,6 +39,11 @@ function addDependente() {
         return;
     }
 
+    if (!validarData($(".nascimento").val())) {
+        swal("Ops!", "Preencha uma data de nascimento correta", "error");
+        return;
+    }
+
     if ($(".nascimento").val() == "") {
         swal("Ops!", "Preencha a Data de Nascimento", "error");
         return;
@@ -67,11 +72,6 @@ function addDependente() {
 
     if ($(".numeroEndereco").val() == "") {
         swal("Ops!", "Preencha o número do endereço", "error");
-        return;
-    }
-
-    if ($(".complemento").val() == "") {
-        swal("Ops!", "Preencha o complemento", "error");
         return;
     }
 
@@ -184,6 +184,12 @@ function salvarRascunho() {
         return;
     }
 
+    if ( !validarData($(".nascimento").val() ) ) {
+        swal("Ops!", "Preencha uma data de nascimento correta", "error");
+        return;
+    }
+
+
     if ($(".nascimento").val() == "") {
         swal("Ops!", "Preencha a Data de Nascimento", "error");
         return;
@@ -212,11 +218,6 @@ function salvarRascunho() {
 
     if ($(".numeroEndereco").val() == "") {
         swal("Ops!", "Preencha o número do endereço", "error");
-        return;
-    }
-
-    if ($(".complemento").val() == "") {
-        swal("Ops!", "Preencha o complemento", "error");
         return;
     }
 
@@ -254,11 +255,13 @@ function salvarRascunho() {
 //});
 
 function salvarRascunhoMemoria() {
+
     var proposta = get("propostaPf");
     proposta.status = "DIGITANDO";
     proposta.nome = $(".nome").val();
-    proposta.nascimento = $(".nascimento").val();
+    proposta.dataNascimento = $(".nascimento").val();
     proposta.cpf = $(".cpf").val();
+    proposta.nomeMae = $("#nomeMae").val();
     proposta.contatoEmpresa = $("#squaredOne").is(":checked");
     proposta.telefone = $(".telefone").val();
     proposta.celular = $(".celular").val();
@@ -268,7 +271,7 @@ function salvarRascunhoMemoria() {
     proposta.endereco.numero = $(".numero").val();
     proposta.endereco.complemento = $(".complemento").val();
     proposta.endereco.bairro = $(".bairro").val();
-    proposta.endereco.cidade = $(".cidade").val();
+    proposta.endereco.cidade = ($(".cidade").val());
     proposta.endereco.estado = $(".estado").val();
 
     if ($("#radio-1").is(":checked") == true) {
@@ -301,7 +304,7 @@ function salvarRascunhoMemoria() {
 
 function carregarProposta() {
     var proposta = get("propostaPf");
-    $(".nome").val(proposta.nome);
+    $("#nomeBeneficiario").val(proposta.nome);
     $(".cpf").val(proposta.cpf);
 
     if (proposta.contatoEmpresa) {
@@ -318,8 +321,9 @@ function carregarProposta() {
         $("#radio-2").attr("checked", true);
     }
 
+    $("#nomeMae").val(proposta.nomeMae);
     $(".telefone").val(proposta.telefone);
-    $(".nascimento").val(proposta.nascimento);
+    $(".nascimento").val(proposta.dataNascimento);
     $(".celular").val(proposta.celular);
     $(".email").val(proposta.email);
     $(".cep").val(proposta.endereco.cep);

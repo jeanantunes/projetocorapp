@@ -7,6 +7,12 @@ $(document).ready(function () {
 });
 
 function addBenef() {
+    if ($(".cnpj").val() == "")
+    {
+        swal("Ops!", "Preencha o cnpj", "error");
+
+        return;
+    }
     salvarRascunhoMemoria();
     window.location = "venda_pme_beneficiarios_lista.html";
 }
@@ -92,10 +98,12 @@ function verificarInputs() {
 function callSerasa(callback, cnpj) {
 
     console.log(cnpj);
+
     if (cnpj.length < 14)
         return;
 
-
+    if (!navigator.onLine) return;
+    
 
     if ($("#cnpjEmpresa").val() != "") {
         var empresas = get("empresas");
@@ -156,13 +164,16 @@ function buscarEmpresa() {
 
     var cnpjValidado = $('#cnpjEmpresa').val().replace(/\D/g, '');
 
+    //put('cpnjValido', "");
+
     callSerasa(function (dataConsulta) {
         console.log(dataConsulta);
         try {
 
+            //put('cpnjValido', dataConsulta.getElementsByTagName("situacao")[0].textContent);
+
             cnae = dataConsulta.getElementsByTagName("codigo")[0].textContent;
 
-            console.log(cnae);
             $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent);
             $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent);
             $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent);
@@ -209,16 +220,6 @@ function salvarRascunho() {
         return;
     }
 
-    if ($("#numeroEndereco").val() == "") {
-        swal("Ops!", "Preencha o número do endereço", "error");
-        return;
-    }
-
-    if ($("#complemento").val() == "") {
-        swal("Ops!", "Preencha o complemento", "error");
-        return;
-    }
-
     if ($("#bairro").val() == "") {
         swal("Ops!", "Preencha o bairro", "error");
         return;
@@ -241,6 +242,7 @@ function salvarRascunho() {
 }
 
 function salvarRascunhoMemoria() {
+
     var proposta = get("proposta");
     proposta.status = "DIGITANDO";
     proposta.cnpj = $("#cnpjEmpresa").val();
@@ -264,7 +266,6 @@ function salvarRascunhoMemoria() {
 
     console.log(proposta);
 
-
     var empresas = get("empresas");
 
     if (empresas == null) {
@@ -277,6 +278,12 @@ function salvarRascunhoMemoria() {
     }
 
     put("proposta", JSON.stringify(proposta));
+}
+
+function cnpjValido()
+{
+
+
 }
 
 function carregarProposta() {
@@ -326,6 +333,57 @@ function validarProposta() {
 
     if ((qtdBenef + qtdDependente) < 3) {
         swal("Ops!", "Proposta deve possuir no mínimo 3 vidas", "error");
+        return;
+    }
+
+    if ($(".cnpj").val() == "") {
+        swal("Ops!", "Preencha o cnpj", "error");
+        return;
+    }
+
+    if ($(".telefone").val() == "") {
+        swal("Ops!", "Preencha o telefone", "error");
+        return;
+    }
+
+    if ($(".celular").val() == "") {
+        swal("Ops!", "Preencha o celular", "error");
+        return;
+    }
+
+    if ($(".email").val() == "") {
+        swal("Ops!", "Preencha o email", "error");
+        return;
+    }
+
+    if ($(".cep").val() == "") {
+        swal("Ops!", "Preencha o cep", "error");
+        return;
+    }
+
+
+    if ($(".endereco").val() == "") {
+        swal("Ops!", "Preencha o endereço", "error");
+        return;
+    }
+
+    if ($(".numero").val() == "") {
+        swal("Ops!", "Preencha o número do endereço", "error");
+        return;
+    }
+
+    if ($(".bairro").val() == "") {
+        swal("Ops!", "Preencha o bairro", "error");
+        return;
+    }
+
+    if ($(".cidade").val() == "") {
+        swal("Ops!", "Preencha o cidade", "error");
+        return;
+    }
+
+    if ($(".estado").val() == "") {
+        swal("Ops!", "Preencha o estado", "error");
         return;
     }
 

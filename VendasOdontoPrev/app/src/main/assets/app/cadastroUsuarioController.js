@@ -168,7 +168,7 @@ $("#btnCpfOdont").click(function () {
                 return;
             }
 
-            if (dataDadosUsuario.cdForcaVenda != null && dataDadosUsuario.statusForcaVenda == "Pré-cadastro") {
+            if (dataDadosUsuario.cdForcaVenda != null && dataDadosUsuario.statusForcaVenda == "Aguardando Aprovação") {
 
                 swal.close();
                 console.log(dataDadosUsuario);

@@ -79,7 +79,7 @@
                         <label class="label-nome labelOdontBlur">Nome</label>
                     </div>
                     <div>
-                        <input type="text" class=" nome inputLabelBlur">
+                        <input type="text" class=" nome inputLabelBlur" id="nomeBeneficiario">
                     </div>
                     <div>
                         <label class="label-email labelOdontBlur">E-mail</label>
@@ -110,11 +110,11 @@
                     </div>
                     <div>
                         <div class="radio">
-                            <input id="radio-1" name="radio" type="radio" class="sexo">
+                            <input id="radio-1" name="radio" type="radio" class="sexo" value="f">
                             <label for="radio-1" class=" radio-inline radio-label label-sexo labelOdontBlur">Feminino</label>
                         </div>
                         <div class="radio">
-                            <input id="radio-2" name="radio" type="radio" class="sexo">
+                            <input id="radio-2" name="radio" type="radio" class="sexo" value="m">
                             <label for="radio-2" class="radio-inline radio-label label-sexo labelOdontBlur">Masculino</label>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                         <label class="label-nome labelOdontBlur">Nome da mãe</label>
                     </div>
                     <div>
-                        <input type="text" class="nome inputLabelBlur">
+                        <input type="text" class="nome inputLabelBlur" id="nomeMae">
                     </div>
 
                     <!-- <input type="checkbox" value="" class="exemplo2 checkbox inputLabelFocus">
@@ -130,7 +130,7 @@
 
                 </label> -->
                     <div class="squaredOne">
-                        <input type="checkbox" value="None" id="squaredOne" name="check" class="checkbox inputLabelCheckFocus" />
+                        <input type="checkbox" value="None" id="squaredOne" name="check" class="checkbox inputLabelCheckFocus"/>
                         <label for="squaredOne" class="Label-checkbox labelCheckOdontFocus checkbox-inline">
                             <span class="spanCheckbox">
                                 O representante legal é o titular do plano
@@ -172,13 +172,13 @@
                         <label class="label-estado labelOdontBlur">Estado</label>
                     </div>
                     <div>
-                        <input type="text" class="estado inputLabelBlur" id="uf">
+                        <input type="text" class="estado inputLabelBlur" id="uf" disabled>
                     </div>
                     <div>
                         <label class="label-cidade labelOdontBlur">Cidade</label>
                     </div>
                     <div>
-                        <input type="text" class="cidade inputLabelBlur" id="cidade">
+                        <input type="text" class="cidade inputLabelBlur" id="cidade" disabled>
                     </div>
                 </div>
 

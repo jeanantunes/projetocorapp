@@ -17,6 +17,22 @@ $("#contaDebito").keyup(function () {
     $("#continuarPfDebito").removeClass('disabled');
 });
 
+$(function () {
+    var regex = new RegExp('[^ 0-9\b]', 'g');
+    // repare a flag "g" de global, para substituir todas as ocorrências
+    $('.agencia').bind('input', function () {
+        $(this).val($(this).val().replace(regex, ''));
+    });
+});
+
+$(function () {
+    var regex = new RegExp('[^ a-zA-Z\b]', 'g');
+    // repare a flag "g" de global, para substituir todas as ocorrências
+    $('.nome').bind('input', function () {
+        $(this).val($(this).val().replace(regex, ''));
+    });
+});
+
 $("#agenciaDebito").keyup(function () {
 
     $("#continuarPfDebito").addClass('disabled');
@@ -30,6 +46,22 @@ $("#agenciaDebito").keyup(function () {
 });
 
 function cadastrarConta() {
+
+    if ($(".bancos").val() == "Selecione...") {
+        swal("Ops!", "Selecione o banco", "error");
+        return;
+    }
+
+    if ($(".agencia").val() == "") {
+        swal("Ops!", "Preencha a agencia", "error");
+        return;
+    }
+
+    if ($(".conta-corrente").val() == "") {
+        swal("Ops!", "Preencha a conta corrente", "error");
+        return;
+    }
+
     var proposta = get("propostaPf");
     proposta.dadosBancarios.codigoBanco = $(".bancos").val();
     proposta.dadosBancarios.agencia = $("#agenciaDebito").val();
@@ -37,5 +69,15 @@ function cadastrarConta() {
 
     atualizarPessoas(proposta);
 
-    window.location.href = "compra_pf_sucesso.html";
+    var pessoa = get("pessoas");
+
+    sincronizarPessoa(function (dataProposta) {
+
+
+
+        window.location.href = "compra_pf_sucesso.html";
+
+    }, pessoa);
+
+    
 }

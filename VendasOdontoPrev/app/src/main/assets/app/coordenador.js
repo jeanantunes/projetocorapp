@@ -20,6 +20,68 @@ $(function () {
     });
 });
 
+$(function () {
+    var regex = new RegExp('[^0-9\]', 'g');
+    // repare a flag "g" de global, para substituir todas as ocorrências
+    $('.numero').bind('input', function () {
+        $(this).val($(this).val().replace(regex, ''));
+    });
+});
+
+function validarData(data)
+{
+    var bits = data.split('/');
+
+    var y = bits[2],
+        m = bits[1],
+        d = bits[0];
+
+    var anoAtual = new Date().getFullYear();
+
+    if (anoAtual < y || y < 1890) return false;
+
+    // Assume not leap year by default (note zero index for Jan)
+    var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // If evenly divisible by 4 and not evenly divisible by 100,
+    // or is evenly divisible by 400, then a leap year
+    if ((!(y % 4) && y % 100) || !(y % 400)) {
+        daysInMonth[1] = 29;
+    }
+    return !(/\D/.test(String(d))) && d > 0 && d <= daysInMonth[--m];
+}
+
+
+//function validarData() {
+//    var currentDate = new Date().toLocaleDateString();
+//
+//    if (currentDate < $(".data").val()) {
+//        console.log("Data maior");
+//
+//        $(".data").css({ "border-color": "red" });
+//        $(".nascimento").css("color", "red");
+//        $(".label-nascimento").css("color", "red");
+//    }
+//
+//    //var date = $(".data").val().replace("/", "-").replace("/", "-");
+//    //var date = new Date($(".data").val());
+//
+//    console.log($(".data").val());
+//
+//    console.log(currentDate === $(".data").val());
+//
+//
+//
+//    //if (currentDate < )
+//    //{
+//    //    console.log("Teste data");
+//    //}
+//
+//
+//    //console.log(inputTime);
+//
+//}
+
 //$("#data").blur(function () {
 //
 //    var id = document.getElementById('data');
@@ -33,6 +95,35 @@ $(function () {
 //    else console.log("data valida");
 //
 //});
+
+$(".data").blur(function () {
+
+    if (validarData($(".data").val())) {
+
+        $(this).css({ "border-color": "#3A94FB" });
+        $(".nascimento").css("color", "#3A94FB");
+        $(".label-nascimento").css("color", "#3A94FB");
+        return;
+    }
+
+    $(".data").css({ "border-color": "red" });
+    $(".nascimento").css("color", "red");
+    $(".label-nascimento").css("color", "red");
+
+    //var dataNascimento = parseDate($(".data").val().replace("/", "-").replace("/", "-"));
+    //var currentDate = new Date().toLocaleDateString();
+    //currentDate = new Date(currentDate.replace("/", "-").replace("/", "-"));
+    //
+    //
+    //console.log(dataNascimento);
+    //console.log(currentDate);
+    //
+    //if (dataNascimento < currentDate)
+    //{
+    //    console.log("Maior de idade");
+    //}
+})
+
 
 function setPlanos() {
     planos = [];
@@ -358,24 +449,113 @@ function sincronizar() {
     setTimeout(function () {
         window.location.href = "logado.html";
     }, 4000);
-    
+
 }
 
-function sincronizarPessoa(pessoa) {
+function removerAcentos(newStringComAcento) {
+    var string = newStringComAcento;
+    var mapaAcentosHex = {
+        a: /[\xE0-\xE6]/g,
+        e: /[\xE8-\xEB]/g,
+        i: /[\xEC-\xEF]/g,
+        o: /[\xF2-\xF6]/g,
+        u: /[\xF9-\xFC]/g,
+        c: /\xE7/g,
+        n: /\xF1/g
+    };
 
+    for (var letra in mapaAcentosHex) {
+        var expressaoRegular = mapaAcentosHex[letra];
+        string = string.replace(expressaoRegular, letra);
+    }
+
+    return string;
+}
+
+function sincronizarPessoa(callback, pessoa) {
+
+    //var pessoa = JSON.parse(pessoaString);
     var forcaVenda = get("dadosUsuario");
+
+    console.log(pessoa[0].planos[0].cdPlano);
+
     var cdPlano = pessoa[0].planos[0].cdPlano;
 
     var pdata = [];
-    var json = "{ \"cdForcaVenda\": \"" + forcaVenda.codigo + "\", \"cdPlano\": \"" + cdPlano + "\", \"titulares\": " + JSON.stringify(pessoa) + "}";
+
+    //var json = "{ \"cdForcaVenda\": \"" + forcaVenda.codigo + "\", \"cdPlano\": \"" + cdPlano + "\", \"titulares\": " + JSON.stringify(pessoa) + "}";
+
+    var json = {
+        "cdForcaVenda": forcaVenda.codigo,
+        "cdPlano": 4,
+        "titulares": [
+            {
+                "celular": pessoa[0].celular,
+                "contatoEmpresa": pessoa[0].contatoEmpresa,
+                "cpf": pessoa[0].cpf,
+                "dadosBancarios": {
+                    "agencia": pessoa[0].dadosBancarios.agencia,
+                    "codigoBanco": pessoa[0].dadosBancarios.codigoBanco,
+                    "conta": pessoa[0].dadosBancarios.conta,
+                    "tipoConta": pessoa[0].dadosBancarios.tipoConta
+                },
+                "dependentes": [
+
+                ],
+                "email": pessoa[0].email,
+                "endereco": {
+                    "bairro": pessoa[0].endereco.bairro,
+                    "cep": pessoa[0].endereco.cep,
+                    "cidade": removerAcentos(pessoa[0].endereco.cidade),
+                    "complemento": pessoa[0].endereco.complemento,
+                    "logradouro": pessoa[0].endereco.logradouro,
+                    "estado": pessoa[0].endereco.estado,
+                    "numero": pessoa[0].endereco.numero
+                },
+                "dataNascimento": pessoa[0].dataNascimento,
+                "nomeMae": pessoa[0].nomeMae,
+                "nome": pessoa[0].nome,
+                "sexo": pessoa[0].sexo,
+                "status": pessoa[0].status,
+                "titular": pessoa[0].titular
+            }
+        ]
+    };
+
+    json = JSON.stringify(json);
+
+    swal({
+        title: "Aguarde",
+        text: 'Estamos enviando a sua proposta',
+        content: "input",
+        imageUrl: "img/load.gif",
+        showCancelButton: false,
+        showConfirmButton: false,
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false,
+        },
+    });
 
     $.ajax({
+        async: true,
         url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapf",
-        type: "POST",
+        method: "POST",
         data: json,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache"
+        },
+        //data: "{ \r\n   \"cdForcaVenda\":\"" + forcaVenda.codigo + "\",\r\n   \"cdPlano\":\"" + 4 + "\",\r\n   \"titulares\":[ \r\n      { \r\n         \"celular\":\"" + pessoa[0].celular + "\",\r\n         \"contatoEmpresa\":" + pessoa[0].contatoEmpresa + ",\r\n         \"cpf\":\"" + pessoa[0].cpf + "\",\r\n         \"dadosBancarios\":{ \r\n            \"agencia\":\"" + pessoa[0].dadosBancarios.agencia + "\",\r\n            \"codigoBanco\":\"" + pessoa[0].dadosBancarios.codigoBanco + "\",\r\n            \"conta\":\"" + pessoa[0].dadosBancarios.conta + "\",\r\n            \"tipoConta\":\"" + pessoa[0].dadosBancarios.tipoConta + "\"\r\n         },\r\n         \"dependentes\":[ \r\n \r\n         ],\r\n         \"email\":\"" + pessoa[0].email + "\",\r\n         \"endereco\":{ \r\n            \"bairro\":\"" + pessoa[0].endereco.bairro + "\",\r\n            \"cep\":\"" + pessoa[0].endereco.cep + "\",\r\n            \"cidade\":\"" + pessoa[0].endereco.cidade + "\",\r\n            \"complemento\":\"" + pessoa[0].endereco.complemento + "\",\r\n            \"logradouro\":\"" + pessoa[0].endereco.logradouro + "\",\r\n            \"estado\":\"" + pessoa[0].endereco.estado + "\",\r\n            \"numero\":\"" + pessoa[0].endereco.numero + "\"\r\n         },\r\n         \"dataNascimento\":\"" + pessoa[0].dataNascimento + "\",\r\n         \"nomeMae\":\"" + pessoa[0].nomeMae + "\",\r\n         \"nome\":\"" + pessoa[0].nome + "\",\r\n         \"sexo\":\"" + pessoa[0].sexo +"\",\r\n         \"status\":\"PRONTA\",\r\n         \"titular\":true\r\n      }\r\n   ]\r\n}\r\n",
+
+        processData: false,
         success: function (result) {
+
+            swal.close();
+
+            callback(result);
+            
             if (result.id == 0) {
                 pessoa[0].status = "CRITICADA";
                 atualizarPessoas(pessoa[0]);
@@ -388,8 +568,9 @@ function sincronizarPessoa(pessoa) {
                 ));
             }
         },
-        error: function () {
-
+        error: function (resp) {
+            swal.close();
+            console.log(resp);
         }
     });
 }

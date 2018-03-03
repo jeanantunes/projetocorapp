@@ -37,7 +37,6 @@
                     <div class="form-group">
                         <label for="" class="label-bancos labelOdontBlur">Banco</label>
                         <select class="form-control bancos selectListBlur" id="">
-                            <option>Selecione...</option>
                             <option value="237">237 - Bradesco</option>
                             <option value="341">341 - Itaú</option>
                             <option value="033">033 - Santander</option>
@@ -49,7 +48,7 @@
                         <label class="label-agencia labelOdontBlur">Agência</label>
                     </div>
                     <div>
-                        <input type="text" class="agencia inputLabelBlur" id="agenciaDebito" name="" maxlength="4">
+                        <input type="tel" class="agencia inputLabelBlur" id="agenciaDebito" name="" maxlength="4" pattern="[0-9]+$" required="required">
                     </div>
                     <div>
                         <label class="label-conta-corrente labelOdontBlur">Conta corrente</label>

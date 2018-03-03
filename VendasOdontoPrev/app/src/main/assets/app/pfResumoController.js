@@ -26,3 +26,17 @@ function buscarPlanosSelecionados() {
         $("#planos").append(plano);
     });
 }
+
+$("#pagarComBoleto").click(function () {
+
+    var pessoa = get("pessoas");
+    console.log(pessoa);
+
+    sincronizarPessoa(function (dataBoleto) {
+
+        console.log(dataBoleto);
+        window.location = "compra_pf_boleto.html";
+
+    }, pessoa);
+
+});

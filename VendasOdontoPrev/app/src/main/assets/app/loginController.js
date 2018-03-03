@@ -87,8 +87,10 @@ function callDadosUsuarios(callback, cpf) {
         },
         error: function (xhr) {
             //$("#loadingLogin").addClass('hide');
+            console.log(xhr);
             if (xhr.status == 0) {
 
+                swal.close();
                 return;
             }
             //console.log(JSON.stringify(resp.statusText));
@@ -158,7 +160,7 @@ function logarETrazerDadosUsuario() {
 
         //var teste = dataUsuarios.status;
 
-        //console.log(teste);
+        console.log(dataLogin);
 
         callDadosUsuarios(function (dataDadosUsuario) {
             //console.log(dataDadosUsuario);
@@ -181,11 +183,11 @@ function logarETrazerDadosUsuario() {
             forca.senha = dataDadosUsuario.senha;
             forca.statusUsuario = dataDadosUsuario.statusUsuario;
             forca.telefone = dataDadosUsuario.telefone;
-            forca.codigo = dataLogin.codigo;
+            forca.codigo = dataLogin.codigoUsuario;
 
             //console.log(JSON.stringify(dataDadosUsuario));
             //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
-            ob.salvarDadosUsuario(JSON.stringify(forca)); 
+            //ob.salvarDadosUsuario(JSON.stringify(forca)); 
             //ob.salvarDadosUsuario();
 
             put("dadosUsuario", JSON.stringify(forca));
