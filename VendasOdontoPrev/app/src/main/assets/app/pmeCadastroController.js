@@ -35,9 +35,8 @@ function buscarPlanosSelecionados() {
         plano = plano.replace("{CSS}", o[0].css);
         plano = plano.replace("{CSSVALOR}", o[0].css);
 
-
-
         $("#planos").append(plano);
+
     });
 }
 
@@ -95,9 +94,11 @@ function verificarInputs() {
     return true;
 }
 
-function callSerasa(callback, cnpj) {
+function callSerasaPme(callback, tokenSerasa, cnpj) {
 
     console.log(cnpj);
+
+    console.log(tokenSerasa);
 
     if (cnpj.length < 14)
         return;
@@ -132,23 +133,20 @@ function callSerasa(callback, cnpj) {
             text: "...",
             closeModal: false,
         },
-    })
+    });
 
     $.ajax({
         async: true,
-        crossDomain: true,
-        url: "https://sitenethomologa.serasa.com.br:443/experian-data-licensing-ws/dataLicensingService",
+        url: "https://api-it1.odontoprev.com.br:8243/serasa/consulta/1.0/",
         method: "POST",
         headers: {
             "Content-Type": "application/xml",
+            "Authorization": "Bearer " + tokenSerasa,
             "Cache-Control": "no-cache"
         },
-        data: "<soapenv:Envelope \n\txmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" \n\txmlns:dat=\"http://services.experian.com.br/DataLicensing/DataLicensingService/\" \n\txmlns:dat1=\"http://services.experian.com.br/DataLicensing/\">\n<soapenv:Header>\n            <wsse:Security  xmlns:wsse=\n                        \"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\n            <wsse:UsernameToken>\n                        <wsse:Username>81935697</wsse:Username>\n            <wsse:Password Type=\n                        \"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Prj@2018</wsse:Password>\n            </wsse:UsernameToken>\n            </wsse:Security>\n   </soapenv:Header>\n   <soapenv:Body>\n      <dat:ConsultarPJ>\n         <parameters>\n            <cnpj>" + cnpj + "</cnpj>\n            <RetornoPJ>\n               <razaoSocial>true</razaoSocial>\n               <nomeFantasia>true</nomeFantasia>\n               <endereco>true</endereco>\n               <dataAbertura>true</dataAbertura>\n               <representanteLegal>true</representanteLegal>\n               <cnae>true</cnae>\n               <telefone>true</telefone>\n               <situacaoCadastral>ONLINE</situacaoCadastral>\n               <simplesNacional>ONLINE</simplesNacional>\n            </RetornoPJ>\n         </parameters>\n      </dat:ConsultarPJ>\n   </soapenv:Body>\n</soapenv:Envelope>",
+        data: "<soapenv:Envelope\r\n                xmlns:dat=\"http://services.experian.com.br/DataLicensing/DataLicensingService/\"\r\n                xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n                <soapenv:Header>\r\n               <wsse:Security\r\n                               xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\"\r\n                               xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\r\n               <wsse:UsernameToken wsu:Id=\"UsernameToken-E26E52D53AB0F9B54115201256503949\">\r\n              <wsse:Username>51990098</wsse:Username>\r\n              <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Prj@2018</wsse:Password>\r\n              <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">3UoD2HzDrcGo5qh9W16B6A==</wsse:Nonce>\r\n              <wsu:Created>2018-03-04T01:07:30.394Z</wsu:Created>\r\n               </wsse:UsernameToken>\r\n               </wsse:Security>\r\n                </soapenv:Header>\r\n                <soapenv:Body>\r\n               <dat:ConsultarPJ>\r\n         <parameters>\r\n            <cnpj>" + cnpj + "</cnpj>\r\n            <RetornoPJ>\r\n               <razaoSocial>true</razaoSocial>\r\n               <nomeFantasia>true</nomeFantasia>\r\n               <dataAbertura>true</dataAbertura>\r\n               <cnae>true</cnae>\r\n               <endereco>true</endereco>\r\n               <telefone>true</telefone>\r\n               <situacaoCadastral>HISTORICO</situacaoCadastral>\r\n               <representanteLegal>true</representanteLegal>\r\n               <simplesNacional>true</simplesNacional>\r\n               <Pacote>PJ1</Pacote>\r\n            </RetornoPJ>\r\n         </parameters>\r\n      </dat:ConsultarPJ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
         success: function (resp) {
-
-            
             callback(resp);
-            swal.close();
         },
         error: function () {
             swal("Falha Serasa", "Você está sem conexão de internet.", "error");
@@ -164,27 +162,58 @@ function buscarEmpresa() {
 
     var cnpjValidado = $('#cnpjEmpresa').val().replace(/\D/g, '');
 
+    if (!navigator.onLine) return;
+
     //put('cpnjValido', "");
+    callTokenProd(function (dataToken) {
+        
+        callSerasaPme(function (dataConsulta) {
+            try {
+                console.log(dataConsulta);
+                try {
+                    var situacaoEmpresa = dataConsulta.getElementsByTagName("situacao")[0].textContent;
+                    var situacao = situacaoEmpresa.indexOf("ATIVA");
 
-    callSerasa(function (dataConsulta) {
-        console.log(dataConsulta);
-        try {
+                    console.log(situacao);
 
-            //put('cpnjValido', dataConsulta.getElementsByTagName("situacao")[0].textContent);
+                    if (!situacao == 0 || situacao == undefined) {
+                        console.log(situacaoEmpresa);
 
-            cnae = dataConsulta.getElementsByTagName("codigo")[0].textContent;
+                        swal("Ops", "Não é possível seguir com a contratação para esta empresa. Consulte o CNPJ e tente novamente.", "info");
 
-            $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent);
-            $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent);
-            $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent);
-            $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent);
-            $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent);
-        }
-        catch (Exception) {
-            console.log(Exception);
-        }
+                        $("#cnpjEmpresa").val("");
+                        $("#razao-social").val("");
+                        $("#ramo-atividade").val("");
+                        $("#representante-legal").val("");
+                        $("#cpf-representante").val("");
+                        $("#nome-fantasia").val("");
 
-    }, cnpjValidado);
+                        return;
+                    }
+                } catch (Exception) { }
+
+                try {
+                    //put('cpnjValido', dataConsulta.getElementsByTagName("situacao")[0].textContent);
+                    
+                    //console.log(empresaAtiva);
+
+                    try { $("#rua").val(dataConsulta.getElementsByTagName("Nome")[0].textContent); } catch (Exception) { }
+                    try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent); } catch (Exception) { }
+                    try { $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent); } catch (Exception) { }
+                    try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent); } catch (Exception) { }
+                    try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent); } catch (Exception) { }
+                    try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent); } catch (Exception) { }
+                    try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[0].textContent); } catch (Exception) { }
+
+                    swal.close();
+
+                } catch (Exception){ }
+            } catch (Exception)
+            {
+                swal.close();
+            }
+        }, dataToken.access_token, cnpjValidado);
+    });
 }
 
 function salvarRascunho() {
@@ -207,6 +236,11 @@ function salvarRascunho() {
 
     if ($("#email").val() == "") {
         swal("Ops!", "Preencha o email", "error");
+        return;
+    }
+
+    if (!validateEmail($(".email").val())) {
+        swal("Ops!", "Preencha um E-mail válido", "error");
         return;
     }
 
@@ -263,6 +297,8 @@ function salvarRascunhoMemoria() {
     proposta.enderecoEmpresa.bairro = $("#bairro").val();
     proposta.enderecoEmpresa.cidade = $("#cidade").val();
     proposta.enderecoEmpresa.estado = $("#uf").val();
+    proposta.cnae = $("#cnae").val();
+    proposta.cpfRepresentante = $("#cpf-representante").val();
 
     console.log(proposta);
 
@@ -302,6 +338,7 @@ function carregarProposta() {
         $("#squaredOne").attr("checked", false);
     }
 
+    $("#cpf-representante").val(proposta.cpf);
     $("#telefone").val(proposta.telefone);
     $("#celular").val(proposta.celular);
     $("#email").val(proposta.email);
@@ -312,6 +349,8 @@ function carregarProposta() {
     $("#bairro").val(proposta.enderecoEmpresa.bairro);
     $("#cidade").val(proposta.enderecoEmpresa.cidade);
     $("#uf").val(proposta.enderecoEmpresa.estado);
+    $("#cnae").val(proposta.cnae);
+
 }
 
 function validarProposta() {
@@ -355,6 +394,16 @@ function validarProposta() {
         swal("Ops!", "Preencha o email", "error");
         return;
     }
+
+    if (!validateEmail($(".email").val())) {
+        swal("Ops!", "Preencha um E-mail válido", "error");
+        return;
+    }
+
+    //if (!validarData($(".nascimento").val())) {
+    //    swal("Ops!", "Preencha uma data de nascimento correta", "error");
+    //    return;
+    //}
 
     if ($(".cep").val() == "") {
         swal("Ops!", "Preencha o cep", "error");

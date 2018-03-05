@@ -54,19 +54,27 @@ function buscarEmpresa() {
 
     var cnpjValidado = $('#cnpjEmpresa').val().replace(/\D/g, '');
 
-    callSerasa(function (dataConsulta) {
-        try {
-            $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent);
-            $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent);
-            $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent);
-            $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent);
-            $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent);
-        }
-        catch (Exception) {
-            console.log(Exception);
-        }
+    callTokenProd(function (dataToken) {
+        callSerasa(function (dataConsulta) {
+            try {
+                try { console.log("Nome fantasia " + dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent); } catch(Exception){ }
+                try { console.log("Razao Social " + dataConsulta.getElementsByTagName("razaoSocial")[0].textContent); } catch (Exception) { }
+                try { console.log("Ramo Atividade " + dataConsulta.getElementsByTagName("descricao")[0].textContent); } catch (Exception) { }
+                try { console.log("Repesentante Legal" + dataConsulta.getElementsByTagName("nome")[0].textContent); } catch (Exception) { }
+                try { console.log("CPF Representante" + dataConsulta.getElementsByTagName("documento")[0].textContent) }
 
-    }, cnpjValidado);
+                $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent);
+                $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent);
+                $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent);
+                $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent);
+                $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent);
+            }
+            catch (Exception) {
+                console.log(Exception);
+            }
+
+        }, dataToken.access_token , cnpjValidado);
+    });
 }
 
 function validarProposta() {

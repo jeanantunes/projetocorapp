@@ -2,15 +2,77 @@
 var jsonName = "";
 var pdata = "";
 var compName = "";
+var URLBase = "";
+var Token = "";
+var conexao;
 
 $(document).ready(function () {
+
+    $("a[href='meus_dados.html']").hide()
+
     setPlanos();
     carregarDadosUsuario();
 
     $("#logout").click(function () {
         logout.removerRegistroLogin();
     });
+
+    defineConexao();
+
+    $(".linkMenu").click(function () {
+        localStorage.removeItem("propostaPf");
+        localStorage.removeItem("proposta");
+    });
 });
+
+function defineConexao() {
+
+    $.ajax({
+        url: "config/connection.json",
+        type: "get",
+        async: false,
+        success: function (result) {
+            conexao = JSON.parse(result);
+        },
+        error: function () {
+
+        }
+    });
+
+    if (conexao.producaoLigado) {
+        URLBase = conexao.producaoURL;
+        Token = conexao.chaveProd;
+    }
+    else {
+        URLBase = conexao.homologacaoURL;
+        console.log(URLBase);
+        Token = conexao.chaveHomolog;
+    }
+}
+
+
+function callTokenProd(callback) {
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/token",
+        method: "POST",
+        headers: {
+            "Authorization": "Basic " + Token,
+            "Cache-Control": "no-cache",
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        data: {
+            "grant_type": "client_credentials"
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+            swal("Ops!", "Erro na conexão, tente mais tarde", "error");
+        }
+    });
+}
 
 $(function () {
     var regex = new RegExp('[^ a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ\b]', 'g');
@@ -28,8 +90,7 @@ $(function () {
     });
 });
 
-function validarData(data)
-{
+function validarData(data) {
     var bits = data.split('/');
 
     var y = bits[2],
@@ -129,8 +190,8 @@ function setPlanos() {
     planos = [];
 
     plano = getRepository("plano");
-    plano.cdPlano = 5936;
-    plano.nome = "Integral DOC LALE";
+    plano.cdPlano = 9;
+    plano.nome = "Integral DOC LE";
     plano.valor = "37";
     plano.centavo = "82";
     plano.desc = "Modalidade Livre Adesão";
@@ -138,8 +199,8 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 6198;
-    plano.nome = "Master LALE";
+    plano.cdPlano = 10;
+    plano.nome = "Master LE";
     plano.valor = "119";
     plano.centavo = "48";
     plano.desc = "Modalidade Livre Adesão";
@@ -148,7 +209,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 6122;
+    plano.cdPlano = 7;
     plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "45";
     plano.centavo = "60";
@@ -158,7 +219,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 6123;
+    plano.cdPlano = 8;
     plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "456";
     plano.centavo = "00";
@@ -167,15 +228,15 @@ function setPlanos() {
 
     planos.push(plano);
 
-    plano = getRepository("plano");
-    plano.cdPlano = 5;
-    plano.nome = "DENTAL BEM-ESTAR";
-    plano.valor = "547";
-    plano.centavo = "20";
-    plano.desc = "Anual";
-    plano.css = "colorSlick3";
-
-    planos.push(plano);
+    //plano = getRepository("plano");
+    //plano.cdPlano = 5;
+    //plano.nome = "DENTAL BEM-ESTAR";
+    //plano.valor = "547";
+    //plano.centavo = "20";
+    //plano.desc = "Anual";
+    //plano.css = "colorSlick3";
+    //
+    //planos.push(plano);
 
     //plano = getRepository("plano");
     //plano.cdPlano = 6;
@@ -198,7 +259,7 @@ function setPlanos() {
     //planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 6114;
+    plano.cdPlano = 1;
     plano.nome = "DENTAL ESTÉTICA";
     plano.valor = "115";
     plano.centavo = "00";
@@ -208,7 +269,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 6115;
+    plano.cdPlano = 2;
     plano.nome = "DENTAL ESTÉTICA";
     plano.valor = "1150";
     plano.centavo = "00";
@@ -228,17 +289,17 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 6120;
+    plano.cdPlano = 5;
     plano.nome = "DENTAL ORTO";
     plano.valor = "147";
     plano.centavo = "00";
     plano.desc = "Mensal";
-    plano.css = "colorSlick4";
+    plano.css = " colorSlick4";
 
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 6121;
+    plano.cdPlano = 6;
     plano.nome = "DENTAL ORTO";
     plano.valor = "1470";
     plano.centavo = "00";
@@ -258,7 +319,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 6116;
+    plano.cdPlano = 3;
     plano.nome = "DENTAL VIP";
     plano.valor = "220";
     plano.centavo = "35";
@@ -268,7 +329,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 6117;
+    plano.cdPlano = 4;
     plano.nome = "DENTAL VIP";
     plano.valor = "2203";
     plano.centavo = "50";
@@ -336,8 +397,8 @@ function carregarDadosUsuario() {
     if (carregarDados == null)
         return;
 
-    $("#nomeCorretorMenu").html(carregarDados.nome);
-    $("#nomeCorretoraMenu").html(carregarDados.nomeEmpresa);
+    $("#nomeCorretorMenu").html(carregarDados.nome == null? "" : carregarDados.nome.split(' ')[0]);
+    $("#nomeCorretoraMenu").html(carregarDados.nomeEmpresa == null? "" : carregarDados.nomeEmpresa.split(' ')[0]);
     $("#nomeCorretor").html(carregarDados.nome);
     $("#nomeCorretora").html(carregarDados.nomeEmpresa);
     $("#emailCorretor").val(carregarDados.email);
@@ -386,70 +447,115 @@ function atualizarEmpresas(proposta) {
     put("empresas", JSON.stringify(empresas));
 }
 
+function atualizarDashBoard() {
 
-function sincronizar() {
-
-    //$.ajax({
-    //    async: false,
-    //    url: "https://api.odontoprev.com.br:8243/token/",
-    //    method: "POST",
-    //    headers: {
-    //        "Authorization": "Basic Y3hHZXBoTzFkcERDd3U0VHlfRExWTWxXQ0R3YTp0WlJtSUN1eUJWajJZRVczRjdaNXdWM2E0YVlh",
-    //        "Cache-Control": "no-cache",
-    //        "Content-Type": "application/x-www-form-urlencoded"
-    //    },
-    //    data: {
-    //        "grant_type": "client_credentials"
-    //    },
-    //    success: function (resp) {
-    //        token = resp;
-    //    },
-    //    error: function (xhr) {
-    //        //swal("Ops!", "Erro na conexão, tente mais tarde", "error");
-    //    }
-    //});
-
-    var empresas = get("empresas");
     var pessoas = get("pessoas");
-    var beneficiarios = get("beneficiarios");
+    var empresas = get("empresas");
 
-    if (empresas != null) {
-        $.each(empresas, function (i, item) {
-            if (item.status == "PRONTA") {
-                var o = empresas.filter(function (x) { return x.cnpj == item.cnpj });
-                var b = beneficiarios.filter(function (x) { return x.cnpj == item.cnpj });
-                sincronizarEmpresa(o, b);
-            }
-        });
-    }
+    var digitandoPessoas = [];
+    var criticadaPessoas = [];
+    var prontaPessoas = [];
+
+    var digitandoEmpresas = [];
+    var criticadaEmpresas = [];
+    var prontaEmpresas = [];
 
     if (pessoas != null) {
-        $.each(pessoas, function (i, item) {
-            if (item.status == "PRONTA") {
-                var o = pessoas.filter(function (x) { return x.cpf == item.cpf });
-                sincronizarPessoa(o);
-            }
-        });
+        digitandoPessoas = pessoas.filter(function (x) { return x.status == "DIGITANDO" });
+        criticadaPessoas = pessoas.filter(function (x) { return x.status == "CRITICADA" });
+        prontaPessoas = pessoas.filter(function (x) { return x.status == "PRONTA" });
     }
 
-    swal({
-        title: "Aguarde",
-        text: 'Estamos enviando as suas propostas',
-        content: "input",
-        imageUrl: "img/load.gif",
-        showCancelButton: false,
-        showConfirmButton: false,
-        icon: "info",
-        button: {
-            text: "...",
-            closeModal: false,
-        },
-    });
+    if (empresas != null) {
+        digitandoEmpresas = empresas.filter(function (x) { return x.status == "DIGITANDO" });
+        criticadaEmpresas = empresas.filter(function (x) { return x.status == "CRITICADA" });
+        prontaEmpresas = empresas.filter(function (x) { return x.status == "PRONTA" });
+    }
 
-    setTimeout(function () {
-        window.location.href = "logado.html";
-    }, 4000);
+    var qtdFinalizada = get("QtdFinalizada");
 
+    if (qtdFinalizada == null) {
+        put("QtdFinalizada", 0);
+        qtdFinalizada = 0;
+    }
+
+    $("#digitando").html(digitandoPessoas.length + digitandoEmpresas.length);
+    $("#criticada").html(criticadaPessoas.length + criticadaEmpresas.length);
+    $("#pronta").html(prontaPessoas.length + prontaEmpresas.length);
+    $("#finalizada").html(qtdFinalizada);
+}
+
+
+
+
+function sincronizar() {
+    if (checkNetConnection()) {
+
+        var empresas = get("empresas");
+        var pessoas = get("pessoas");
+        var beneficiarios = get("beneficiarios");
+
+        if (empresas != null) {
+
+            swal({
+                title: "Aguarde",
+                text: 'Estamos enviando as suas propostas (PME)',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+
+            $.each(empresas, function (i, item) {
+                if (item.status == "PRONTA") {
+                    var o = empresas.filter(function (x) { return x.cnpj == item.cnpj });
+                    var b = beneficiarios.filter(function (x) { return x.cnpj == item.cnpj });
+                    sincronizarEmpresa(o, b);
+                    atualizarDashBoard();
+                }
+            });
+
+            swal.close();
+        }
+
+        if (pessoas != null) {
+
+            swal({
+                title: "Aguarde",
+                text: 'Estamos enviando as suas propostas (PF)',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+
+            $.each(pessoas, function (i, item) {
+                if (item.status == "PRONTA") {
+                    var o = pessoas.filter(function (x) { return x.cpf == item.cpf });
+
+                    sincronizarPessoa(function (dataProposta) {
+                        console.log(dataProposta);
+                    }, o);
+
+                }
+            });
+
+            swal.close();
+        }
+    }
+    else {
+        swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
+    }
 }
 
 function removerAcentos(newStringComAcento) {
@@ -487,7 +593,7 @@ function sincronizarPessoa(callback, pessoa) {
 
     var json = {
         "cdForcaVenda": forcaVenda.codigo,
-        "cdPlano": 4,
+        "cdPlano": cdPlano,
         "titulares": [
             {
                 "celular": pessoa[0].celular,
@@ -499,9 +605,8 @@ function sincronizarPessoa(callback, pessoa) {
                     "conta": pessoa[0].dadosBancarios.conta,
                     "tipoConta": pessoa[0].dadosBancarios.tipoConta
                 },
-                "dependentes": [
-
-                ],
+                "dependentes": pessoa[0].dependentes
+                ,
                 "email": pessoa[0].email,
                 "endereco": {
                     "bairro": pessoa[0].endereco.bairro,
@@ -524,6 +629,8 @@ function sincronizarPessoa(callback, pessoa) {
 
     json = JSON.stringify(json);
 
+    console.log(json);
+
     swal({
         title: "Aguarde",
         text: 'Estamos enviando a sua proposta',
@@ -538,41 +645,53 @@ function sincronizarPessoa(callback, pessoa) {
         },
     });
 
-    $.ajax({
-        async: true,
-        url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapf",
-        method: "POST",
-        data: json,
-        headers: {
-            "Content-Type": "application/json",
-            "Cache-Control": "no-cache"
-        },
-        //data: "{ \r\n   \"cdForcaVenda\":\"" + forcaVenda.codigo + "\",\r\n   \"cdPlano\":\"" + 4 + "\",\r\n   \"titulares\":[ \r\n      { \r\n         \"celular\":\"" + pessoa[0].celular + "\",\r\n         \"contatoEmpresa\":" + pessoa[0].contatoEmpresa + ",\r\n         \"cpf\":\"" + pessoa[0].cpf + "\",\r\n         \"dadosBancarios\":{ \r\n            \"agencia\":\"" + pessoa[0].dadosBancarios.agencia + "\",\r\n            \"codigoBanco\":\"" + pessoa[0].dadosBancarios.codigoBanco + "\",\r\n            \"conta\":\"" + pessoa[0].dadosBancarios.conta + "\",\r\n            \"tipoConta\":\"" + pessoa[0].dadosBancarios.tipoConta + "\"\r\n         },\r\n         \"dependentes\":[ \r\n \r\n         ],\r\n         \"email\":\"" + pessoa[0].email + "\",\r\n         \"endereco\":{ \r\n            \"bairro\":\"" + pessoa[0].endereco.bairro + "\",\r\n            \"cep\":\"" + pessoa[0].endereco.cep + "\",\r\n            \"cidade\":\"" + pessoa[0].endereco.cidade + "\",\r\n            \"complemento\":\"" + pessoa[0].endereco.complemento + "\",\r\n            \"logradouro\":\"" + pessoa[0].endereco.logradouro + "\",\r\n            \"estado\":\"" + pessoa[0].endereco.estado + "\",\r\n            \"numero\":\"" + pessoa[0].endereco.numero + "\"\r\n         },\r\n         \"dataNascimento\":\"" + pessoa[0].dataNascimento + "\",\r\n         \"nomeMae\":\"" + pessoa[0].nomeMae + "\",\r\n         \"nome\":\"" + pessoa[0].nome + "\",\r\n         \"sexo\":\"" + pessoa[0].sexo +"\",\r\n         \"status\":\"PRONTA\",\r\n         \"titular\":true\r\n      }\r\n   ]\r\n}\r\n",
 
-        processData: false,
-        success: function (result) {
+    callTokenProd(function (dataToken) {
 
-            swal.close();
+        $.ajax({
+            async: true,
+            //url: URLBase + "vendapf",
+            url: URLBase + "/corretorservicos/1.0/vendapf",
+            method: "POST",
+            data: json,
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache",
+                "Authorization": "Bearer " + dataToken.access_token
+            },
+            //data: "{ \r\n   \"cdForcaVenda\":\"" + forcaVenda.codigo + "\",\r\n   \"cdPlano\":\"" + 4 + "\",\r\n   \"titulares\":[ \r\n      { \r\n         \"celular\":\"" + pessoa[0].celular + "\",\r\n         \"contatoEmpresa\":" + pessoa[0].contatoEmpresa + ",\r\n         \"cpf\":\"" + pessoa[0].cpf + "\",\r\n         \"dadosBancarios\":{ \r\n            \"agencia\":\"" + pessoa[0].dadosBancarios.agencia + "\",\r\n            \"codigoBanco\":\"" + pessoa[0].dadosBancarios.codigoBanco + "\",\r\n            \"conta\":\"" + pessoa[0].dadosBancarios.conta + "\",\r\n            \"tipoConta\":\"" + pessoa[0].dadosBancarios.tipoConta + "\"\r\n         },\r\n         \"dependentes\":[ \r\n \r\n         ],\r\n         \"email\":\"" + pessoa[0].email + "\",\r\n         \"endereco\":{ \r\n            \"bairro\":\"" + pessoa[0].endereco.bairro + "\",\r\n            \"cep\":\"" + pessoa[0].endereco.cep + "\",\r\n            \"cidade\":\"" + pessoa[0].endereco.cidade + "\",\r\n            \"complemento\":\"" + pessoa[0].endereco.complemento + "\",\r\n            \"logradouro\":\"" + pessoa[0].endereco.logradouro + "\",\r\n            \"estado\":\"" + pessoa[0].endereco.estado + "\",\r\n            \"numero\":\"" + pessoa[0].endereco.numero + "\"\r\n         },\r\n         \"dataNascimento\":\"" + pessoa[0].dataNascimento + "\",\r\n         \"nomeMae\":\"" + pessoa[0].nomeMae + "\",\r\n         \"nome\":\"" + pessoa[0].nome + "\",\r\n         \"sexo\":\"" + pessoa[0].sexo +"\",\r\n         \"status\":\"PRONTA\",\r\n         \"titular\":true\r\n      }\r\n   ]\r\n}\r\n",
 
-            callback(result);
-            
-            if (result.id == 0) {
-                pessoa[0].status = "CRITICADA";
-                atualizarPessoas(pessoa[0]);
+            processData: false,
+            success: function (result) {
+
+                swal.close();
+
+                callback(result);
+
+                if (result.id == 0) {
+
+                    pessoa[0].status = "CRITICADA";
+                    atualizarPessoas(pessoa[0]);
+                    console.log("Erro");
+                }
+                else {
+
+                    var pessoas = get("pessoas");
+                    var todosExcetoExclusao = pessoas.filter(function (x) { return x.cpf != pessoa[0].cpf });
+                    console.log(todosExcetoExclusao);
+                    put("pessoas", JSON.stringify(todosExcetoExclusao));
+
+                }
+
+                atualizarDashBoard();
+            },
+            error: function (resp) {
+                swal.close();
+                console.log(resp);
             }
-            else {
-                var pessoas = get("pessoas");
-                var todosExcetoExclusao = pessoas.filter(function (x) { return x.cpf == pessoa[0].cpf });
-
-                put("pessoas", JSON.stringify(todosExcetoExclusao
-                ));
-            }
-        },
-        error: function (resp) {
-            swal.close();
-            console.log(resp);
-        }
+        });
     });
+
 }
 
 function sincronizarEmpresa(proposta, beneficiarios) {
@@ -580,27 +699,39 @@ function sincronizarEmpresa(proposta, beneficiarios) {
     var pdata = [];
     var json = "{ \"empresas\": " + JSON.stringify(proposta) + ", \"titulares\":" + JSON.stringify(beneficiarios) + "}";
 
-    $.ajax({
-        url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
-        type: "POST",
-        data: json,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            if (result.id == 0) {
-                proposta[0].status = "CRITICADA";
-                atualizarEmpresas(proposta[0]);
-            }
-            else {
-                var empresas = get("empresas");
-                var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != proposta[0].cnpj });
+    console.log(json);
 
-                put("empresas", JSON.stringify(todosExcetoExclusao));
-            }
-        },
-        error: function () {
+    callTokenProd(function (dataToken) {
+        $.ajax({
+            url: URLBase + "/corretorservicos/1.0/vendapme",
+            //url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
+            type: "POST",
+            data: json,
+            dataType: "json",
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache",
+                "Authorization": "Bearer " + dataToken.access_token
+            },
+            success: function (result) {
+                if (result.id == 0) {
+                    proposta[0].status = "CRITICADA";
+                    atualizarEmpresas(proposta[0]);
+                }
+                else {
+                    var empresas = get("empresas");
+                    var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != proposta[0].cnpj });
 
-        }
+                    put("empresas", JSON.stringify(todosExcetoExclusao));
+
+                }
+
+                atualizarDashBoard();
+            },
+            error: function () {
+                swal.close();
+            }
+        });
     });
 }
 
@@ -614,4 +745,39 @@ function isValidDate(date) {
     return composedDate.getDate() == d &&
         composedDate.getMonth() == m &&
         composedDate.getFullYear() == y;
+}
+
+function checkNetConnection() {
+    var xhr = new XMLHttpRequest();
+    var file = "http://www.odontoprev.com.br/home/portugues/_img/logo-odontoprev.png";
+    var r = Math.round(Math.random() * 10000);
+    xhr.open('HEAD', file + "?subins =" + r, false);
+    try {
+        xhr.send();
+        if (xhr.status >= 200 && xhr.status < 304) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (e) {
+        return false;
+    }
+}
+
+function getInputsByValue(value) {
+    var allInputs = document.getElementsByTagName("input");
+    var results = [];
+    for (var x = 0; x < allInputs.length; x++)
+        if (allInputs[x].value == value)
+            results.push(allInputs[x]);
+    return results;
+}
+
+function validateEmail(email) {
+    var reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+    if (reg.test(email)) {
+        return true;
+    }
+
+    return false;
 }

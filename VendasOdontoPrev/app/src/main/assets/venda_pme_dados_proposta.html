@@ -72,11 +72,11 @@
                
             </div>
             <br />
-            <div class="text-center">
+            <div class="text-center" >
                 <a href="venda_pme_addPlano.html"><label for="senha" class="linkOdontAddPlanos colorSlick3">+ ADICIONAR MAIS PLANOS</label></a>
             </div>
 
-            <form id="formulario-proposta" name="dadosProposta">
+            <form id="formulario-proposta" name="dadosProposta" style="margin-top:20px;">
                 <div class="boxDependente">
                     <div>
                         <label class="labelBlue">DADOS DA EMPRESA</label>
@@ -105,10 +105,10 @@
                     <div>
                         <input type="text" disabled class="ramo-atividade inputLabelBlur" id="ramo-atividade" name="ramoAtividade">
                     </div>
-                    <div>
+                    <div style="display:none">
                         <label class="label-inscricao-estadual labelOdontBlur">Inscrição estadual</label>
                     </div>
-                    <div>
+                    <div style="display:none">
                         <input type="text" disabled class="inscricao-estadual inputLabelBlur" id="inscricao-estadual" maxlength="14" name="inscricaoEstadual">
                     </div>
                     <div>
@@ -144,13 +144,15 @@
                     <div>
                         <input type="text" class="email inputLabelBlur" id="email">
                     </div>
+                        <input type="text" id="cnae" style="display: none"/>
+                       
 
                     <!-- <input type="checkbox" value="" class="exemplo2 checkbox inputLabelFocus">
                     <label class="Label-checkbox labelOdontFocus checkbox-inline">
 
                     </label> -->
 
-                    <div class="squaredOne">
+                    <div class="squaredOne" style="display:none">
                         <input checked type="checkbox" value="True" id="squaredOne" name="representanteLegal" class="checkbox inputLabelCheckFocus" />
                         <label for="squaredOne" class="Label-checkbox labelCheckOdontFocus checkbox-inline">
                             <span class="spanCheckbox">
@@ -158,7 +160,9 @@
                             </span>
                         </label>
                     </div>
-                    <div>
+
+
+                    <div style="margin-top:20px;">
                         <label class="labelBlue">ENDEREÇO DA EMPRESA</label>
                     </div>
                     <div>
@@ -210,7 +214,7 @@
                     <div>
                         <input type="text" class="estado inputLabelBlur" id="uf" name="uf">
                     </div>
-                    <div class="squaredTwo">
+                    <div class="squaredTwo" style="display:none">
                         <input checked type="checkbox" value=True id="squaredTwo" name="enderecoCorrespondencia" class="checkbox inputLabelCheckFocus" />
                         <label for="squaredTwo" class="Label-checkbox labelCheckOdontFocus checkbox-inline">
                             <span class="spanCheckbox">

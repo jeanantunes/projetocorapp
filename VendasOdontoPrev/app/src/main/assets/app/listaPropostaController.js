@@ -33,7 +33,7 @@ function carregarLista() {
         var link = "";
 
         if (item.status == "DIGITANDO") {
-            status = "Aguardando aprovação";
+            status = "Proposta incompleta";
             css = "colorCirc1";
             acao = "ver detalhes";
             link = "venda_pf_editar.html?cpf=" + item.cpf;
@@ -83,7 +83,7 @@ function carregarLista() {
             link = "venda_pme_editar.html?cnpj=" + item.cnpj;
         }
 
-        itemLista = itemLista.replace("{NOME}", (item.nome == undefined ? "Falha: Nome nulo na Serasa" : item.nome));
+        itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? "Falha: Nome nulo na Serasa" : item.razaoSocial));
         itemLista = itemLista.replace("{STATUS}", status);
         itemLista = itemLista.replace("{CSS}", css);
         itemLista = itemLista.replace("{ACAO}", acao);

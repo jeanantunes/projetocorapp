@@ -480,7 +480,7 @@ h1, .titleListBox{
     font-family: Roboto-Bold;
     font-size: 16pt;
     position: absolute;
-    margin-top: 27pt;
+    margin-top: 15pt;
 }
 
 .labelBlue{
@@ -702,6 +702,10 @@ h1, .titleListBox{
         font-size: 10pt !important;
     }
 
+    .labelDependentes {
+        font-size: 10pt !important;
+    }
+
     .labelBold{
         font-size: 12pt !important;
     }
@@ -751,6 +755,15 @@ h5, .subListBox{
     color: #ACAAA5;
     position: absolute;
     margin-top: 65pt;
+}
+
+.labelDependentes {
+    font-family: Roboto-Light;
+    font-size: 14pt;
+    color: #ACAAA5;
+    position: absolute;
+    margin-top: 80pt;
+    margin-bottom: 10pt;
 }
 
 .labelBold{

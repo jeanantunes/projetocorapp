@@ -13,30 +13,50 @@ function buscarPlanosSelecionados() {
         var o = planos.filter(function (x) { return x.cdPlano == item.cdPlano });
         var plano = getComponent("planoFixo");
 
+        var valorPlanoInt = parseInt(o[0].valor);
+        var valorPlanoFloat = parseFloat(o[0].centavo);
+        //var valorPlano = valorPlanoInt + valorPlanoFloat;
+        var totalBeneficiarios = 1 + proposta.dependentes.length;
+
+        var valorReal = valorPlanoInt.toString() + "." + valorPlanoFloat;
+
+        valorReal = parseFloat(valorReal);
+
+        var valorTotal = parseFloat(valorReal) * totalBeneficiarios;
+
+        console.log();
+
+        if ((valorTotal % 2) == 0) {
+            var valorReal = valorTotal;
+            var valorCent = "00";
+        } else
+        {
+            var valorString = valorTotal.toString();
+            var position = valorString.indexOf(".");
+            var tamanhoString = valorTotal.toString().length;
+            var valorReal = valorString.substring(0, position);
+            var valorCent = valorString.substring(position + 1, tamanhoString);
+
+            if (valorCent.toString().length == 1) valorCent = parseFloat(valorCent.toString() + "0");
+        }
+        
+
         plano = plano.replace("{TITULAR}", proposta.nome);
         plano = plano.replace("{CDPLANO}", o[0].cdPlano);
         plano = plano.replace("{CDPLANO-BT}", o[0].cdPlano);
         plano = plano.replace("{NOME}", o[0].nome);
         plano = plano.replace("{DESC}", o[0].desc);
-        plano = plano.replace("{VALOR}", o[0].valor);
-        plano = plano.replace("{CENTAVO}", o[0].centavo);
+        plano = plano.replace("{VALOR}", valorReal);//o[0].valorRealDiv);
+        plano = plano.replace("{CENTAVO}", valorCent);//o[0].valorFloaDiv);
         plano = plano.replace("{CSS}", o[0].css);
         plano = plano.replace("{CSSVALOR}", o[0].css);
+        plano = plano.replace("{DEPENDENTES}", proposta.dependentes.length);
 
         $("#planos").append(plano);
     });
 }
 
-$("#pagarComBoleto").click(function () {
-
-    var pessoa = get("pessoas");
-    console.log(pessoa);
-
-    sincronizarPessoa(function (dataBoleto) {
-
-        console.log(dataBoleto);
-        window.location = "compra_pf_boleto.html";
-
-    }, pessoa);
-
-});
+function pagarComBoleto()
+{
+    window.location = "compra_pf_boleto.html";
+}

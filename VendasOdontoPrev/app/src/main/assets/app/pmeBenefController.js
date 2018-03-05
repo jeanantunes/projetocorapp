@@ -13,10 +13,14 @@ $(document).ready(function () {
             return;
 
         var proposta = get("proposta");
+        var benef = get("beneficiario");
+
+        benef.dependentes = [];
         proposta.dependentes = [];
         atualizarEmpresas(proposta);
 
         put("proposta", JSON.stringify(proposta));
+        put("beneficiario", JSON.stringify(benef));
 
         window.location.href = "venda_pme_dependentes.html";
 
@@ -67,6 +71,17 @@ function salvarBenef() {
     if (problema)
         return;
 
+    var benef = get("beneficiario");
+    var beneficiarios = get("beneficiarios");
+
+    if (beneficiarios == null) {
+        beneficiarios = [];
+    }
+
+    beneficiarios.push(benef);
+
+    put("beneficiarios", JSON.stringify(beneficiarios));
+
     swal({
         title: "Feito!",
         text: "Beneficiário cadastrado com sucesso.",
@@ -115,6 +130,10 @@ function carregarBenef() {
 
 function adicionarBenefMemoria() {
     var proposta = get("proposta");
+    var currentYear = (new Date).getFullYear();
+    var idade = $(".nascimento").val().split("/");
+    var menor = currentYear - idade;
+
 
     if ($("#nome-beneficiario").val() == "") {
         swal("Ops!", "Preencha o Nome", "error");
@@ -133,12 +152,6 @@ function adicionarBenefMemoria() {
         $(".dependentes").val(0);
         return;
     }
-
-    //if (!isValidDate($(".nascimento").val())) {
-    //    swal("Ops!", "Data de Nascimento inválida", "error");
-    //    $(".dependentes").val(0);
-    //    return;
-    //}
 
     if ($(".cpf").val() == "" || !TestaCPF($(".cpf").val().replace(/\D/g, ''))) {
         console.log("Validando cpf");
@@ -159,19 +172,34 @@ function adicionarBenefMemoria() {
         return;
     }
 
+    if (!validarData($(".nascimento").val())) {
+        swal("Ops!", "Preencha uma data de nascimento correta", "error");
+        return;
+    }
+
+    var currentYear = (new Date).getFullYear();
+    var idade = $(".nascimento").val().split("/");
+    var menor = currentYear - idade[2];
+
+    if (menor < 18) {
+        swal("Ops!", "O Titular não pode ser menor de idade", "error");
+        $(".dependentes").val(0);
+        return;
+    }
+
     var benef = getRepository("beneficiario");
     var benefMemoria = get("beneficiario");
-    //var benefTodos = get("beneficiarios");
+    var benefTodos = get("beneficiarios");
 
-    //if (benefTodos != null) {
-    //    var existe = benefTodos.filter(function (x) { return x.cpf == $("#cpf").val() });
+    if (benefTodos != null) {
+        var existe = benefTodos.filter(function (x) { return x.cpf == $("#cpf").val() });
 
-    //    if (existe.length > 0) {
-    //        swal("Ops!", "Já existe um Beneficiário com este CPF", "error");
-    //        $(".dependentes").val(0);
-    //        return;
-    //    }
-    //}
+        if (existe.length > 0) {
+            swal("Conflito!", "Já existe um Beneficiário com este CPF", "error");
+            $(".dependentes").val(0);
+            return;
+        }
+    }
 
     if (benefMemoria != null) {
         benef.dependentes = benefMemoria.dependentes;
@@ -197,15 +225,7 @@ function adicionarBenefMemoria() {
 
     put("beneficiario", JSON.stringify(benef));
 
-    var beneficiarios = get("beneficiarios");
 
-    if (beneficiarios == null) {
-        beneficiarios = [];
-    }
-
-    beneficiarios.push(benef);
-
-    put("beneficiarios", JSON.stringify(beneficiarios));
 
     return benef;
 }

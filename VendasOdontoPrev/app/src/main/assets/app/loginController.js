@@ -1,4 +1,4 @@
-function callLogin(callback, login, password) {
+function callLogin(callback, token, login, password) {
 
     swal({
         title: "Aguarde",
@@ -16,14 +16,15 @@ function callLogin(callback, login, password) {
 
     $.ajax({
         async: true,
-        url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/login",
+        url: URLBase + "/corretorservicos/1.0/login",
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Cache-Control": "no-cache"
+            "Cache-Control": "no-cache",
+            "Authorization": "Bearer " + token
         },
         processData: false,
-        data: "{\r\n\"usuario\": \"" + login + "\",\r\n\"senha\": \"" + password +"\"\r\n}\r\n\r\n ",
+        data: "{\r\n\"usuario\": \"" + login + "\",\r\n\"senha\": \"" + password + "\"\r\n}\r\n\r\n ",
         success: function (resp) {
             callback(resp)
         },
@@ -35,7 +36,7 @@ function callLogin(callback, login, password) {
             //console.log(xhr.status);
             //$("#loadingLogin").addClass('hide');
 
-            if (xhr.status == 400) {
+            if (xhr.status == 403) {
                 swal("Ops!", "Login ou senha inválida.", "error");
                 $("#erroLogin").removeClass('hide');
                 $("#erroLogin").html("CPF ou senha inválida.");
@@ -53,15 +54,13 @@ function callLogin(callback, login, password) {
 
 $("#continuarLogin").click(function () {
 
-    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, '')))
-    {
+    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
         swal("Ops", "CPF inválido", "error");
 
         return;
     }
 
-    if ($("#password").val().length < 8)
-    {
+    if ($("#password").val().length < 8) {
         swal("Ops", "A senha deve conter no mínimo 8 caracteres", "error");
 
         return;
@@ -71,14 +70,15 @@ $("#continuarLogin").click(function () {
 
 });
 
-function callDadosUsuarios(callback, cpf) {
+function callDadosUsuarios(callback, token, cpf) {
 
     $.ajax({
         async: true,
         url: "https://api-it1.odontoprev.com.br:8243/dcss/usuario/1.0/cpf/" + cpf,
         method: "GET",
         headers: {
-            "Cache-Control": "no-cache"
+            "Cache-Control": "no-cache",
+            "Authorization": "Bearer " + token
         },
         success: function (resp) {
             //$("#loadingLogin").addClass('hide');
@@ -153,49 +153,57 @@ function logarETrazerDadosUsuario() {
 
     $("divLoading").removeClass('hide');
 
-    callLogin(function (dataLogin) {
+    callTokenProd(function (dataToken) {
 
-        //ob.imprimirSucess();
-        //console.log(dataUsuarios);
+        console.log(dataToken);
 
-        //var teste = dataUsuarios.status;
+        callLogin(function (dataLogin) {
 
-        console.log(dataLogin);
-
-        callDadosUsuarios(function (dataDadosUsuario) {
-            //console.log(dataDadosUsuario);
-            //console.log(JSON.stringify(dataDadosUsuario));
+            console.log(dataLogin);
             //ob.imprimirSucess();
-            //console.log(dataDadosUsuario);
+            //console.log(dataUsuarios);
 
-            console.log(dataDadosUsuario);
-            var forca = getRepository("dadosUsuario");
+            //var teste = dataUsuarios.status;
 
-            forca.nome = dataDadosUsuario.nome;
-            forca.cargo = dataDadosUsuario.cargo;
-            forca.cpf = dataDadosUsuario.cpf;
-            forca.email = dataDadosUsuario.email;
-            forca.login = dataDadosUsuario.login;
-            forca.nomeEmpresa = dataDadosUsuario.nomeEmpresa;
-            forca.nomeGerente = dataDadosUsuario.nomeGerente;
-            forca.responsavel = dataDadosUsuario.responsavel;
-            forca.rg = dataDadosUsuario.rg;
-            forca.senha = dataDadosUsuario.senha;
-            forca.statusUsuario = dataDadosUsuario.statusUsuario;
-            forca.telefone = dataDadosUsuario.telefone;
-            forca.codigo = dataLogin.codigoUsuario;
+            console.log(dataLogin);
 
-            //console.log(JSON.stringify(dataDadosUsuario));
-            //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
-            //ob.salvarDadosUsuario(JSON.stringify(forca)); 
-            //ob.salvarDadosUsuario();
+            callDadosUsuarios(function (dataDadosUsuario) {
+                //console.log(dataDadosUsuario);
+                //console.log(JSON.stringify(dataDadosUsuario));
+                //ob.imprimirSucess();
+                //console.log(dataDadosUsuario);
 
-            put("dadosUsuario", JSON.stringify(forca));
+                console.log(dataDadosUsuario);
+                var forca = getRepository("dadosUsuario");
 
-            window.location = "logado.html";
+                forca.nome = dataDadosUsuario.nome;
+                forca.cargo = dataDadosUsuario.cargo;
+                forca.cpf = dataDadosUsuario.cpf;
+                forca.email = dataDadosUsuario.email;
+                forca.login = dataDadosUsuario.login;
+                forca.nomeEmpresa = dataDadosUsuario.nomeEmpresa;
+                forca.nomeGerente = dataDadosUsuario.nomeGerente;
+                forca.responsavel = dataDadosUsuario.responsavel;
+                forca.rg = dataDadosUsuario.rg;
+                forca.senha = dataDadosUsuario.senha;
+                forca.statusUsuario = dataDadosUsuario.statusUsuario;
+                forca.telefone = dataDadosUsuario.telefone;
+                forca.codigo = dataLogin.codigoUsuario;
 
-        }, cpfTratado);
+                //console.log(JSON.stringify(dataDadosUsuario));
+                //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
+                ob.salvarDadosUsuario(JSON.stringify(forca));
+                //ob.salvarDadosUsuario();
 
-    }, cpfTratado, $("#password").val());
+                put("dadosUsuario", JSON.stringify(forca));
+
+                window.location = "logado.html";
+
+            }, dataToken.access_token, cpfTratado);
+
+        }, dataToken.access_token, cpfTratado, $("#password").val());
+
+    });
+
 }
 

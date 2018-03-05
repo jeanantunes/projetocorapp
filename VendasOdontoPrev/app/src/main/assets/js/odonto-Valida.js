@@ -134,6 +134,7 @@ function callToken(callback) {
         }
     });
 }
+
 function callCep(callback, token, cep) {
     $.ajax({
         async: true,
@@ -1009,6 +1010,25 @@ $(document).ready(function () {
     $("#emailNaoCadastrado").blur(function () {
 
         var teste = $("#emailNaoCadastrado").val();
+
+        if (validateEmail(teste)) {
+            console.log(teste);
+            $(".label-email").css("color", "#3A94FB");
+            $(".email").css("color", "#3A94FB");
+            $(".email").css("border-color", "#3A94FB");
+
+            return;
+        }
+
+        $(".label-email").css("color", "red");
+        $(".email").css("color", "red");
+        $(".email").css("border-color", "red");
+
+    });
+
+    $(".email").blur(function () {
+
+        var teste = $(".email").val();
 
         if (validateEmail(teste)) {
             console.log(teste);

@@ -7,7 +7,7 @@ $(document).ready(function () {
 
 
 function atualizarFatura() {
-    if ($(".selectListBlur").val() == null || $(".selectListBlur").val() == "") {
+    if ($(".selectListBlur").val() == null || $(".selectListBlur").val() == "Selecione...") {
         swal("Ops!", "Selecione a Data de vencimento da Fatura", "error");
         return;
     }

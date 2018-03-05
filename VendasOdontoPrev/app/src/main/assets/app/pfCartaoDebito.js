@@ -18,7 +18,7 @@ $("#contaDebito").keyup(function () {
 });
 
 $(function () {
-    var regex = new RegExp('[^ 0-9\b]', 'g');
+    var regex = new RegExp('[^0-9]', 'g');
     // repare a flag "g" de global, para substituir todas as ocorrências
     $('.agencia').bind('input', function () {
         $(this).val($(this).val().replace(regex, ''));
@@ -26,7 +26,7 @@ $(function () {
 });
 
 $(function () {
-    var regex = new RegExp('[^ a-zA-Z\b]', 'g');
+    var regex = new RegExp('[a-zA-Z0-9]', 'g');
     // repare a flag "g" de global, para substituir todas as ocorrências
     $('.nome').bind('input', function () {
         $(this).val($(this).val().replace(regex, ''));
@@ -69,15 +69,5 @@ function cadastrarConta() {
 
     atualizarPessoas(proposta);
 
-    var pessoa = get("pessoas");
-
-    sincronizarPessoa(function (dataProposta) {
-
-
-
-        window.location.href = "compra_pf_sucesso.html";
-
-    }, pessoa);
-
-    
+    window.location.href = "compra_pf_sucesso.html";
 }

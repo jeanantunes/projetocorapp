@@ -5,6 +5,8 @@
 
     var benef = get("beneficiario");
     benef.dependentes = [];
+
+    $('.cpf').off('blur');
 });
 
 function carregarForm() {
@@ -22,16 +24,36 @@ function carregarForm() {
 
         $("#lista").append(form);
     }
+
+    $(".cpf").focusout(function () {
+
+        if ($(this).parent().parent().find(".nascimento").val() == "") {
+            swal("Ops!", "Antes de digitar o CPF, por favor preencha a Data de Nascimento", "error");
+            $(this).val("");
+            stop = true;
+            return;
+        }
+
+        var currentYear = (new Date).getFullYear();
+        var idade = $(".nascimento").val().split("/");
+        var menor = currentYear - idade[2];
+
+        if (menor >= 18) {
+            var stringteste = $(this).val().replace(".", "");
+            stringteste = stringteste.replace("-", "");
+            stringteste = stringteste.replace(".", "");
+
+            console.log(stringteste);
+
+            if ($(this).val() == "" || TestaCPF(stringteste) == false) {
+                $(this).css({ "border-color": "#F00" });
+                $(".label-cpf").css("color", "red");
+                $(".cpf").css("color", "red");
+            }
+        }
+    });
+
 }
-
-//$("#cpf").blur(function () {
-//
-//    console.log("teste");
-//    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
-//        swal("Ops", "CPF inválido", "error");
-//    }
-//});
-
 
 function SalvarDependentes() {
     var stop = false;
@@ -57,8 +79,40 @@ function SalvarDependentes() {
             return;
         }
 
-        if ($(this).find(".cpf").val() == "") {
-            swal("Ops!", "Preencha o CPF do " + $(this).find(".depends").html(), "error");
+        if ($(this).find(".cpf").val() != "" && getInputsByValue($(this).find(".cpf").val()).length > 1) {
+            swal("Ops!", "Existem dependentes com o mesmo CPF, por favor verifique.", "error");
+            stop = true;
+            return;
+        }
+
+        if (!validarData($(this).find(".nascimento").val())) {
+            swal("Ops!", "Preencha uma data de nascimento correta do " + $(this).find(".depends").html(), "error");
+            stop = true;
+            return;
+        }
+
+        var currentYear = (new Date).getFullYear();
+        var idade = $(this).find(".nascimento").val().split("/");
+        var menor = currentYear - idade[2];
+
+        if (menor >= 18) {
+            if ($(this).find(".cpf").val() == "") {
+                console.log("Validando cpf");
+                swal("Ops!", "CPF está inválido", "error");
+                stop = true;
+                return;
+            }
+        }
+
+        if ($(this).find(".cpf").val() != "" && !TestaCPF($(this).find(".cpf").val().replace(/\D/g, ''))) {
+            swal("Ops!", "CPF está inválido", "error");
+            stop = true;
+            return;
+        }
+
+        var benef = get("beneficiario");
+        if ($(this).find(".cpf").val() != "" && benef.cpf == $(this).find(".cpf").val()) {
+            swal("Conflito!", "Você informou o mesmo CPF do titular para este dependente, por favor verifique.", "error");
             stop = true;
             return;
         }
@@ -68,33 +122,7 @@ function SalvarDependentes() {
             stop = true;
             return;
         }
-
-        var benefTodos = get("beneficiarios");
-
-        if (benefTodos != null) {
-            var existe = benefTodos.filter(function (x) { return x.cpf == $("#cpf").val() });
-
-            if (existe.length > 0) {
-                swal("Ops!", "Já existe um Beneficiário com este CPF", "error");
-                $(".dependentes").val(0);
-                return;
-            }
-        }
-
-        //if (benefTodos != null) {
-        //    var deps = benefTodos.dependentes;
-        //    if (deps != null) {
-        //        var existe = deps.filter(function (x) { return x.cpf == $("#cpf").val() });
-
-        //        if (existe.length > 0) {
-        //            swal("Ops!", "Já existe um Dependente com este CPF", "error");
-        //            $(".dependentes").val(0);
-        //            return;
-        //        }
-        //    }
-        //}
     });
-
 
     if (stop)
         return;
@@ -114,24 +142,10 @@ function SalvarDependentes() {
             benef.dependentes = [];
         }
 
-        //var benefTodos = get("beneficiarios");
-
-        //if (benefTodos != null) {
-        //    var deps = benefTodos.dependentes;
-        //    if (deps != null) {
-        //        var existe = deps.filter(function (x) { return x.cpf == $("#cpf").val() });
-
-        //        if (existe.length > 0) {
-        //            swal("Ops!", "Já existe um Dependente com este CPF", "error");
-        //            $(".dependentes").val(0);
-        //            return;
-        //        }
-        //    }
-        //}
-
         benef.dependentes.push(dependente);
         put("beneficiario", JSON.stringify(benef));
     });
 
     window.location.href = 'venda_pme_beneficiarios.html';
 }
+

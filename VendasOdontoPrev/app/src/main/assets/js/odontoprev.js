@@ -154,25 +154,6 @@ $("#salvarEditDados").click(function () {
     }
 // End Menu //
 
-function validarCpf()
-{
-   var cpf = $('#cpf').val().replace(/\D/g, '');
-   if(cpf == "46809897852")
-   {
-        $( "#celOdont" ).removeClass( "hide" )
-        $( "#cpfOdont" ).addClass( "hide" )
-        $("#nome").val("Yago");
-        $("#celular").val("(11)1111-1111");
-        $("#email").val("almeida_yago@hotmail.com")
-   }
-   else
-   {
-        $( "#celOdontCorretora" ).removeClass( "hide" )
-        $( "#cpfOdont" ).addClass( "hide" )
-   }
-}
-
-
 //Grafico Vendas//
     $(document).ready(function() {
         $('.barras').each(function() {

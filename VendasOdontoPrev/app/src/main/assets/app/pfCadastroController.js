@@ -27,6 +27,11 @@ function addDependente() {
         return;
     }
 
+    if (!validateEmail($(".email").val())) {
+        swal("Ops!", "Preencha um E-mail válido", "error");
+        return;
+    }
+    
     if ($(".celular").val() == "") {
         swal("Ops!", "Preencha o celular", "error");
         return;
@@ -87,6 +92,15 @@ function addDependente() {
 
     if ($(".estado").val() == "") {
         swal("Ops!", "Preencha o estado", "error");
+        return;
+    }
+
+    var currentYear = (new Date).getFullYear();
+    var idade = $(".nascimento").val().split("/");
+    var menor = currentYear - idade[2];
+
+    if (menor < 18) {
+        swal("Ops!", "O Titular não pode ser menor de idade", "error");
         return;
     }
 
@@ -236,7 +250,17 @@ function salvarRascunho() {
         return;
     }
 
-    salvarRascunhoMemoria();
+
+    var currentYear = (new Date).getFullYear();
+    var idade = $(".nascimento").val().split("/");
+    var menor = currentYear - idade[2];
+
+    if (menor < 18) {
+        swal("Ops!", "O Titular não pode ser menor de idade", "error");
+        return;
+    }
+
+   salvarRascunhoMemoria();
     window.location.href = "resumo_pf_proposta.html";
 }
 
@@ -342,7 +366,7 @@ function listarDependentes() {
 
     $.each(proposta.dependentes, function (i, item) {
         var dep = getComponent("dependente");
-        dep = dep.replace("{CPF}", item.cpf);
+        dep = dep.replace("{CPF}", (item.cpf == ""? "Menor de Idade" : item.cpf));
         dep = dep.replace("{CPF-BT}", item.cpf);
         dep = dep.replace("{CPF-DESC}", item.cpf);
         dep = dep.replace("{NOME}", item.nome);
