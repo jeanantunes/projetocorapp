@@ -137,7 +137,7 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
 
     $.ajax({
         async: true,
-        url: "https://api-it1.odontoprev.com.br:8243/serasa/consulta/1.0/",
+        url: URLBase + "/serasa/consulta/1.0/",
         method: "POST",
         headers: {
             "Content-Type": "application/xml",
@@ -159,11 +159,11 @@ $('#cnpjEmpresa').blur(function () {
 });
 
 function buscarEmpresa() {
-
+    
     var cnpjValidado = $('#cnpjEmpresa').val().replace(/\D/g, '');
 
     if (!navigator.onLine) return;
-
+   
     //put('cpnjValido', "");
     callTokenProd(function (dataToken) {
         
@@ -171,13 +171,26 @@ function buscarEmpresa() {
             try {
                 console.log(dataConsulta);
                 try {
-                    var situacaoEmpresa = dataConsulta.getElementsByTagName("situacao")[0].textContent;
-                    var situacao = situacaoEmpresa.indexOf("ATIVA");
-
+                    try {
+                        var situacaoEmpresa = dataConsulta.getElementsByTagName("situacao")[0].textContent;
+                        var situacao = situacaoEmpresa.indexOf("ATIVA");
+                    } catch (Exception) { }
+                    
                     console.log(situacao);
 
-                    if (!situacao == 0 || situacao == undefined) {
-                        console.log(situacaoEmpresa);
+                    if (situacao == undefined)
+                    {
+                        $("#razao-social").prop('disabled', false);
+                        $("#ramo-atividade").prop('disabled', false);
+                        $("#representante-legal").prop('disabled', false);
+                        $("#cpf-representante").prop('disabled', false);
+                        $("#nome-fantasia").prop('disabled', false);
+
+                        swal.close();
+                        return;
+                    }
+
+                    if (!situacao == 0) {
 
                         swal("Ops", "Não é possível seguir com a contratação para esta empresa. Consulte o CNPJ e tente novamente.", "info");
 
@@ -187,7 +200,7 @@ function buscarEmpresa() {
                         $("#representante-legal").val("");
                         $("#cpf-representante").val("");
                         $("#nome-fantasia").val("");
-
+                        //$("#razao-social").removeProp("disabled", true);
                         return;
                     }
                 } catch (Exception) { }
@@ -196,7 +209,6 @@ function buscarEmpresa() {
                     //put('cpnjValido', dataConsulta.getElementsByTagName("situacao")[0].textContent);
                     
                     //console.log(empresaAtiva);
-
                     try { $("#rua").val(dataConsulta.getElementsByTagName("Nome")[0].textContent); } catch (Exception) { }
                     try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent); } catch (Exception) { }
                     try { $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent); } catch (Exception) { }
@@ -204,6 +216,10 @@ function buscarEmpresa() {
                     try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent); } catch (Exception) { }
                     try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent); } catch (Exception) { }
                     try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[0].textContent); } catch (Exception) { }
+                    try { $("#cep").val(dataConsulta.getElementsByTagName("cep")[0].textContent); } catch (Exception) { }
+                    try { $("#uf").val(dataConsulta.getElementsByTagName("uf")[0].textContent); } catch (Exception) { }
+                    try { $("#cidade").val(dataConsulta.getElementsByTagName("cidade")[0].textContent); } catch (Exception) { }
+                    try { $("#bairro").val(dataConsulta.getElementsByTagName("bairro")[0].textContent); } catch (Exception) { }
 
                     swal.close();
 
@@ -280,7 +296,6 @@ function salvarRascunhoMemoria() {
     var proposta = get("proposta");
     proposta.status = "DIGITANDO";
     proposta.cnpj = $("#cnpjEmpresa").val();
-    proposta.cnae = cnae;
     proposta.razaoSocial = $("#razao-social").val();
     proposta.incEstadual = $("#inscricao-estadual").val();
     proposta.ramoAtividade = $("#ramo-atividade").val();
@@ -338,7 +353,7 @@ function carregarProposta() {
         $("#squaredOne").attr("checked", false);
     }
 
-    $("#cpf-representante").val(proposta.cpf);
+    $("#cpf-representante").val(proposta.cpfRepresentante);
     $("#telefone").val(proposta.telefone);
     $("#celular").val(proposta.celular);
     $("#email").val(proposta.email);

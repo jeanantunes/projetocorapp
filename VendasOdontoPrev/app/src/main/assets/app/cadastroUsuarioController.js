@@ -38,7 +38,7 @@ function callDadosUsuarios(callback, token, cpf) {
 
     $.ajax({
         async: true,
-        url: "https://api-it1.odontoprev.com.br:8243/dcss/usuario/1.0/cpf/" + cpf,
+        url: URLBase + "dcss/usuario/1.0/cpf/" + cpf,
         method: "GET",
         headers: {
             "Cache-Control": "no-cache",
@@ -129,7 +129,7 @@ function callCorretora(callback, token, cnpj) {
 
     $.ajax({
         async: true,
-        url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/corretora/" + cnpj,
+        url: URLBase + "/corretorservicos/1.0/corretora/" + cnpj,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -223,7 +223,9 @@ $("#btnInfoCorretoraNCpf").click(function () {
             var celularTratado = $("#celularNaoCadastrado").val().replace(/\D/g, '');
             var email = $("#emailNaoCadastrado").val();
             var senha = $("#confirmar-senhaCpfFalse").val();
-            var dataNascimento = "";
+            var dataNascimento = "11/08/2001";
+
+            console.log(dataNascimento);
 
             callInputForcaVenda(function (dataForcaVenda) {
 

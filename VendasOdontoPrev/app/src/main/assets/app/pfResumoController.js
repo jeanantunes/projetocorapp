@@ -26,7 +26,7 @@ function buscarPlanosSelecionados() {
 
         console.log();
 
-        if ((valorTotal % 2) == 0) {
+        if ((valorTotal % 2) == 0 || (valorTotal % 2) == 1) {
             var valorReal = valorTotal;
             var valorCent = "00";
         } else

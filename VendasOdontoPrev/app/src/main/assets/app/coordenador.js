@@ -489,6 +489,7 @@ function atualizarDashBoard() {
 
 
 function sincronizar() {
+
     if (checkNetConnection()) {
 
         var empresas = get("empresas");
@@ -541,21 +542,22 @@ function sincronizar() {
 
             $.each(pessoas, function (i, item) {
                 if (item.status == "PRONTA") {
+
                     var o = pessoas.filter(function (x) { return x.cpf == item.cpf });
 
                     sincronizarPessoa(function (dataProposta) {
                         console.log(dataProposta);
                     }, o);
-
                 }
             });
-
-            swal.close();
         }
     }
     else {
         swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
+
     }
+
+    swal.close();
 }
 
 function removerAcentos(newStringComAcento) {
@@ -696,8 +698,9 @@ function sincronizarPessoa(callback, pessoa) {
 
 function sincronizarEmpresa(proposta, beneficiarios) {
 
+    var dadosUsuario = get("dadosUsuario");
     var pdata = [];
-    var json = "{ \"empresas\": " + JSON.stringify(proposta) + ", \"titulares\":" + JSON.stringify(beneficiarios) + "}";
+    var json = "{ \"cdForcaVenda\":" + dadosUsuario.codigo + ", \"empresas\": " + JSON.stringify(proposta) + ", \"titulares\":" + JSON.stringify(beneficiarios) + "}";
 
     console.log(json);
 

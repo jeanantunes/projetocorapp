@@ -181,11 +181,11 @@ function adicionarBenefMemoria() {
     var idade = $(".nascimento").val().split("/");
     var menor = currentYear - idade[2];
 
-    if (menor < 18) {
-        swal("Ops!", "O Titular não pode ser menor de idade", "error");
-        $(".dependentes").val(0);
-        return;
-    }
+    //if (menor < 18) {
+    //    swal("Ops!", "O Titular não pode ser menor de idade", "error");
+    //    $(".dependentes").val(0);
+    //    return;
+    //}
 
     var benef = getRepository("beneficiario");
     var benefMemoria = get("beneficiario");

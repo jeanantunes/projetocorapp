@@ -74,7 +74,7 @@ function callDadosUsuarios(callback, token, cpf) {
 
     $.ajax({
         async: true,
-        url: "https://api-it1.odontoprev.com.br:8243/dcss/usuario/1.0/cpf/" + cpf,
+        url: URLBase + "/dcss/usuario/1.0/cpf/" + cpf,
         method: "GET",
         headers: {
             "Cache-Control": "no-cache",
@@ -192,7 +192,7 @@ function logarETrazerDadosUsuario() {
 
                 //console.log(JSON.stringify(dataDadosUsuario));
                 //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
-                ob.salvarDadosUsuario(JSON.stringify(forca));
+                //ob.salvarDadosUsuario(JSON.stringify(forca));
                 //ob.salvarDadosUsuario();
 
                 put("dadosUsuario", JSON.stringify(forca));
