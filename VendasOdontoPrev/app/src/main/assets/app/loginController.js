@@ -70,13 +70,14 @@ $("#continuarLogin").click(function () {
 
 });
 
-function callDadosUsuarios(callback, token, cpf) {
+function callDadosForcaVenda(callback, token, cpf) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/dcss/usuario/1.0/cpf/" + cpf,
+        url: URLBase + "/corretorservicos/1.0/forcavenda/" + cpf,
         method: "GET",
         headers: {
+            "Content-Type": "application/json",
             "Cache-Control": "no-cache",
             "Authorization": "Bearer " + token
         },
@@ -167,7 +168,7 @@ function logarETrazerDadosUsuario() {
 
             console.log(dataLogin);
 
-            callDadosUsuarios(function (dataDadosUsuario) {
+            callDadosForcaVenda(function (dataDadosUsuario) {
                 //console.log(dataDadosUsuario);
                 //console.log(JSON.stringify(dataDadosUsuario));
                 //ob.imprimirSucess();
@@ -180,15 +181,15 @@ function logarETrazerDadosUsuario() {
                 forca.cargo = dataDadosUsuario.cargo;
                 forca.cpf = dataDadosUsuario.cpf;
                 forca.email = dataDadosUsuario.email;
-                forca.login = dataDadosUsuario.login;
-                forca.nomeEmpresa = dataDadosUsuario.nomeEmpresa;
+                forca.login = dataDadosUsuario.cpf;
+                forca.nomeEmpresa = dataDadosUsuario.corretora.razaoSocial;
                 forca.nomeGerente = dataDadosUsuario.nomeGerente;
                 forca.responsavel = dataDadosUsuario.responsavel;
                 forca.rg = dataDadosUsuario.rg;
                 forca.senha = dataDadosUsuario.senha;
-                forca.statusUsuario = dataDadosUsuario.statusUsuario;
-                forca.telefone = dataDadosUsuario.telefone;
-                forca.codigo = dataLogin.codigoUsuario;
+                forca.statusUsuario = dataDadosUsuario.statusForcaVenda;
+                forca.telefone = dataDadosUsuario.celular;
+                forca.codigo = dataLogin.cdForcaVenda;
 
                 //console.log(JSON.stringify(dataDadosUsuario));
                 //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
