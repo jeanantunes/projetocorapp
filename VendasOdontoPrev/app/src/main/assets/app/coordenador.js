@@ -190,7 +190,7 @@ function setPlanos() {
     planos = [];
 
     plano = getRepository("plano");
-    plano.cdPlano = 9;
+    plano.cdPlano = 82;
     plano.nome = "Integral DOC LE";
     plano.valor = "37";
     plano.centavo = "82";
@@ -199,7 +199,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 10;
+    plano.cdPlano = 83;
     plano.nome = "Master LE";
     plano.valor = "119";
     plano.centavo = "48";
@@ -209,7 +209,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 7;
+    plano.cdPlano = 67;
     plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "45";
     plano.centavo = "60";
@@ -219,7 +219,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 8;
+    plano.cdPlano = 66;
     plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "456";
     plano.centavo = "00";
@@ -228,15 +228,15 @@ function setPlanos() {
 
     planos.push(plano);
 
-    //plano = getRepository("plano");
-    //plano.cdPlano = 5;
-    //plano.nome = "DENTAL BEM-ESTAR";
-    //plano.valor = "547";
-    //plano.centavo = "20";
-    //plano.desc = "Anual";
-    //plano.css = "colorSlick3";
-    //
-    //planos.push(plano);
+    plano = getRepository("plano");
+    plano.cdPlano = 68;
+    plano.nome = "DENTAL BEM-ESTAR";
+    plano.valor = "547";
+    plano.centavo = "20";
+    plano.desc = "Anual";
+    plano.css = "colorSlick3";
+    
+    planos.push(plano);
 
     //plano = getRepository("plano");
     //plano.cdPlano = 6;
@@ -259,7 +259,7 @@ function setPlanos() {
     //planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 1;
+    plano.cdPlano = 74;
     plano.nome = "DENTAL ESTÉTICA";
     plano.valor = "115";
     plano.centavo = "00";
@@ -269,7 +269,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 2;
+    plano.cdPlano = 73;
     plano.nome = "DENTAL ESTÉTICA";
     plano.valor = "1150";
     plano.centavo = "00";
@@ -279,7 +279,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 10;
+    plano.cdPlano = 75;
     plano.nome = "DENTAL ESTÉTICA";
     plano.valor = "1380";
     plano.centavo = "00";
@@ -289,7 +289,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 5;
+    plano.cdPlano = 77;
     plano.nome = "DENTAL ORTO";
     plano.valor = "147";
     plano.centavo = "00";
@@ -299,7 +299,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 6;
+    plano.cdPlano = 76;
     plano.nome = "DENTAL ORTO";
     plano.valor = "1470";
     plano.centavo = "00";
@@ -309,7 +309,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 13;
+    plano.cdPlano = 78;
     plano.nome = "DENTAL ORTO";
     plano.valor = "1764";
     plano.centavo = "00";
@@ -319,7 +319,7 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 3;
+    plano.cdPlano = 80;
     plano.nome = "DENTAL VIP";
     plano.valor = "220";
     plano.centavo = "35";
@@ -329,10 +329,20 @@ function setPlanos() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 4;
+    plano.cdPlano = 79;
     plano.nome = "DENTAL VIP";
     plano.valor = "2203";
     plano.centavo = "50";
+    plano.desc = "Anual";
+    plano.css = "colorSlick5";
+
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 81;
+    plano.nome = "DENTAL VIP";
+    plano.valor = "2644";
+    plano.centavo = "20";
     plano.desc = "Anual";
     plano.css = "colorSlick5";
 

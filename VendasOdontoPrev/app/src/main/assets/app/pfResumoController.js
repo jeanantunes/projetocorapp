@@ -35,7 +35,7 @@ function buscarPlanosSelecionados() {
             var position = valorString.indexOf(".");
             var tamanhoString = valorTotal.toString().length;
             var valorReal = valorString.substring(0, position);
-            var valorCent = valorString.substring(position + 1, tamanhoString);
+            var valorCent = valorString.substring(position + 1, position + 3);
 
             if (valorCent.toString().length == 1) valorCent = parseFloat(valorCent.toString() + "0");
         }
