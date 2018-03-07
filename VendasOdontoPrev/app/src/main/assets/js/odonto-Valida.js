@@ -1012,7 +1012,7 @@ $(document).ready(function () {
         var teste = $("#emailNaoCadastrado").val();
 
         if (validateEmail(teste)) {
-            console.log(teste);
+
             $(".label-email").css("color", "#3A94FB");
             $(".email").css("color", "#3A94FB");
             $(".email").css("border-color", "#3A94FB");
@@ -1028,10 +1028,10 @@ $(document).ready(function () {
 
     $(".email").blur(function () {
 
-        var teste = $(".email").val();
+        var emailNaoCadastrado = $(".email").val();
 
-        if (validateEmail(teste)) {
-            console.log(teste);
+        if (validateEmail(emailNaoCadastrado)) {
+            console.log(emailNaoCadastrado);
             $(".label-email").css("color", "#3A94FB");
             $(".email").css("color", "#3A94FB");
             $(".email").css("border-color", "#3A94FB");

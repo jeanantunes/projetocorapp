@@ -72,7 +72,7 @@ function callTokenProd(callback) {
             swal("Ops!", "Erro na conexão, tente mais tarde", "error");
         }
     });
-}
+};
 
 $(function () {
     var regex = new RegExp('[^ a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ\b]', 'g');
@@ -554,20 +554,25 @@ function sincronizar() {
                 if (item.status == "PRONTA") {
 
                     var o = pessoas.filter(function (x) { return x.cpf == item.cpf });
+                    var propostas = pessoas.filter(function (x) { return x.cpf != item.cpf });
 
+                    pessoas = []; //limpar
+
+                    $.each(propostas, function (i, item) {
+                        pessoas.push(item);
+                    });
+                   
                     sincronizarPessoa(function (dataProposta) {
                         console.log(dataProposta);
                     }, o);
+
                 }
             });
         }
     }
     else {
-        swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
-
+        swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");0
     }
-
-    swal.close();
 }
 
 function removerAcentos(newStringComAcento) {
@@ -621,17 +626,17 @@ function sincronizarPessoa(callback, pessoa) {
                 ,
                 "email": pessoa[0].email,
                 "endereco": {
-                    "bairro": pessoa[0].endereco.bairro,
+                    "bairro": removerAcentos(pessoa[0].endereco.bairro),
                     "cep": pessoa[0].endereco.cep,
                     "cidade": removerAcentos(pessoa[0].endereco.cidade),
                     "complemento": pessoa[0].endereco.complemento,
-                    "logradouro": pessoa[0].endereco.logradouro,
+                    "logradouro": removerAcentos(pessoa[0].endereco.logradouro),
                     "estado": pessoa[0].endereco.estado,
                     "numero": pessoa[0].endereco.numero
                 },
                 "dataNascimento": pessoa[0].dataNascimento,
-                "nomeMae": pessoa[0].nomeMae,
-                "nome": pessoa[0].nome,
+                "nomeMae": removerAcentos(pessoa[0].nomeMae),
+                "nome": removerAcentos(pessoa[0].nome),
                 "sexo": pessoa[0].sexo,
                 "status": pessoa[0].status,
                 "titular": pessoa[0].titular

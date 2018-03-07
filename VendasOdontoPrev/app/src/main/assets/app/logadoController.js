@@ -34,6 +34,7 @@ function validarVersaoApp()
 }
 
 function getVersaoApp(callback, token) {
+
     $.ajax({
         async: true,
         url: URLBase + "/corretorapp/1.0/versao",
@@ -48,6 +49,7 @@ function getVersaoApp(callback, token) {
         error: function (xhr) {
         }
     });
+
 }
 
 

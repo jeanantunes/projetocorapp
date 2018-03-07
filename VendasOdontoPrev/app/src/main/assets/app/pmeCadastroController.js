@@ -306,7 +306,7 @@ function salvarRascunhoMemoria() {
     proposta.celular = $("#celular").val();
     proposta.email = $("#email").val();
     proposta.enderecoEmpresa.cep = $("#cep").val();
-    proposta.enderecoEmpresa.logradouro = $("#rua").val();
+    proposta.enderecoEmpresa.logradouro = removerAcentos($("#rua").val());
     proposta.enderecoEmpresa.numero = $("#numeroEndereco").val();
     proposta.enderecoEmpresa.complemento = $("#complemento").val();
     proposta.enderecoEmpresa.bairro = $("#bairro").val();

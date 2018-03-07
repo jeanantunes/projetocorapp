@@ -26,9 +26,9 @@ $(function () {
 });
 
 $(function () {
-    var regex = new RegExp('[a-zA-Z0-9]', 'g');
+    var regex = new RegExp('[^a-zA-Z0-9]', 'g');
     // repare a flag "g" de global, para substituir todas as ocorrências
-    $('.nome').bind('input', function () {
+    $('.conta-corrente').bind('input', function () {
         $(this).val($(this).val().replace(regex, ''));
     });
 });

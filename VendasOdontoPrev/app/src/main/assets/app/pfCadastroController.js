@@ -366,11 +366,11 @@ function listarDependentes() {
 
     $.each(proposta.dependentes, function (i, item) {
         var dep = getComponent("dependente");
-        dep = dep.replace("{CPF}", (item.cpf == ""? "Menor de Idade" : item.cpf));
-        dep = dep.replace("{CPF-BT}", item.cpf);
+        dep = dep.replace("{CPF}", (item.cpf == "" ? item.nome : item.cpf));
+        dep = dep.replace("{CPF-BT}", (item.cpf == "" ? item.nome : item.cpf));
         dep = dep.replace("{CPF-DESC}", item.cpf);
         dep = dep.replace("{NOME}", item.nome);
-
+        dep = dep.replace("{NOME-DEP}", item.nome);
         $("#listaDep").append(dep);
     });
 }
@@ -378,9 +378,14 @@ function listarDependentes() {
 function excluirDep(obj) {
 
     var container = $(".div-excluir[data-id='" + $(obj).attr("data-id") + "']");
+
+    //if (container.length == 0) {
+    //
+    //    var container = $(".div-excluir[data-id='" + $(obj).attr("data-nome") + "']");
+    //}
     var proposta = get("propostaPf");
 
-    var propostaExcetoExcluido = proposta.dependentes.filter(function (x) { return x.cpf != container.attr("data-id") });
+    var propostaExcetoExcluido = proposta.dependentes.filter(function (x) { return x.cpf != container.attr("data-id")});
     proposta.dependentes = [];
     $.each(propostaExcetoExcluido, function (i, item) {
         proposta.dependentes.push(item);

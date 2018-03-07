@@ -207,8 +207,8 @@ function adicionarBenefMemoria() {
 
     problema = false;
 
-    benef.nome = $("#nome-beneficiario").val();
-    benef.nomeMae = $(".nome-mae").val();
+    benef.nome = removerAcentos($("#nome-beneficiario").val());
+    benef.nomeMae = removerAcentos($(".nome-mae").val());
 
     if ($("#radio-1").is(":checked") == true) {
         benef.sexo = $("#radio-1").val();

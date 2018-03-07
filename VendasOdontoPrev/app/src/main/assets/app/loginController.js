@@ -1,19 +1,5 @@
 function callLogin(callback, token, login, password) {
 
-    swal({
-        title: "Aguarde",
-        text: 'Estamos procurando seus dados',
-        content: "input",
-        showCancelButton: false,
-        showConfirmButton: false,
-        imageUrl: "img/load.gif",
-        icon: "info",
-        button: {
-            text: "...",
-            closeModal: false,
-        },
-    })
-
     $.ajax({
         async: true,
         url: URLBase + "/corretorservicos/1.0/login",
@@ -65,6 +51,20 @@ $("#continuarLogin").click(function () {
 
         return;
     }
+
+    swal({
+        title: "Aguarde",
+        text: 'Estamos procurando seus dados',
+        content: "input",
+        showCancelButton: false,
+        showConfirmButton: false,
+        imageUrl: "img/load.gif",
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false,
+        },
+    });
 
     logarETrazerDadosUsuario();
 
@@ -168,7 +168,8 @@ function logarETrazerDadosUsuario() {
 
             console.log(dataLogin);
 
-            callDadosForcaVenda(function (dataDadosUsuario) {
+            callDadosForcaVenda(function (dataDadosUsuario) { // Essa request salva os dados dos corretores no localstorage
+
                 //console.log(dataDadosUsuario);
                 //console.log(JSON.stringify(dataDadosUsuario));
                 //ob.imprimirSucess();
@@ -190,15 +191,14 @@ function logarETrazerDadosUsuario() {
                 forca.statusUsuario = dataDadosUsuario.statusForcaVenda;
                 forca.telefone = dataDadosUsuario.celular;
                 forca.codigo = dataLogin.codigoUsuario;
-
+                put("dadosUsuario", JSON.stringify(forca));
                 //console.log(JSON.stringify(dataDadosUsuario));
                 //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
                 //Marcelo
                 ob.salvarDadosUsuario(JSON.stringify(forca));
                 //ob.salvarDadosUsuario();
 
-                put("dadosUsuario", JSON.stringify(forca));
-
+               
                 window.location = "logado.html";
 
             }, dataToken.access_token, cpfTratado);
