@@ -193,6 +193,7 @@ function logarETrazerDadosUsuario() {
 
                 //console.log(JSON.stringify(dataDadosUsuario));
                 //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
+                //Marcelo
                 ob.salvarDadosUsuario(JSON.stringify(forca));
                 //ob.salvarDadosUsuario();
 

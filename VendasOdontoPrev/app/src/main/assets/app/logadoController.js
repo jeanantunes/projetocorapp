@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
     atualizarDashBoard();
-    //validarVersaoApp();
+    validarVersaoApp();
 
 });
 
@@ -15,14 +15,16 @@ function validarVersaoApp()
 
             var versao = dataVersao.versao;
 
-            if (versao != 1) {
+           
+
+            if (versao != '2') {
                 swal({
                     title: "Ops",
                     text: "Sua versão do aplicativo está desatualizada, atualize na Play Store",
                     type: "warning"
                 }, function () {
-                    // Redirect the user
-                    window.location = "https://play.google.com/store/apps/details?id=br.com.beneficiario.odontoprev&hl=pt_BR";
+                   // Redirect the user
+                    window.location = "https://play.google.com/store/apps/details?id=com.vendaodonto.vendasodontoprev";
                 });
             }
 
@@ -34,7 +36,7 @@ function validarVersaoApp()
 function getVersaoApp(callback, token) {
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/versao",
+        url: URLBase + "/corretorapp/1.0/versao",
         method: "GET",
         headers: {
             "Cache-Control": "no-cache",
