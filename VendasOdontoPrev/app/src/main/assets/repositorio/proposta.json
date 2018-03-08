@@ -11,7 +11,7 @@
   "telefone": "",
   "celular": "",
   "email": "",
-  "vencimentoFatura": 30,
+  "vencimentoFatura": "",
   "enderecoEmpresa": {
     "cep": "",
     "logradouro": "",

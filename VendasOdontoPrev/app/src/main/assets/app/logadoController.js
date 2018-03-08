@@ -9,13 +9,11 @@ $(document).ready(function () {
 
 function validarVersaoApp()
 {
-    callTokenProd(function (dataToken) {
+    callTokenProdSemMsgErro(function (dataToken) {
 
         getVersaoApp(function (dataVersao) {
 
             var versao = dataVersao.versao;
-
-           
 
             if (versao != '2') {
                 swal({

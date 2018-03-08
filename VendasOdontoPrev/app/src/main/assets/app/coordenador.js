@@ -74,6 +74,29 @@ function callTokenProd(callback) {
     });
 };
 
+function callTokenProdSemMsgErro(callback) {
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/token",
+        method: "POST",
+        headers: {
+            "Authorization": "Basic " + Token,
+            "Cache-Control": "no-cache",
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        data: {
+            "grant_type": "client_credentials"
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+
+        }
+    });
+};
+
 $(function () {
     var regex = new RegExp('[^ a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ\b]', 'g');
     // repare a flag "g" de global, para substituir todas as ocorrências

@@ -238,8 +238,7 @@ function salvarRascunho() {
         swal("Ops!", "Preencha o CNPJ", "error");
         return;
     }
-
-
+    
     if ($("#telefone").val() == "") {
         swal("Ops!", "Preencha o telefone", "error");
         return;
@@ -289,6 +288,24 @@ function salvarRascunho() {
     salvarRascunhoMemoria();
 
     swal("Feito","Proposta salva com sucesso", "success")
+}
+
+function salvarEContinuar() {
+
+    if ($("#cnpjEmpresa").val() == "") {
+        swal("Ops!", "Preencha o CNPJ", "error");
+        return;
+    }
+
+    if (!validaCnpj($("#cnpjEmpresa").val())) {
+        swal("Ops!", "Preencha um CNPJ válido", "error");
+        return;
+    }
+
+    salvarRascunhoMemoria();
+
+    swal("Feito", "Proposta salva com sucesso", "success");
+
 }
 
 function salvarRascunhoMemoria() {

@@ -83,7 +83,7 @@ function carregarLista() {
             link = "venda_pme_editar.html?cnpj=" + item.cnpj;
         }
 
-        itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? "Falha: Nome nulo na Serasa" : item.razaoSocial));
+        itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
         itemLista = itemLista.replace("{STATUS}", status);
         itemLista = itemLista.replace("{CSS}", css);
         itemLista = itemLista.replace("{ACAO}", acao);

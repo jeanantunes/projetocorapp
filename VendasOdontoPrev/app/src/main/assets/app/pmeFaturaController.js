@@ -2,7 +2,11 @@
 
 $(document).ready(function () {
     var proposta = get("proposta");
-    $(".selectListBlur").val(proposta.vencimentoFatura);
+
+    //if (proposta.vencimentoFatura != "") {
+    //    $(".selectListBlur").val(proposta.vencimentoFatura);
+    //}
+    
 });
 
 

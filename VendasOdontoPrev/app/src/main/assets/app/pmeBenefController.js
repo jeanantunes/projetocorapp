@@ -2,8 +2,8 @@
 
 $(document).ready(function () {
     carregarLista();
-    carregarBenef();
     carregarBoxPlanos();
+    carregarBenef();
 
     $(".dependentes").change(function () {
 
@@ -29,21 +29,19 @@ $(document).ready(function () {
 });
 
 function carregarBoxPlanos() {
-    console.log("Executou");
+
     var propostaPlanos = get("proposta");
 
     var sel = document.getElementById('planosPme');
 
     var planos = get("planos");
 
-    console.log(planos);
+    $.each(propostaPlanos.planos, function (i, item) {
 
-    for (var i = 0; i < propostaPlanos.planos.length; i++) {
+        var o = planos.filter(function (x) { return x.cdPlano == item.cdPlano });
 
-        console.log(propostaPlanos.planos[i].cdPlano);
-
-        var plano = planos[i].nome;
-        var codigo = planos[i].cdPlano;
+        var plano = o[0].nome;
+        var codigo = o[0].cdPlano;
 
         var opt = document.createElement('option');
         ////console.log(dataEspecialidades[i].descricao);
@@ -51,8 +49,8 @@ function carregarBoxPlanos() {
         ////console.log(dataEspecialidades[i].codigo);
         opt.appendChild(document.createTextNode(plano));
         sel.appendChild(opt);
-    }
 
+    });
 }
 
 function carregarLista() {
@@ -116,10 +114,10 @@ function carregarBenef() {
     $(".dependentes").val(benef.dependentes.length);
 
     if (benef.sexo == "m") {
-        $("#radio-1").attr("checked", true);
+        $("#radio-2").attr("checked", true);
     }
     else {
-        $("#radio-2").attr("checked", true);
+        $("#radio-1").attr("checked", true);
     }
 
     $(".nascimento").val(benef.dataNascimento);
@@ -153,8 +151,12 @@ function adicionarBenefMemoria() {
         return;
     }
 
-    if ($(".cpf").val() == "" || !TestaCPF($(".cpf").val().replace(/\D/g, ''))) {
-        console.log("Validando cpf");
+    var currentYear = (new Date).getFullYear();
+    var idade = $(".nascimento").val().split("/");
+    var menor = currentYear - idade[2];
+
+    if (($(".cpf").val() == "" || !TestaCPF($(".cpf").val().replace(/\D/g, ''))) && menor > 17) {
+
         swal("Ops!", "CPF está inválido", "error");
         $(".dependentes").val(0);
         return;
@@ -177,9 +179,7 @@ function adicionarBenefMemoria() {
         return;
     }
 
-    var currentYear = (new Date).getFullYear();
-    var idade = $(".nascimento").val().split("/");
-    var menor = currentYear - idade[2];
+
 
     //if (menor < 18) {
     //    swal("Ops!", "O Titular não pode ser menor de idade", "error");
@@ -191,7 +191,7 @@ function adicionarBenefMemoria() {
     var benefMemoria = get("beneficiario");
     var benefTodos = get("beneficiarios");
 
-    if (benefTodos != null) {
+    if (benefTodos != null && $("#cpf").val() != "") {
         var existe = benefTodos.filter(function (x) { return x.cpf == $("#cpf").val() });
 
         if (existe.length > 0) {
@@ -224,8 +224,6 @@ function adicionarBenefMemoria() {
     benef.cdPlano = $(".plano").val();
 
     put("beneficiario", JSON.stringify(benef));
-
-
 
     return benef;
 }

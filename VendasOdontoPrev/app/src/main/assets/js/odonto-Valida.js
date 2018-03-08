@@ -8,6 +8,7 @@ $(document).ready(function () {
             return false;
         } else { return true; }
     }
+
     function validarDependentes() {
         var myJSON = JSON.stringify($("#meu_formulario").serializeArray());
         window.localStorage.setItem('Beneficiario', myJSON);
