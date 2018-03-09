@@ -57,13 +57,15 @@
         <div class="row">
             <div class="col-md-12 odontBoxCenter">
                 <h1 class="titleOdont text-center">
-                    VENCIMENTO DA FATURA
+                    DATAS OPERACIONAIS
                 </h1>
+
+                <p class="label-parentesco labelOdontBlur"> Escolha a melhor data vencimento da fatura. </p>
 
                 <div class="boxLabInput">
                     <div class="form-group">
-                        <label for="" class="label-parentesco labelOdontBlur">Data de vencimento da fatura</label>
-                        <select class="form-control parentesco selectListBlur" id="vencOdont">
+                        <label for="" class="label-parentesco labelOdontBlur" style="color: #1974CE">Data de vencimento da fatura</label>
+                        <select  class="form-control parentesco selectListBlur" id="vencOdont" style="color: #1974CE">
                             <option>Selecione...</option>
                             <option>05</option>
                             <option>15</option>
@@ -74,18 +76,25 @@
             </div>
         </div>
 
-        <div class="row">
+       
+
+         <div class="row">
             <div class="col-md-12">
-                <div class="btn btn-lg btn-block btnOdont disabled" href="" id="bntVenc" onclick="atualizarFatura()" role="button" style="background:#75d84b">FINALIZAR</div>
+                <label class="label-parentesco labelOdontBlur" id="proximoMes"></label>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <label id="proximoMes"></label>
-                <label id="vencimento"></label>
-                <label id="vigencia"></label>
-                <label id="movimentacao"></label>
+                <label class="label-parentesco labelOdontBlur" id="vencimento"></label><br>
+                <label class="label-parentesco labelOdontBlur" id="vigencia"></label><br>
+                <label class="label-parentesco labelOdontBlur" id="movimentacao"></label><br>
+            </div>
+        </div>
+
+         <div class="row">
+            <div class="col-md-12">
+                <div class="btn btn-lg btn-block btnOdont disabled" href="" id="bntVenc" onclick="atualizarFatura()" role="button" style="background:#1974CE">CONTINUAR</div>
             </div>
         </div>
 
