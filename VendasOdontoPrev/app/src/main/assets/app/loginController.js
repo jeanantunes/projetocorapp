@@ -96,6 +96,7 @@ function callDadosForcaVenda(callback, token, cpf) {
             }
             //console.log(JSON.stringify(resp.statusText));
             //ob.imprimirAlgo(JSON.stringify(resp.statusText));
+            swal.close();
         }
     });
 }
@@ -149,33 +150,24 @@ function logarETrazerDadosUsuario() {
     }
     var cpfTratado = $("#cpf").val().replace(/\D/g, '');
 
-    console.log(cpfTratado);
-
-
     $("divLoading").removeClass('hide');
 
     callTokenProd(function (dataToken) {
 
-        console.log(dataToken);
-
         callLogin(function (dataLogin) {
 
-            console.log(dataLogin);
             //ob.imprimirSucess();
             //console.log(dataUsuarios);
 
             //var teste = dataUsuarios.status;
 
-            console.log(dataLogin);
-
             callDadosForcaVenda(function (dataDadosUsuario) { // Essa request salva os dados dos corretores no localstorage
 
+                swal.close();
                 //console.log(dataDadosUsuario);
                 //console.log(JSON.stringify(dataDadosUsuario));
                 //ob.imprimirSucess();
                 //console.log(dataDadosUsuario);
-
-                console.log(dataDadosUsuario);
                 var forca = getRepository("dadosUsuario");
 
                 forca.nome = dataDadosUsuario.nome;
@@ -195,9 +187,8 @@ function logarETrazerDadosUsuario() {
                 //console.log(JSON.stringify(dataDadosUsuario));
                 //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
                 //Marcelo
-                ob.salvarDadosUsuario(JSON.stringify(forca));
+                //ob.salvarDadosUsuario(JSON.stringify(forca));
                 //ob.salvarDadosUsuario();
-
                
                 window.location = "logado.html";
 

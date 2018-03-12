@@ -103,9 +103,6 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
     if (cnpj.length < 14)
         return;
 
-    if (!navigator.onLine) return;
-    
-
     if ($("#cnpjEmpresa").val() != "") {
         var empresas = get("empresas");
         
@@ -118,6 +115,14 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
                 return;
             }
         }
+    }
+
+    if (!navigator.onLine) {
+
+
+
+
+        return;
     }
 
     //swal("Aguarde!", "Estamos buscando seus dados.");

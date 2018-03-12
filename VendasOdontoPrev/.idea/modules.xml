@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VendasOdontoPrev.iml" filepath="$PROJECT_DIR$/VendasOdontoPrev.iml" />
-      <module fileurl="file://C:\Users\Treinamento6\Documents\APPGIT_PROD\est-portalcorretor-app\VendasOdontoPrev\VendasOdontoPrev.iml" filepath="C:\Users\Treinamento6\Documents\APPGIT_PROD\est-portalcorretor-app\VendasOdontoPrev\VendasOdontoPrev.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Treinamento6\Documents\APPGIT_PROD\est-portalcorretor-app\VendasOdontoPrev\app\app.iml" filepath="C:\Users\Treinamento6\Documents\APPGIT_PROD\est-portalcorretor-app\VendasOdontoPrev\app\app.iml" />
     </modules>
   </component>
 </project>

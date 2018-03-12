@@ -39,9 +39,8 @@ function buscarPlanosSelecionados() {
 
             if (valorCent.toString().length == 1) valorCent = parseFloat(valorCent.toString() + "0");
         }
-        
 
-        plano = plano.replace("{TITULAR}", proposta.nome.split(' ')[0]);
+        plano = plano.replace("{TITULAR}", proposta.nome.split(' ')[0] + " " + proposta.nome.split(' ')[proposta.nome.split(' ').length - 1]);
         plano = plano.replace("{CDPLANO}", o[0].cdPlano);
         plano = plano.replace("{CDPLANO-BT}", o[0].cdPlano);
         plano = plano.replace("{NOME}", o[0].nome);
