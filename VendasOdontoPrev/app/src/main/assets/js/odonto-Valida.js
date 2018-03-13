@@ -417,7 +417,7 @@ $(document).ready(function () {
         if ($(this).val() == "") {
             $(this).css({ "border-color": "#F00" });
             $(".label-mensagem").css("color", "red");
-            $("#enviar").addClass("disabled");
+          
         }
     });
 
@@ -426,7 +426,6 @@ $(document).ready(function () {
             $(this).css({ "border-color": "#3A94FB" });
             $(".mensagem").css("color", "#3A94FB");
             $(".mensagem").css("color", "#3A94FB");
-            $("#enviar").removeClass("disabled");
         }
     });
 
@@ -1030,6 +1029,8 @@ $(document).ready(function () {
     $(".email").blur(function () {
 
         var emailNaoCadastrado = $(".email").val();
+
+        if (emailNaoCadastrado == "") var emailNaoCadastrado = $("#emailNaoCadastrado").val();
 
         if (validateEmail(emailNaoCadastrado)) {
             console.log(emailNaoCadastrado);

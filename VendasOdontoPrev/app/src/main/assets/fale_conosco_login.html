@@ -14,8 +14,9 @@
     <link href="css/sweetalert.css" rel="stylesheet" />
 </head>
 <body>
+
     <!-- Menu -->
-    <div class="closeNav hide" onclick="closeNav()"></div>
+    <!--<div class="closeNav hide" onclick="closeNav()"></div>
     <div id="mySidenav" class="sidenav">
         <div class="row">
             <div class="col-md-12 userLog">
@@ -37,20 +38,22 @@
         <a href="venda_index_pme.html" class="linkMenu"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
         <a href="rede_credenciada.html" class="linkMenu"><img src="img/menu-rede-credenciada.png" align="center">BUSCAR REDE CREDENCIADA</a>
         <a href="lista_proposta.html" class="linkMenu"><img src="img/menu-listas.png" align="center">LISTA DE PROPOSTA</a>
-        <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
+         <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> 
         <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
         <a href="fale_conosco.html" class="linkMenu colorActive"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
         <a id="logout" href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
-    </div>
+    </div>-->
     <!-- End Menu -->
+
     <!-- Bloco 1 -->
+
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 boxHeader">
+            <div class="col-md-12 boxHeader ">
                 <div class="col-md-12 text-left imgLogoODPVHeader">
                     <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
                 </div>
-                <span class="btnMenu" onclick="openNav()">&#9776;</span>
+                <!--<span class="btnMenu" onclick="openNav()">&#9776;</span>-->
             </div>
         </div>
         <div class="row">
@@ -59,8 +62,29 @@
                     FALE CONOSCO
                 </h1>
                 <h2 class="subTitleOdont text-center">
-                    Escreva a mensagem
+                    Preencha os campos
                 </h2>
+            </div>
+        </div>
+
+        <div class="boxLabInput">
+            <div>
+                <label class="label-nome labelOdontBlur">Nome</label>
+            </div>
+            <div>
+                <input type="text" class="nome inputLabelBlur" id="nomeSuporteLogin" required="required" pattern="^[a-zA-Z0-9]+$">
+            </div>
+            <!--<div>
+                <label class="label-cpf labelOdontBlur">CPF</label>
+            </div>
+            <div>
+                <input id="cpf" name="cpf" type="tel" class="cpf inputLabelBlur">
+            </div>-->
+            <div>
+                <label class="label-email labelOdontBlur">E-mail</label>
+            </div>
+            <div>
+                <input type="text" class="email inputLabelBlur" id="emailSuporteLogin">
             </div>
         </div>
 
@@ -99,7 +123,7 @@
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
     <script src="app/coordenador.js"></script>
-    <script src="app/fale_conosco_mensagemController.js"></script>
+    <script src="app/faleConoscoLoginController.js"></script>
     <script charset="ISO-8859-1" src="js/sweetalert.min.js"></script>
 
 </body>

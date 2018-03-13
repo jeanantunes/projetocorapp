@@ -1163,6 +1163,12 @@ h5, .subListBox{
     padding: 16px;
 }
 
+.btnDuvidasLogin {
+    text-decoration: underline;
+    font-family: Roboto-Medium;
+    color: #fff !important;
+}
+
 .btnPinkOdont:hover{
     color: #fff !important;
 }

@@ -70,6 +70,7 @@ var inputs = $('input');
 inputs.on('keyup', verificarInputs);
 
 function verificarInputs() {
+
     inputs.each(function () {
         // verificar um a um e passar a false se algum falhar
         // no lugar do if pode-se usar alguma função de validação, regex ou outros
@@ -96,10 +97,6 @@ function verificarInputs() {
 
 function callSerasaPme(callback, tokenSerasa, cnpj) {
 
-    console.log(cnpj);
-
-    console.log(tokenSerasa);
-
     if (cnpj.length < 14)
         return;
 
@@ -118,10 +115,6 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
     }
 
     if (!navigator.onLine) {
-
-
-
-
         return;
     }
 
@@ -166,15 +159,35 @@ $('#cnpjEmpresa').blur(function () {
 function buscarEmpresa() {
     
     var cnpjValidado = $('#cnpjEmpresa').val().replace(/\D/g, '');
+    var cnpj = get("dadosUsuario");
 
-    if (!navigator.onLine) return;
-   
+
+    if (cnpj.cnpjCorretora == cnpjValidado)
+    {
+        swal("Ops", "Esse é o CNPJ da sua corretora, digite o CNPJ do seu cliente", "info");
+        $("#cnpjEmpresa").val("");
+        return;
+    }
+
+
+    if (!navigator.onLine) {
+
+        $("#razao-social").prop('disabled', false);
+        $("#ramo-atividade").prop('disabled', false);
+        $("#representante-legal").prop('disabled', false);
+        $("#cpf-representante").prop('disabled', false);
+        $("#nome-fantasia").prop('disabled', false);
+
+        return;
+    }
+
+    limparCampos();
+
     //put('cpnjValido', "");
     callTokenProd(function (dataToken) {
         
         callSerasaPme(function (dataConsulta) {
-            try {
-                console.log(dataConsulta);
+
                 try {
                     try {
                         var situacaoEmpresa = dataConsulta.getElementsByTagName("situacao")[0].textContent;
@@ -215,24 +228,25 @@ function buscarEmpresa() {
                     
                     //console.log(empresaAtiva);
                     try { $("#rua").val(dataConsulta.getElementsByTagName("Nome")[0].textContent); } catch (Exception) { }
-                    try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent); } catch (Exception) { }
-                    try { $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent); } catch (Exception) { }
-                    try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent); } catch (Exception) { }
-                    try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent); } catch (Exception) { }
-                    try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent); } catch (Exception) { }
+                    try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent); } catch (Exception) { $("#razao-social").prop('disabled', false); }
+                    try { $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent); } catch (Exception) { $("#ramo-atividade").prop('disabled', false); }
+                    try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent); } catch (Exception) { $("#representante-legal").prop('disabled', false); }
+                    try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent); } catch (Exception) { $("#cpf-representante").prop('disabled', false); }
+                    try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent); } catch (Exception) { $("#nome-fantasia").prop('disabled', false); }
                     try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[0].textContent); } catch (Exception) { }
                     try { $("#cep").val(dataConsulta.getElementsByTagName("cep")[0].textContent); } catch (Exception) { }
                     try { $("#uf").val(dataConsulta.getElementsByTagName("uf")[0].textContent); } catch (Exception) { }
                     try { $("#cidade").val(dataConsulta.getElementsByTagName("cidade")[0].textContent); } catch (Exception) { }
                     try { $("#bairro").val(dataConsulta.getElementsByTagName("bairro")[0].textContent); } catch (Exception) { }
+                    try { $("#numeroEndereco").val(dataConsulta.getElementsByTagName("Numero")[0].textContent); } catch (Exception) { }
+                    try { $("#complemento").val(dataConsulta.getElementsByTagName("Complemento")[0].textContent); } catch (Exception) { }
+
+                    //29294771000110
 
                     swal.close();
 
-                } catch (Exception){ }
-            } catch (Exception)
-            {
-                swal.close();
-            }
+                } catch (Exception) { swal.close();}
+
         }, dataToken.access_token, cnpjValidado);
     });
 }
@@ -447,7 +461,6 @@ function validarProposta() {
         return;
     }
 
-
     if ($(".endereco").val() == "") {
         swal("Ops!", "Preencha o endereço", "error");
         return;
@@ -475,4 +488,24 @@ function validarProposta() {
 
     salvarRascunho();
     window.location.href = "vencimento_fatura_pme.html";
+}
+
+function limparCampos() {
+
+    $("#razao-social").val("");
+    $("#ramo-atividade").val("");
+    $("#representante-legal").val("");
+    $("#cpf-representante").val("");
+    $("#nome-fantasia").val("");
+    $("#telefone").val("");
+    $("#celular").val("");
+    $("#email").val("");
+    $("#cep").val("");
+    $("#rua").val("");
+    $("#numeroEndereco").val("");
+    $("#complemento").val("");
+    $("#bairro").val("");
+    $("#cidade").val("");
+    $("#uf").val("");
+
 }

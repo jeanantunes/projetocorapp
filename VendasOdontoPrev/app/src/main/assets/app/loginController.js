@@ -182,7 +182,9 @@ function logarETrazerDadosUsuario() {
                 forca.senha = dataDadosUsuario.senha;
                 forca.statusUsuario = dataDadosUsuario.statusForcaVenda;
                 forca.telefone = dataDadosUsuario.celular;
+                forca.cnpjCorretora = dataDadosUsuario.corretora.cnpj;
                 forca.codigo = dataLogin.codigoUsuario;
+
                 put("dadosUsuario", JSON.stringify(forca));
                 //console.log(JSON.stringify(dataDadosUsuario));
                 //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));

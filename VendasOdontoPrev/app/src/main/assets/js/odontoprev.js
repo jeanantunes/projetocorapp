@@ -42,9 +42,11 @@ $(document).ready(function(){
     //     $( "#buscarCorretora" ).removeClass( "hide" )
     //     return false;
     // });
- 	$("#btnkeyOdontNCpf").click(function(){
-        $( "#keyOdontCorretora" ).addClass( "hide" )
-        $( "#infoCorretora" ).removeClass( "hide" )
+    $("#btnkeyOdontNCpf").click(function () {
+
+        $("#keyOdontCorretora").addClass("hide")
+        $("#termoOdontNCadastrado").removeClass('hide');
+        
         return false;
     });
 

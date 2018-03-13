@@ -29,6 +29,30 @@ function callEmail(callback, token)
 {
     var faleConosco = get("faleConosco");
     var emailFaleConosco = "falecom@odontoprev.com.br";
+    var recepientName = "Fale Conosco";
+
+
+    var json = {
+
+        "sender": faleConosco.emailRemetente,
+
+        "senderName": faleConosco.nomeRemetente,
+
+        "recepients": [
+
+            emailFaleConosco
+
+        ],
+
+        "recepientName": recepientName,
+
+        "subject": faleConosco.subject,
+
+        "type": "text/html",
+
+        "body": faleConosco.textoEnviado
+    }
+    console.log(json);
 
     $.ajax({
         async: true,
@@ -43,7 +67,9 @@ function callEmail(callback, token)
             callback(resp);
 
         },
-        data: "{\r\n\r\n  \"sender\": \"" + faleConosco.emailRemetente + "\",\r\n\r\n  \"senderName\": \"" + faleConosco.nomeRemetente + "\",\r\n\r\n  \"recepients\": [\r\n\r\n    \"" + emailFaleConosco + "\"\r\n\r\n  ],\r\n\r\n  \"recepientName\": \"Fernando S.\",\r\n\r\n  \"subject\": \"" + faleConosco.subject + "\",\r\n\r\n  \"type\": \"text/html\",\r\n\r\n  \"body\": \"" + faleConosco.textoEnviado + "\"\r\n\r\n}",
+        data: JSON.stringify(json),
+        //data:"{\r\n\r\n  \"sender\": \"" + faleConosco.emailRemetente + "\",\r\n\r\n\"senderName\": \"" + faleConosco.nomeRemetente + "\",\r\n\r\n\"recepients\": [\r\n\r\n    \"" + emailFaleConosco + "\"\r\n\r\n  ],\r\n\r\n  \"recepientName\": \"Fernando S.\",\r\n\r\n\"subject\": \"" + faleConosco.subject + "\",\r\n\r\n\"type\": \"text/html\",\r\n\r\n\"body\": \"" + faleConosco.textoEnviado + "\"\r\n\r\n}",
+
         error: function (xhr) {
             swal("Ops!", "Erro na conexão, tente mais tarde", "error");
         }
@@ -63,17 +89,27 @@ $("#enviar").click(function () {
     
         callEmail(function (dataEmail) {
 
+            localStorage.removeItem("faleConosco");
+
             swal({
                 title: "Feito!",
                 text: "Obrigado pela mensagem",
                 type: "success"
-            }, function () {
-                window.location = "logado.html";
-            });
-
-            localStorage.removeItem("faleConosco");
+            }, function (isConfirm) {
+                window.location.href = "logado.html";
+            });         
 
          }, dataToken.access_token);
     });
+});
+
+$(".mensagem").keyup(function () {
+
+    if ($(this).val() != "") {
+        $("#enviar").removeClass("disabled");
+        return;
+    }
+
+    $("#enviar").addClass("disabled");
 
 });

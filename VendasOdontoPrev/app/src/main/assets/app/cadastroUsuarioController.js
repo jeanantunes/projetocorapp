@@ -215,7 +215,8 @@ $("#btnInfoCorretoraNCpf").click(function () {
             }
 
             $("#infoCorretora").addClass('hide');
-            $("#termoOdontNCadastrado").removeClass('hide');
+            $("#cadastroSucessoCorretora").removeClass("hide");
+            //$("#termoOdontNCadastrado").removeClass('hide');
 
             var codCorretora = dataCorretora.cdCorretora;
             var nome = $("#nomeNaoCadastrado").val();
@@ -242,7 +243,8 @@ $("#btnInfoCorretoraNCpf").click(function () {
 $("#btnTermoNCadastrado").click(function () {
 
     $("#termoOdontNCadastrado").addClass("hide");
-    $("#cadastroSucessoCorretora").removeClass("hide");
+    $("#infoCorretora").removeClass("hide")
+  
 
 });
 
@@ -284,7 +286,7 @@ function validateEmail(email) {
 $("#nomeNaoCadastrado").keyup(function () {
 
     $("#btnCelOdontNCpf").addClass('disabled');
-    if ($(this).val() != "" && $("#emailNaoCadastrado").val() != "" && $("#celularNaoCadastrado").val().length > 14 && validateEmail($("#emailNaoCadastrado").val())) {
+    if ($(this).val() != "" && $("#emailNaoCadastrado").val() != "" && $("#celularNaoCadastrado").val().length > 14 && validateEmail($("#emailNaoCadastrado").val()) && ValidaNome($("#nomeNaoCadastrado").val())) {
         $("#btnCelOdontNCpf").removeClass('disabled');
     }
 });
@@ -292,7 +294,7 @@ $("#nomeNaoCadastrado").keyup(function () {
 $("#celularNaoCadastrado").keyup(function () {
 
     $("#btnCelOdontNCpf").addClass('disabled');
-    if ($(this).val().length > 14 && $("#emailNaoCadastrado").val() != "" && $("#nomeNaoCadastrado").val() != "" && validateEmail($("#emailNaoCadastrado").val())) {
+    if ($(this).val().length > 14 && $("#emailNaoCadastrado").val() != "" && $("#nomeNaoCadastrado").val() != "" && validateEmail($("#emailNaoCadastrado").val()) && ValidaNome($("#nomeNaoCadastrado").val())) {
         $("#btnCelOdontNCpf").removeClass('disabled');
     }
 });
@@ -301,7 +303,7 @@ $("#emailNaoCadastrado").blur(function () {
 
     $("#btnCelOdontNCpf").addClass('disabled');
 
-    if ($(this).val() != "" && $("#celularNaoCadastrado").val().length > 14 && $("#nomeNaoCadastrado").val() != "" && validateEmail($(this).val())) {
+    if ($(this).val() != "" && $("#celularNaoCadastrado").val().length > 14 && $("#nomeNaoCadastrado").val() != "" && validateEmail($(this).val()) && ValidaNome($("#nomeNaoCadastrado").val())) {
         console.log("Executando validação email");
         $("#btnCelOdontNCpf").removeClass('disabled');
     }
