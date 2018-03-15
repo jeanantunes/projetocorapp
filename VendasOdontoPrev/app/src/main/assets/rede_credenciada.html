@@ -480,12 +480,22 @@
             $("#btnTeste").click(function (e) {
 
                 if ($("#cep").val() == "") {
-                    swal("Alerta", "Preencha o cep", "warning");
+                    swal("Alerta", "Preencha o CEP", "warning");
 
                     $("#cep").css({ "border-color": "#F00" });
                     $(".cep").css("color", "red");
                     $(".label-cep").css("color", "red");
 
+                    return;
+                }
+
+                if ($("#bairro").val() == "") {
+                    swal("Alerta", "Preencha o Bairro", "warning");
+                    return;
+                }
+
+                if ($("#cidade").val() == "") {
+                    swal("Alerta", "Preencha o Cidade", "warning");
                     return;
                 }
 

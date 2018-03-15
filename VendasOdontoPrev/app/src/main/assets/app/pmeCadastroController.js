@@ -170,7 +170,7 @@ function buscarEmpresa() {
     }
 
 
-    if (!navigator.onLine) {
+    if (!checkNetConnection()) {
 
         $("#razao-social").prop('disabled', false);
         $("#ramo-atividade").prop('disabled', false);

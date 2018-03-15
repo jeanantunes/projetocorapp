@@ -11,6 +11,11 @@ function addDependente() {
         swal("Ops!", "Preencha o CPF", "error");
         return;
     }
+    
+    if (!ValidaNome($(".nome").val())) {
+        swal("Ops!", "Nome inválido", "error");
+        return false;
+    }
 
     if (!TestaCPF($("#cpf").val())) {
         swal("Ops!", "CPF inválido", "error");
@@ -63,6 +68,11 @@ function addDependente() {
     if ($(".nome-mae").val() == "") {
         swal("Ops!", "Preencha Nome da Mãe", "error");
         return;
+    }
+
+    if (!ValidaNome($("#nomeMae").val())) {
+        swal("Ops!", "Nome da mãe inválido", "error");
+        return false;
     }
 
     if ($(".cep").val() == "") {
@@ -181,6 +191,11 @@ function salvarRascunho() {
         return;
     }
 
+    if (!ValidaNome($(".nome").val())) {
+        swal("Ops!", "Nome inválido", "error");
+        return false;
+    }
+
     if ($(".email").val() == "") {
         swal("Ops!", "Preencha o E-mail", "error");
         return;
@@ -218,6 +233,11 @@ function salvarRascunho() {
     if ($(".nome-mae").val() == "") {
         swal("Ops!", "Preencha Nome da Mãe", "error");
         return;
+    }
+
+    if (!ValidaNome($("#nomeMae").val())) {
+        swal("Ops!", "Nome da mãe inválido", "error");
+        return false;
     }
 
     if ($(".cep").val() == "") {

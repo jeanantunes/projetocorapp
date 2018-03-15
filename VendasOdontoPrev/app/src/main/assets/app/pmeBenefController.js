@@ -139,6 +139,11 @@ function adicionarBenefMemoria() {
         return;
     }
 
+    if (!ValidaNome($("#nome-beneficiario").val())) {
+        swal("Ops!", "Nome inválido", "error");
+        return false;
+    }
+
     if ($("#radio-1").is(":checked") == false && $("#radio-2").is(":checked") == false) {
         swal("Ops!", "Selecione o Sexo", "error");
         $(".dependentes").val(0);
@@ -166,6 +171,11 @@ function adicionarBenefMemoria() {
         swal("Ops!", "Preencha o Nome da Mãe", "error");
         $(".dependentes").val(0);
         return;
+    }
+
+    if (!ValidaNome($(".nome-mae").val())) {
+        swal("Ops!", "Nome da mãe inválido", "error");
+        return false;
     }
 
     if ($(".cep").val() == "") {

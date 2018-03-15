@@ -101,7 +101,7 @@ function callTokenProdSemMsgErro(callback) {
 //    var regex = new RegExp('[^ a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ\b]', 'g');
 //    // repare a flag "g" de global, para substituir todas as ocorrências
 //    $('.nome').bind('input', function () {
-//        $(this).val($(this).val().replace(regex, ''));
+//        $(this).val($(this).val().replace(/^[a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ']+$/g, ''));
 //    });
 //});
 
@@ -240,7 +240,8 @@ function ValidaNome(fieldValue) {
     // Se o nome possuir conectivos que não 'e' ou 'y', é inválido
     for (let i in splittedName) {
 
-        //if (splittedName[i].match(/\D/g)) return false
+        if (!splittedName[i].match(/^[a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ']+$/g)) return false
+
 
         if (i === '0' || parseInt(i) === (totalWords - 1)) continue // Ignora o primeiro e o último nome
 

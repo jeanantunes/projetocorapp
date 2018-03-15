@@ -68,6 +68,12 @@ function SalvarDependentes() {
             return;
         }
 
+        if (!ValidaNome($(this).find(".nome-dependente").val())) {
+            swal("Ops!", $(this).find(".depends").html() + ": nome inválido", "error");
+            stop = true;
+            return false;
+        }
+
         if ($(this).find(".sexo").val() == "") {
             swal("Ops!", "Selecione o Sexo do " + $(this).find(".depends").html(), "error");
             stop = true;
@@ -122,6 +128,12 @@ function SalvarDependentes() {
             swal("Ops!", "Preencha o Nome da Mãe do " + $(this).find(".depends").html(), "error");
             stop = true;
             return;
+        }
+
+        if (!ValidaNome($(this).find(".nome-mae").val())) {
+            swal("Ops!", $(this).find(".depends").html() + ": nome da mãe inválido", "error");
+            stop = true;
+            return false;
         }
     });
 

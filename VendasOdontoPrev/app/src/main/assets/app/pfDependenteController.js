@@ -20,6 +20,11 @@ function SalvarDependente() {
         return;
     }
 
+    if (!ValidaNome($("#nomeDependente").val())) {
+        swal("Ops!", "Nome inválido", "error");
+        return false;
+    }
+
     if ($(".email").val() == "") {
         swal("Ops!", "Preencha o E-mail", "error");
         return;
@@ -73,6 +78,11 @@ function SalvarDependente() {
     if ($(".nome-mae").val() == "") {
         swal("Ops!", "Preencha o Nome da Mãe", "error");
         return;
+    }
+
+    if (!ValidaNome($("#nomeMae").val())) {
+        swal("Ops!", "Nome da mãe inválido", "error");
+        return false;
     }
 
     var proposta = get("propostaPf");
