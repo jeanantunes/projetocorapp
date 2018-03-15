@@ -212,8 +212,6 @@ function ValidaNome(fieldValue) {
 
     var splittedName = fieldValue.split(/[\ |\']+/) // Separa o nome por espaços e apóstrofos (')
 
-    if (splittedName[1] == "") return false
-
     var totalWords = splittedName.length
 
     let firstName = splittedName[0]
@@ -240,8 +238,11 @@ function ValidaNome(fieldValue) {
     // Se o nome possuir conectivos que não 'e' ou 'y', é inválido
     for (let i in splittedName) {
 
-        if (!splittedName[i].match(/^[a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ']+$/g)) return false
+        // Se o nome estiver vazio, é invalido
+        if (splittedName[i] == "") return false
 
+        // Se o nome possuir caracteres especiais, exceto apostrofo, é invalido
+        if (!splittedName[i].match(/^[a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ']+$/g)) return false
 
         if (i === '0' || parseInt(i) === (totalWords - 1)) continue // Ignora o primeiro e o último nome
 
