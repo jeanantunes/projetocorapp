@@ -56,6 +56,7 @@
 .boxLabInput{
     margin-bottom: 10%;
     margin-top: 5%;
+    color: #3197EE;
 }
 
 .boxList{
@@ -1074,8 +1075,16 @@ h5, .subListBox{
     width: 100%;
     font-size: 20pt;
     background: transparent;
-    border-bottom: 1px solid #ACAAA5;
+    border-bottom: 1px solid #3197EE;
+}
 
+#proximoMes{
+    margin-top: 2% ;   
+    background-color: #F9B40A;
+    color: white;
+    border-radius: 2%;
+     font-size: 10pt;
+    text-align: center;
 }
 
 .selectListCidadeBlur{
@@ -1179,6 +1188,7 @@ h5, .subListBox{
     font-size: 15pt;
     padding-top: 4%;
 }
+
 
 .labelOdontFocus{
     font-family: Roboto-Medium;

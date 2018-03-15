@@ -102,9 +102,10 @@ function isEffectiveDate(dayDueDate) {
 
     console.log('Data de movimentação: ' + movingDate.toLocaleDateString());
 
-    $("#vencimento").html('Data de vencimento: ' + DueDate.toLocaleDateString());
-    $("#vigencia").html('Data de vigencia: ' + effectiveDate.toLocaleDateString());
-    $("#movimentacao").html('Data de movimentação: ' + movingDate.toLocaleDateString());
+    $("#vencimento").html('Data de vencimento <br>' + DueDate.toLocaleDateString());
+    $("#vigencia").html('Data de vigencia <br>' + effectiveDate.toLocaleDateString());
+    $("#movimentacao").html('Data de movimentação <br>' + movingDate.toLocaleDateString());
+    $("#proximoMes").html('Para o vencimento escolhido, a vigência deste contrato ficará para o próximo mês.');
 
     if (movingDate < currentTime) {
 
