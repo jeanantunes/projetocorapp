@@ -189,6 +189,32 @@ function adicionarBenefMemoria() {
         return;
     }
 
+    var cpfAtual = $(".cpf").val();
+    var propostaA = get("proposta");
+    var benefs = get("beneficiarios");
+    var dependsCpf = false;
+    benefs = benefs.filter(function (x) { return x.cnpj == propostaA.cnpj });
+    var oe = benefs.filter(function (x) { return x.cpf == cpfAtual });
+
+    if (oe.length >= 1) {
+        swal("Conflito!", "Você informou o mesmo CPF de outro titular para este titular, por favor verifique.", "error");
+        stop = true;
+        return;
+    }
+
+    $.each(benefs, function (i, item) {
+        $.each(item.dependentes, function (i, param) {
+            if (param.cpf == cpfAtual) {
+                dependsCpf = true;
+            }
+        });
+    });
+
+    if (dependsCpf) {
+        swal("Conflito!", "Você informou o mesmo CPF de outro Dependente para este Titular, por favor verifique.", "error");
+        stop = true;
+        return;
+    }
 
 
     //if (menor < 18) {

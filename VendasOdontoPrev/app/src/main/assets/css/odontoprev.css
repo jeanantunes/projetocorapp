@@ -1702,6 +1702,10 @@ input[type=checkbox] {
     background-color: #FF4141;
 }
 
+.colorCirc4 {
+    background-color: #40ff00;
+}
+
 .listBarra{
     border-left:1px solid silver; 
     padding:0px 0px 0px 20px; 

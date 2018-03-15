@@ -37,16 +37,23 @@ function carregarLista() {
             css = "colorCirc1";
             acao = "ver detalhes";
             link = "venda_pf_editar.html?cpf=" + item.cpf;
+            acaoseta = "";
         } else if (item.status == "PRONTA") {
             status = "Aguardando sincronismo";
             css = "colorCirc4";
             acao = "sincronizar";
             link = "logado.html";
+            acaoseta = "";
         } else if (item.status == "CRITICADA") {
             status = "Pendente finalizar cadastro";
             css = "colorCirc3";
             acao = "ver detalhes";
             link = "venda_pf_editar.html?cpf=" + item.cpf;
+            acaoseta = "";
+        } else if (item.status == "ENVIADA") {
+            status = "Enviada";
+            css = "colorCirc2";
+            acaoseta = "hide";
         }
 
         itemLista = itemLista.replace("{NOME}", item.nome);
@@ -54,6 +61,7 @@ function carregarLista() {
         itemLista = itemLista.replace("{CSS}", css);
         itemLista = itemLista.replace("{ACAO}", acao);
         itemLista = itemLista.replace("{LINK}", link);
+        itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
 
         $("#listaPessoas").append(itemLista);
     });
@@ -71,16 +79,23 @@ function carregarLista() {
             css = "colorCirc1";
             acao = "ver detalhes";
             link = "venda_pme_editar.html?cnpj=" + item.cnpj;
+            acaoseta = "";
         } else if (item.status == "PRONTA") {
             status = "Aguardando sincronismo";
             css = "colorCirc4";
             acao = "sincronizar";
             link = "logado.html";
+            acaoseta = "";
         } else if (item.status == "CRITICADA") {
             status = "Pendente finalizar cadastro";
             css = "colorCirc3";
             acao = "ver detalhes";
             link = "venda_pme_editar.html?cnpj=" + item.cnpj;
+            acaoseta = "";
+        } else if (item.status == "ENVIADA") {
+            status = "Enviada";
+            css = "colorCirc2";
+            acaoseta = "hide";
         }
 
         itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
@@ -88,6 +103,7 @@ function carregarLista() {
         itemLista = itemLista.replace("{CSS}", css);
         itemLista = itemLista.replace("{ACAO}", acao);
         itemLista = itemLista.replace("{LINK}", link);
+        itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
 
         $("#listaEmpresas").append(itemLista);
     });

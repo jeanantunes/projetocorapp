@@ -431,6 +431,42 @@ function validarProposta() {
         return;
     }
 
+    if ($("#razao-social").val() == "") {
+        swal("Ops!", "Preencha a razäo social", "error");
+        return;
+    }
+
+    if ($("#nome-fantasia").val() == "") {
+        swal("Ops!", "Preencha o nome fantasia", "error");
+        return;
+    }
+
+    if ($("#ramo-atividade").val() == "") {
+        swal("Ops!", "Preencha o ramo de atividade", "error");
+        return;
+    }
+
+    if ($("#representante-legal").val() == "") {
+        swal("Ops!", "Preencha o nome do representante legal", "error");
+        return;
+    }
+
+    if (ValidaNome($("#representante-legal").val())) {
+        swal("Ops!", "Nome do representante legal inválido", "error");
+        return;
+    }
+
+    if ($("#cpf-representante").val() == "") {
+        swal("Ops!", "Preencha o cpf do representante legal", "error");
+        return;
+    }
+
+    if (!TestaCPF($("#cpf-representante").val().replace(/\D/g, ''))) {
+       
+        swal("Ops!", "CPF do representante legal inválido", "error");
+        return;
+    }
+
     if ($(".telefone").val() == "") {
         swal("Ops!", "Preencha o telefone", "error");
         return;

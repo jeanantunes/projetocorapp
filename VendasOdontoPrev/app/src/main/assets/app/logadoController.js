@@ -50,12 +50,9 @@ function getVersaoApp(callback, token) {
 
 }
 
-
-
-
 function deslogar() {
     ob.deslogar();
-    window.location();
+    window.location = "index.html";
 }
 
 function abrirgaleria() {

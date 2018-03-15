@@ -9,8 +9,17 @@ $(document).ready(function () {
     
 });
 
+$(".selectListBlur").change(function () {
+
+    if ($(".selectListBlur").val() == "Selecione...") return;
+
+    isEffectiveDate($(".selectListBlur").val());
+    
+});
+
 
 function atualizarFatura() {
+
     if ($(".selectListBlur").val() == null || $(".selectListBlur").val() == "Selecione...") {
         swal("Ops!", "Selecione a Data de vencimento da Fatura", "error");
         return;
@@ -54,17 +63,17 @@ function isEffectiveDate(dayDueDate) {
 
     switch (dayDueDate) {
 
-        case 5:
+        case "05":
             effectiveDate = new Date(year, month, 1, 0, 0, 0, 0);
             movingDate = new Date(year, month, 25, 0, 0, 0, 0);
             break;
 
-        case 15:
+        case "15":
             effectiveDate = new Date(year, month, 10, 0, 0, 0, 0);
             movingDate = new Date(year, month, 5, 0, 0, 0, 0);
             break;
 
-        case 25:
+        case "25":
             effectiveDate = new Date(year, month, 20, 0, 0, 0, 0);
             movingDate = new Date(year, month, 15, 0, 0, 0, 0);
             break;
@@ -75,7 +84,7 @@ function isEffectiveDate(dayDueDate) {
         DueDate.setMonth(DueDate.getMonth() + addMonth);
     }
 
-    if (effectiveDate <= currentTime) {
+    if (effectiveDate <= currentTime || movingDate <= effectiveDate) {
 
         effectiveDate.setMonth(effectiveDate.getMonth() + addMonth);
     }
@@ -85,16 +94,21 @@ function isEffectiveDate(dayDueDate) {
         movingDate.setMonth(movingDate.getMonth() + addMonth);
     }
 
-    console.log('Data Atual: ' + currentTime);
+    console.log('Data Atual: ' + currentTime.toLocaleDateString());
 
-    console.log('Data Vencimento: ' + DueDate);
+    console.log('Data Vencimento: ' + DueDate.toLocaleDateString());
 
-    console.log('Data de vigencia: ' + effectiveDate);
+    console.log('Data de vigencia: ' + effectiveDate.toLocaleDateString());
 
-    console.log('Data de movimentação: ' + movingDate);
+    console.log('Data de movimentação: ' + movingDate.toLocaleDateString());
+
+    $("#vencimento").html('Data de vencimento: ' + DueDate.toLocaleDateString());
+    $("#vigencia").html('Data de vigencia: ' + effectiveDate.toLocaleDateString());
+    $("#movimentacao").html('Data de movimentação: ' + movingDate.toLocaleDateString());
 
     if (movingDate < currentTime) {
 
+        $("#proximoMes").html('Para o vencimento escolhido, a vigência deste contrato ficará para o próximo mês.');
         console.log('Para o vencimento escolhido, a vigência deste contrato ficará para o próximo mês.');
 
         return false;

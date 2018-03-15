@@ -638,6 +638,12 @@ function sincronizar() {
                     $.each(propostas, function (i, item) {
                         pessoas.push(item);
                     });
+
+                    o[0].status = "SYNC";
+
+                    pessoas.push(o[0]);
+
+                    put("pessoas", JSON.stringify(pessoas));
                    
                     sincronizarPessoa(function (dataProposta) {
                         console.log(dataProposta);
@@ -771,7 +777,11 @@ function sincronizarPessoa(callback, pessoa) {
                 else {
 
                     var pessoas = get("pessoas");
+                    pessoa[0].status = "ENVIADA";
+
                     var todosExcetoExclusao = pessoas.filter(function (x) { return x.cpf != pessoa[0].cpf });
+                    todosExcetoExclusao.push(pessoa[0]);
+
                     console.log(todosExcetoExclusao);
                     put("pessoas", JSON.stringify(todosExcetoExclusao));
 
@@ -816,6 +826,10 @@ function sincronizarEmpresa(proposta, beneficiarios) {
                 else {
                     var empresas = get("empresas");
                     var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != proposta[0].cnpj });
+                
+                    proposta[0].status = "ENVIADA";
+
+                    todosExcetoExclusao.push(proposta[0]);
 
                     put("empresas", JSON.stringify(todosExcetoExclusao));
 
