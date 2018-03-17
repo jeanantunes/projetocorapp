@@ -38,6 +38,7 @@ public class CustomWebView extends WebView {
 //        this.getSettings().setSupportZoom(false);
         this.getSettings().setLoadWithOverviewMode(false);
         this.getSettings().setUseWideViewPort(false);
+        //this.setWebContentsDebuggingEnabled(true);
         this.getSettings().setAllowUniversalAccessFromFileURLs(true);
 
 

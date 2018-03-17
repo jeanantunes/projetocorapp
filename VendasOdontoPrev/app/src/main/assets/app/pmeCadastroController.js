@@ -105,8 +105,9 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
         
         if (empresas != null) {
             var existe = empresas.filter(function (x) { return x.cnpj == $("#cnpjEmpresa").val() });
-            
-            if (existe.length > 0) {
+            var proposta = get("proposta");
+
+            if (existe.length > 0 && $("#cnpjEmpresa").val() != proposta.cnpj) {
                 swal("Ops!", "CNPJ já cadastrado, por favor verifique.", "error");
                 $("#cnpjEmpresa").val("");
                 return;
@@ -451,7 +452,7 @@ function validarProposta() {
         return;
     }
 
-    if (ValidaNome($("#representante-legal").val())) {
+    if (!ValidaNome($("#representante-legal").val())) {
         swal("Ops!", "Nome do representante legal inválido", "error");
         return;
     }

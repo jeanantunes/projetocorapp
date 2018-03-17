@@ -51,7 +51,8 @@ function getVersaoApp(callback, token) {
 }
 
 function deslogar() {
-    ob.deslogar();
+    
+    ob.deslogar();  
     window.location = "index.html";
 }
 

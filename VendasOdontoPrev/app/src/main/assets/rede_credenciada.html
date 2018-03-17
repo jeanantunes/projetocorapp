@@ -151,9 +151,10 @@
             <div class="modal-body-OdontMed">
                 <div class="row">
                     <label class="labelBoldTitleModal">Especialidades</label>
-                    <div class="text-center">
-                        <label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista1" style="color:gray"></h5></p></label>
-                        <!--<label><img src="img/Ortodontia.png" class="" alt=""><p>_</p></label>-->
+                    <div id="divEspecs" class="text-center">
+                        
+                        <!--<label> <img src="img/Protese.png" class="" alt=""/>  <p> <h5 id="especialidadeDentista1" style="color:gray"/> </h5> </p>  </label>-->
+                        <!--<label><img src="img/Ortodontia.png" class="" alt=""><p><h5 id="especialidadeDentista1"></h5></p></label>-->
                         <!--<label><img src="img/Consulta.png" class="" alt=""><p>_</p></label>-->
                         <!--<label><img src="img/Cirurgia.png" class="" alt=""><p>_</p></label>-->
                     </div>
@@ -263,8 +264,17 @@
                             //infowindow.open(map, marker);
                             document.getElementById('nomeDentista').innerHTML = abc.dentistas[i].nomeDentista;
                             document.getElementById('croDentista').innerHTML = abc.dentistas[i].numeroCRO;
-                            document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
-                            document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
+
+                            var especialidades = abc.dentistas[i].especialidade.descricaoEspecialidade;
+
+                            for (var i = 0; i < especialidades.split(',').length; i++)
+                            {
+                                $("#divEspecs").append('<label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista1" style="color:gray"></h5></p></label>');
+                            }
+                            //$("#divEspecs").html('<label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista1" style="color:gray"></h5></p></label>');
+
+                            //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
+                            //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
                             document.getElementById('enderecoDentista').innerHTML = abc.dentistas[i].endereco.enderecoCompleto;
                             document.getElementById('cepDentista').innerHTML = abc.dentistas[i].endereco.cep;
                             document.getElementById('telefoneDentista').innerHTML = abc.dentistas[i].numeroFone;

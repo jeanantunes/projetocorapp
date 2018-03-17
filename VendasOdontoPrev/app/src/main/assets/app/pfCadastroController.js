@@ -405,8 +405,15 @@ function excluirDep(obj) {
     //}
     var proposta = get("propostaPf");
 
-    var propostaExcetoExcluido = proposta.dependentes.filter(function (x) { return x.cpf != container.attr("data-id")});
+    var propostaExcetoExcluido = proposta.dependentes.filter(function (x) {
+
+        if (container.attr("data-id") == container.attr("data-nome")) return x.nome != container.attr("data-nome")
+
+        return x.cpf != container.attr("data-id")
+    });
+
     proposta.dependentes = [];
+
     $.each(propostaExcetoExcluido, function (i, item) {
         proposta.dependentes.push(item);
     });

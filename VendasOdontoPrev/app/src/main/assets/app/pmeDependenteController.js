@@ -125,31 +125,32 @@ function SalvarDependentes() {
         }
 
         var benefs = get("beneficiarios");
-        var cpfAtual = $(this).find(".cpf").val();
-        benefs = benefs.filter(function (x) { return x.cnpj == benef.cnpj });
-        var oe = benefs.filter(function (x) { return x.cpf == cpfAtual});
-        var dependsCpf = false;
+        if (benefs != null) {
+            var cpfAtual = $(this).find(".cpf").val();
+            benefs = benefs.filter(function (x) { return x.cnpj == benef.cnpj });
+            var oe = benefs.filter(function (x) { return x.cpf == cpfAtual });
+            var dependsCpf = false;
 
-        if (oe.length >= 1) {
-            swal("Conflito!", "Você informou o mesmo CPF do titular para este dependente, por favor verifique.", "error");
-            stop = true;
-            return;
-        }
+            if (oe.length >= 1 && cpfAtual != "") {
+                swal("Conflito!", "Você informou o mesmo CPF de outro titular para este dependente, por favor verifique.", "error");
+                stop = true;
+                return;
+            }
 
-        $.each(benefs, function (i, item) {
-            $.each(item.dependentes, function (i, param) {
-                if (param.cpf == cpfAtual) {
-                    dependsCpf = true;
-                }
+            $.each(benefs, function (i, item) {
+                $.each(item.dependentes, function (i, param) {
+                    if (param.cpf == cpfAtual && cpfAtual != "") {
+                        dependsCpf = true;
+                    }
+                });
             });
-        });
 
-        if (dependsCpf) {
-            swal("Conflito!", "Você informou o mesmo CPF de outro Dependente para este dependente, por favor verifique.", "error");
-            stop = true;
-            return;
+            if (dependsCpf) {
+                swal("Conflito!", "Você informou o mesmo CPF de outro Dependente para este dependente, por favor verifique.", "error");
+                stop = true;
+                return;
+            }
         }
-
 
         if ($(this).find(".nome-mae").val() == "") {
             swal("Ops!", "Preencha o Nome da Mãe do " + $(this).find(".depends").html(), "error");

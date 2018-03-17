@@ -272,7 +272,7 @@ function setPlanos() {
     plano.nome = "Integral DOC LE";
     plano.valor = "24";
     plano.centavo = "93";
-    plano.desc = "Modalidade Livre Adesão";
+    plano.desc = "Modalidade Compulsório";
     plano.css = "colorSlick3";
     planos.push(plano);
 
@@ -281,7 +281,7 @@ function setPlanos() {
     plano.nome = "Master LE";
     plano.valor = "101";
     plano.centavo = "10";
-    plano.desc = "Modalidade Livre Adesão";
+    plano.desc = "Modalidade Compulsório";
     plano.css = "colorSlick2";
 
     planos.push(plano);

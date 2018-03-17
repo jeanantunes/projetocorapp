@@ -5,10 +5,10 @@ function callToken(callback) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/token/",
+        url: "https://api.odontoprev.com.br:8243/token/",
         method: "POST",
         headers: {
-            "Authorization": "Basic " + Token,
+            "Authorization": "Basic ZWp3c0pfVGN6YXdObUdDYlN3dW1PRnVXTXQ0YTozM3pyVjJoRXo3TkN3WElpejNfcnlnbzNZZjRh",
             "Cache-Control": "no-cache",
             "Content-Type": "application/x-www-form-urlencoded"
         },
@@ -56,7 +56,7 @@ function callEmail(callback, token)
 
     $.ajax({
         async: true,
-        url: URLBase + "/sendemail/1.0/send",
+        url: "https://api.odontoprev.com.br:8243/sendemail/1.0/send",
         method: "POST",
         headers: {
             "Authorization": "Bearer " + token,

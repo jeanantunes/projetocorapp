@@ -22,6 +22,7 @@ function carregarLista() {
         benef = benef.replace("{CPF-BT}", item.cpf);
         benef = benef.replace("{NOME}", item.nome);
         benef = benef.replace("{DEPENDENTES}", item.dependentes.length);
+        benef = benef.replace("{NOME-BENEF}", item.nome);
 
         $("#lista").append(benef);
     });

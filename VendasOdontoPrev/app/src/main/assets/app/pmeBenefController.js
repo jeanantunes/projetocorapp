@@ -126,7 +126,7 @@ function carregarBenef() {
     $(".plano").val(benef.cdPlano);
 }
 
-function adicionarBenefMemoria() {
+/*function adicionarBenefMemoria() {
     var proposta = get("proposta");
     var currentYear = (new Date).getFullYear();
     var idade = $(".nascimento").val().split("/");
@@ -215,6 +215,129 @@ function adicionarBenefMemoria() {
         stop = true;
         return;
     }
+
+
+    //if (menor < 18) {
+    //    swal("Ops!", "O Titular não pode ser menor de idade", "error");
+    //    $(".dependentes").val(0);
+    //    return;
+    //}
+
+    var benef = getRepository("beneficiario");
+    var benefMemoria = get("beneficiario");
+    var benefTodos = get("beneficiarios");
+
+    if (benefTodos != null && $("#cpf").val() != "") {
+        var existe = benefTodos.filter(function (x) { return x.cpf == $("#cpf").val() });
+
+        if (existe.length > 0) {
+            swal("Conflito!", "Já existe um Beneficiário com este CPF", "error");
+            $(".dependentes").val(0);
+            return;
+        }
+    }
+
+    if (benefMemoria != null) {
+        benef.dependentes = benefMemoria.dependentes;
+    }
+
+    problema = false;
+
+    benef.nome = removerAcentos($("#nome-beneficiario").val());
+    benef.nomeMae = removerAcentos($(".nome-mae").val());
+
+    if ($("#radio-1").is(":checked") == true) {
+        benef.sexo = $("#radio-1").val();
+    }
+    else {
+        benef.sexo = $("#radio-2").val();
+    }
+
+    benef.dataNascimento = $(".nascimento").val();
+    benef.cpf = $(".cpf").val();
+    benef.cnpj = proposta.cnpj;
+    benef.endereco.cep = $(".cep").val();
+    benef.cdPlano = $(".plano").val();
+
+    put("beneficiario", JSON.stringify(benef));
+
+    return benef;
+}
+*/
+
+function adicionarBenefMemoria() {
+    var proposta = get("proposta");
+    var currentYear = (new Date).getFullYear();
+    var idade = $(".nascimento").val().split("/");
+    var menor = currentYear - idade;
+
+
+    if ($("#nome-beneficiario").val() == "") {
+        swal("Ops!", "Preencha o Nome", "error");
+        $(".dependentes").val(0);
+        return;
+    }
+
+    if (!ValidaNome($("#nome-beneficiario").val())) {
+        swal("Ops!", "Nome inválido", "error");
+        $(".dependentes").val(0);
+        return false;
+    }
+
+    if ($("#radio-1").is(":checked") == false && $("#radio-2").is(":checked") == false) {
+        swal("Ops!", "Selecione o Sexo", "error");
+        $(".dependentes").val(0);
+        return;
+    }
+
+    if ($(".nascimento").val() == "") {
+        swal("Ops!", "Preencha a Data de Nascimento", "error");
+        $(".dependentes").val(0);
+        return;
+    }
+
+    var currentYear = (new Date).getFullYear();
+    var idade = $(".nascimento").val().split("/");
+    var menor = currentYear - idade[2];
+
+    if (($(".cpf").val() == "")) {
+
+        swal("Ops!", "Preencha o campo CPF", "error");
+        $(".dependentes").val(0);
+        return;
+    }
+
+    if (($(".cpf").val() == "" || !TestaCPF($(".cpf").val().replace(/\D/g, '')))) {
+
+        swal("Ops!", "CPF está inválido", "error");
+        $(".dependentes").val(0);
+        return;
+    }
+
+    if ($(".nome-mae").val() == "") {
+        swal("Ops!", "Preencha o Nome da Mãe", "error");
+        $(".dependentes").val(0);
+        return;
+    }
+
+    if (!ValidaNome($(".nome-mae").val())) {
+        swal("Ops!", "Nome da mãe inválido", "error");
+        $(".dependentes").val(0);
+        return false;
+    }
+
+    if ($(".cep").val() == "") {
+        swal("Ops!", "Preencha o CEP", "error");
+        $(".dependentes").val(0);
+        return;
+    }
+
+    if (!validarData($(".nascimento").val())) {
+        swal("Ops!", "Preencha uma data de nascimento correta", "error");
+        $(".dependentes").val(0);
+        return;
+    }
+
 
 
     //if (menor < 18) {

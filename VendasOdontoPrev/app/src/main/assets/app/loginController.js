@@ -52,6 +52,8 @@ $("#continuarLogin").click(function () {
         return;
     }
 
+    logarETrazerDadosUsuario();
+
     swal({
         title: "Aguarde",
         text: 'Estamos procurando seus dados',
@@ -65,9 +67,6 @@ $("#continuarLogin").click(function () {
             closeModal: false,
         },
     });
-
-    logarETrazerDadosUsuario();
-
 });
 
 function callDadosForcaVenda(callback, token, cpf) {
