@@ -84,7 +84,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div onclick="iniciarProposta(67)" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button">
+                                <div id="bemEstarMensal" onclick="iniciarProposta( $(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                     <div class="spanInlineLeft">
                                         <span>Mensal</span>
                                     </div>
@@ -93,7 +93,7 @@
                                     </div>
                                 </div>
                                 <p class="pInfoPlanoSlick1">Carência: 90 dias para tratamentos e 180 para prótese</p>
-                                <div onclick="iniciarProposta(66)" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button">
+                                <div id="bemEstarAnual" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                     <div class="spanInlineLeft">
                                         <span>Anual</span>
                                     </div>
@@ -104,15 +104,17 @@
 
                                 <p class="pInfoPlanoSlick1">Carência: 60 dias para tratamentos e 90 para prótese</p>
 
-                                <div onclick="iniciarProposta(68)" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button">
-                                    <div class="spanInlineLeft">
-                                        <span>Anual</span>
+                                <div id="divBemEstar">
+                                    <div id="bemEstarAnualSCarencia" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button" data-id="">
+                                        <div class="spanInlineLeft">
+                                            <span>Anual</span>
+                                        </div>
+                                        <div class="spanInlineRight">
+                                            <span class="font-moeda">R$ 547,<span class="font-cent">20</span></span>
+                                        </div>
                                     </div>
-                                    <div class="spanInlineRight">
-                                        <span class="font-moeda">R$ 547,<span class="font-cent">20</span></span>
-                                    </div>
+                                    <p class="pInfoPlanoSlick1">Sem carência</p>
                                 </div>
-                                <p class="pInfoPlanoSlick1">Sem carência</p>
                             </div>
                         </div>
                     </div>
@@ -163,7 +165,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div onclick="iniciarProposta(74)" class="btn btn-lg btn-block btnOdontPlano btnSlick3" href="venda_pf_dados_proposta.html" role="button">
+                                <div id="esteticaMensal" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick3" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                     <div class="spanInlineLeft">
                                         <span>Mensal</span>
                                     </div>
@@ -172,7 +174,7 @@
                                     </div>
                                 </div>
                                 <p class="pInfoPlanoSlick3">Carência: 90 dias para tratamentos e 180 para prótese</p>
-                                <div onclick="iniciarProposta(73)" class="btn btn-lg btn-block btnOdontPlano btnSlick3" href="venda_pf_dados_proposta.html" role="button">
+                                <div id="esteticaAnual" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick3" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                     <div class="spanInlineLeft">
                                         <span>Anual</span>
                                     </div>
@@ -181,15 +183,17 @@
                                     </div>
                                 </div>
                                 <p class="pInfoPlanoSlick3">Carência: 60 dias para tratamentos e 90 para prótese</p>
-                                <div onclick="iniciarProposta(75)" class="btn btn-lg btn-block btnOdontPlano btnSlick3" href="venda_pf_dados_proposta.html" role="button">
-                                    <div class="spanInlineLeft">
-                                        <span>Anual</span>
+                                <div id="divEstetica">
+                                    <div id="esteticaAnualSCarencia" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick3" href="venda_pf_dados_proposta.html" role="button" data-id="">
+                                        <div class="spanInlineLeft">
+                                            <span>Anual</span>
+                                        </div>
+                                        <div class="spanInlineRight">
+                                            <span class="font-moeda">R$ 1380,<span class="font-cent">00</span></span>
+                                        </div>
                                     </div>
-                                    <div class="spanInlineRight">
-                                        <span class="font-moeda">R$ 1380,<span class="font-cent">00</span></span>
-                                    </div>
+                                    <p class="pInfoPlanoSlick3">Sem carência</p>
                                 </div>
-                                <p class="pInfoPlanoSlick3">Sem carência</p>
                             </div>
                         </div>
                     </div>
@@ -205,7 +209,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div onclick="iniciarProposta(77)" class="btn btn-lg btn-block btnOdontPlano btnSlick4" href="venda_pf_dados_proposta.html" role="button">
+                                <div id="ortoMensal" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick4" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                     <div class="spanInlineLeft">
                                         <span>Mensal</span>
                                     </div>
@@ -214,7 +218,7 @@
                                     </div>
                                 </div>
                                 <p class="pInfoPlanoSlick4">Carência: 90 dias para tratamentos e 180 para prótese</p>
-                                <div onclick="iniciarProposta(76)" class="btn btn-lg btn-block btnOdontPlano btnSlick4" href="venda_pf_dados_proposta.html" role="button">
+                                <div id="ortoAnual" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick4" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                     <div class="spanInlineLeft">
                                         <span>Anual</span>
                                     </div>
@@ -223,15 +227,17 @@
                                     </div>
                                 </div>
                                 <p class="pInfoPlanoSlick4">Carência: 60 dias para tratamentos e 90 para prótese</p>
-                                <div onclick="iniciarProposta(78)" class="btn btn-lg btn-block btnOdontPlano btnSlick4" href="venda_pf_dados_proposta.html" role="button">
-                                    <div class="spanInlineLeft">
-                                        <span>Anual</span>
+                                <div id="divOrto">
+                                    <div id="ortoAnualSCarencia" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick4" href="venda_pf_dados_proposta.html" role="button" data-id="">
+                                        <div class="spanInlineLeft">
+                                            <span>Anual</span>
+                                        </div>
+                                        <div class="spanInlineRight">
+                                            <span class="font-moeda">R$ 1764,<span class="font-cent">00</span></span>
+                                        </div>
                                     </div>
-                                    <div class="spanInlineRight">
-                                        <span class="font-moeda">R$ 1764,<span class="font-cent">00</span></span>
-                                    </div>
+                                    <p class="pInfoPlanoSlick4">Sem carência</p>
                                 </div>
-                                <p class="pInfoPlanoSlick4">Sem carência</p>
                             </div>
                         </div>
                     </div>
@@ -248,7 +254,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div onclick="iniciarProposta(80)" class="btn btn-lg btn-block btnOdontPlano btnSlick5" href="venda_pf_dados_proposta.html" role="button">
+                                <div id="vipMensal" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick5" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                     <div class="spanInlineLeft">
                                         <span>Mensal</span>
                                     </div>
@@ -257,7 +263,7 @@
                                     </div>
                                 </div>
                                 <p class="pInfoPlanoSlick5">Carência: 90 dias para tratamentos e 180 para prótese</p>
-                                <div onclick="iniciarProposta(79)" class="btn btn-lg btn-block btnOdontPlano btnSlick5" href="venda_pf_dados_proposta.html" role="button">
+                                <div id="vipAnual" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick5" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                     <div class="spanInlineLeft">
                                         <span>Anual</span>
                                     </div>
@@ -266,15 +272,17 @@
                                     </div>
                                 </div>
                                 <p class="pInfoPlanoSlick5">Carência: 60 dias para tratamentos e 90 para prótese</p>
-                                <div onclick="iniciarProposta(81)" class="btn btn-lg btn-block btnOdontPlano btnSlick5" href="venda_pf_dados_proposta.html" role="button">
-                                    <div class="spanInlineLeft">
-                                        <span>Anual</span>
+                                <div id="divVip">
+                                    <div id="vipAnualSCarencia" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick5" href="venda_pf_dados_proposta.html" role="button" data-id="">
+                                        <div class="spanInlineLeft">
+                                            <span>Anual</span>
+                                        </div>
+                                        <div class="spanInlineRight">
+                                            <span class="font-moeda">R$ 2644,<span class="font-cent">20</span></span>
+                                        </div>
                                     </div>
-                                    <div class="spanInlineRight">
-                                        <span class="font-moeda">R$ 2644,<span class="font-cent">20</span></span>
-                                    </div>
+                                    <p class="pInfoPlanoSlick5">Sem carência</p>
                                 </div>
-                                <p class="pInfoPlanoSlick5">Sem carência</p>
                             </div>
                         </div>
                     </div>

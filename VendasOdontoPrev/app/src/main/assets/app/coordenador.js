@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     $("a[href='meus_dados.html']").hide()
 
-    setPlanos();
+    
     carregarDadosUsuario();
 
     $("#logout").click(function () {
@@ -42,11 +42,13 @@ function defineConexao() {
     if (conexao.producaoLigado) {
         URLBase = conexao.producaoURL;
         Token = conexao.chaveProd;
+        setPlanosProd();
     }
     else {
         URLBase = conexao.homologacaoURL;
         console.log(URLBase);
         Token = conexao.chaveHomolog;
+        setPlanosHml();
     }
 }
 
@@ -212,6 +214,8 @@ function ValidaNome(fieldValue) {
 
     var splittedName = fieldValue.split(/[\ |\']+/) // Separa o nome por espaços e apóstrofos (')
 
+    var splittedNameSpace = fieldValue.split(/[\ ]+/)
+
     var totalWords = splittedName.length
 
     let firstName = splittedName[0]
@@ -246,7 +250,9 @@ function ValidaNome(fieldValue) {
 
         if (i === '0' || parseInt(i) === (totalWords - 1)) continue // Ignora o primeiro e o último nome
 
-        if (splittedName[i].length === 1 && !splittedName[i].match(/[E|Y]/i)) {
+        var nameWithApostrophe = splittedName[i] + "'" + splittedName[parseInt(i) + 1]
+
+        if (splittedName[i].length === 1 && !splittedName[i].match(/[E|Y]/i) && nameWithApostrophe != splittedNameSpace[i]) {
             return false
         }
     }
@@ -264,7 +270,7 @@ function ValidaNome(fieldValue) {
 }
 
 
-function setPlanos() {
+function setPlanosProd() {
     planos = [];
 
     plano = getRepository("plano");
@@ -427,6 +433,331 @@ function setPlanos() {
     planos.push(plano);
 
     put("planos", JSON.stringify(planos));
+    setPlanosProdCod()
+}
+
+
+function setPlanosProdCod() {
+
+    planos = [];
+
+    ////// CODIGO PLANOS DENTAL BEM - ESTAR ////////
+
+    var plano = new Object();
+    plano.cdPlano = 67;
+    plano.nome = "DENTAL BEM-ESTAR MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 66;
+    plano.nome = "DENTAL BEM-ESTAR ANUAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 68;
+    plano.nome = "DENTAL BEM-ESTAR ANUAL S/CARENCIA";
+    planos.push(plano);
+
+    
+    //////// CODIGO PLANOS DENTAL ESTETICA /////////
+
+    var plano = new Object();
+    plano.cdPlano = 74;
+    plano.nome = "DENTAL ESTETICA MENSAL";  
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 73;
+    plano.nome = "DENTAL ESTETICA ANUAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 75;
+    plano.nome = "DENTAL ESTETICA ANUAL S/CARENCIA";
+    planos.push(plano);
+
+    ///////// CODIGO PLANOS DENTAL ORTO //////////
+
+    var plano = new Object();
+    plano.cdPlano = 77;
+    plano.nome = "DENTAL ORTO MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 76;
+    plano.nome = "DENTAL ORTO ANUAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 78;
+    plano.nome = "DENTAL ORTO ANUAL S/CARENCIA";
+    planos.push(plano);
+
+    ///////// CODIGO PLANOS DENTAL VIP //////////
+
+    var plano = new Object();
+    plano.cdPlano = 80;
+    plano.nome = "DENTAL VIP MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 79;
+    plano.nome = "DENTAL VIP ANUAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 81;
+    plano.nome = "DENTAL VIP ANUAL S/CARENCIA";
+    planos.push(plano);
+
+    /////////////////////////////////////////////
+
+    put("CodPlanos", JSON.stringify(planos));
+}
+
+function setPlanosHmlCod() {
+
+    planos = [];
+
+    ////// CODIGO PLANOS DENTAL BEM - ESTAR ////////
+
+    var plano = new Object();
+    plano.cdPlano = 7;
+    plano.nome = "DENTAL BEM-ESTAR MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 8;
+    plano.nome = "DENTAL BEM-ESTAR ANUAL";
+    planos.push(plano);
+
+    //var plano = new Object();
+    //plano.cdPlano = 68;
+    //plano.nome = "DENTAL BEM-ESTAR ANUAL S/CARENCIA";
+    //planos.push(plano);
+
+
+    //////// CODIGO PLANOS DENTAL ESTETICA /////////
+
+    var plano = new Object();
+    plano.cdPlano = 1;
+    plano.nome = "DENTAL ESTETICA MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 2;
+    plano.nome = "DENTAL ESTETICA ANUAL";
+    planos.push(plano);
+
+    //var plano = new Object();
+    //plano.cdPlano = 75;
+    //plano.nome = "DENTAL ESTETICA ANUAL S/CARENCIA";
+    //planos.push(plano);
+
+    ///////// CODIGO PLANOS DENTAL ORTO //////////
+
+    var plano = new Object();
+    plano.cdPlano = 5;
+    plano.nome = "DENTAL ORTO MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 6;
+    plano.nome = "DENTAL ORTO ANUAL";
+    planos.push(plano);
+
+    //var plano = new Object();
+    //plano.cdPlano = 78;
+    //plano.nome = "DENTAL ORTO ANUAL S/CARENCIA";
+    //planos.push(plano);
+
+    ///////// CODIGO PLANOS DENTAL VIP //////////
+
+    var plano = new Object();
+    plano.cdPlano = 3;
+    plano.nome = "DENTAL VIP MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 4;
+    plano.nome = "DENTAL VIP ANUAL";
+    planos.push(plano);
+
+    //var plano = new Object();
+    //plano.cdPlano = 81;
+    //plano.nome = "DENTAL VIP ANUAL S/CARENCIA";
+    //planos.push(plano);
+
+    /////////////////////////////////////////////
+
+    put("CodPlanos", JSON.stringify(planos));
+}
+
+function setPlanosHml() {
+    planos = [];
+
+    plano = getRepository("plano");
+    plano.cdPlano = 101;
+    plano.nome = "Integral DOC LE";
+    plano.valor = "24";
+    plano.centavo = "93";
+    plano.desc = "Modalidade Compulsório";
+    plano.css = "colorSlick3";
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 102;
+    plano.nome = "Master LE";
+    plano.valor = "101";
+    plano.centavo = "10";
+    plano.desc = "Modalidade Compulsório";
+    plano.css = "colorSlick2";
+
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 7;
+    plano.nome = "DENTAL BEM-ESTAR";
+    plano.valor = "45";
+    plano.centavo = "60";
+    plano.desc = "Mensal";
+    plano.css = "colorSlick3";
+
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 8;
+    plano.nome = "DENTAL BEM-ESTAR";
+    plano.valor = "456";
+    plano.centavo = "00";
+    plano.desc = "Anual";
+    plano.css = "colorSlick3";
+
+    planos.push(plano);
+
+    //plano = getRepository("plano"); // Plano sem carencia, nao existe em homolog
+    //plano.cdPlano = 68;
+    //plano.nome = "DENTAL BEM-ESTAR";
+    //plano.valor = "547";
+    //plano.centavo = "20";
+    //plano.desc = "Anual";
+    //plano.css = "colorSlick3";
+    //
+    //planos.push(plano);
+
+    //plano = getRepository("plano");
+    //plano.cdPlano = 6;
+    //plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
+    //plano.valor = "14";
+    //plano.centavo = "98";
+    //plano.desc = "Mensal";
+    //plano.css = "colorSlick2";
+    //
+    //planos.push(plano);
+    //
+    //plano = getRepository("plano");
+    //plano.cdPlano = 7;
+    //plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
+    //plano.valor = "149";
+    //plano.centavo = "80";
+    //plano.desc = "Anual";
+    //plano.css = "colorSlick2";
+    //
+    //planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 1;
+    plano.nome = "DENTAL ESTÉTICA";
+    plano.valor = "115";
+    plano.centavo = "00";
+    plano.desc = "Mensal";
+    plano.css = "colorSlick3";
+
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 2;
+    plano.nome = "DENTAL ESTÉTICA";
+    plano.valor = "1150";
+    plano.centavo = "00";
+    plano.desc = "Anual";
+    plano.css = "colorSlick3";
+
+    planos.push(plano);
+
+    //plano = getRepository("plano"); // Plano sem carencia, nao existe em homolog
+    //plano.cdPlano = 75;
+    //plano.nome = "DENTAL ESTÉTICA";
+    //plano.valor = "1380";
+    //plano.centavo = "00";
+    //plano.desc = "Anual";
+    //plano.css = "colorSlick3";
+    //
+    //planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 5;
+    plano.nome = "DENTAL ORTO";
+    plano.valor = "147";
+    plano.centavo = "00";
+    plano.desc = "Mensal";
+    plano.css = " colorSlick4";
+
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 6;
+    plano.nome = "DENTAL ORTO";
+    plano.valor = "1470";
+    plano.centavo = "00";
+    plano.desc = "Anual";
+    plano.css = "colorSlick4";
+
+    planos.push(plano);
+
+    //plano = getRepository("plano"); // Plano sem carencia, nao existe em homolog
+    //plano.cdPlano = 78;
+    //plano.nome = "DENTAL ORTO";
+    //plano.valor = "1764";
+    //plano.centavo = "00";
+    //plano.desc = "Anual";
+    //plano.css = "colorSlick4";
+    //
+    //planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 3;
+    plano.nome = "DENTAL VIP";
+    plano.valor = "220";
+    plano.centavo = "35";
+    plano.desc = "Mensal";
+    plano.css = "colorSlick5";
+
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 4;
+    plano.nome = "DENTAL VIP";
+    plano.valor = "2203";
+    plano.centavo = "50";
+    plano.desc = "Anual";
+    plano.css = "colorSlick5";
+
+    planos.push(plano);
+
+    //plano = getRepository("plano"); // Plano sem carencia, nao existe em homolog
+    //plano.cdPlano = 81;
+    //plano.nome = "DENTAL VIP";
+    //plano.valor = "2644";
+    //plano.centavo = "20";
+    //plano.desc = "Anual";
+    //plano.css = "colorSlick5";
+    //
+    //planos.push(plano);
+
+    put("planos", JSON.stringify(planos));
+
+    setPlanosHmlCod();
 }
 
 function getComponent(pCompName) {

@@ -278,7 +278,7 @@ function adicionarBenefMemoria() {
         return;
     }
 
-    if (!ValidaNome($("#nome-beneficiario").val())) {
+    if (!ValidaNome($("#nome-beneficiarigito").val())) {
         swal("Ops!", "Nome inválido", "error");
         $(".dependentes").val(0);
         return false;
