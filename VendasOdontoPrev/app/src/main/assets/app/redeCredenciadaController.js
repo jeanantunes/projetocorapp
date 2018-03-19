@@ -1,56 +1,4 @@
-﻿function mapa(abc) {
-
-    var latlng = { lat: -23.5432147, lng: -46.7356894 };
-    //initMap(latlng);
-
-    if (abc == null) {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 4,
-            center: latlng,
-            disableDefaultUI: true
-        });
-    }
-    else if (abc != null) {
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 13,
-            center: { lat: parseFloat(abc.dentistas[0].endereco.cidade.latitude), lng: parseFloat(abc.dentistas[0].endereco.cidade.longitude) },
-            disableDefaultUI: true
-        });
-
-        for (var i = 0; i < abc.dentistas.length; i++) {
-            var latlng2 = new google.maps.LatLng((abc.dentistas[i].endereco.cidade.latitude), (abc.dentistas[i].endereco.cidade.longitude));
-
-            var marker = new google.maps.Marker({
-                position: latlng2,
-                map: map,
-                center: latlng2
-            });
-
-
-            var infowindow = new google.maps.InfoWindow();
-
-
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                    //console.log("Dentro da funcão Click:  " + contentString[i]);
-                    //infowindow.setContent('<div><strong>' + abc.dentistas[i].nomeDentista + '</strong><br>');
-                    //infowindow.open(map, marker);
-
-                    document.getElementById('nomeDentista').innerHTML = abc.dentistas[i].nomeDentista;
-                    document.getElementById('croDentista').innerHTML = abc.dentistas[i].numeroCRO;
-                    document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
-                    document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
-                    document.getElementById('enderecoDentista').innerHTML = abc.dentistas[i].endereco.enderecoCompleto;
-                    document.getElementById('cepDentista').innerHTML = abc.dentistas[i].endereco.cep;
-                    document.getElementById('telefoneDentista').innerHTML = abc.dentistas[i].numeroFone;
-                    document.getElementById('tipoPessoaDentista').innerHTML = abc.dentistas[i].tipoPrestador;
-
-                    $("#btnModal").click();
-                }
-            })(marker, i));
-        }
-    }
-}
+﻿
 
 $(document).ready(function () {
 
@@ -64,11 +12,23 @@ function initMap(redeCredenciada) {
     mapa(redeCredenciada);
 }
 
-
-
 var t;
 
 function callEspecialidades(callback, token) {
+
+    swal({
+        title: "Aguarde",
+        text: 'Estamos buscando as especialidades',
+        content: "input",
+        showCancelButton: false,
+        showConfirmButton: false,
+        imageUrl: "img/load.gif",
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false,
+        },
+    })
 
     $.ajax({
         async: true,
@@ -79,12 +39,27 @@ function callEspecialidades(callback, token) {
             "Content-Type": "application/json"
         },
         success: function (resp) {
+
             callback(resp)
         },
     });
 }
 
 function callEstados(callback, token) {
+
+    swal({
+        title: "Aguarde",
+        text: 'Estamos buscando os estados',
+        content: "input",
+        showCancelButton: false,
+        showConfirmButton: false,
+        imageUrl: "img/load.gif",
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false,
+        },
+    })
 
     $.ajax({
         async: true,
@@ -95,12 +70,27 @@ function callEstados(callback, token) {
             "Content-Type": "application/json"
         },
         success: function (resp) {
+            
             callback(resp)
         },
     });
 }
 
 function callCidade(callback, token, uf) {
+
+    swal({
+        title: "Aguarde",
+        text: 'Estamos procurando as cidades',
+        content: "input",
+        showCancelButton: false,
+        showConfirmButton: false,
+        imageUrl: "img/load.gif",
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false,
+        },
+    })
 
     $.ajax({
         async: true,
@@ -118,6 +108,20 @@ function callCidade(callback, token, uf) {
 
 function callBairro(callback, token, uf, codigoCidade) {
 
+    swal({
+        title: "Aguarde",
+        text: 'Estamos procurando dentistas',
+        content: "input",
+        showCancelButton: false,
+        showConfirmButton: false,
+        imageUrl: "img/load.gif",
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false,
+        },
+    })
+    
     var codigoBeneficiario = "375796040";
 
     $.ajax({
@@ -132,19 +136,20 @@ function callBairro(callback, token, uf, codigoCidade) {
             callback(resp)
         },
         error: function (xhr) {
+            swal.close();
             callback(xhr)
+            
         }
     });
 }
 
 function especialidades() {
     callTokenProd(function (dataToken) {
+
         callEspecialidades(function (dataEspecialidades) {
             //console.log(dataEspecialidades);
-
+            
             var sel = document.getElementById('especs');
-
-
 
             for (var i = 0; i < dataEspecialidades.length; i++) {
 
@@ -168,6 +173,8 @@ function especialidades() {
 
             document.getElementById('especs').value = especialidade;
 
+            swal.close();
+
         }, dataToken.access_token);
     });
 }
@@ -176,7 +183,7 @@ function callRedeCredenciada(callback, token, CodBeneficiario, uf, codigoEspecia
 
     swal({
         title: "Aguarde",
-        text: 'Estamos procurando seus dados',
+        text: 'Estamos procurando dentitas',
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
@@ -186,7 +193,7 @@ function callRedeCredenciada(callback, token, CodBeneficiario, uf, codigoEspecia
             text: "...",
             closeModal: false,
         },
-    })
+    });
 
     if (codigoCidade == undefined) {
 
@@ -253,6 +260,8 @@ function estados() {
 
             document.getElementById('estados').value = "selecione";
 
+
+            swal.close();
         }, dataToken.access_token);
     });
 }
@@ -293,6 +302,7 @@ $("#estados").change(function () {
 
             document.getElementById('cidades').value = "selecione";
 
+            swal.close();
         }, dataToken.access_token, uf);
     });
 });
@@ -345,6 +355,8 @@ $("#cidades").change(function () {
 
             document.getElementById('bairros').value = "selecione";
 
+            swal.close();
+
         }, dataToken.access_token, uf, codigoCidade);
     });
 });
@@ -380,19 +392,25 @@ $("#btnBuscar").click(function () {
 
                 initMap(dataRedeCredenciada);
 
+        
+
             }, dataToken.access_token, codBeneficiario, estado, codigoEspecialidade, codigoMicroregiao, privian, codigoMarca, "0", codCidade);
 
         }
         else if (codBairro != undefined) {
             callRedeCredenciada(function (dataRedeCredenciada) {
 
+
                 initMap(dataRedeCredenciada);
+               
             }, dataToken.access_token, codBeneficiario, estado, codigoEspecialidade, codigoMicroregiao, privian, codigoMarca, codBairro, codCidade);
         } 
         else if (codBairro == 0) {
             callRedeCredenciada(function (dataRedeCredenciada) {
 
+
                 initMap(dataRedeCredenciada);
+
             }, dataToken.access_token, codBeneficiario, estado, codigoEspecialidade, codigoMicroregiao, privian, codigoMarca, "0", codCidade);
         } 
 

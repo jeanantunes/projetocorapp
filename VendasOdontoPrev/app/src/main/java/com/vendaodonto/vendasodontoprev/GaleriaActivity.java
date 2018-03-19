@@ -235,9 +235,4 @@ public class GaleriaActivity extends AppCompatActivity {
         Log.d("MeuLog", "Fechou activity");
         finish();
     }
-
-
-
-
-
 }
