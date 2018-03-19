@@ -212,7 +212,7 @@ $(".data").blur(function () {
 
 function ValidaNome(fieldValue) {
 
-    var splittedName = fieldValue.split(/[\ |\']+/) // Separa o nome por espaços e apóstrofos (')
+    var splittedName = fieldValue.trim().split(/[\ |\']+/) // Separa o nome por espaços e apóstrofos (')
 
     var splittedNameSpace = fieldValue.split(/[\ ]+/)
 

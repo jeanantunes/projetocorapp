@@ -3,5 +3,5 @@
   "homologacaoURL": "https://api-it1.odontoprev.com.br:8243",
   "chaveHomolog": "TG9HMzEwMjVmSlBobHcyMm41NEVWY0p0M29FYTptT25HRnN6ZElFNlN0WDNiUGhSN3VFTFo0ZDhhh",
   "chaveProd": "ZWp3c0pfVGN6YXdObUdDYlN3dW1PRnVXTXQ0YTozM3pyVjJoRXo3TkN3WElpejNfcnlnbzNZZjRh",
-  "producaoLigado": false
+  "producaoLigado": true
 }

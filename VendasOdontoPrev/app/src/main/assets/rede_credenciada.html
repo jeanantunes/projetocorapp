@@ -15,9 +15,7 @@
 
     <script type="text/javascript">
 
-        window.onload = function () {
-            especialidades();
-        }
+        
 
     </script>
 </head>
@@ -76,29 +74,47 @@
                 </div>
 
                 <div class="boxLabInput">
-                    <div>
+
+                    <!--<div>
                         <label class="label-cep labelOdontBlur">CEP</label>
                         <label class="col-md-6 text-right"><span class=""><h5 id="labelCep"></h5></span></label>
                     </div>
                     <div>
                         <input type="text" class=" cep inputLabelBlur" id="cep">
-                    </div>
-                    <div>
+                    </div>-->
+                    <!--<div>
                         <label class="label-bairro labelOdontBlur">BAIRRO</label>
                     </div>
                     <div>
                         <input type="text" class="bairro inputLabelBlur" id="bairro">
-                    </div>
-                    <div>
+                    </div>-->
+                    <!--<div>
                         <label class="label-cidade labelOdontBlur">CIDADE</label>
                     </div>
                     <div>
                         <input type="text" class="cidade inputLabelBlur" id="cidade">
-                    </div>
+                    </div>-->
+
                     <div class="form-group">
-                        <label for="" class="label-especialidade labelOdontBlur">Especialidades</label>
+                        <label for="" class="label-especialidade labelOdontBlur">ESPECIALIDADES</label>
                         <select class="form-control especialidade selectListBlur" id="especs"></select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="" class="label-estado labelOdontBlur">ESTADO</label>
+                        <select class="form-control estado selectListBlur" id="estados"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="label-cidade labelOdontBlur">CIDADE</label>
+                        <select class="form-control cidade selectListBlur" id="cidades"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="label-bairro labelOdontBlur">BAIRRO</label>
+                        <select class="form-control bairro selectListBlur" id="bairros"></select>
+                    </div>
+
                 </div>
 
             </div>
@@ -107,7 +123,7 @@
         <div class="row">
             <div class="col-md-12 btnPadBtm">
                 <!--<a class="btn btn-lg btn-block btnOdont" id="" data-toggle="modal" data-target="#myModal" role="button">BUSCAR</a>-->
-                <button class="btn btn-lg btn-block btnOdont" id="btnTeste">BUSCAR</button>
+                <button class="btn btn-lg btn-block btnOdont" id="btnBuscar">BUSCAR</button>
             </div>
         </div>
 
@@ -115,21 +131,12 @@
             <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJVbswYP8yLVKCQGtTN3Xsifugqm8BBkQ&callback=mapa">
             </script>
         </div>
-        <script>
-
-            function initMap(redeCredenciada) {
-                var latlng = { lat: -23.5432147, lng: -46.7356894 };
-                mapa(redeCredenciada);
-            }
-
-        </script>
 
     </div>
 
 
     <!-- End Bloco 1 -->
     <button type="button" class="btnModal" data-backdrop="static" style="border:1px solid white; background-color: transparent;" id="btnModal" data-toggle="modal" data-target="#myModal" BotaoModal</button>
-    <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modalConteiner">
             <div class="imgBtnExcluir">
@@ -151,10 +158,9 @@
             <div class="modal-body-OdontMed">
                 <div class="row">
                     <label class="labelBoldTitleModal">Especialidades</label>
-                    <div id="divEspecs" class="text-center">
-                        
-                        <!--<label> <img src="img/Protese.png" class="" alt=""/>  <p> <h5 id="especialidadeDentista1" style="color:gray"/> </h5> </p>  </label>-->
-                        <!--<label><img src="img/Ortodontia.png" class="" alt=""><p><h5 id="especialidadeDentista1"></h5></p></label>-->
+                    <div class="text-center">
+                        <label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista1" style="color:gray"></h5></p></label>
+                        <!--<label><img src="img/Ortodontia.png" class="" alt=""><p>_</p></label>-->
                         <!--<label><img src="img/Consulta.png" class="" alt=""><p>_</p></label>-->
                         <!--<label><img src="img/Cirurgia.png" class="" alt=""><p>_</p></label>-->
                     </div>
@@ -185,6 +191,7 @@
     <script src="js/odonto-Valida.js"></script>
     <script src="js/sweetalert.min.js"></script>
     <script src="app/coordenador.js"></script>
+    <script src="app/redeCredenciadaController.js"></script>
     <!--<script src="C:\Users\Treinamento6\Downloads\Jquery.js"></script>-->
 
 
@@ -199,260 +206,157 @@
         //       $('#loginmodal').modal('show')
         // }
 
-        function especialidades() {
-            callToken(function (dataToken) {
-                callEspecialidades(function (dataEspecialidades) {
-                    //console.log(dataEspecialidades);
+        //function especialidades() {
+        //    callToken(function (dataToken) {
+        //        callEspecialidades(function (dataEspecialidades) {
+        //            //console.log(dataEspecialidades);
+        //
+        //            var sel = document.getElementById('especs');
+        //
+        //            for (var i = 0; i < dataEspecialidades.length; i++) {
+        //
+        //                var opt = document.createElement('option');
+        //                //console.log(dataEspecialidades[i].descricao);
+        //                opt.setAttribute('value', dataEspecialidades[i].codigo);
+        //                //console.log(dataEspecialidades[i].codigo);
+        //                opt.appendChild(document.createTextNode(dataEspecialidades[i].descricao));
+        //                sel.appendChild(opt);
+        //            }
+        //
+        //            var especialidade = 1;
+        //            document.getElementById('especs').value = especialidade;
+        //
+        //        }, dataToken.access_token);
+        //    });
+        //}
+        //
+        //
+        //
+        //var t;
 
-                    var sel = document.getElementById('especs');
+        //function callToken(callback) {
+        //
+        //    $.ajax({
+        //        async: true,
+        //        url: "https://api.odontoprev.com.br:8243/token/",
+        //        method: "POST",
+        //        headers: {
+        //            "Authorization": "Basic Y3hHZXBoTzFkcERDd3U0VHlfRExWTWxXQ0R3YTp0WlJtSUN1eUJWajJZRVczRjdaNXdWM2E0YVlh",
+        //            "Cache-Control": "no-cache",
+        //            "Content-Type": "application/x-www-form-urlencoded"
+        //        },
+        //        data: {
+        //            "grant_type": "client_credentials"
+        //        },
+        //        success: function (resp) {
+        //            swal.close();
+        //            callback(resp)
+        //        },
+        //        error: function (xhr) {
+        //            swal("Ops!", "Erro na conexão, tente mais tarde", "error");
+        //        }
+        //    });
+        //}
 
-                    for (var i = 0; i < dataEspecialidades.length; i++) {
+        //function callCep(callback, token, cep) {
+        //
+        //    swal({
+        //        title: "Aguarde",
+        //        text: 'Estamos procurando seus dados',
+        //        content: "input",
+        //        showCancelButton: false,
+        //        showConfirmButton: false,
+        //        icon: "info",
+        //        button: {
+        //            text: "...",
+        //            closeModal: false,
+        //        },
+        //    })
+        //
+        //    $.ajax({
+        //        async: true,
+        //        url: "https://api.odontoprev.com.br:8243/cep/1.1/por/cep/" + cep,
+        //        method: "GET",
+        //        headers: {
+        //            "Authorization": "Bearer " + token,
+        //            "Cache-Control": "no-cache",
+        //            "Content-Type": "application/json"
+        //        },
+        //        success: function (resp) {
+        //            document.getElementById('labelCep').style.display = 'none';
+        //            swal.close();
+        //            callback(resp)
+        //        },
+        //
+        //        error: function (xhr) {
+        //            if (xhr.status == 500) {
+        //                swal.close();
+        //                console.log("CEP INVALIDO");
+        //                document.getElementById('labelCep').style.display = 'block';
+        //                document.getElementById('labelCep').innerHTML = "CEP não foi encontrado";
+        //            }
+        //        }
+        //    });
+        //}
 
-                        var opt = document.createElement('option');
-                        //console.log(dataEspecialidades[i].descricao);
-                        opt.setAttribute('value', dataEspecialidades[i].codigo);
-                        //console.log(dataEspecialidades[i].codigo);
-                        opt.appendChild(document.createTextNode(dataEspecialidades[i].descricao));
-                        sel.appendChild(opt);
-                    }
+        //function callEspecialidades(callback, token) {
+        //
+        //
+        //    $.ajax({
+        //        async: true,
+        //        url: "https://api.odontoprev.com.br:8243/redecredenciada/1.0/especialidades",
+        //        method: "GET",
+        //        headers: {
+        //            "Authorization": "Bearer " + token,
+        //            "Cache-Control": "no-cache",
+        //            "Content-Type": "application/json"
+        //        },
+        //        success: function (resp) {
+        //            swal.close();
+        //            callback(resp)
+        //        },
+        //    });
+        //}
+        //
+        //function callCidade(callback, token, uf, codigoCidade) {
+        //
+        //    $.ajax({
+        //        async: true,
+        //        url: "https://api.odontoprev.com.br:8243/cep/1.1/cidades/uf?uf=" + uf + "&codigoCidade=" + codigoCidade,
+        //        method: "GET",
+        //        headers: {
+        //            "Authorization": "Bearer " + token,
+        //            "Cache-Control": "no-cache",
+        //            "Content-Type": "application/json"
+        //        },
+        //        success: function (resp) {
+        //            callback(resp)
+        //        },
+        //    });
+        //}
 
-                    var especialidade = 1;
-                    document.getElementById('especs').value = especialidade;
-
-                }, dataToken.access_token);
-            });
-        }
-
-        function mapa(abc) {
-
-
-
-            var latlng = { lat: -23.5432147, lng: -46.7356894 };
-            //initMap(latlng);
-
-            if (abc == null) {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 4,
-                    center: latlng,
-                    disableDefaultUI: true
-                });
-            }
-            else if (abc != null) {
-                map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 11,
-                    center: { lat: parseFloat(abc.dentistas[0].endereco.cidade.latitude), lng: parseFloat(abc.dentistas[0].endereco.cidade.longitude) },
-                    disableDefaultUI: true
-                });
-
-                for (var i = 0; i < abc.dentistas.length; i++) {
-                    var latlng2 = new google.maps.LatLng((abc.dentistas[i].endereco.cidade.latitude), (abc.dentistas[i].endereco.cidade.longitude));
-
-                    var marker = new google.maps.Marker({
-                        position: latlng2,
-                        map: map,
-                        center: latlng2
-                    });
-
-
-                    var infowindow = new google.maps.InfoWindow();
-
-
-                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                        return function () {
-                            //console.log("Dentro da funcão Click:  " + contentString[i]);
-                            //infowindow.setContent('<div><strong>' + abc.dentistas[i].nomeDentista + '</strong><br>');
-                            //infowindow.open(map, marker);
-                            document.getElementById('nomeDentista').innerHTML = abc.dentistas[i].nomeDentista;
-                            document.getElementById('croDentista').innerHTML = abc.dentistas[i].numeroCRO;
-
-                            var especialidades = abc.dentistas[i].especialidade.descricaoEspecialidade;
-
-                            for (var i = 0; i < especialidades.split(',').length; i++)
-                            {
-                                $("#divEspecs").append('<label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista1" style="color:gray"></h5></p></label>');
-                            }
-                            //$("#divEspecs").html('<label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista1" style="color:gray"></h5></p></label>');
-
-                            //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
-                            //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
-                            document.getElementById('enderecoDentista').innerHTML = abc.dentistas[i].endereco.enderecoCompleto;
-                            document.getElementById('cepDentista').innerHTML = abc.dentistas[i].endereco.cep;
-                            document.getElementById('telefoneDentista').innerHTML = abc.dentistas[i].numeroFone;
-                            document.getElementById('tipoPessoaDentista').innerHTML = abc.dentistas[i].tipoPrestador;
-
-                            $("#btnModal").click();
-                        }
-                    })(marker, i));
-                }
-            }
-
-
-
-
-        }
-
-        var t;
-
-        function callToken(callback) {
-
-            $.ajax({
-                async: true,
-                url: "https://api.odontoprev.com.br:8243/token/",
-                method: "POST",
-                headers: {
-                    "Authorization": "Basic Y3hHZXBoTzFkcERDd3U0VHlfRExWTWxXQ0R3YTp0WlJtSUN1eUJWajJZRVczRjdaNXdWM2E0YVlh",
-                    "Cache-Control": "no-cache",
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                data: {
-                    "grant_type": "client_credentials"
-                },
-                success: function (resp) {
-                    swal.close();
-                    callback(resp)
-                },
-                error: function (xhr) {
-                    swal("Ops!", "Erro na conexão, tente mais tarde", "error");
-                }
-            });
-        }
-
-        function callCep(callback, token, cep) {
-
-            swal({
-                title: "Aguarde",
-                text: 'Estamos procurando seus dados',
-                content: "input",
-                showCancelButton: false,
-                showConfirmButton: false,
-                icon: "info",
-                button: {
-                    text: "...",
-                    closeModal: false,
-                },
-            })
-
-            $.ajax({
-                async: true,
-                url: "https://api.odontoprev.com.br:8243/cep/1.1/por/cep/" + cep,
-                method: "GET",
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Cache-Control": "no-cache",
-                    "Content-Type": "application/json"
-                },
-                success: function (resp) {
-                    document.getElementById('labelCep').style.display = 'none';
-                    swal.close();
-                    callback(resp)
-                },
-
-                error: function (xhr) {
-                    if (xhr.status == 500) {
-                        swal.close();
-                        console.log("CEP INVALIDO");
-                        document.getElementById('labelCep').style.display = 'block';
-                        document.getElementById('labelCep').innerHTML = "CEP não foi encontrado";
-                    }
-                }
-            });
-        }
-
-        function callEspecialidades(callback, token) {
+        //function callBairro(callback, token, uf, codigoCidade, codigoBeneficiario) {
+        //
+        //    $.ajax({
+        //        async: true,
+        //        url: "https://api.odontoprev.com.br:8243/cep/1.1/bairros?uf=" + uf + "&codigoCidade=" + codigoCidade + "&codigoBeneficiario=" + codigoBeneficiario,
+        //        method: "GET",
+        //        headers: {
+        //            "Content-Type": "application/json",
+        //            "Authorization": "Bearer " + token,
+        //            "Cache-Control": "no-cache",
+        //            "Postman-Token": "c7575dd9-1908-dcf4-12eb-9091693dd541"
+        //
+        //        },
+        //        success: function (resp) {
+        //            callback(resp)
+        //        },
+        //        error: function (xhr) {
+        //        }
+        //    });
+        //}
 
 
-            $.ajax({
-                async: true,
-                url: "https://api.odontoprev.com.br:8243/redecredenciada/1.0/especialidades",
-                method: "GET",
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Cache-Control": "no-cache",
-                    "Content-Type": "application/json"
-                },
-                success: function (resp) {
-                    swal.close();
-                    callback(resp)
-                },
-            });
-        }
-
-        function callCidade(callback, token, uf, codigoCidade) {
-
-            $.ajax({
-                async: true,
-                url: "https://api.odontoprev.com.br:8243/cep/1.1/cidades/uf?uf=" + uf + "&codigoCidade=" + codigoCidade,
-                method: "GET",
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Cache-Control": "no-cache",
-                    "Content-Type": "application/json"
-                },
-                success: function (resp) {
-                    callback(resp)
-                },
-            });
-        }
-
-        function callBairro(callback, token, uf, codigoCidade, codigoBeneficiario) {
-
-            $.ajax({
-                async: true,
-                url: "https://api.odontoprev.com.br:8243/cep/1.1/bairros?uf=" + uf + "&codigoCidade=" + codigoCidade + "&codigoBeneficiario=" + codigoBeneficiario,
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token,
-                    "Cache-Control": "no-cache",
-                    "Postman-Token": "c7575dd9-1908-dcf4-12eb-9091693dd541"
-
-                },
-                success: function (resp) {
-                    callback(resp)
-                },
-                error: function (xhr) {
-                }
-            });
-        }
-
-        function callRedeCredenciada(callback, token, CodBeneficiario, uf, codigoEspecialidade, codigoMicroregiao, privian, codigoMarca, codigoBairro) {
-
-            swal({
-                title: "Aguarde",
-                text: 'Estamos procurando seus dados',
-                content: "input",
-                showCancelButton: false,
-                showConfirmButton: false,
-                icon: "info",
-                button: {
-                    text: "...",
-                    closeModal: false,
-                },
-            })
-
-            $.ajax({
-                async: true,
-                url: "https://api.odontoprev.com.br:8243/dcms/redecredenciada/1.0/dentistas?codigoBeneficiario=" + CodBeneficiario
-                + "&siglaUf=" + uf + "&codigoEspecialidade=" + codigoEspecialidade + "&codigoRegiao=" + codigoMicroregiao + "&privian=" + privian + "&codigoMarca=" +
-                codigoMarca + "&codigoBairro=" + codigoBairro,
-                //url: "https://api.odontoprev.com.br:8243/cep/1.1/bairros?uf=" + uf + "&codigoCidade=" + codigoCidade + "&codigoBeneficiario=" + codigoBeneficiario,
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token,
-                    "Cache-Control": "no-cache"
-                },
-
-                success: function (resp) {
-                    swal.close();
-                    callback(resp)
-
-                },
-                error: function (xhr) {
-                    swal(":(", "Nenhum dentista encontrado", "info");
-                }
-            });
-        }
 
 
         function removerAcentos(newStringComAcento) {
@@ -475,194 +379,194 @@
             return string;
         }
 
-        function callTokenBack() {
-
-            ob.logString("Foi");
-            callToken(function (dataToken) {
-                ob.logString("Foi dnv");
-            });
-        }
-
-
-        $(document).ready(function () {
-            var t1;
-
-            $("#btnTeste").click(function (e) {
-
-                if ($("#cep").val() == "") {
-                    swal("Alerta", "Preencha o CEP", "warning");
-
-                    $("#cep").css({ "border-color": "#F00" });
-                    $(".cep").css("color", "red");
-                    $(".label-cep").css("color", "red");
-
-                    return;
-                }
-
-                if ($("#bairro").val() == "") {
-                    swal("Alerta", "Preencha o Bairro", "warning");
-                    return;
-                }
-
-                if ($("#cidade").val() == "") {
-                    swal("Alerta", "Preencha o Cidade", "warning");
-                    return;
-                }
+            //function callTokenBack() {
+            //
+            //    ob.logString("Foi");
+            //    callToken(function (dataToken) {
+            //        ob.logString("Foi dnv");
+            //    });
+            //}
 
 
-                var cep = $("#cep").val().replace(/\D/g, '');
-
-                callToken(function (dataToken) {
-                    t1 = dataToken;
-
-                    callCep(function (dataCep) {
-                        var teste = removerAcentos(dataCep[0].cidade);
-                        teste = teste.toUpperCase();
-
-
-                        callCidade(function (dataCidade) {
-                            var result = $.grep(dataCidade, function (e) { return e.nome == removerAcentos(dataCep[0].cidade).toUpperCase(); });
-
-                            var CodBeneficiario = "375796040";
-
-
-                            callBairro(function (dataBairro) {
-
-
-                                var codigoEspecialidade = $('#especs').val();
-                                var privian = "FALSE";
-                                var codigoMarca = "1";
-
-                                //var bairro = dataCep[0].bairro.toUpperCase();
-
-                                var codigoBairro = $.grep(dataBairro, function (e) {
-                                    if (dataCep[0].bairro != null) {
-                                        return e.nome == dataCep[0].bairro.toUpperCase()
-                                    } else {
-                                        return e.nome == dataCep[0].cidade.toUpperCase()
-                                    }
-
-                                });
-
-                                if (codigoBairro == null) {
-                                    codigoBairro = "";
-                                }
-
-                                //console.log(codigoBairro);
-                                //console.log(result[0].codigoMicroregiao);
-
-
-                                if (codigoBairro.length == 0) {
-                                    callRedeCredenciada(function (dataRedeCredenciada) {
-                                        //console.log(dataRedeCredenciada);
-                                        initMap(dataRedeCredenciada);
-
-                                    }, dataToken.access_token, CodBeneficiario, dataCep[0].estado, codigoEspecialidade, result[0].codigoMicroregiao, privian, codigoMarca, "0");
-
-                                }
-                                else if (codigoBairro != null) {
-                                    callRedeCredenciada(function (dataRedeCredenciada) {
-                                        initMap(dataRedeCredenciada);
-                                    }, dataToken.access_token, CodBeneficiario, dataCep[0].estado, codigoEspecialidade, result[0].codigoMicroregiao, privian, codigoMarca, codigoBairro[0].codigo);
-                                }
-
-                            }, dataToken.access_token, dataCep[0].estado, result[0].codigoCidade, CodBeneficiario);
-
-                        }, dataToken.access_token, dataCep[0].estado, dataCep[0].idCidade);
-
-                    }, dataToken.access_token, cep);
-
-                });
-            });
-        });
-
-
-        $(document).ready(function () {
-
-            function limpa_formulário_cep() {
-                // Limpa valores do formulário de cep.
-                $("#bairro").val("");
-                $("#cidade").val("");
-            }
-
-            var typingTimer; //timer identifier
-            var doneTypingInterval = 500; //time in ms, 5 second for example
-
-            //on keyup, start the countdown
-            $('#cepRedeCredenciada').keyup(function () {
-                clearTimeout(typingTimer);
-                if ($('#cepRedeCredenciada').val) {
-                    typingTimer = setTimeout(doneTyping, doneTypingInterval);
-                }
-            });
-
-            function doneTyping() {
-                validar();
-            }
-
-            function validar() {
-                //Nova variável "cep" somente com dígitos.
-                var cep = $('#cepRedeCredencida').val().replace(/\D/g, '');
-
-                //Verifica se campo cep possui valor informado.
-                if (cep != "" && cep.length == 8) {
-
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
-
-                    //Valida o formato do CEP.
-                    if (validacep.test(cep)) {
-
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        $("#bairro").val("");
-                        $("#cidade").val("");
-
-                        $("#cepRedeCredenciada").val("00000-000");
-                        callToken(function (dataToken) {
-                            callCep(function (dataCep) {
-                                $("#cepRedeCredenciada").val("00000-000");
-                                $("#bairroRedeCredenciada").val(dataCep[0].bairro);
-                                $("#cidadeRedeCredenciada").val(dataCep[0].cidade);
-
-                            }, dataToken.access_token, cep);
-                        });
-
-                        //    //Consulta o webservice viacep.com.br/
-                        //    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados)
-                        //    {
-                        //        if (!("erro" in dados)) {
-                        //        //Atualiza os campos com os valores da consulta.
-                        //            $("#rua").val(dados.logradouro);
-                        //            $("#bairro").val(dados.bairro);
-                        //            $("#cidade").val(dados.localidade);
-                        //            $("#uf").val(dados.uf);
-                        //        } //end if.
-                        //        else {
-                        //            //CEP pesquisado não foi encontrado.
-                        //            limpa_formulário_cep();
-                        //            alert("CEP não encontrado.");
-                        //        }
-                        //    });
+            //$(document).ready(function () {
+            //    var t1;
+            //
+            //    $("#btnTeste").click(function (e) {
+            //
+            //        if ($("#cep").val() == "") {
+            //            swal("Alerta", "Preencha o CEP", "warning");
+            //
+            //            $("#cep").css({ "border-color": "#F00" });
+            //            $(".cep").css("color", "red");
+            //            $(".label-cep").css("color", "red");
+            //
+            //            return;
+            //        }
+            //
+            //        if ($("#bairro").val() == "") {
+            //            swal("Alerta", "Preencha o Bairro", "warning");
+            //            return;
+            //        }
+            //
+            //        if ($("#cidade").val() == "") {
+            //            swal("Alerta", "Preencha o Cidade", "warning");
+            //            return;
+            //        }
+            //
+            //
+            //        var cep = $("#cep").val().replace(/\D/g, '');
+            //
+            //        callToken(function (dataToken) {
+            //            t1 = dataToken;
+            //
+            //            callCep(function (dataCep) {
+            //                var teste = removerAcentos(dataCep[0].cidade);
+            //                teste = teste.toUpperCase();
+            //
+            //
+            //                callCidade(function (dataCidade) {
+            //                    var result = $.grep(dataCidade, function (e) { return e.nome == removerAcentos(dataCep[0].cidade).toUpperCase(); });
+            //
+            //                    var CodBeneficiario = "375796040";
+            //
+            //
+            //                    callBairro(function (dataBairro) {
+            //
+            //
+            //                        var codigoEspecialidade = $('#especs').val();
+            //                        var privian = "FALSE";
+            //                        var codigoMarca = "1";
+            //
+            //                        //var bairro = dataCep[0].bairro.toUpperCase();
+            //
+            //                        var codigoBairro = $.grep(dataBairro, function (e) {
+            //                            if (dataCep[0].bairro != null) {
+            //                                return e.nome == dataCep[0].bairro.toUpperCase()
+            //                            } else {
+            //                                return e.nome == dataCep[0].cidade.toUpperCase()
+            //                            }
+            //
+            //                        });
+            //
+            //                        if (codigoBairro == null) {
+            //                            codigoBairro = "";
+            //                        }
+            //
+            //                        //console.log(codigoBairro);
+            //                        //console.log(result[0].codigoMicroregiao);
+            //
+            //
+            //                        if (codigoBairro.length == 0) {
+            //                            callRedeCredenciada(function (dataRedeCredenciada) {
+            //                                //console.log(dataRedeCredenciada);
+            //                                initMap(dataRedeCredenciada);
+            //
+            //                            }, dataToken.access_token, CodBeneficiario, dataCep[0].estado, codigoEspecialidade, result[0].codigoMicroregiao, privian, codigoMarca, "0");
+            //
+            //                        }
+            //                        else if (codigoBairro != null) {
+            //                            callRedeCredenciada(function (dataRedeCredenciada) {
+            //                                initMap(dataRedeCredenciada);
+            //                            }, dataToken.access_token, CodBeneficiario, dataCep[0].estado, codigoEspecialidade, result[0].codigoMicroregiao, privian, codigoMarca, codigoBairro[0].codigo);
+            //                        }
+            //
+            //                    }, dataToken.access_token, dataCep[0].estado, result[0].codigoCidade, CodBeneficiario);
+            //
+            //                }, dataToken.access_token, dataCep[0].estado, dataCep[0].idCidade);
+            //
+            //            }, dataToken.access_token, cep);
+            //
+            //        });
+            //    });
+            //});
 
 
-
-
-                    } //end if.
-                    else {
-                        //cep é inválido.
-                        limpa_formulário_cep();
-                        alert("Formato de CEP inválido.");
-                    }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep();
-                }
-            }
-
-            //Quando o campo cep perde o foco.
-
-        });
+            //$(document).ready(function () {
+            //
+            //    function limpa_formulário_cep() {
+            //        // Limpa valores do formulário de cep.
+            //        $("#bairro").val("");
+            //        $("#cidade").val("");
+            //    }
+            //
+            //    var typingTimer; //timer identifier
+            //    var doneTypingInterval = 500; //time in ms, 5 second for example
+            //
+            //    //on keyup, start the countdown
+            //    $('#cepRedeCredenciada').keyup(function () {
+            //        clearTimeout(typingTimer);
+            //        if ($('#cepRedeCredenciada').val) {
+            //            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+            //        }
+            //    });
+            //
+            //    function doneTyping() {
+            //        validar();
+            //    }
+            //
+            //    function validar() {
+            //        //Nova variável "cep" somente com dígitos.
+            //        var cep = $('#cepRedeCredencida').val().replace(/\D/g, '');
+            //
+            //        //Verifica se campo cep possui valor informado.
+            //        if (cep != "" && cep.length == 8) {
+            //
+            //            //Expressão regular para validar o CEP.
+            //            var validacep = /^[0-9]{8}$/;
+            //
+            //            //Valida o formato do CEP.
+            //            if (validacep.test(cep)) {
+            //
+            //                //Preenche os campos com "..." enquanto consulta webservice.
+            //                $("#bairro").val("");
+            //                $("#cidade").val("");
+            //
+            //                $("#cepRedeCredenciada").val("00000-000");
+            //                callToken(function (dataToken) {
+            //                    callCep(function (dataCep) {
+            //                        $("#cepRedeCredenciada").val("00000-000");
+            //                        $("#bairroRedeCredenciada").val(dataCep[0].bairro);
+            //                        $("#cidadeRedeCredenciada").val(dataCep[0].cidade);
+            //
+            //                    }, dataToken.access_token, cep);
+            //                });
+            //
+            //                //    //Consulta o webservice viacep.com.br/
+            //                //    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados)
+            //                //    {
+            //                //        if (!("erro" in dados)) {
+            //                //        //Atualiza os campos com os valores da consulta.
+            //                //            $("#rua").val(dados.logradouro);
+            //                //            $("#bairro").val(dados.bairro);
+            //                //            $("#cidade").val(dados.localidade);
+            //                //            $("#uf").val(dados.uf);
+            //                //        } //end if.
+            //                //        else {
+            //                //            //CEP pesquisado não foi encontrado.
+            //                //            limpa_formulário_cep();
+            //                //            alert("CEP não encontrado.");
+            //                //        }
+            //                //    });
+            //
+            //
+            //
+            //
+            //            } //end if.
+            //            else {
+            //                //cep é inválido.
+            //                limpa_formulário_cep();
+            //                alert("Formato de CEP inválido.");
+            //            }
+            //        } //end if.
+            //        else {
+            //            //cep sem valor, limpa formulário.
+            //            limpa_formulário_cep();
+            //        }
+            //    }
+            //
+            //    //Quando o campo cep perde o foco.
+            //
+            //});
 
     </script>
 

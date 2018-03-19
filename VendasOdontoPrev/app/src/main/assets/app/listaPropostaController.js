@@ -371,25 +371,37 @@ function carregarListaOnline() {
                 var acao = "";
                 var link = "";
 
-                if (item.statusVenda == "PROPOSTA IMPLANTADA") {
+                if (item.statusVenda == "Aprovado") {
 
-                    status = "PROPOSTA IMPLANTADA";
-                    css = "colorCirc1";
-                    acaoseta = "hide";
-
-                } else if (item.statusVenda == "VIDAS COM CRITICAS") {
-                    status = "VIDAS COM CRITICAS";
-                    css = "colorCirc3";
-                    acaoseta = "hide";
-                } else if (item.statusVenda == "AGUARDANDO EMPRESA") {
-                    status = "AGUARDANDO EMPRESA";
-                    css = "colorCirc1";
-                    acaoseta = "hide";
-                } else if (item.statusVenda == "VIDAS OK") {
-                    status = "VIDAS OK";
+                    status = "Aprovada";
                     css = "colorCirc2";
                     acaoseta = "hide";
+                } else if (item.statusVenda == "Criticado") {
+
+                    status = "Criticada";
+                    css = "colorCirc3";
+                    acaoseta = "hide";
                 }
+
+                //if (item.statusVenda == "PROPOSTA IMPLANTADA") {
+                //
+                //    status = "PROPOSTA IMPLANTADA";
+                //    css = "colorCirc1";
+                //    acaoseta = "hide";
+                //
+                //} else if (item.statusVenda == "VIDAS COM CRITICAS") {
+                //    status = "VIDAS COM CRITICAS";
+                //    css = "colorCirc3";
+                //    acaoseta = "hide";
+                //} else if (item.statusVenda == "AGUARDANDO EMPRESA") {
+                //    status = "AGUARDANDO EMPRESA";
+                //    css = "colorCirc1";
+                //    acaoseta = "hide";
+                //} else if (item.statusVenda == "VIDAS OK") {
+                //    status = "VIDAS OK";
+                //    css = "colorCirc2";
+                //    acaoseta = "hide";
+                //}
 
                 itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
                 itemLista = itemLista.replace("{STATUS}", status);
