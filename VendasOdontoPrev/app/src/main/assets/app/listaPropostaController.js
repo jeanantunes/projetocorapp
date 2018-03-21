@@ -105,6 +105,10 @@ function carregarListaOffline() {
             status = "Enviada";
             css = "colorCirc2";
             acaoseta = "hide";
+        } else if (item.status == "SYNC") {
+            status = "Sincronizando";
+            css = "colorCirc2";
+            acaoseta = "hide";
         }
 
         itemLista = itemLista.replace("{NOME}", item.nome);
@@ -226,6 +230,10 @@ function carregarListaOnline() {
                 acao = "ver detalhes";
                 link = "venda_pf_editar.html?cpf=" + item.cpf;
                 acaoseta = "";
+            } else if (item.status == "SYNC") {
+                status = "Sincronizando";
+                css = "colorCirc5";
+                acaoseta = "hide";
             }
 
             itemLista = itemLista.replace("{NOME}", item.nome);
@@ -422,10 +430,8 @@ function carregarListaOnline() {
         }, TokenAcess);
     });
  
-
     $("#totalEmpresas").html(qtdEmpresas);
     $("#total").html(qtdEmpresas + qtdPessoas);
-
     
 }
 

@@ -35,7 +35,16 @@
                     disableDefaultUI: true
                 });
 
+                var dentistas = [];
+
                 for (var i = 0; i < abc.dentistas.length; i++) {
+
+                    var filter = dentistas.filter(function (x) { return x == abc.dentistas[i].codigoDentista });
+                    
+                    if (filter.length > 0) continue;
+                    
+                    dentistas.push(abc.dentistas[i].codigoDentista);
+
                     var latlng2 = new google.maps.LatLng((abc.dentistas[i].endereco.cidade.latitude), (abc.dentistas[i].endereco.cidade.longitude));
 
                     var marker = new google.maps.Marker({
@@ -53,23 +62,39 @@
                             if (selectedMarker) {
                                 selectedMarker.setIcon('img/pin_azul.png');
                             }
+
                             marker.setIcon('img/pin_rosa.png');
                             selectedMarker = marker;
 
+                            
                             //console.log("Dentro da funcão Click:  " + contentString[i]);
                             //infowindow.setContent('<div><strong>' + abc.dentistas[i].nomeDentista + '</strong><br>');
                             //infowindow.open(map, marker);
 
-                            document.getElementById('nomeDentista').innerHTML = abc.dentistas[i].nomeDentista;
-                            document.getElementById('croDentista').innerHTML = abc.dentistas[i].numeroCRO;
-                            //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
-                            document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
-                            document.getElementById('enderecoDentista').innerHTML = abc.dentistas[i].endereco.enderecoCompleto;
-                            document.getElementById('cepDentista').innerHTML = abc.dentistas[i].endereco.cep;
-                            document.getElementById('telefoneDentista').innerHTML = abc.dentistas[i].numeroFone;
-                            document.getElementById('tipoPessoaDentista').innerHTML = abc.dentistas[i].tipoPrestador;
+                            $("#nomeDentista").html("Dr(a). " + abc.dentistas[i].nomeDentista);
+                            $("#croDentista").html(abc.dentistas[i].numeroCRO);
+                            //$("#especialidadeDentista").html(abc.dentistas[i].especialidade.descricaoEspecialidade);
 
-                            $("#btnModal").click();
+                            var especialidades = abc.dentistas[i].especialidade.descricaoEspecialidade.split(",");
+
+                            $("#enderecoDentista").html(abc.dentistas[i].endereco.enderecoCompleto);
+                            $("#cepDentista").html(abc.dentistas[i].endereco.cep);
+                            $("#telefoneDentista").html(abc.dentistas[i].numeroFone);
+                            $("#tipoPessoaDentista").html(abc.dentistas[i].tipoPrestador);
+
+                            //document.getElementById('nomeDentista').innerHTML = abc.dentistas[i].nomeDentista;
+                            
+                            //document.getElementById('croDentista').innerHTML = abc.dentistas[i].numeroCRO;
+                            //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
+                            //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
+                            //document.getElementById('enderecoDentista').innerHTML = abc.dentistas[i].endereco.enderecoCompleto;
+                            //document.getElementById('cepDentista').innerHTML = abc.dentistas[i].endereco.cep;
+                            //document.getElementById('telefoneDentista').innerHTML = abc.dentistas[i].numeroFone;
+                            //document.getElementById('tipoPessoaDentista').innerHTML = abc.dentistas[i].tipoPrestador;
+
+                            
+                            $('#myModal').modal('show');
+                            
                         }
                     })(marker, i));
                 }
@@ -185,10 +210,10 @@
             </div>
         </div>
 
-            <div id="map" class="nopadding">
-                <script  async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJVbswYP8yLVKCQGtTN3Xsifugqm8BBkQ&callback=mapa">
-                </script>
-            </div>
+        <div id="map" class="nopadding">
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJVbswYP8yLVKCQGtTN3Xsifugqm8BBkQ&callback=mapa">
+            </script>
+        </div>
 
         <!--<input type="text" class="hide" id="foco">-->
 
@@ -196,10 +221,10 @@
 
 
     <!-- End Bloco 1 -->
-    <button type="button" class="btnModal" data-backdrop="static" style="border:1px solid white; background-color: transparent;" id="btnModal" data-toggle="modal" data-target="#myModal" BotaoModal</button>
+    <!--<button type="button" class="btnModal" data-backdrop="static" style="border:1px solid white; color:transparent; background-color: transparent;" id="btnModal" data-toggle="modal" data-target="#myModal" BotaoModal</button>-->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modalConteiner">
-            <div class="imgBtnExcluir">
+            <div class="imgBtnExcluir" id="closeModalRedeCredenciada">
                 <img src="img/btn-excluir.png" class="btnExcluir" alt="">
             </div>
             <div class="modal-content">
@@ -219,7 +244,7 @@
                 <div class="row">
                     <label class="labelBoldTitleModal">Especialidades</label>
                     <div class="text-center">
-                        <label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista1" style="color:gray"></h5></p></label>
+                        <label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista" style="color:gray"></h5></p></label>
                         <!--<label><img src="img/Ortodontia.png" class="" alt=""><p>_</p></label>-->
                         <!--<label><img src="img/Consulta.png" class="" alt=""><p>_</p></label>-->
                         <!--<label><img src="img/Cirurgia.png" class="" alt=""><p>_</p></label>-->
@@ -243,11 +268,12 @@
         </div>
     </div>
     <!-- End Modal -->
+    <script src="js/jquery.3.2.1.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/odontoprev.js"></script>
-    <script src="js/jquery.3.2.1.js"></script>
+
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
     <script src="js/sweetalert.min.js"></script>

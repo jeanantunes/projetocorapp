@@ -171,14 +171,11 @@ function buscarEmpresa() {
     }
 
 
+    bloquearCampos();
+
     if (!checkNetConnection()) {
 
-        $("#razao-social").prop('disabled', false);
-        $("#ramo-atividade").prop('disabled', false);
-        $("#representante-legal").prop('disabled', false);
-        $("#cpf-representante").prop('disabled', false);
-        $("#nome-fantasia").prop('disabled', false);
-
+        desbloqCampos();
         return;
     }
 
@@ -250,6 +247,26 @@ function buscarEmpresa() {
 
         }, dataToken.access_token, cnpjValidado);
     });
+}
+
+function bloquearCampos() {
+
+    $("#razao-social").prop('disabled', true);
+    $("#ramo-atividade").prop('disabled', true);
+    $("#representante-legal").prop('disabled', true);
+    $("#cpf-representante").prop('disabled', true);
+    $("#nome-fantasia").prop('disabled', true);
+
+}
+
+function desbloqCampos() {
+
+    $("#razao-social").prop('disabled', false);
+    $("#ramo-atividade").prop('disabled', false);
+    $("#representante-legal").prop('disabled', false);
+    $("#cpf-representante").prop('disabled', false);
+    $("#nome-fantasia").prop('disabled', false);
+
 }
 
 function salvarRascunho() {
@@ -546,3 +563,5 @@ function limparCampos() {
     $("#uf").val("");
 
 }
+
+

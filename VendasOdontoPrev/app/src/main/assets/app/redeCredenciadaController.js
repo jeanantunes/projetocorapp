@@ -400,7 +400,7 @@ $("#btnBuscar").click(function () {
         else if (codBairro != undefined) {
             callRedeCredenciada(function (dataRedeCredenciada) {
 
-
+                console.log(dataRedeCredenciada);
                 initMap(dataRedeCredenciada);
                
             }, dataToken.access_token, codBeneficiario, estado, codigoEspecialidade, codigoMicroregiao, privian, codigoMarca, codBairro, codCidade);
@@ -408,7 +408,7 @@ $("#btnBuscar").click(function () {
         else if (codBairro == 0) {
             callRedeCredenciada(function (dataRedeCredenciada) {
 
-
+                console.log(dataRedeCredenciada);
                 initMap(dataRedeCredenciada);
 
             }, dataToken.access_token, codBeneficiario, estado, codigoEspecialidade, codigoMicroregiao, privian, codigoMarca, "0", codCidade);
@@ -416,6 +416,13 @@ $("#btnBuscar").click(function () {
 
 
     });
+});
+
+$("#closeModalRedeCredenciada").click(function () {
+
+    $('#myModal').modal('toggle');
+
+
 });
 
 

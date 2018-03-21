@@ -874,6 +874,7 @@ function atualizarDashBoard() {
     var digitandoPessoas = [];
     var criticadaPessoas = [];
     var prontaPessoas = [];
+    var syncPessoas = [];
 
     var digitandoEmpresas = [];
     var criticadaEmpresas = [];
@@ -883,6 +884,7 @@ function atualizarDashBoard() {
         digitandoPessoas = pessoas.filter(function (x) { return x.status == "DIGITANDO" });
         criticadaPessoas = pessoas.filter(function (x) { return x.status == "CRITICADA" });
         prontaPessoas = pessoas.filter(function (x) { return x.status == "PRONTA" });
+        syncPessoas = pessoas.filter(function (x) { return x.status == "SYNC" });
     }
 
     if (empresas != null) {
@@ -900,7 +902,7 @@ function atualizarDashBoard() {
 
     $("#digitando").html(digitandoPessoas.length + digitandoEmpresas.length);
     $("#criticada").html(criticadaPessoas.length + criticadaEmpresas.length);
-    $("#pronta").html(prontaPessoas.length + prontaEmpresas.length);
+    $("#pronta").html(prontaPessoas.length + prontaEmpresas.length + syncPessoas.length);
     $("#finalizada").html(qtdFinalizada);
 }
 
@@ -973,13 +975,15 @@ function sincronizar() {
 
                     o[0].status = "SYNC";
 
+                    o[0].horaSync = new Date();
+
                     pessoas.push(o[0]);
 
                     put("pessoas", JSON.stringify(pessoas));
                    
                     sincronizarPessoa(function (dataProposta) {
                         console.log(dataProposta);
-                    }, o);
+                    }, o, false);
 
                 }
             });
@@ -1010,7 +1014,7 @@ function removerAcentos(newStringComAcento) {
     return string;
 }
 
-function sincronizarPessoa(callback, pessoa) {
+function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja sendo ressincronizada reSync recebe true
 
     //var pessoa = JSON.parse(pessoaString);
     var forcaVenda = get("dadosUsuario");
@@ -1063,19 +1067,25 @@ function sincronizarPessoa(callback, pessoa) {
 
     console.log(json);
 
-    swal({
-        title: "Aguarde",
-        text: 'Estamos enviando a sua proposta',
-        content: "input",
-        imageUrl: "img/load.gif",
-        showCancelButton: false,
-        showConfirmButton: false,
-        icon: "info",
-        button: {
-            text: "...",
-            closeModal: false,
-        },
-    });
+    if (reSync){
+
+        swal({
+            title: "Aguarde",
+            text: 'Estamos enviando a sua proposta',
+            content: "input",
+            imageUrl: "img/load.gif",
+            showCancelButton: false,
+            showConfirmButton: false,
+            icon: "info",
+            button: {
+                text: "...",
+                closeModal: false,
+            },
+        });
+
+    }
+
+
 
 
     callTokenProd(function (dataToken) {
@@ -1127,7 +1137,6 @@ function sincronizarPessoa(callback, pessoa) {
             }
         });
     });
-
 }
 
 function sincronizarEmpresa(proposta, beneficiarios) {

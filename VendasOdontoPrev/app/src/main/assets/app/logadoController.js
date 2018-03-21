@@ -3,7 +3,7 @@
 $(document).ready(function () {
     atualizarDashBoard();
     validarVersaoApp();
-
+    resyncPropostasPF();
 });
 
 
@@ -28,7 +28,6 @@ function validarVersaoApp()
 
         }, dataToken.access_token);
     });
-
 }
 
 function getVersaoApp(callback, token) {
@@ -47,7 +46,6 @@ function getVersaoApp(callback, token) {
         error: function (xhr) {
         }
     });
-
 }
 
 function deslogar() {
@@ -79,4 +77,101 @@ function setarDados() {
     //
     //document.getElementsByClassName('.nomeCorretor').innerHTML = "" + dadosTratados.nome;
 
+}
+
+function callDashBoardPF(callback, Token) {
+
+    var statusTodasPropostas = 0;
+    var dadosForca = get("dadosUsuario");
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+
+        }
+    });
+}
+
+function callDashBoardPME(callback, Token) {
+
+    var statusTodasPropostas = 0;
+    var dadosForca = get("dadosUsuario");
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+
+        }
+    });
+}
+
+function resyncPropostasPF() {
+
+    $.ajax({
+        url: "config/timeResync.json",
+        type: "get",
+        async: false,
+        success: function (result) {
+            time = JSON.parse(result);
+        },
+        error: function () {
+
+        }
+    });
+
+    var propostasPF = get("pessoas");
+
+    $.each(propostasPF, function (i, item) {
+
+        var o = propostasPF.filter(function (x) { return x.cpf == item.cpf });
+        var propostas = propostasPF.filter(function (x) { return x.cpf != item.cpf });
+
+        propostasPF = []; //limpar
+
+        $.each(propostas, function (i, item) {
+            propostasPF.push(item);
+        });
+
+        if (item.status != "SYNC")
+            return
+
+        var now = new Date(item.horaSync);
+        var date = new Date();
+
+        var olderDate = moment(date).subtract(time.timeResync, 'minutes').toDate();
+
+        if (!(olderDate > now))
+            return;
+
+        o[0].status = "PRONTA";
+
+        propostasPF.push(o[0]);
+
+        put("pessoas", JSON.stringify(propostasPF));
+
+        sincronizarPessoa(function (dataProposta) {
+            console.log(dataProposta);
+        }, o, false);
+
+    });
 }
