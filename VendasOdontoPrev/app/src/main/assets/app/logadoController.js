@@ -3,7 +3,9 @@
 $(document).ready(function () {
     atualizarDashBoard();
     validarVersaoApp();
-    resyncPropostasPF();
+    //resyncPropostasPME();
+    //resyncPropostasPF();
+    //checkStatusPropostas();
 });
 
 
@@ -174,4 +176,177 @@ function resyncPropostasPF() {
         }, o, false);
 
     });
+}
+
+function resyncPropostasPME() {
+
+    $.ajax({
+        url: "config/timeResync.json",
+        type: "get",
+        async: false,
+        success: function (result) {
+            time = JSON.parse(result);
+        },
+        error: function () {
+
+        }
+    });
+
+    var propostasPME = get("empresas");
+    var beneficiarios = get("beneficiarios");
+
+    $.each(propostasPME, function (i, item) {
+
+        var o = propostasPME.filter(function (x) { return x.cnpj == item.cnpj });
+        var propostas = propostasPME.filter(function (x) { return x.cnpj != item.cnpj });
+        var b = beneficiarios.filter(function (x) { return x.cnpj == item.cnpj });
+
+        propostasPME = []; //limpar
+
+        $.each(propostas, function (i, item) {
+            propostasPME.push(item);
+        });
+
+        if (item.status != "SYNC") {
+            propostasPME.push(o[0]);
+            return;
+        }
+
+        var now = new Date(item.horaSync);
+        var date = new Date();
+
+        var olderDate = moment(date).subtract(time.timeResync, 'minutes').toDate();
+
+        if (!(olderDate > now))
+            return;
+
+        o[0].status = "PRONTA";
+
+        propostasPME.push(o[0]);
+
+        put("empresas", JSON.stringify(propostasPME));
+
+        sincronizarEmpresa(o, b);
+
+        atualizarDashBoard();
+
+    });
+}
+
+function callDashBoardPF(callback, Token) {
+    var statusTodasPropostas = 0;
+    var dadosForca = get("dadosUsuario");
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+
+        }
+    });
+}
+
+function callDashBoardPME(callback, Token) {
+    var statusTodasPropostas = 0;
+    var dadosForca = get("dadosUsuario");
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+
+        }
+    });
+}
+
+function checkStatusPropostas() {
+
+    var propostasPme = get("empresas");
+    var propostasPf = get("pessoas");
+
+    $.ajax({
+        url: "config/timeResync.json",
+        type: "get",
+        async: false,
+        success: function (result) {
+            time = JSON.parse(result);
+        },
+        error: function () {
+
+        }
+    });
+
+    callTokenProdSemMsgErro(function (dataToken) {
+
+        callDashBoardPF(function (dataDashPf) {
+
+            $.each(propostasPf, function (i, item) {
+
+                var proposta = dataDashPf.dashboardPropostasPF.filter(function (x) { return x.cpf == item.cpf.replace(/\D/g, '') });
+
+                if (proposta[0].dataAtualizacao == undefined) // Checa se o registro nâo contem data de atualizacao, caso nao tenha sera setado uma data no registro
+                {
+                    proposta[0].dataAtualizacao = new Date();
+
+                    var propostas = propostasPf.filter(function (x) { return x.cpf != item.cpf });
+
+                    propostasPf = []; //limpar
+
+                    $.each(propostas, function (i, item) {
+                        propostasPf.push(item);
+                    });
+
+                    propostasPf.push(proposta[0]);
+
+                    put("pessoas", JSON.stringify(propostasPf));
+
+                    return;
+                }
+
+                var now = new Date(proposta[0].dataAtualizacao);
+
+                var date = new Date();
+
+                var olderDate = moment(date).subtract(time.timeUpdate, 'days').toDate();
+
+                if (!(olderDate > now)) return;
+                
+                if (proposta.length > 0) proposta[0].status = item.statusVenda;
+
+                proposta[0].dataAtualizacao = new Date();
+
+                var propostas = propostasPf.filter(function (x) { return x.cpf.replace(/\D/g, '') != item.cpf });
+
+                propostasPf = []; //limpar
+
+                $.each(propostas, function (i, item) {
+                    propostasPf.push(item);
+                });
+
+                propostasPf.push(proposta[0]);
+
+                put("pessoas", JSON.stringify(propostasPf));
+            });
+
+        }, dataToken.access_token);
+    });
+
 }

@@ -91,7 +91,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <a class="btn btn-lg btn-block btnOdontPlano btnSlick3" onclick="adicionarPlano(101)" role="button">
+                                <a id="btnIntegral" class="btn btn-lg btn-block btnOdontPlano btnSlick3" onclick="adicionarPlano($(this).attr('data-id'))" role="button">
                                     <div class="spanInlineLeft">
                                         <span>Mensal</span>
                                     </div>
@@ -116,7 +116,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <a class="btn btn-lg btn-block btnOdontPlano btnSlick2" onclick="adicionarPlano(102)" role="button">
+                                <a id="btnMaster" class="btn btn-lg btn-block btnOdontPlano btnSlick2" onclick="adicionarPlano($(this).attr('data-id'))" role="button" data-id="">
                                     <div class="spanInlineLeft">
                                         <span>Mensal</span>
                                     </div>

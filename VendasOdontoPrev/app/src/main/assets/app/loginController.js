@@ -23,13 +23,13 @@ function callLogin(callback, token, login, password) {
             //$("#loadingLogin").addClass('hide');
 
             if (xhr.status == 403) {
-                swal("Ops!", "Login ou senha inv�lida.", "error");
+                swal("Ops!", "Login ou senha inválida.", "error");
                 $("#erroLogin").removeClass('hide');
-                $("#erroLogin").html("CPF ou senha inv�lida.");
+                $("#erroLogin").html("CPF ou senha inválida.");
 
                 return;
             } else if (xhr.status == 0) {
-                swal("Ops!", "Erro na conex�o, tente novamente.", "error");
+                swal("Ops!", "Erro na conexão, tente novamente.", "error");
                 //swal.close();
                 return;
             }
@@ -41,13 +41,13 @@ function callLogin(callback, token, login, password) {
 $("#continuarLogin").click(function () {
 
     if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
-        swal("Ops", "CPF inv�lido", "error");
+        swal("Ops", "CPF inválido", "error");
 
         return;
     }
 
     if ($("#password").val().length < 8) {
-        swal("Ops", "A senha deve conter no m�nimo 8 caracteres", "error");
+        swal("Ops", "A senha deve conter no mínimo 8 caracteres", "error");
 
         return;
     }
@@ -100,20 +100,20 @@ function callDadosForcaVenda(callback, token, cpf) {
     });
 }
 
-// Mant�m os inputs em cache:
+// Mantêm os inputs em cache:
 var inputs = $('input');
 
-// Chama a fun��o de verifica��o quando as entradas forem modificadas
-// Usei o 'keyup', mas 'change' ou 'keydown' s�o tamb�m eventos �teis aqui
+// Chama a função de verificação quando as entradas forem modificadas
+// Usei o 'keyup', mas 'change' ou 'keydown' são tambêm eventos úteis aqui
 inputs.on('keyup', verificarInputs);
 
 function verificarInputs() {
-    var preenchidos = true;  // assumir que est�o preenchidos
+    var preenchidos = true;  // assumir que estão preenchidos
 
     inputs.each(function () {
 
         // verificar um a um e passar a false se algum falhar
-        // no lugar do if pode-se usar alguma fun��o de valida��o, regex ou outros
+        // no lugar do if pode-se usar alguma função de validação, regex ou outros
         var id = this.id;
         if (!this.value || !TestaCPF($("#cpf").val()) || $("#password").val().length < 8) {//|| !TestaCPF($("#cpf").val()) || $("#password").val().length < 8){// || $("#password").val().length < 8){//|| !TestaCPF($("#cpf").val()) || $("#password").val().length < 8 ) {
             preenchidos = false;
@@ -122,7 +122,7 @@ function verificarInputs() {
             return false;
         }
     });
-    // Habilite, ou n�o, o <button>, dependendo da vari�vel:
+    // Habilite, ou não, o <button>, dependendo da vari�vel:
     $('button').prop('disabled', !preenchidos); //,
     return true;
 }
@@ -144,7 +144,7 @@ function logarETrazerDadosUsuario() {
     if (!online) {
         //$("#loadingLogin").addClass('hide');
         $("#erroLogin").removeClass('hide');
-        $("#erroLogin").html("Erro na conex�o, tente novamente.");
+        $("#erroLogin").html("Erro na conexão, tente novamente.");
         return;
     }
     var cpfTratado = $("#cpf").val().replace(/\D/g, '');

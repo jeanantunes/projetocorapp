@@ -1,3 +1,4 @@
 ﻿{
-  "timeResync": 15
+  "timeResync": 30,
+  "timeUpdate":  0
 }

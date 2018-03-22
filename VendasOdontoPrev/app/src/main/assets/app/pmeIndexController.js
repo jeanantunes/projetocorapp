@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    setIdPlano();
 });
 
 function iniciarProposta(cdPlano) {
@@ -26,7 +26,7 @@ function setIdPlano() {
         type: "get",
         async: false,
         success: function (result) {
-            conexao = eval(result);
+            conexao = JSON.parse(result);
         },
         error: function () {
 
@@ -35,6 +35,7 @@ function setIdPlano() {
 
     var plano = planos.filter(function (x) { if (x.nome == "INTEGRAL DOC LE") { return x.nome; } });
     $("#btnIntegral").attr("data-id", plano[0].cdPlano);
+
 
     var plano = planos.filter(function (x) { if (x.nome == "MASTER LE") { return x.nome; } });
     $("#btnMaster").attr("data-id", plano[0].cdPlano);

@@ -246,7 +246,7 @@ function ValidaNome(fieldValue) {
         if (splittedName[i] == "") return false
 
         // Se o nome possuir caracteres especiais, exceto apostrofo, é invalido
-        if (!splittedName[i].match(/^[a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ']+$/g)) return false
+        if (!splittedName[i].match(/^[a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõçÇ']+$/g)) return false
 
         if (i === '0' || parseInt(i) === (totalWords - 1)) continue // Ignora o primeiro e o último nome
 
@@ -441,6 +441,17 @@ function setPlanosProdCod() {
 
     planos = [];
 
+    var plano = new Object();
+    plano.cdPlano = 101;
+    plano.nome = "INTEGRAL DOC LE";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano = getRepository("plano");
+    plano.cdPlano = 102;
+    plano.nome = "MASTER LE";
+    planos.push(plano);
+
     ////// CODIGO PLANOS DENTAL BEM - ESTAR ////////
 
     var plano = new Object();
@@ -518,6 +529,16 @@ function setPlanosProdCod() {
 function setPlanosHmlCod() {
 
     planos = [];
+
+    var plano = new Object();
+    plano.cdPlano = 61;
+    plano.nome = "INTEGRAL DOC LE";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 62;
+    plano.nome = "MASTER LE";
+    planos.push(plano);
 
     ////// CODIGO PLANOS DENTAL BEM - ESTAR ////////
 
@@ -597,7 +618,7 @@ function setPlanosHml() {
     planos = [];
 
     plano = getRepository("plano");
-    plano.cdPlano = 101;
+    plano.cdPlano = 61;
     plano.nome = "Integral DOC LE";
     plano.valor = "24";
     plano.centavo = "93";
@@ -606,7 +627,7 @@ function setPlanosHml() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 102;
+    plano.cdPlano = 62;
     plano.nome = "Master LE";
     plano.valor = "101";
     plano.centavo = "10";
@@ -935,8 +956,19 @@ function sincronizar() {
 
             $.each(empresas, function (i, item) {
                 if (item.status == "PRONTA") {
+
                     var o = empresas.filter(function (x) { return x.cnpj == item.cnpj });
                     var b = beneficiarios.filter(function (x) { return x.cnpj == item.cnpj });
+
+                    var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != item.cnpj });
+
+                    o[0].status = "SYNC";
+                    o[0].horaSync = new Date();
+
+                    todosExcetoExclusao.push(o[0]);
+
+                    put("empresas", JSON.stringify(todosExcetoExclusao));
+
                     sincronizarEmpresa(o, b);
                     atualizarDashBoard();
                 }
@@ -1120,6 +1152,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
                     var pessoas = get("pessoas");
                     pessoa[0].status = "ENVIADA";
+                    pessoa[0].dataAtualizacao = new Date();
 
                     var todosExcetoExclusao = pessoas.filter(function (x) { return x.cpf != pessoa[0].cpf });
                     todosExcetoExclusao.push(pessoa[0]);
@@ -1140,6 +1173,8 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 }
 
 function sincronizarEmpresa(proposta, beneficiarios) {
+
+    console.log(proposta);
 
     var dadosUsuario = get("dadosUsuario");
     var pdata = [];
@@ -1178,7 +1213,8 @@ function sincronizarEmpresa(proposta, beneficiarios) {
 
                 atualizarDashBoard();
             },
-            error: function () {
+            error: function (xhr) {
+                console.log(xhr);
                 swal.close();
             }
         });

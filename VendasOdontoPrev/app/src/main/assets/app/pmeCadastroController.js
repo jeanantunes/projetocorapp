@@ -454,10 +454,10 @@ function validarProposta() {
         return;
     }
 
-    if ($("#nome-fantasia").val() == "") {
-        swal("Ops!", "Preencha o nome fantasia", "error");
-        return;
-    }
+    //if ($("#nome-fantasia").val() == "") {
+    //    swal("Ops!", "Preencha o nome fantasia", "error");
+    //    return;
+    //}
 
     if ($("#ramo-atividade").val() == "") {
         swal("Ops!", "Preencha o ramo de atividade", "error");
