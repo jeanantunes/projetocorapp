@@ -12,7 +12,7 @@
   "dadosBancarios": {
     "codigoBanco": "",
     "agencia": "",
-    "tipoConta": "CC",
+    "tipoConta": "",
     "conta": ""
   },
   "endereco": {

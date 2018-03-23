@@ -95,6 +95,14 @@
     background-color: #F1F9FF;
 }
 
+.btnEsqueciSenha {
+    position: relative;
+    padding-bottom: 10%;
+    padding-top: 5%;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+
 .odontBoxCenter{
     padding-bottom: 0%;
 }

@@ -101,7 +101,7 @@ function carregarListaOffline() {
             acao = "ver detalhes";
             link = "venda_pf_editar.html?cpf=" + item.cpf;
             acaoseta = "";
-        } else if (item.status == "ENVIADA") {
+        } else if (item.status == "ENVIADA" || item.status == "Aprovado") {
             status = "Enviada";
             css = "colorCirc2";
             acaoseta = "hide";
@@ -200,7 +200,7 @@ function carregarListaOnline() {
 
     $.each(pessoas, function (i, item) {
 
-        if (item.status != "ENVIADA") {
+        if (item.status != "ENVIADA" && item.status != "Aprovado") {
 
             qtdPessoas++;
 

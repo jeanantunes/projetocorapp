@@ -447,7 +447,6 @@ function setPlanosProdCod() {
     planos.push(plano);
 
     var plano = new Object();
-    plano = getRepository("plano");
     plano.cdPlano = 102;
     plano.nome = "MASTER LE";
     planos.push(plano);

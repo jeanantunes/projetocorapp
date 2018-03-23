@@ -5,9 +5,9 @@ $(document).ready(function () {
     validarVersaoApp();
     //resyncPropostasPME();
     //resyncPropostasPF();
-    //checkStatusPropostas();
-});
+    checkStatusPropostas();
 
+});
 
 function validarVersaoApp()
 {
@@ -78,7 +78,6 @@ function setarDados() {
     //document.getElementById('nomeCorretoraMenu').innerHTML = "" + dadosTratados.nomeEmpresa;
     //
     //document.getElementsByClassName('.nomeCorretor').innerHTML = "" + dadosTratados.nome;
-
 }
 
 function callDashBoardPF(callback, Token) {
@@ -106,6 +105,50 @@ function callDashBoardPF(callback, Token) {
 
 function callDashBoardPME(callback, Token) {
 
+    var statusTodasPropostas = 0;
+    var dadosForca = get("dadosUsuario");
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+
+        }
+    });
+}
+
+function callDashBoardPF(callback, Token) {
+    var statusTodasPropostas = 0;
+    var dadosForca = get("dadosUsuario");
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+
+        }
+    });
+}
+
+function callDashBoardPME(callback, Token) {
     var statusTodasPropostas = 0;
     var dadosForca = get("dadosUsuario");
 
@@ -175,6 +218,8 @@ function resyncPropostasPF() {
             console.log(dataProposta);
         }, o, false);
 
+        atualizarDashBoard();
+
     });
 }
 
@@ -233,49 +278,7 @@ function resyncPropostasPME() {
     });
 }
 
-function callDashBoardPF(callback, Token) {
-    var statusTodasPropostas = 0;
-    var dadosForca = get("dadosUsuario");
 
-    $.ajax({
-        async: true,
-        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + Token,
-            "Cache-Control": "no-cache",
-        },
-        success: function (resp) {
-            callback(resp);
-        },
-        error: function (xhr) {
-
-        }
-    });
-}
-
-function callDashBoardPME(callback, Token) {
-    var statusTodasPropostas = 0;
-    var dadosForca = get("dadosUsuario");
-
-    $.ajax({
-        async: true,
-        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + Token,
-            "Cache-Control": "no-cache",
-        },
-        success: function (resp) {
-            callback(resp);
-        },
-        error: function (xhr) {
-
-        }
-    });
-}
 
 function checkStatusPropostas() {
 
@@ -300,53 +303,63 @@ function checkStatusPropostas() {
 
             $.each(propostasPf, function (i, item) {
 
-                var proposta = dataDashPf.dashboardPropostasPF.filter(function (x) { return x.cpf == item.cpf.replace(/\D/g, '') });
+                var proposta;
+                var propostaDash;
 
-                if (proposta[0].dataAtualizacao == undefined) // Checa se o registro nâo contem data de atualizacao, caso nao tenha sera setado uma data no registro
+                $.each(dataDashPf.dashboardPropostasPF, function (indice2, itemDashPf) {
+
+                    if (itemDashPf.cpf == item.cpf.replace(/\D/g, '')) {
+                        propostaDash = itemDashPf;
+                        proposta = item;
+                    }
+                });
+
+                if (proposta == undefined) return; // Caso não encontre nenhuma proposta, retorna
+
+                if (proposta.dataAtualizacao == undefined) // Checa se o registro não contem data de atualização, caso nao tenha sera setado uma data no registro
                 {
-                    proposta[0].dataAtualizacao = new Date();
-
+                    proposta.dataAtualizacao = new Date();
+                
                     var propostas = propostasPf.filter(function (x) { return x.cpf != item.cpf });
-
+                
                     propostasPf = []; //limpar
-
+                
                     $.each(propostas, function (i, item) {
                         propostasPf.push(item);
                     });
-
-                    propostasPf.push(proposta[0]);
-
+                
+                    propostasPf.push(proposta);
+                
                     put("pessoas", JSON.stringify(propostasPf));
-
+                
                     return;
                 }
 
-                var now = new Date(proposta[0].dataAtualizacao);
-
-                var date = new Date();
-
-                var olderDate = moment(date).subtract(time.timeUpdate, 'days').toDate();
-
-                if (!(olderDate > now)) return;
+                var now = new Date(proposta.dataAtualizacao);
                 
-                if (proposta.length > 0) proposta[0].status = item.statusVenda;
+                var date = new Date();
+                
+                var olderDate = moment(date).subtract(time.timeUpdate, 'days').toDate();
+                
+                if (!(olderDate > now)) return;
 
-                proposta[0].dataAtualizacao = new Date();
-
-                var propostas = propostasPf.filter(function (x) { return x.cpf.replace(/\D/g, '') != item.cpf });
-
+                proposta.status = propostaDash.statusVenda;
+                
+                proposta.dataAtualizacao = new Date();
+                
+                var propostas = propostasPf.filter(function (x) { return x.cpf != item.cpf });
+                
                 propostasPf = []; //limpar
-
+                
                 $.each(propostas, function (i, item) {
                     propostasPf.push(item);
                 });
-
-                propostasPf.push(proposta[0]);
-
+                
+                propostasPf.push(proposta);
+                
                 put("pessoas", JSON.stringify(propostasPf));
             });
 
         }, dataToken.access_token);
     });
-
 }
