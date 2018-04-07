@@ -73,7 +73,8 @@
 
                             $("#nomeDentista").html("Dr(a). " + abc.dentistas[i].nomeDentista);
                             $("#croDentista").html(abc.dentistas[i].numeroCRO);
-                            //$("#especialidadeDentista").html(abc.dentistas[i].especialidade.descricaoEspecialidade);
+
+                            $("#especialidadeDentista").html(abc.dentistas[i].especialidade.descricaoEspecialidade);
 
                             var especialidades = abc.dentistas[i].especialidade.descricaoEspecialidade.split(",");
 
@@ -245,9 +246,11 @@
                     <label class="labelBoldTitleModal">Especialidades</label>
                     <div class="text-center">
                         <label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista" style="color:gray"></h5></p></label>
+
                         <!--<label><img src="img/Ortodontia.png" class="" alt=""><p>_</p></label>-->
                         <!--<label><img src="img/Consulta.png" class="" alt=""><p>_</p></label>-->
                         <!--<label><img src="img/Cirurgia.png" class="" alt=""><p>_</p></label>-->
+
                     </div>
                 </div>
             </div>

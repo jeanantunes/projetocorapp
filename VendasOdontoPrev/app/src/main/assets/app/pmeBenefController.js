@@ -1,11 +1,23 @@
 ﻿var problema = true;
 
 $(document).ready(function () {
+    localStorage.removeItem("beneficiarioEmEdicao");
     carregarLista();
     carregarBoxPlanos();
     carregarBenef();
 
     $(".dependentes").change(function () {
+
+        var benef = get("beneficiario");
+
+        if (benef != null) {
+            if ($(".dependentes").val() < benef.dependentes.length) {
+
+                swal("Ops!", "Para diminuir a quantidade de dependentes, use o botão excluir", "error");
+                $(".dependentes").val(benef.dependentes.length);
+                return;
+            }
+        }
 
         adicionarBenefMemoria();
 
@@ -60,6 +72,7 @@ function carregarLista() {
     $("#razaoSocial").html(proposta.razaoSocial);
     $("#cnpjEmpresa").html(proposta.cnpj);
 
+
 }
 
 function salvarBenef() {
@@ -75,6 +88,19 @@ function salvarBenef() {
     if (beneficiarios == null) {
         beneficiarios = [];
     }
+
+    var beneficiarioEmEdicao = get("cpfEmEdicaoPME");
+
+    if (beneficiarioEmEdicao != null) {
+
+        var beneficiariosExcetoEmEdicao = beneficiarios.filter(function (x) { return x.cpf != beneficiarioEmEdicao });
+        beneficiarios = []; // limpa os beneficiarios
+        beneficiarios = beneficiariosExcetoEmEdicao;
+        put("beneficiarios", JSON.stringify(beneficiarios));
+
+    }
+
+    //if (benef.cpf != )
 
     beneficiarios.push(benef);
 
@@ -124,6 +150,25 @@ function carregarBenef() {
     $(".cpf").val(benef.cpf);
     $(".cep").val(benef.endereco.cep);
     $(".plano").val(benef.cdPlano);
+
+    listarDependentes();
+}
+
+function listarDependentes() {
+    var proposta = get("beneficiario");
+
+    $.each(proposta.dependentes, function (i, item) {
+        var dep = getComponent("dependente");
+        dep = dep.replace("{CPF}", (item.cpf == "" ? item.nome : item.cpf));
+        dep = dep.replace("{CPF-BT}", (item.cpf == "" ? item.nome : item.cpf));
+        dep = dep.replace("{CPF-BTN-EDITAR}", (item.cpf == "" ? item.nome : item.cpf));
+        dep = dep.replace("{NOME-BTN-EDITAR}", item.nome);
+        dep = dep.replace("{NASCIMENTO-EDITAR}", item.dataNascimento);
+        dep = dep.replace("{CPF-DESC}", item.cpf);
+        dep = dep.replace("{NOME}", item.nome);
+        dep = dep.replace("{NOME-DEP}", item.nome);
+        $("#listaDep").append(dep);
+    });
 }
 
 /*function adicionarBenefMemoria() {
@@ -351,9 +396,18 @@ function adicionarBenefMemoria() {
     var benefTodos = get("beneficiarios");
 
     if (benefTodos != null && $("#cpf").val() != "") {
+
+        var beneficiarioSendoEditado = false;
+
+        if (benefMemoria != null) {
+
+            if (benefMemoria.cpf == $("#cpf").val()) beneficiarioSendoEditado = true;
+
+        }
+
         var existe = benefTodos.filter(function (x) { return x.cpf == $("#cpf").val() });
 
-        if (existe.length > 0) {
+        if (existe.length > 0 && !beneficiarioSendoEditado) {
             swal("Conflito!", "Já existe um Beneficiário com este CPF", "error");
             $(".dependentes").val(0);
             return;
@@ -386,4 +440,55 @@ function adicionarBenefMemoria() {
 
     return benef;
 }
+
+function excluirDep(obj) {
+
+    var container = $(".div-excluir[data-id='" + $(obj).attr("data-id") + "']");
+
+    //if (container.length == 0) {
+    //
+    //    var container = $(".div-excluir[data-id='" + $(obj).attr("data-nome") + "']");
+    //}
+    var beneficiario = get("beneficiario");
+
+    var beneficiarioExcetoExcluido = beneficiario.dependentes.filter(function (x) {
+
+        if (container.attr("data-id") == container.attr("data-nome")) return x.nome != container.attr("data-nome")
+
+        return x.cpf != container.attr("data-id")
+    });
+
+    beneficiario.dependentes = [];
+
+    $.each(beneficiarioExcetoExcluido, function (i, item) {
+        beneficiario.dependentes.push(item);
+    });
+
+    $("#dependentesPME").val(beneficiario.dependentes.length);
+
+    put("beneficiario", JSON.stringify(beneficiario));
+    container.remove();
+
+    //atualizarPessoas(proposta);
+}
+
+function editarDependente(obj) {
+
+    var container = $(".div-excluir[data-id='" + $(obj).attr("data-id") + "']");
+    var beneficiario = get("beneficiario");
+
+    var beneficiarioEmEdicao = beneficiario.dependentes.filter(function (x) {
+
+        if (container.attr("data-id") == container.attr("data-nome")) return x.nome == container.attr("data-nome")
+
+        return x.cpf == container.attr("data-id")
+    });
+
+    put("beneficiarioEmEdicao", JSON.stringify(beneficiarioEmEdicao[0]));
+
+    window.location.href = "venda_pme_dependente_edicao.html";
+}
+
+
+
 

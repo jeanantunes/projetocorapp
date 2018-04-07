@@ -3,8 +3,8 @@
 $(document).ready(function () {
     atualizarDashBoard();
     validarVersaoApp();
-    //resyncPropostasPME();
-    //resyncPropostasPF();
+    resyncPropostasPME();
+    resyncPropostasPF();
     checkStatusPropostas();
 
 });
@@ -17,7 +17,7 @@ function validarVersaoApp()
 
             var versao = dataVersao.versao;
 
-            if (versao != '2') {
+            if (versao != '3') {
                 swal({
                     title: "Ops",
                     text: "Sua versão do aplicativo está desatualizada, atualize na Play Store",
@@ -186,6 +186,8 @@ function resyncPropostasPF() {
 
     var propostasPF = get("pessoas");
 
+    if (propostasPF == null) return;
+
     $.each(propostasPF, function (i, item) {
 
         var o = propostasPF.filter(function (x) { return x.cpf == item.cpf });
@@ -240,6 +242,8 @@ function resyncPropostasPME() {
     var propostasPME = get("empresas");
     var beneficiarios = get("beneficiarios");
 
+    if (propostasPME == null) return;
+
     $.each(propostasPME, function (i, item) {
 
         var o = propostasPME.filter(function (x) { return x.cnpj == item.cnpj });
@@ -284,6 +288,8 @@ function checkStatusPropostas() {
 
     var propostasPme = get("empresas");
     var propostasPf = get("pessoas");
+
+    if (propostasPf == null) return
 
     $.ajax({
         url: "config/timeResync.json",

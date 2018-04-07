@@ -7,6 +7,7 @@
     benef.dependentes = [];
 
     $('.cpf').off('blur');
+    
 });
 
 function carregarForm() {
@@ -24,6 +25,8 @@ function carregarForm() {
         form = form.replace("{DEP2}", i + 1);
 
         $("#lista").append(form);
+
+        $("#dataNascimentoDep").prop('type', 'tel');
     }
 
     $(".cpf").focusout(function () {
@@ -53,7 +56,6 @@ function carregarForm() {
             }
         }
     });
-
 }
 
 function SalvarDependentes() {
@@ -112,8 +114,9 @@ function SalvarDependentes() {
         }
 
         if ($(this).find(".cpf").val() != "" && !TestaCPF($(this).find(".cpf").val().replace(/\D/g, ''))) {
-            swal("Ops!", "CPF está inválido", "error");
+            swal("Ops!", "O CPF do " + $(this).find(".depends").html().toLowerCase + " é inválido.", "error");           
             stop = true;
+            $(this).find(".cpf").focus();
             return;
         }
 

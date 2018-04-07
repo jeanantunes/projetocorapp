@@ -39,7 +39,7 @@ function atualizarFatura() {
     atualizarEmpresas(proposta);
     put("proposta", JSON.stringify(proposta));
 
-    window.location.href = "proposta_pme_enviada.html";
+    window.location.href = "resumo_pme_proposta.html";
 
 }
 
@@ -47,7 +47,7 @@ function atualizarFatura() {
 //
 //    if (!dayDueDate) {
 //
-//        console.log('dia informado invalido');
+//        console.log('dia informado invalido');,
 //
 //        return false;
 //

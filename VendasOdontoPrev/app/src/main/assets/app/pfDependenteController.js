@@ -8,7 +8,6 @@ $(document).ready(function () {
     $('.cpf').off('blur').on();
 });
 
-
 function SalvarDependente() {
 
     var currentYear = (new Date).getFullYear();
@@ -65,6 +64,11 @@ function SalvarDependente() {
         return;
     }
 
+    if (benef.cpf == $(".cpf").val() && $(".cpf").val() != "") {
+        swal("Conflito!", "Você informou o mesmo CPF do titular para este dependente, por favor verifique.", "error");
+        return;
+    }
+
     if ($(".nascimento").val() == "") {
         swal("Ops!", "Preencha a data de nascimento", "error");
         return;
@@ -105,6 +109,7 @@ function SalvarDependente() {
     dependente.nomeMae = $(".nome-mae").val()
     dependente.dataNascimento = $(".nascimento").val();
     dependente.sexo = $(".sexo").val();
+    dependente.celular = $(".celular").val();
 
     if (proposta.dependentes.length == 0) {
         proposta.dependentes = [];

@@ -157,8 +157,6 @@ function callCep(callback, token, cep) {
 }
 
 
-
-
 // <!-- Função Valida CPF -->
 
 
@@ -242,11 +240,16 @@ $(document).ready(function () {
     $('.tempo').mask('00:00:00');
     $('.data_tempo').mask('00/00/0000 00:00:00');
     $('.data').mask('00/00/0000');
+    $('.data-responsavel').mask('00/00/0000');
     $('.cep').mask('00000-000');
     $('.tel').mask('00000-0000');
+    $('.telefone-segundo-contato').mask('(00) 0000-0000');
+    $('.celular-segundo-contato').mask('(00) 00000-0000');
     $('.telefone').mask('(00) 0000-0000');
     $('.celular').mask('(00) 00000-0000');
     $('.cpf').mask('000.000.000-00');
+    $('.cpf-representante-legal').mask('000.000.000-00');
+    $('.celular-representante-legal').mask('(00) 00000-0000');
     $('.cnpj').mask('00.000.000/0000-00');
     $('.dinheiro').mask('000.000.000.000.000,00', { reverse: true });
     $('.dinheiro2').mask("#.##0,00", { reverse: true });
@@ -298,6 +301,40 @@ $(document).ready(function () {
             $(this).css({ "border-color": "#3A94FB" });
             $(".cpf").css("color", "#3A94FB");
             $(".label-cpf").css("color", "#3A94FB");
+            $("input:-webkit-autofill").css("color", "#3A94FB");
+        }
+    });
+
+    //CPF REPRESENTANTE LEGAL
+
+    $(".cpf-representante-legal").focus(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "blue" });
+            $(".cpf-representante-legal").css("color", "#1974CE");
+            $(".label-cpf-representante-legal").css("color", "#1974CE");
+        }
+    });
+
+    $(".cpf-representante-legal").blur(function () {
+
+        var stringteste = $(this).val().replace(".", "");
+        stringteste = stringteste.replace("-", "");
+        stringteste = stringteste.replace(".", "");
+
+        console.log(stringteste);
+
+        if ($(this).val() == "" || TestaCPF(stringteste) == false) {
+            $(this).css({ "border-color": "#F00" });
+            $(".label-cpf-representante-legal").css("color", "red");
+            $(".cpf-representante-legal").css("color", "red");
+        }
+    });
+
+    $(".cpf-representante-legal").keyup(function () {
+        if ($(this).val() != "") {
+            $(this).css({ "border-color": "#3A94FB" });
+            $(".cpf-representante-legal").css("color", "#3A94FB");
+            $(".label-cpf-representante-legal").css("color", "#3A94FB");
             $("input:-webkit-autofill").css("color", "#3A94FB");
         }
     });
@@ -710,6 +747,31 @@ $(document).ready(function () {
         }
     });
 
+    // NOME SEGUNDO CONTATO
+
+    $(".segundo-contato").focus(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "blue" });
+            $(".segundo-contato").css("color", "#1974CE");
+            $(".label-nome-segundo-contato").css("color", "#1974CE");
+        }
+    });
+
+    $(".segundo-contato").blur(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "#F00" });
+            $(".label-nome-segundo-contato").css("color", "red");
+        }
+    });
+
+    $(".segundo-contato").keyup(function () {
+        if ($(this).val() != "") {
+            $(this).css({ "border-color": "#3A94FB" });
+            $(".segundo-contato").css("color", "#3A94FB");
+            $(".label-nome-segundo-contato").css("color", "#3A94FB");
+        }
+    });
+
     // NOME MAE
 
     $(".nome-mae").focus(function () {
@@ -724,6 +786,7 @@ $(document).ready(function () {
         if ($(this).val() == "") {
             $(this).css({ "border-color": "#F00" });
             $(".label-nome-mae").css("color", "red");
+
         }
     });
 
@@ -732,6 +795,31 @@ $(document).ready(function () {
             $(this).css({ "border-color": "#3A94FB" });
             $(".nome-mae").css("color", "#3A94FB");
             $(".label-nome-mae").css("color", "#3A94FB");
+        }
+    });
+
+    // NOME RESPONSAVEL LEGAL
+
+    $(".nome-responsavel").focus(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "blue" });
+            $(".nome-responsavel").css("color", "#1974CE");
+            $(".label-nome-responsavel-legal").css("color", "#1974CE");
+        }
+    });
+
+    $(".nome-responsavel").blur(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "#F00" });
+            $(".label-nome-responsavel-legal").css("color", "red");
+        }
+    });
+
+    $(".nome-responsavel").keyup(function () {
+        if ($(this).val() != "") {
+            $(this).css({ "border-color": "#3A94FB" });
+            $(".nome-responsavel").css("color", "#3A94FB");
+            $(".label-nome-responsavel-legal").css("color", "#3A94FB");
         }
     });
 
@@ -862,6 +950,32 @@ $(document).ready(function () {
         }
     });
 
+    // telefone segundo contato
+
+    $(".telefone-segundo-contato").focus(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "blue" });
+            $(".telefone-segundo-contato").css("color", "#1974CE");
+            $(".label-telefone-segundo-contato").css("color", "#1974CE");
+        }
+    });
+
+
+    $(".telefone-segundo-contato").blur(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "#F00" });
+            $(".label-telefone-segundo-contato").css("color", "red");
+        }
+    });
+
+    $(".telefone-segundo-contato").keyup(function () {
+        if ($(this).val() != "") {
+            $(this).css({ "border-color": "#3A94FB" });
+            $(".telefone-segundo-contato").css("color", "#3A94FB");
+            $(".label-telefone-segundo-contato").css("color", "#3A94FB");
+        }
+    });
+
     // Celular
 
     $(".celular").focus(function () {
@@ -886,6 +1000,60 @@ $(document).ready(function () {
             $(this).css({ "border-color": "#3A94FB" });
             $(".celular").css("color", "#3A94FB");
             $(".label-celular").css("color", "#3A94FB");
+        }
+    });
+
+    // Celular segundo contato
+
+    $(".celular-segundo-contato").focus(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "blue" });
+            $(".celular-segundo-contato").css("color", "#1974CE");
+            $(".label-celular-segundo-contato").css("color", "#1974CE");
+        }
+    });
+
+
+    $(".celular-segundo-contato").blur(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "#F00" });
+            $(".label-celular-segundo-contato").css("color", "red");
+        }
+    });
+
+
+    $(".celular-segundo-contato").keyup(function () {
+        if ($(this).val() != "") {
+            $(this).css({ "border-color": "#3A94FB" });
+            $(".celular-segundo-contato").css("color", "#3A94FB");
+            $(".label-celular-segundo-contato").css("color", "#3A94FB");
+        }
+    });
+
+    // Celular representante legal
+
+    $(".celular-representante-legal").focus(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "blue" });
+            $(".celular-representante-legal").css("color", "#1974CE");
+            $(".label-celular-representante-legal").css("color", "#1974CE");
+        }
+    });
+
+
+    $(".celular-representante-legal").blur(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "#F00" });
+            $(".label-celular-representante-legal").css("color", "red");
+        }
+    });
+
+
+    $(".celular-representante-legal").keyup(function () {
+        if ($(this).val() != "") {
+            $(this).css({ "border-color": "#3A94FB" });
+            $(".celular-representante-legal").css("color", "#3A94FB");
+            $(".label-celular-representante-legal").css("color", "#3A94FB");
         }
     });
 
@@ -977,7 +1145,6 @@ $(document).ready(function () {
         if ($(this).val() == "") {
             $(this).css({ "border-color": "#F00" });
             $(".label-numero").css("color", "red");
-
         }
     });
 
@@ -998,14 +1165,84 @@ $(document).ready(function () {
         return false;
     }
 
-    $(".email").focus(function () {
+    ///// email segundo contato pme
+
+    $(".email-segundo-contato").focus(function () {
 
         if ($(this).val() == "") {
             $(this).css({ "border-color": "blue" });
-            $(".email").css("color", "#1974CE");
-            $(".label-email").css("color", "#1974CE");
+            $(".email-segundo-contato").css("color", "#1974CE");
+            $(".label-email-segundo-contato").css("color", "#1974CE");
         }
     });
+
+    $(".email-segundo-contato").blur(function () {
+
+        var emailNaoCadastrado = $(this).val();
+
+        if (validateEmail(emailNaoCadastrado)) {
+            $(".label-email-segundo-contato").css("color", "#3A94FB");
+            $(".email-segundo-contato").css("color", "#3A94FB");
+            $(".email-segundo-contato").css("border-color", "#3A94FB");
+
+            return;
+        }
+
+        $(".label-email-segundo-contato").css("color", "red");
+        $(".email-segundo-contato").css("color", "red");
+        $(".email-segundo-contato").css("border-color", "red");
+
+    });
+
+    $(".email-segundo-contato").keyup(function () {
+        if ($(this).val() != "") {
+            $(this).css({ "border-color": "#3A94FB" });
+            $(".email-segundo-contato").css("color", "#3A94FB");
+            $(".label-email-segundo-contato").css("color", "#3A94FB");
+        }
+    });
+
+    ////////////////////////////////////////////////
+
+    $(".email-representante-legal").focus(function () {
+
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "blue" });
+            $(".email-representante-legal").css("color", "#1974CE");
+            $(".label-email-representante-legal").css("color", "#1974CE");
+        }
+    });
+
+    $(".email-representante-legal").blur(function () {
+
+        var emailNaoCadastrado = $(this).val();
+
+        if (validateEmail(emailNaoCadastrado)) {
+            $(".label-email-representante-legal").css("color", "#3A94FB");
+            $(".email-representante-legal").css("color", "#3A94FB");
+            $(".email-representante-legal").css("border-color", "#3A94FB");
+
+            return;
+        }
+
+        $(".label-email-representante-legal").css("color", "red");
+        $(".email-representante-legal").css("color", "red");
+        $(".email-representante-legal").css("border-color", "red");
+
+    });
+
+    $(".email-representante-legal").keyup(function () {
+        if ($(this).val() != "") {
+            $(this).css({ "border-color": "#3A94FB" });
+            $(".email-representante-legal").css("color", "#3A94FB");
+            $(".label-email-representante-legal").css("color", "#3A94FB");
+        }
+    });
+
+
+
+
+
 
     $("#emailNaoCadastrado").blur(function () {
 
@@ -1026,6 +1263,15 @@ $(document).ready(function () {
 
     });
 
+    $(".email").focus(function () {
+
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "blue" });
+            $(".email").css("color", "#1974CE");
+            $(".label-email").css("color", "#1974CE");
+        }
+    });
+
     $(".email").blur(function () {
 
         var emailNaoCadastrado = $(".email").val();
@@ -1044,7 +1290,6 @@ $(document).ready(function () {
         $(".label-email").css("color", "red");
         $(".email").css("color", "red");
         $(".email").css("border-color", "red");
-
     });
 
     $(".email").keyup(function () {
@@ -1327,6 +1572,48 @@ $(".nascimento").keyup(function () {
         $(".nascimento").css("color", "#3A94FB");
         $(".label-nascimento").css("color", "#3A94FB");
     }
+
+});
+
+// DATA NASCIMENTO REPRESENTANTE LEGAL
+
+$(".nascimento-representante-legal").focus(function () {
+    if ($(this).val() == "") {
+        $(this).css({ "border-color": "blue" });
+        $(".nascimento-representante-legal").css("color", "#1974CE");
+        $(".label-nascimento-representante-legal").css("color", "#1974CE");
+    }
+});
+
+$(".nascimento-representante-legal").blur(function () {
+    if ($(this).val() == "") {
+        $(this).css({ "border-color": "#F00" });
+        $(".label-nascimento-representante-legal").css("color", "red");
+    }
+});
+
+$(".nascimento-representante-legal").keyup(function () {
+    if ($(this).val() != "") {
+        $(this).css({ "border-color": "#3A94FB" });
+        $(".nascimento-representante-legal").css("color", "#3A94FB");
+        $(".label-nascimento-representante-legal").css("color", "#3A94FB");
+    }
+
+});
+
+$(".nascimento-representante-legal").blur(function () {
+
+    if (validarData($(".nascimento-representante-legal").val())) {
+
+        $(this).css({ "border-color": "#3A94FB" });
+        $(".nascimento-representante-legal").css("color", "#3A94FB");
+        $(".label-nascimento-representante-legal").css("color", "#3A94FB");
+        return;
+    }
+
+    $(".nascimento-representante-legal").css("border-color", "red" );
+    $(".nascimento-representante-legal").css("color", "red");
+    $(".label-nascimento-representante-legal").css("color", "red");
 
 });
 

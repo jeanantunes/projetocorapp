@@ -54,25 +54,27 @@
                 <span class="btnMenu" onclick="openNav()">&#9776;</span>
             </div>
         </div>
-        <div class="col-md-12 odontBoxCenter">
-            <div class="row">
-                <div class="text-center">
-                    <div>
-                        <h1 class="titleOdont text-center">
-                            DADOS DA PROPOSTA
-                        </h1>
-                        <h2 class="subTitleOdont text-center">
-                            Confira o plano escolhido e preencha os dados do cliente abaixo
-                        </h2>
+        <div class="odontBoxCenter" style="padding-left:0px; padding-right:0px;">
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="text-center">
+                        <div>
+                            <h1 class="titleOdont text-center">
+                                DADOS DA PROPOSTA
+                            </h1>
+                            <h2 class="subTitleOdont text-center">
+                                Confira o plano escolhido e preencha os dados do cliente abaixo
+                            </h2>
+                        </div>
                     </div>
                 </div>
+
+                <div id="planos" style="margin-bottom:20px;"></div>
             </div>
 
-            <div id="planos" style="margin-bottom:20px;">
-               
-            </div>
             <br />
-            <div class="text-center" >
+            <div class="text-center">
                 <a href="venda_pme_addPlano.html"><label for="senha" class="linkOdontAddPlanos colorSlick3">+ ADICIONAR MAIS PLANOS</label></a>
             </div>
 
@@ -109,7 +111,7 @@
                         <label class="label-inscricao-estadual labelOdontBlur">Inscrição estadual</label>
                     </div>
                     <div style="display:none">
-                        <input type="tel"  class="inscricao-estadual inputLabelBlur" id="inscricao-estadual" maxlength="14" name="inscricaoEstadual">
+                        <input type="tel" class="inscricao-estadual inputLabelBlur" id="inscricao-estadual" maxlength="14" name="inscricaoEstadual">
                     </div>
                     <div>
                         <label class="label-representante-legal labelOdontBlur">Representante legal</label>
@@ -121,38 +123,38 @@
                         <label class="label-cpf labelOdontBlur">CPF</label>
                     </div>
                     <div>
-                        <input type="tel"  disabled class="cpf inputLabelBlur" id="cpf-representante" name="cpfRepresentante">
+                        <input type="tel" disabled class="cpf inputLabelBlur" id="cpf-representante" name="cpfRepresentante">
                     </div>
                     <div>
                         <label class="label-telefone labelOdontBlur">Telefone</label>
-                        
+
                     </div>
                     <div>
                         <input type="tel" class="telefone inputLabelBlur" id="telefone" name="telefone">
                     </div>
                     <div>
                         <label class="label-celular labelOdontBlur">Celular</label>
-                        
+
                     </div>
                     <div>
-                        <input type="tel" class="celular inputLabelBlur"  id="celular" name="celular">
+                        <input type="tel" class="celular inputLabelBlur" id="celular" name="celular">
                     </div>
                     <div>
                         <label class="label-email labelOdontBlur">E-mail</label>
-                        
+
                     </div>
                     <div>
                         <input type="text" class="email inputLabelBlur" id="email">
                     </div>
-                        <input type="text" id="cnae" style="display: none"/>
-                       
+                    <input type="text" id="cnae" style="display: none" />
+
 
                     <!-- <input type="checkbox" value="" class="exemplo2 checkbox inputLabelFocus">
                     <label class="Label-checkbox labelOdontFocus checkbox-inline">
 
                     </label> -->
 
-                    <div class="squaredOne" style="display:none">
+                    <div class="squaredOne">
                         <input checked type="checkbox" value="True" id="squaredOne" name="representanteLegal" class="checkbox inputLabelCheckFocus" />
                         <label for="squaredOne" class="Label-checkbox labelCheckOdontFocus checkbox-inline">
                             <span class="spanCheckbox">
@@ -161,58 +163,86 @@
                         </label>
                     </div>
 
+                    <div class="hide" id="divSegundoContato">
+                        <div>
+                            <label class="label-nome-segundo-contato labelOdontBlur">Nome</label>
+                        </div>
+                        <div>
+                            <input type="text" class="segundo-contato inputLabelBlur" id="nomeSegundoContato">
+                        </div>
+                        <div>
+                            <label class="label-telefone-segundo-contato labelOdontBlur">Telefone</label>
+                        </div>
+                        <div>
+                            <input type="tel" class="telefone-segundo-contato inputLabelBlur" id="telefoneSegundoContato" name="telefone">
+                        </div>
+                        <div>
+                            <label class="label-celular-segundo-contato labelOdontBlur">Celular</label>
+
+                        </div>
+                        <div>
+                            <input type="tel" class="celular-segundo-contato inputLabelBlur" id="celularSegundoContato" name="celular">
+                        </div>
+                        <div>
+                            <label class="label-email-segundo-contato labelOdontBlur">E-mail</label>
+                        </div>
+                        <div>
+                            <input type="text" class="email-segundo-contato inputLabelBlur" id="emailSegundoContato">
+                        </div>
+                    </div>
+
 
                     <div style="margin-top:20px;">
                         <label class="labelBlue">ENDEREÇO DA EMPRESA</label>
                     </div>
                     <div>
                         <label class="label-cep labelOdontBlur">CEP</label>
-                        
+
                     </div>
                     <div>
                         <input type="tel" class="cep inputLabelBlur" id="cep" name="cep">
                     </div>
                     <div>
                         <label class="label-endereco labelOdontBlur">Endereço</label>
-                        
+
                     </div>
                     <div>
                         <input type="text" class="endereco inputLabelBlur" id="rua" name="rua">
                     </div>
                     <div>
                         <label class="label-numero labelOdontBlur">Número</label>
-                        
+
                     </div>
                     <div>
                         <input type="tel" class="numero inputLabelBlur" id="numeroEndereco" name="numeroEndereco" maxlength="5">
                     </div>
                     <div>
                         <label class="label-complemento labelOdontBlur">Complemento</label>
-                        
+
                     </div>
                     <div>
                         <input type="text" class="complemento inputLabelBlur" name="complemento" id="complemento">
                     </div>
                     <div>
                         <label class="label-bairro labelOdontBlur">Bairro</label>
-                        
+
                     </div>
                     <div>
                         <input type="text" class="bairro inputLabelBlur" id="bairro" name="bairro">
                     </div>
                     <div>
                         <label class="label-cidade labelOdontBlur">Cidade</label>
-                        
+
                     </div>
                     <div>
                         <input type="text" class="cidade inputLabelBlur" id="cidade" name="cidade">
                     </div>
                     <div>
                         <label class="label-estado labelOdontBlur">Estado</label>
-                        
+
                     </div>
                     <div>
-                        <input type="text" class="estado inputLabelBlur" id="uf" name="uf">
+                        <input type="text" class="estado inputLabelBlur" id="uf" name="uf" maxlength="2">
                     </div>
                     <div class="squaredTwo" style="display:none">
                         <input checked type="checkbox" value=True id="squaredTwo" name="enderecoCorrespondencia" class="checkbox inputLabelCheckFocus" />
@@ -225,7 +255,7 @@
             </form>
 
             <div class="row">
-                <div class="col-md-12 btnPadBtm">
+                <div class="col-md-12 btnPadBtm" style="margin-top:10px; padding-bottom:5px;">
                     <div class="btn btn-lg btn-block btnOdont" onclick="addBenef()">ADICIONAR BENEFICIÁRIOS</div>
                 </div>
             </div>
@@ -254,7 +284,6 @@
             </div>
         </div>
     </div>
-    </div>
     <!-- End Bloco 1 -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -266,5 +295,6 @@
     <script src="js/odonto-Valida.js"></script>
     <script src="app/coordenador.js"></script>
     <script src="app/pmeCadastroController.js"></script>
+    <script src="js/moment.js"></script>
 </body>
 </html>

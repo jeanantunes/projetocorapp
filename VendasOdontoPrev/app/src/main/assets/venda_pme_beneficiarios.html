@@ -96,7 +96,7 @@
             <!-- End BOX mostra quando adicionado um Beneficiário -->
 
 
-            <div class="row boxDependente">
+            <div class="row boxDependente" style="margin-bottom: 0px;">
                 <form id="formulario_benefeciario">
                     <div>
                         <label class="labelBlue">NOVO BENEFICIÁRIO</label>
@@ -171,6 +171,7 @@
                 <div class="row">
                     <div class="col-md-12 btnPadBtmTop">
                         <a class="btn btn-lg btn-block btnOdont" id="salvarBeneficiario" role="button" onclick="salvarBenef()">SALVAR</a>
+                        <a href="venda_pme_beneficiarios_lista.html" class="btn btn-lg btn-block btnOdont" style="background:#a0a0a0" role="button">CANCELAR</a>
                     </div>
                 </div>
                 <!-- End Botão só mostra quando adiciona um Beneficiário -->
@@ -178,16 +179,23 @@
 
             <!-- Condição ao clicar Adicionar Beneficiário esconde os campos e mostra o Box de Beneficiário -->
             <!-- Se ele tiver Dependentes abrir a tela href="venda_pme_dependentes.html" se não esconde os campos e habilita o Botão Continuar -->
-            <div class="row">
+            <div class="row hide">
                 <div class="col-md-12 btnPadBtm">
-                    <button class="btn btn-lg btn-block btnOdont hide" id="adicionarBeneficiario" role="button" onclick="">ADICIONAR BENEFICIÁRIOS</buttpn>
+                    <button class="btn btn-lg btn-block btnOdont" id="adicionarBeneficiario" role="button" onclick="">ADICIONAR BENEFICIÁRIOS</buttpn>
                 </div>
             </div>
+
+
             <!-- End Condição ao clicar Adicionar Beneficiário esconde os campos e mostra o Box de Beneficiário -->
+
+            <div id="listaDep"></div>
+           <br />
+
             <!-- Botão mostra quando adicionado um Beneficiário -->
             <div class="row hide">
                 <div class="col-md-12 btnPadBtm">
                     <a href="vencimento_fatura_pme.html" class="btn btn-lg btn-block btnOdont" id="" role="button">CONTINUAR</a>
+
                 </div>
             </div>
             <!--End Botão mostra quando adicionado um Beneficiário -->
@@ -205,5 +213,6 @@
     <script src="app/coordenador.js"></script>
     <script src="app/pmeBenefController.js"></script>
     <script src="js/sweetalert.min.js"></script>
+
 </body>
 </html>

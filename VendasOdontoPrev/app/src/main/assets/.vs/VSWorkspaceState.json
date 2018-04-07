@@ -2,10 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\componente",
-    "\\js",
-    "\\repositorio"
+    "\\img",
+    "\\js"
   ],
-  "SelectedNode": "\\app\\logadoController.js",
+  "SelectedNode": "\\app\\pmeResumoPropostaController.js",
   "PreviewInSolutionExplorer": false
 }

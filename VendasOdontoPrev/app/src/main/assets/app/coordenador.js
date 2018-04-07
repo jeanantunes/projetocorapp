@@ -138,50 +138,6 @@ function validarData(data) {
 }
 
 
-//function validarData() {
-//    var currentDate = new Date().toLocaleDateString();
-//
-//    if (currentDate < $(".data").val()) {
-//        console.log("Data maior");
-//
-//        $(".data").css({ "border-color": "red" });
-//        $(".nascimento").css("color", "red");
-//        $(".label-nascimento").css("color", "red");
-//    }
-//
-//    //var date = $(".data").val().replace("/", "-").replace("/", "-");
-//    //var date = new Date($(".data").val());
-//
-//    console.log($(".data").val());
-//
-//    console.log(currentDate === $(".data").val());
-//
-//
-//
-//    //if (currentDate < )
-//    //{
-//    //    console.log("Teste data");
-//    //}
-//
-//
-//    //console.log(inputTime);
-//
-//}
-
-//$("#data").blur(function () {
-//
-//    var id = document.getElementById('data');
-//
-//    var RegExPattern = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])      [\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
-//
-//    if (!((id.value.match(RegExPattern)) && (id.value != ''))) {
-//        console.log("data invalida");
-//        id.focus();
-//    }
-//    else console.log("data valida");
-//
-//});
-
 $(".data").blur(function () {
 
     if (validarData($(".data").val())) {
@@ -192,23 +148,11 @@ $(".data").blur(function () {
         return;
     }
 
-    $(".data").css({ "border-color": "red" });
+    $(".data").css("border-color", "red");
     $(".nascimento").css("color", "red");
     $(".label-nascimento").css("color", "red");
 
-    //var dataNascimento = parseDate($(".data").val().replace("/", "-").replace("/", "-"));
-    //var currentDate = new Date().toLocaleDateString();
-    //currentDate = new Date(currentDate.replace("/", "-").replace("/", "-"));
-    //
-    //
-    //console.log(dataNascimento);
-    //console.log(currentDate);
-    //
-    //if (dataNascimento < currentDate)
-    //{
-    //    console.log("Maior de idade");
-    //}
-})
+});
 
 function ValidaNome(fieldValue) {
 
@@ -278,6 +222,7 @@ function setPlanosProd() {
     plano.nome = "Integral DOC LE";
     plano.valor = "24";
     plano.centavo = "93";
+    plano.valorFloat = 24.93;
     plano.desc = "Modalidade Compulsório";
     plano.css = "colorSlick3";
     planos.push(plano);
@@ -287,6 +232,7 @@ function setPlanosProd() {
     plano.nome = "Master LE";
     plano.valor = "101";
     plano.centavo = "10";
+    plano.valorFloat = 101.10;
     plano.desc = "Modalidade Compulsório";
     plano.css = "colorSlick2";
 
@@ -297,6 +243,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "45";
     plano.centavo = "60";
+    plano.valorFloat = 45.60;
     plano.desc = "Mensal";
     plano.css = "colorSlick3";
 
@@ -307,6 +254,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "456";
     plano.centavo = "00";
+    plano.valorFloat = 456.00;
     plano.desc = "Anual";
     plano.css = "colorSlick3";
 
@@ -317,6 +265,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "547";
     plano.centavo = "20";
+    plano.valorFloat = 547.20;
     plano.desc = "Anual";
     plano.css = "colorSlick3";
     
@@ -347,6 +296,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL ESTÉTICA";
     plano.valor = "115";
     plano.centavo = "00";
+    plano.valorFloat = 115.00;
     plano.desc = "Mensal";
     plano.css = "colorSlick3";
 
@@ -357,6 +307,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL ESTÉTICA";
     plano.valor = "1150";
     plano.centavo = "00";
+    plano.valorFloat = 1150.00;
     plano.desc = "Anual";
     plano.css = "colorSlick3";
 
@@ -367,6 +318,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL ESTÉTICA";
     plano.valor = "1380";
     plano.centavo = "00";
+    plano.valorFloat = 1380.00;
     plano.desc = "Anual";
     plano.css = "colorSlick3";
 
@@ -377,6 +329,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL ORTO";
     plano.valor = "147";
     plano.centavo = "00";
+    plano.valorFloat = 147.00;
     plano.desc = "Mensal";
     plano.css = " colorSlick4";
 
@@ -387,6 +340,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL ORTO";
     plano.valor = "1470";
     plano.centavo = "00";
+    plano.valorFloat = 1470.00;
     plano.desc = "Anual";
     plano.css = "colorSlick4";
 
@@ -397,6 +351,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL ORTO";
     plano.valor = "1764";
     plano.centavo = "00";
+    plano.valorFloat = 1764.00;
     plano.desc = "Anual";
     plano.css = "colorSlick4";
 
@@ -407,6 +362,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL VIP";
     plano.valor = "220";
     plano.centavo = "35";
+    plano.valorFloat = 220.35;
     plano.desc = "Mensal";
     plano.css = "colorSlick5";
 
@@ -417,6 +373,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL VIP";
     plano.valor = "2203";
     plano.centavo = "50";
+    plano.valorFloat = 2203.50;
     plano.desc = "Anual";
     plano.css = "colorSlick5";
 
@@ -427,6 +384,7 @@ function setPlanosProd() {
     plano.nome = "DENTAL VIP";
     plano.valor = "2644";
     plano.centavo = "20";
+    plano.valorFloat = 2644.00;
     plano.desc = "Anual";
     plano.css = "colorSlick5";
 
@@ -621,6 +579,7 @@ function setPlanosHml() {
     plano.nome = "Integral DOC LE";
     plano.valor = "24";
     plano.centavo = "93";
+    plano.valorFloat = 24.93;
     plano.desc = "Modalidade Compulsório";
     plano.css = "colorSlick3";
     planos.push(plano);
@@ -630,6 +589,7 @@ function setPlanosHml() {
     plano.nome = "Master LE";
     plano.valor = "101";
     plano.centavo = "10";
+    plano.valorFloat = 101.10;
     plano.desc = "Modalidade Compulsório";
     plano.css = "colorSlick2";
 
@@ -640,6 +600,7 @@ function setPlanosHml() {
     plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "45";
     plano.centavo = "60";
+    plano.valorFloat = 45.60;
     plano.desc = "Mensal";
     plano.css = "colorSlick3";
 
@@ -650,6 +611,7 @@ function setPlanosHml() {
     plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "456";
     plano.centavo = "00";
+    plano.valorFloat = 456.00;
     plano.desc = "Anual";
     plano.css = "colorSlick3";
 
@@ -690,6 +652,7 @@ function setPlanosHml() {
     plano.nome = "DENTAL ESTÉTICA";
     plano.valor = "115";
     plano.centavo = "00";
+    plano.valorFloat = 115.00;
     plano.desc = "Mensal";
     plano.css = "colorSlick3";
 
@@ -700,6 +663,7 @@ function setPlanosHml() {
     plano.nome = "DENTAL ESTÉTICA";
     plano.valor = "1150";
     plano.centavo = "00";
+    plano.valorFloat = 1150.00;
     plano.desc = "Anual";
     plano.css = "colorSlick3";
 
@@ -720,6 +684,7 @@ function setPlanosHml() {
     plano.nome = "DENTAL ORTO";
     plano.valor = "147";
     plano.centavo = "00";
+    plano.valorFloat = 147.00;
     plano.desc = "Mensal";
     plano.css = " colorSlick4";
 
@@ -730,6 +695,7 @@ function setPlanosHml() {
     plano.nome = "DENTAL ORTO";
     plano.valor = "1470";
     plano.centavo = "00";
+    plano.valorFloat = 1470.00;
     plano.desc = "Anual";
     plano.css = "colorSlick4";
 
@@ -750,6 +716,7 @@ function setPlanosHml() {
     plano.nome = "DENTAL VIP";
     plano.valor = "220";
     plano.centavo = "35";
+    plano.valorFloat = 220.35;
     plano.desc = "Mensal";
     plano.css = "colorSlick5";
 
@@ -760,6 +727,7 @@ function setPlanosHml() {
     plano.nome = "DENTAL VIP";
     plano.valor = "2203";
     plano.centavo = "50";
+    plano.valorFloat = 2203.50;
     plano.desc = "Anual";
     plano.css = "colorSlick5";
 
@@ -842,6 +810,28 @@ function carregarDadosUsuario() {
     $("#nomeCorretora").html(carregarDados.nomeEmpresa);
     $("#emailCorretor").val(carregarDados.email);
     $("#numeroCorretor").val(carregarDados.telefone);
+}
+
+function toDate(dateStr) {
+    var parts = dateStr.split("/");
+    return new Date(parts[2], parts[1] - 1, parts[0]);
+}
+
+function toDateSplitHifenSerasa(dateStr) {
+    var parts = dateStr.split("-");
+    return new Date(parts[0], parts[1] - 1, parts[2].substring(0, 2));
+}
+
+function isMaiorDeIdade(date) {
+
+    var eightYearsAgo = moment().subtract(18, "years");
+    var birthday = moment(date);
+
+    if (!birthday.isValid()) {
+        // INVALID DATE
+    } else if (eightYearsAgo.isAfter(birthday)) return true;
+
+    return false;
 }
 
 function getUrlParameter(sParam) {
@@ -931,7 +921,7 @@ function atualizarDashBoard() {
 
 function sincronizar() {
 
-    if (checkNetConnection()) {
+    if (navigator.onLine) {
 
         var empresas = get("empresas");
         var pessoas = get("pessoas");
@@ -1058,23 +1048,49 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
     //var json = "{ \"cdForcaVenda\": \"" + forcaVenda.codigo + "\", \"cdPlano\": \"" + cdPlano + "\", \"titulares\": " + JSON.stringify(pessoa) + "}";
 
-    var json = {
-        "cdForcaVenda": forcaVenda.codigo,
-        "cdPlano": cdPlano,
-        "titulares": [
-            {
-                "celular": pessoa[0].celular,
-                "contatoEmpresa": pessoa[0].contatoEmpresa,
-                "cpf": pessoa[0].cpf,
-                "dadosBancarios": {
-                    "agencia": pessoa[0].dadosBancarios.agencia,
-                    "codigoBanco": pessoa[0].dadosBancarios.codigoBanco,
-                    "conta": pessoa[0].dadosBancarios.conta,
-                    "tipoConta": pessoa[0].dadosBancarios.tipoConta
-                },
-                "dependentes": pessoa[0].dependentes
-                ,
-                "email": pessoa[0].email,
+    var date = toDate(pessoa[0].dataNascimento);
+
+    if (isMaiorDeIdade(date)) {
+        var json = {
+            "cdForcaVenda": forcaVenda.codigo,
+            "cdPlano": cdPlano,
+            "titulares": [
+                {
+                    "nome": removerAcentos(pessoa[0].nome),
+                    "cpf": pessoa[0].cpf,
+                    "dataNascimento": pessoa[0].dataNascimento,
+                    "nomeMae": removerAcentos(pessoa[0].nomeMae),
+                    "sexo": pessoa[0].sexo,
+                    "status": pessoa[0].status,
+                    "titular": pessoa[0].titular,
+                    "celular": pessoa[0].celular,
+                    "contatoEmpresa": pessoa[0].contatoEmpresa,
+                    "dadosBancarios": {
+                        "agencia": pessoa[0].dadosBancarios.agencia,
+                        "codigoBanco": pessoa[0].dadosBancarios.codigoBanco,
+                        "conta": pessoa[0].dadosBancarios.conta,
+                        "tipoConta": pessoa[0].dadosBancarios.tipoConta
+                    },
+                    "dependentes": pessoa[0].dependentes,
+                    "email": pessoa[0].email,
+                    "endereco": {
+                        "bairro": removerAcentos(pessoa[0].endereco.bairro),
+                        "cep": pessoa[0].endereco.cep,
+                        "cidade": removerAcentos(pessoa[0].endereco.cidade),
+                        "complemento": pessoa[0].endereco.complemento,
+                        "logradouro": removerAcentos(pessoa[0].endereco.logradouro),
+                        "estado": pessoa[0].endereco.estado,
+                        "numero": pessoa[0].endereco.numero
+                    }
+                }
+            ],
+            "responsavelContratual": {
+                "nome": pessoa[0].responsavelContratual.nome,
+                "cpf": pessoa[0].responsavelContratual.cpf,
+                "dataNascimento": pessoa[0].responsavelContratual.dataNascimento,
+                "email": pessoa[0].responsavelContratual.email,
+                "celular": pessoa[0].responsavelContratual.celular,
+                "sexo": pessoa[0].responsavelContratual.sexo,
                 "endereco": {
                     "bairro": removerAcentos(pessoa[0].endereco.bairro),
                     "cep": pessoa[0].endereco.cep,
@@ -1083,16 +1099,65 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                     "logradouro": removerAcentos(pessoa[0].endereco.logradouro),
                     "estado": pessoa[0].endereco.estado,
                     "numero": pessoa[0].endereco.numero
-                },
-                "dataNascimento": pessoa[0].dataNascimento,
-                "nomeMae": removerAcentos(pessoa[0].nomeMae),
-                "nome": removerAcentos(pessoa[0].nome),
-                "sexo": pessoa[0].sexo,
-                "status": pessoa[0].status,
-                "titular": pessoa[0].titular
+                }
             }
-        ]
-    };
+        };
+
+    } else {
+        var json = {
+            "cdForcaVenda": forcaVenda.codigo,
+            "cdPlano": cdPlano,
+            "titulares": [
+                {
+                    "nome": removerAcentos(pessoa[0].nome),
+                    "cpf": pessoa[0].cpf,
+                    "dataNascimento": pessoa[0].dataNascimento,
+                    "nomeMae": removerAcentos(pessoa[0].nomeMae),
+                    "sexo": pessoa[0].sexo,
+                    "status": pessoa[0].status,
+                    "titular": pessoa[0].titular,
+                    "celular": pessoa[0].celular,
+                    "contatoEmpresa": pessoa[0].contatoEmpresa,
+                    "dadosBancarios": {
+                        "agencia": pessoa[0].dadosBancarios.agencia,
+                        "codigoBanco": pessoa[0].dadosBancarios.codigoBanco,
+                        "conta": pessoa[0].dadosBancarios.conta,
+                        "tipoConta": pessoa[0].dadosBancarios.tipoConta
+                    },
+                    "dependentes": pessoa[0].dependentes,
+                    "email": pessoa[0].email,
+                    "endereco": {
+                        "bairro": removerAcentos(pessoa[0].endereco.bairro),
+                        "cep": pessoa[0].endereco.cep,
+                        "cidade": removerAcentos(pessoa[0].endereco.cidade),
+                        "complemento": pessoa[0].endereco.complemento,
+                        "logradouro": removerAcentos(pessoa[0].endereco.logradouro),
+                        "estado": pessoa[0].endereco.estado,
+                        "numero": pessoa[0].endereco.numero
+                    }
+                }
+            ],
+            "responsavelContratual": {
+                "nome": "",
+                "cpf": "",
+                "dataNascimento": "",
+                "email": "",
+                "celular": "",
+                "sexo": "",
+                "endereco": {
+                    "bairro": "",
+                    "cep": "",
+                    "cidade": "",
+                    "complemento": "",
+                    "logradouro": "",
+                    "estado": "",
+                    "numero": ""
+                }
+            }
+        };
+    }
+
+    
 
     json = JSON.stringify(json);
 

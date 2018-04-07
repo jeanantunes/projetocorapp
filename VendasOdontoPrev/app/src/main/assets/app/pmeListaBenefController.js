@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
     carregarLista();
+    localStorage.removeItem("cpfEmEdicaoPME");
+    localStorage.removeItem("beneficiario");
 });
 
 function carregarLista() {
@@ -20,6 +22,8 @@ function carregarLista() {
         var benef = getComponent("beneficiario");
         benef = benef.replace("{CPF}", item.cpf);
         benef = benef.replace("{CPF-BT}", item.cpf);
+        benef = benef.replace("{CPF-BTNEXCLUIR}", item.cpf);
+        benef = benef.replace("{NASCIMENTO-EDITAR}", item.dataNascimento);
         benef = benef.replace("{NOME}", item.nome);
         benef = benef.replace("{DEPENDENTES}", item.dependentes.length);
         benef = benef.replace("{NOME-BENEF}", item.nome);
@@ -54,6 +58,19 @@ function excluirBenef(obj) {
     if (beneficiarios.length == 0) {
         $("#lista").html("Você ainda não possui beneficiários cadastrados");
     }
+}
+
+function editarBeneficiario(obj) {
+
+    var container = $(".div-excluir[data-id='" + $(obj).attr("data-id") + "']");
+    var beneficiarios = get("beneficiarios");
+    var beneficiarioSelecionado = beneficiarios.filter(function (x) { return x.cpf == container.attr("data-id") });
+
+
+    put("cpfEmEdicaoPME", JSON.stringify(beneficiarioSelecionado[0].cpf));
+    put("beneficiario", JSON.stringify(beneficiarioSelecionado[0]));
+
+    window.location.href = "venda_pme_beneficiarios.html";
 }
 
 function adicionarBenef() {

@@ -9,3 +9,9 @@ $(document).ready(function () {
     put("proposta", JSON.stringify(editado[0]));
     window.location.href = "venda_pme_dados_proposta.html";
 });
+
+
+$(".cpf").click(function () {
+    $(this).prop('type', 'tel');
+
+});

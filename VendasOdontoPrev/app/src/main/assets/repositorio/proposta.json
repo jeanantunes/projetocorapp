@@ -7,7 +7,7 @@
   "ramoAtividade": "",
   "nomeFantasia": "",
   "representanteLegal": "",
-  "contatoEmpresa": true,
+  "contatoEmpresa": "",
   "telefone": "",
   "celular": "",
   "email": "",
@@ -20,6 +20,12 @@
     "bairro": "",
     "cidade": "",
     "estado": ""
+  },
+  "contactEmpresa": {
+    "nome": "",
+    "email": "",
+    "celular": "",
+    "telefone": ""
   },
   "planos": [
   ]

@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
 
-    if (!checkNetConnection()) {
+    if (!navigator.onLine) {
         carregarListaOffline();
         return;
     }
@@ -76,6 +76,7 @@ function carregarListaOffline() {
     $("#total").html(qtdEmpresas + qtdPessoas);
 
     $.each(pessoas, function (i, item) {
+
         var itemLista = getComponent("itemLista");
 
         var status = "";
@@ -96,7 +97,7 @@ function carregarListaOffline() {
             link = "logado.html";
             acaoseta = "";
         } else if (item.status == "CRITICADA") {
-            status = "Pendente finalizar cadastro";
+            status = "Criticada";
             css = "colorCirc3";
             acao = "ver detalhes";
             link = "venda_pf_editar.html?cpf=" + item.cpf;
@@ -124,6 +125,8 @@ function carregarListaOffline() {
     $.each(empresas, function (i, item) {
         var itemLista = getComponent("itemLista");
 
+        console.log(item);
+
         var status = "";
         var css = "";
         var acao = "";
@@ -131,7 +134,7 @@ function carregarListaOffline() {
         var acaoseta = "";
 
         if (item.status == "DIGITANDO") {
-            status = "Aguardando aprovação";
+            status = "Incompleta";
             css = "colorCirc1";
             acao = "ver detalhes";
             link = "venda_pme_editar.html?cnpj=" + item.cnpj;
@@ -143,7 +146,7 @@ function carregarListaOffline() {
             link = "logado.html";
             acaoseta = "";
         } else if (item.status == "CRITICADA") {
-            status = "Pendente finalizar cadastro";
+            status = "Criticada";
             css = "colorCirc3";
             acao = "ver detalhes";
             link = "venda_pme_editar.html?cnpj=" + item.cnpj;
@@ -187,9 +190,7 @@ function carregarListaOnline() {
 
     var qtdPessoas = 0;
     var qtdEmpresas = 0;
-
-        
-
+ 
     //if (pessoas != null) {
     //    qtdPessoas = pessoas.length;
     //}
@@ -200,7 +201,11 @@ function carregarListaOnline() {
 
     $.each(pessoas, function (i, item) {
 
+        console.log(item);
+
         if (item.status != "ENVIADA" && item.status != "Aprovado") {
+
+            
 
             qtdPessoas++;
 
@@ -225,7 +230,7 @@ function carregarListaOnline() {
                 link = "logado.html";
                 acaoseta = "";
             } else if (item.status == "CRITICADA") {
-                status = "Pendente finalizar cadastro";
+                status = "Criticada";
                 css = "colorCirc3";
                 acao = "ver detalhes";
                 link = "venda_pf_editar.html?cpf=" + item.cpf;
@@ -254,8 +259,6 @@ function carregarListaOnline() {
         TokenAcess = dataToken.access_token;
 
         callDashBoardPF(function (dataDashPf) {
-
-            console.log(dataDashPf);
 
             $.each(dataDashPf.dashboardPropostasPF, function (i, item) {
 
@@ -311,19 +314,19 @@ function carregarListaOnline() {
 
     $.each(empresas, function (i, item) {
 
+        var status = "";
+        var css = "";
+        var acao = "";
+        var link = "";
+
         if (item.status != "ENVIADA") {
 
             qtdEmpresas++;
 
             var itemLista = getComponent("itemLista");
 
-            var status = "";
-            var css = "";
-            var acao = "";
-            var link = "";
-
             if (item.status == "DIGITANDO") {
-                status = "Aguardando aprovação";
+                status = "Incompleta";
                 css = "colorCirc1";
                 acao = "ver detalhes";
                 link = "venda_pme_editar.html?cnpj=" + item.cnpj;
@@ -335,7 +338,7 @@ function carregarListaOnline() {
                 link = "logado.html";
                 acaoseta = "";
             } else if (item.status == "CRITICADA") {
-                status = "Pendente finalizar cadastro";
+                status = "Criticada";
                 css = "colorCirc3";
                 acao = "ver detalhes";
                 link = "venda_pme_editar.html?cnpj=" + item.cnpj;
@@ -343,6 +346,10 @@ function carregarListaOnline() {
             } else if (item.status == "ENVIADA") {
                 status = "Enviada";
                 css = "colorCirc2";
+                acaoseta = "hide";
+            } else if (item.status == "SYNC") {
+                status = "Sincronizando";
+                css = "colorCirc5";
                 acaoseta = "hide";
             }
 

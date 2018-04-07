@@ -4,11 +4,11 @@
   "nome": "",
   "dataNascimento": "",
   "sexo": "",
-  "titular": true,
+  "titular": "",
   "telefone": "",
   "celular": "",
   "email": "",
-  "nomeMae":  "",
+  "nomeMae": "",
   "dadosBancarios": {
     "codigoBanco": "",
     "agencia": "",
@@ -24,8 +24,24 @@
     "cidade": "",
     "estado": ""
   },
-  "planos": [
-  ],
-  "dependentes": [
-  ]
+  "planos": [],
+  "dependentes": [],
+  "responsavelContratual": {
+    "nome": "",
+    "cpf": "",
+    "dataNascimento": "",
+    "email": "",
+    "celular": "",
+    "sexo": "",
+    "endereco": {
+      "cep": "",
+      "logradouro": "",
+      "numero": "",
+      "complemento": "",
+      "bairro": "",
+      "cidade": "",
+      "estado": "",
+      "tipoEndereco": null
+    }
+  }
 }

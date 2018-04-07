@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Odontoprev</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/odontoprev-dependente.css" rel="stylesheet" />
+    <link href="css/sweetalert.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Menu -->
+    <div class="closeNav hide" onclick="closeNav()"></div>
+    <div id="mySidenav" class="sidenav">
+        <div class="row">
+            <div class="col-md-12 userLog">
+                <div class="col-md-12">
+                    <div class="perfilMenu">
+                        <img src="img/icone_325x325.png" class="imgPerfil" alt="">
+                        <div>
+                            <label class="labelOdontMenu" id="nomeCorretorMenu"></label>
+                        </div>
+                        <div>
+                            <label class="subLabelOdontMenu" id="nomeCorretoraMenu"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="logado.html" class="linkMenu"><img src="img/menu-home.png" align="center">TELA INICIAL</a>
+        <a href="venda_index_pf.html" class="linkMenu"><img src="img/menu-vender-pf.png" align="center">VENDER PESSOA F�SICA</a>
+        <a href="venda_index_pme.html" class="linkMenu colorActive"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
+        <a href="rede_credenciada.html" class="linkMenu"><img src="img/menu-rede-credenciada.png" align="center">BUSCAR REDE CREDENCIADA</a>
+        <a href="lista_proposta.html" class="linkMenu"><img src="img/menu-listas.png" align="center">LISTA DE PROPOSTA</a>
+        <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMA��ES DOS PLANOS</a> -->
+        <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
+        <a href="fale_conosco.html" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
+        <a id="logout" href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
+    </div>
+    <!-- End Menu -->
+    <!-- Bloco 1 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-left imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+                <span class="btnMenu" onclick="openNav()">&#9776;</span>
+            </div>
+        </div>
+        <div class="col-md-12 odontBoxCenter">
+            <div class="row">
+                <div class="text-center">
+                    <div>
+                        <h1 class="titleOdont text-center">
+                            DEPENDENTE
+                        </h1>
+                        <h2 class="subTitleOdont text-center">
+                            TITULAR
+                        </h2>
+                    </div>
+                    <div class="row nomeRazaSocial">
+                        <h4 id="nome-titular"></h4>
+                    </div>
+                </div>
+            </div>
+
+            <div id="lista">
+                <div class="row boxDependente">
+                    <div>
+                        <label class="labelBlue depends">DEPENDENTE</label>
+                    </div>
+                    <div>
+                        <label class="label-nome-dependente labelOdontBlur">Nome do dependente</label>
+                    </div>
+                    <div>
+                        <input type="text" class="nome nome-dependente inputLabelBlur">
+                    </div>
+                    <div>
+                        <label class="label-sexo labelOdontBlur">Sexo</label>
+                    </div>
+                    <div>
+                        <select class="form-control plano selectListBlur sexo">
+                            <option value="m">Masculino</option>
+                            <option value="f">Feminino</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label-nascimento labelOdontBlur">Data de nascimento</label>
+                    </div>
+                    <div>
+                        <input type="tel" class="nascimento data inputLabelBlur">
+                    </div>
+                    <div>
+                        <label class="label-cpf labelOdontBlur">CPF</label>
+                    </div>
+                    <div>
+                        <input type="tel" class=" cpf inputLabelBlur" id="cpf">
+                    </div>
+                    <div>
+                        <label class="label-nome-mae labelOdontBlur">Nome da mãe</label>
+                    </div>
+                    <div>
+                        <input type="text" class="nome nome-mae inputLabelBlur">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 btnPadBtmTop">
+                    <button href="" class="btn btn-lg btn-block btnOdont" id="salvar" role="button" onclick="SalvarDependentes()">SALVAR</button>
+                    <button href="" class="btn btn-lg btn-block btnOdont" id="voltar" style="background:#9f9f9f" role="button" onclick="history.go(-1)">VOLTAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Bloco 1 -->
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="js/jquery.3.2.1.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
+    <script src="js/odonto-Valida.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="app/coordenador.js"></script>
+    <script charset="iso-8859-1" src="app/pmeEditarDependenteController.js"></script>
+</body>
+</html>
