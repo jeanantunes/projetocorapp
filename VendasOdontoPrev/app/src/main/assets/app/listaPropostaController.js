@@ -155,6 +155,11 @@ function carregarListaOffline() {
             status = "Enviada";
             css = "colorCirc2";
             acaoseta = "hide";
+
+        } else if (item.status == "SYNC") {
+            status = "Sincronizando";
+            css = "colorCirc2";
+            acaoseta = "hide";
         }
 
         itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
@@ -190,7 +195,7 @@ function carregarListaOnline() {
 
     var qtdPessoas = 0;
     var qtdEmpresas = 0;
- 
+
     //if (pessoas != null) {
     //    qtdPessoas = pessoas.length;
     //}
@@ -205,7 +210,7 @@ function carregarListaOnline() {
 
         if (item.status != "ENVIADA" && item.status != "Aprovado") {
 
-            
+
 
             qtdPessoas++;
 
@@ -284,13 +289,13 @@ function carregarListaOnline() {
                     css = "colorCirc3";
                     acaoseta = "hide";
                 }
-               //} else if (item.statusVenda == "Criticada Envio") {
-               //
-               //    status = "Criticado";
-               //    css = "colorCirc3";
-               //    acaoseta = "hide";
-               //
-               //}
+                //} else if (item.statusVenda == "Criticada Envio") {
+                //
+                //    status = "Criticado";
+                //    css = "colorCirc3";
+                //    acaoseta = "hide";
+                //
+                //}
 
                 itemLista = itemLista.replace("{NOME}", item.nome);
                 itemLista = itemLista.replace("{STATUS}", status);
@@ -436,10 +441,10 @@ function carregarListaOnline() {
 
         }, TokenAcess);
     });
- 
+
     $("#totalEmpresas").html(qtdEmpresas);
     $("#total").html(qtdEmpresas + qtdPessoas);
-    
+
 }
 
 

@@ -199,7 +199,7 @@ function setTotalProposta()
 
     });
 
-    var valorTotal = valorProposta;
+    var valorTotal = valorProposta.toFixed(2);
 
     if ((valorTotal % 2) == 0 || (valorTotal % 2) == 1) {
         var valorReal = valorTotal;

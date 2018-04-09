@@ -1113,6 +1113,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                     "cpf": pessoa[0].cpf,
                     "dataNascimento": pessoa[0].dataNascimento,
                     "nomeMae": removerAcentos(pessoa[0].nomeMae),
+                    "email": pessoa[0].email,
                     "sexo": pessoa[0].sexo,
                     "status": pessoa[0].status,
                     "titular": pessoa[0].titular,
@@ -1125,7 +1126,6 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                         "tipoConta": pessoa[0].dadosBancarios.tipoConta
                     },
                     "dependentes": pessoa[0].dependentes,
-                    "email": pessoa[0].email,
                     "endereco": {
                         "bairro": removerAcentos(pessoa[0].endereco.bairro),
                         "cep": pessoa[0].endereco.cep,
@@ -1138,26 +1138,24 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                 }
             ],
             "responsavelContratual": {
-                "nome": "",
-                "cpf": "",
-                "dataNascimento": "",
-                "email": "",
-                "celular": "",
-                "sexo": "",
+                "nome": removerAcentos(pessoa[0].nome),
+                "cpf": pessoa[0].cpf,
+                "dataNascimento": pessoa[0].dataNascimento,
+                "email": pessoa[0].email,
+                "celular": pessoa[0].celular,
+                "sexo": pessoa[0].sexo,
                 "endereco": {
-                    "bairro": "",
-                    "cep": "",
-                    "cidade": "",
-                    "complemento": "",
-                    "logradouro": "",
-                    "estado": "",
-                    "numero": ""
+                    "bairro": removerAcentos(pessoa[0].endereco.bairro),
+                    "cep": pessoa[0].endereco.cep,
+                    "cidade": removerAcentos(pessoa[0].endereco.cidade),
+                    "complemento": pessoa[0].endereco.complemento,
+                    "logradouro": removerAcentos(pessoa[0].endereco.logradouro),
+                    "estado": pessoa[0].endereco.estado,
+                    "numero": pessoa[0].endereco.numero
                 }
             }
         };
     }
-
-    
 
     json = JSON.stringify(json);
 

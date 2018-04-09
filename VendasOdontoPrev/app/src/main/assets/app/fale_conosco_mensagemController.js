@@ -63,11 +63,11 @@ function callEmail(callback, token)
             "Content-Type": "application/json",
             "Cache-Control": "no-cache"
         },
+        data: JSON.stringify(json),
         success: function (resp) {
             callback(resp);
 
         },
-        data: JSON.stringify(json),
         //data:"{\r\n\r\n  \"sender\": \"" + faleConosco.emailRemetente + "\",\r\n\r\n\"senderName\": \"" + faleConosco.nomeRemetente + "\",\r\n\r\n\"recepients\": [\r\n\r\n    \"" + emailFaleConosco + "\"\r\n\r\n  ],\r\n\r\n  \"recepientName\": \"Fernando S.\",\r\n\r\n\"subject\": \"" + faleConosco.subject + "\",\r\n\r\n\"type\": \"text/html\",\r\n\r\n\"body\": \"" + faleConosco.textoEnviado + "\"\r\n\r\n}",
 
         error: function (xhr) {
