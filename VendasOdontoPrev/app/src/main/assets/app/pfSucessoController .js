@@ -7,4 +7,6 @@ $(document).ready(function () {
     localStorage.removeItem("propostaPf");
 
     sincronizar();
+
+    console.log("Sincrono");
 });

@@ -57,14 +57,12 @@ function callRecuperarSenha(callback, cpf) {
     $.ajax({
 
         async: true,
-        crossDomain: true,
         url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/esqueciMinhaSenha",
         method: "POST",
         headers: {
             "Authorization": "Bearer 866a12f4-741f-3a5a-b85e-df71699ca1d6",
             "Content-Type": "application/json",
-            "Cache-Control": "no-cache",
-            "Postman-Token": "9b7d1504-989f-45b0-95ab-68df79ce5b56"
+            "Cache-Control": "no-cache"
         },
         processData: false,
         data: JSON.stringify({ "cpf": cpf }),

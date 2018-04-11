@@ -958,7 +958,10 @@ function sincronizar() {
 
                     put("empresas", JSON.stringify(todosExcetoExclusao));
 
-                    sincronizarEmpresa(o, b);
+                    sincronizarEmpresa(function (dataVendaPme) {
+                        swal.close();
+
+                    }, o, b);
                     atualizarDashBoard();
                 }
             });
@@ -1003,7 +1006,10 @@ function sincronizar() {
                     put("pessoas", JSON.stringify(pessoas));
                    
                     sincronizarPessoa(function (dataProposta) {
+
                         console.log(dataProposta);
+                        swal.close();
+
                     }, o, false);
 
                 }
@@ -1050,7 +1056,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
     var date = toDate(pessoa[0].dataNascimento);
 
-    if (isMaiorDeIdade(date)) {
+    if (!isMaiorDeIdade(date)) {
         var json = {
             "cdForcaVenda": forcaVenda.codigo,
             "cdPlano": cdPlano,
@@ -1184,6 +1190,20 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
     callTokenProd(function (dataToken) {
 
+        swal({
+            title: "Aguarde",
+            text: 'Estamos enviando a sua proposta',
+            content: "input",
+            imageUrl: "img/load.gif",
+            showCancelButton: false,
+            showConfirmButton: false,
+            icon: "info",
+            button: {
+                text: "...",
+                closeModal: false,
+            },
+        });
+
         $.ajax({
             async: true,
             //url: URLBase + "vendapf",
@@ -1199,10 +1219,6 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
             processData: false,
             success: function (result) {
-
-                swal.close();
-
-                callback(result);
 
                 if (result.id == 0) {
 
@@ -1223,8 +1239,10 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                     put("pessoas", JSON.stringify(todosExcetoExclusao));
 
                 }
-
+                
                 atualizarDashBoard();
+                callback(result);
+
             },
             error: function (resp) {
                 swal.close();
@@ -1234,7 +1252,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
     });
 }
 
-function sincronizarEmpresa(proposta, beneficiarios) {
+function sincronizarEmpresa(callback, proposta, beneficiarios) {
 
     console.log(proposta);
 
@@ -1245,6 +1263,22 @@ function sincronizarEmpresa(proposta, beneficiarios) {
     console.log(json);
 
     callTokenProd(function (dataToken) {
+
+        swal({
+            title: "Aguarde",
+            text: 'Estamos enviando a sua proposta',
+            content: "input",
+            imageUrl: "img/load.gif",
+            showCancelButton: false,
+            showConfirmButton: false,
+            icon: "info",
+            button: {
+                text: "...",
+                closeModal: false,
+            },
+        });
+
+
         $.ajax({
             url: URLBase + "/corretorservicos/1.0/vendapme",
             //url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
@@ -1274,10 +1308,11 @@ function sincronizarEmpresa(proposta, beneficiarios) {
                 }
 
                 atualizarDashBoard();
+                swal.close();
             },
             error: function (xhr) {
                 console.log(xhr);
-                swal.close();
+                //swal.close();
             }
         });
     });

@@ -353,6 +353,12 @@ function buscarEmpresa() {
     var cnpj = get("dadosUsuario");
     var cnpjDaProposta = get("proposta");
 
+    if (!validaCnpj(cnpjValidado)) {
+
+        return;
+
+    }
+
     if (cnpj.cnpjCorretora == cnpjValidado)
     {
         swal("Ops", "Esse é o CNPJ da sua corretora, digite o CNPJ do seu cliente", "info");

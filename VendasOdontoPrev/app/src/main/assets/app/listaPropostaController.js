@@ -108,7 +108,7 @@ function carregarListaOffline() {
             acaoseta = "hide";
         } else if (item.status == "SYNC") {
             status = "Sincronizando";
-            css = "colorCirc2";
+            css = "colorCirc5";
             acaoseta = "hide";
         }
 
@@ -158,7 +158,7 @@ function carregarListaOffline() {
 
         } else if (item.status == "SYNC") {
             status = "Sincronizando";
-            css = "colorCirc2";
+            css = "colorCirc5";
             acaoseta = "hide";
         }
 
