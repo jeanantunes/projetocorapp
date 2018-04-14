@@ -115,6 +115,24 @@ $(function () {
     });
 });
 
+$(".nome").keyup(function () {
+
+    var capturandoEspaco = $(".nome").val().substring($(".nome").val().length - 2, $(".nome").val().length);
+
+    if (capturandoEspaco == "  ") {
+
+        $(".nome").val($(".nome").val().substring(0, $(".nome").val().length - 1))
+
+    }
+});
+
+$(".nome").blur(function () {
+
+    $(".nome").val($(".nome").val().trim());
+
+});
+
+
 function validarData(data) {
     var bits = data.split('/');
 
@@ -1024,13 +1042,13 @@ function sincronizar() {
 function removerAcentos(newStringComAcento) {
     var string = newStringComAcento;
     var mapaAcentosHex = {
-        a: /[\xE0-\xE6]/g,
-        e: /[\xE8-\xEB]/g,
-        i: /[\xEC-\xEF]/g,
-        o: /[\xF2-\xF6]/g,
-        u: /[\xF9-\xFC]/g,
-        c: /\xE7/g,
-        n: /\xF1/g
+        A: /[\xE0-\xE6]/gi,
+        E: /[\xE8-\xEB]/gi,
+        I: /[\xEC-\xEF]/gi,
+        O: /[\xF2-\xF6]/gi,
+        U: /[\xF9-\xFC]/gi,
+        C: /\xE7/gi,
+        N: /\xF1/gi
     };
 
     for (var letra in mapaAcentosHex) {

@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //OneSignal.startInit(this).init();
+
         db = new DataBase(this);
 
         super.onCreate(savedInstanceState);
