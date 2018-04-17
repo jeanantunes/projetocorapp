@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+
+    <title>Odontoprev</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Bloco 1 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-left imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    CONTA DE DÉBITO
+                </h1>
+                <h2 class="subTitleOdont text-center">
+                    Para finalizar a proposta, preencha os dados abaixo
+                </h2>
+
+                <div class="boxLabInput">
+                    <div class="form-group">
+                        <label for="" class="label-bancos labelOdontBlur">Banco</label>
+                        <select class="form-control bancos selectListBlur" id="">
+                            <option value="237">237 - Bradesco</option>
+                            <option value="341">341 - Itaú</option>
+                            <option value="033">033 - Santander</option>
+                        </select>
+                    </div>
+                    <div>
+
+
+                        <label class="label-agencia labelOdontBlur">Agência</label>
+                    </div>
+                    <div>
+                        <input type="tel" class="agencia inputLabelBlur" id="agenciaDebito" name="" maxlength="4" pattern="[0-9]+$" required="required">
+                    </div>
+                    <div>
+                        <label class="label-conta-corrente labelOdontBlur">Conta corrente</label>
+                    </div>
+                    <div>
+                        <input type="tel" class="conta-corrente inputLabelBlur" id="contaDebito" name="" maxlength="10">
+                    </div>
+
+                    <div class="row" id="divProximoMes">
+                        <div class="col-md-12">
+                            <label class="label-parentesco labelOdontBlur" id="proximoMes" style="margin-top: 40px; padding-right:20px; padding-left:20px; padding-bottom:10px; font-family: Roboto-Light; text-align: left; font-size: 14px;">
+                            <h6 class="text-left" style="font-family: Roboto-Bold;">ATENÇÃO</h6> 
+                            Não é possível debitar de conta poupança ou de conta salário. Para débitos em contas do banco
+                            Itaú, será necessário confirmar a ação via SMS.</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 btnPadBtm">
+                <div class="btn btn-lg btn-block btnOdont disabled" onclick="cadastrarConta()" role="button" id="continuarPfDebito">CONTINUAR</div>
+            </div>
+        </div>
+    </div>
+    <!-- End Bloco 1 -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="js/jquery.3.2.1.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
+    <script src="js/odonto-Valida.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script charset="ISO-8859-1" src="app/coordenador.js"></script>
+    <script charset="ISO-8859-1" src="app/pfCartaoDebito.js"></script>
+
+</body>
+</html>

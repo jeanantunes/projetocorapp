@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Odontoprev</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/odontoprev.css" rel="stylesheet">
+      <link href="css/sweetalert.css" rel="stylesheet" />
+  </head>
+  <body>
+      <!-- Menu -->
+      <div class="closeNav hide" onclick="closeNav()"></div>
+      <div id="mySidenav" class="sidenav">
+          <div class="row">
+              <div class="col-md-12 userLog">
+                  <div class="col-md-12">
+                      <div class="perfilMenu">
+                          <img src="img/icone_325x325.png" class="imgPerfil" alt="" id="imageePerfil">
+                          <div>
+                              <label class="labelOdontMenu" id="nomeCorretorMenu"></label>
+                          </div>
+                          <div>
+                              <label class="subLabelOdontMenu" id="nomeCorretoraMenu"></label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <a href="logado.html" class="linkMenu colorActive"><img src="img/menu-home.png" align="center">TELA INICIAL</a>
+          <a href="venda_index_pf.html" class="linkMenu"><img src="img/menu-vender-pf.png" align="center">VENDER PESSOA FÍSICA</a>
+          <a href="venda_index_pme.html" class="linkMenu"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
+          <a href="rede_credenciada.html" class="linkMenu"><img src="img/menu-rede-credenciada.png" align="center">BUSCAR REDE CREDENCIADA</a>
+          <a href="lista_proposta.html" class="linkMenu"><img src="img/menu-listas.png" align="center">LISTA DE PROPOSTA</a>
+          <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
+          <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
+          <a href="fale_conosco.html" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
+          <a id="logout" href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
+      </div>
+      <!-- End Menu -->
+      <!-- Bloco 1 -->
+      <div class="container-fluid" id="">
+
+          <div class="row">
+              <div class="col-md-12 boxHeader">
+                  <div class="col-md-12 text-left imgLogoODPVHeader">
+                      <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                  </div>
+                  <span class="btnMenu" onclick="openNav()">&#9776;</span>
+                  <!-- <a class="btn btn-sm btnOdontSell" href="vender.html" role="button">Vender</a> -->
+              </div>
+          </div>
+          <div class="col-md-12 odontBoxCenter">
+              <div class="row">
+                  <div class="perfil">
+                      <!--data-toggle="modal" data-target="#myModal"-->
+                      <img src="img/icone_325x325.png" class="imgPerfil" alt="" id="imagePerfil">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="text-center">
+                      <div>
+                          <label class="labelOdont" id="nomeCorretor"></label>
+                      </div>
+                      <div>
+                          <label class="subLabelOdont" id="nomeCorretora"></label>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="btnOdontEnter">
+                      <a class="btn btn-lg btn-block btnPinkOdont" style="margin-bottom: 5%;" href="venda_index_pf.html" role="button">VENDER PARA PESSOA FÍSICA</a>
+                  </div>
+                  <div class="btnPadBtm">
+                      <a class="btn btn-lg btn-block btnOdont" href="venda_index_pme.html" role="button">VENDER PARA PME</a>
+                  </div>
+              </div>
+              <div class="row boxAlerts">
+                  <label class="labelBlueAlert">ALERTAS</label>
+                  <div class="text-center">
+                      <div class="boxAlertIcomp" onclick="window.location.href='lista_proposta.html'">
+                          <!-- <img src="img/alarm.png" class="imgAlarm" align="left"> -->
+                          <label class="label-Icomp"><p id="digitando"></p> Propostas incompletas</label>
+                      </div>
+                      <div class="boxAlertCritico" onclick="window.location.href='lista_proposta.html'">
+                          <!-- <img src="img/delete.png" class="imgDel" align="left"> -->
+                          <label class="label-Critico"><p id="criticada"></p> Propostas criticadas</label>
+                      </div>
+                  </div>
+                  <div class="text-center">
+                      <div class="boxAlertPendente" style="float:left;margin-left:10px;" onclick="sincronizar()">
+                          <!-- <img src="img/alarm.png" class="imgAlarm" align="left"> -->
+                          <label class="label-Icomp"><p id="pronta"></p> Propostas não enviadas</label>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <!--<div class="boxVendas">
+                    <label class="labelBlue">PROPOSTAS</label>
+                    <div class="dropdown">
+                        <button class="btnDropOdont dropdown-toggle" type="button" data-toggle="dropdown">
+                            Valor R$/mês
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">...</a></li>
+                        </ul>
+                    </div>
+                    <section class="grafico-barras">
+                        <ul>
+                            <span class="barra-fondo">
+                                <label class="labelVendGrafic">PESSOA FÍSICA</label>
+                                <li class="space-top-5 barras" data-value="75"><span class="valor-vendar">R$ 350,00</span></li>
+                            </span>
+
+                            <span class="barra-fondo">
+                                <label class="labelVendGrafic">PME</label>
+                                <li class="space-top-5 barras" data-value="100"><span class="valor-vendar">R$ 100,00</span></li>
+                            </span>
+                        </ul>
+                    </section>
+                </div>-->
+              </div>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Foto Perfil</h4>
+                      </div>
+                      <div class="modal-body">
+                          <p>Escolha uma opção.</p>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="abrirgaleria()">Galeria</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Remover</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- End Modal -->
+      </div>
+      <!-- End Bloco 1 -->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/scripts.js"></script>
+      <script src="js/odontoprev.js"></script>
+      <script src="js/moment.js"></script>
+      <script src="js/sweetalert.min.js"></script>
+      <script src="app/coordenador.js"></script>
+      <script src="app/logadoController.js"></script>
+
+  </body>
+</html>

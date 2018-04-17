@@ -1,0 +1,47 @@
+﻿{
+  "status": "",
+  "cpf": "",
+  "nome": "",
+  "dataNascimento": "",
+  "sexo": "",
+  "titular": "",
+  "telefone": "",
+  "celular": "",
+  "email": "",
+  "nomeMae": "",
+  "dadosBancarios": {
+    "codigoBanco": "",
+    "agencia": "",
+    "tipoConta": "",
+    "conta": ""
+  },
+  "endereco": {
+    "cep": "",
+    "logradouro": "",
+    "numero": "",
+    "complemento": "",
+    "bairro": "",
+    "cidade": "",
+    "estado": ""
+  },
+  "planos": [],
+  "dependentes": [],
+  "responsavelContratual": {
+    "nome": "",
+    "cpf": "",
+    "dataNascimento": "",
+    "email": "",
+    "celular": "",
+    "sexo": "",
+    "endereco": {
+      "cep": "",
+      "logradouro": "",
+      "numero": "",
+      "complemento": "",
+      "bairro": "",
+      "cidade": "",
+      "estado": "",
+      "tipoEndereco": null
+    }
+  }
+}

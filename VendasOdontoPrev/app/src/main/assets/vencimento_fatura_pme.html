@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+
+    <title>Odontoprev</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Menu -->
+    <div class="closeNav hide" onclick="closeNav()"></div>
+    <div id="mySidenav" class="sidenav">
+        <div class="row">
+            <div class="col-md-12 userLog">
+                <div class="col-md-12">
+                    <div class="perfilMenu">
+                        <img src="img/icone_325x325.png" class="imgPerfil" alt="">
+                        <div>
+                            <label class="labelOdontMenu" id="nomeCorretorMenu"></label>
+                        </div>
+                        <div>
+                            <label class="subLabelOdontMenu" id="nomeCorretoraMenu"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="logado.html" class="linkMenu"><img src="img/menu-home.png" align="center">TELA INICIAL</a>
+        <a href="venda_index_pf.html" class="linkMenu"><img src="img/menu-vender-pf.png" align="center">VENDER PESSOA FÍSICA</a>
+        <a href="venda_index_pme.html" class="linkMenu colorActive"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
+        <a href="rede_credenciada.html" class="linkMenu"><img src="img/menu-rede-credenciada.png" align="center">BUSCAR REDE CREDENCIADA</a>
+        <a href="lista_proposta.html" class="linkMenu"><img src="img/menu-listas.png" align="center">LISTA DE PROPOSTA</a>
+        <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
+        <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
+        <a href="fale_conosco.html" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
+        <a id="logout" href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
+    </div>
+    <!-- End Menu -->
+    <!-- Bloco 1 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-left imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+                <span class="btnMenu" onclick="openNav()">&#9776;</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <h1 class="titleOdont text-center">
+                    DATAS OPERACIONAIS
+                </h1>
+
+                <p class="label-parentesco labelOdontBlur"> Escolha a melhor data vencimento da fatura. </p>
+
+                <div class="boxLabInput">
+                    <div class="form-group">
+                        <label for="" class="label-parentesco labelOdontBlur" style="color: #1974CE">Data de vencimento da fatura</label>
+                        <select  class="form-control parentesco selectListBlur" id="vencOdont" style="color: #1974CE">
+                            <option>Selecione...</option>
+                            <option>05</option>
+                            <option>15</option>
+                            <option>25</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+
+         <div class="row hide" id="divProximoMes">
+            <div class="col-md-12">
+                <label class="label-parentesco labelOdontBlur" id="proximoMes"></label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="label-parentesco labelOdontBlur" id="corte"></label><br>
+                <label class="label-parentesco labelOdontBlur" id="vencimento"></label><br>
+                <label class="label-parentesco labelOdontBlur" id="vigencia"></label><br><br />
+                <!--<label class="label-parentesco labelOdontBlur" id="movimentacao"></label><br><br />-->
+            </div>
+        </div>
+
+         <div class="row">
+            <div class="col-md-12">
+                <div class="btn btn-lg btn-block btnOdont disabled" href="" id="bntVenc" onclick="atualizarFatura()" role="button" style="background:#1974CE">CONTINUAR</div>
+            </div>
+        </div>
+
+    </div>
+    <!-- End Bloco 1 -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="js/jquery.3.2.1.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
+    <script src="js/odonto-Valida.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="app/coordenador.js"></script>
+    <script src="app/pmeFaturaController.js"></script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+    <title>Odontoprev</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet" />
+</head>
+	
+<body>
+    <!-- Menu -->
+    <div class="closeNav hide" onclick="closeNav()"></div>
+    <div id="mySidenav" class="sidenav">
+        <div class="row">
+            <div class="col-md-12 userLog">
+                <div class="col-md-12">
+                    <div class="perfilMenu">
+                        <img src="img/icone_325x325.png" class="imgPerfil" alt="">
+                        <div>
+                            <label class="labelOdontMenu" id="nomeCorretorMenu"></label>
+                        </div>
+                        <div>
+                            <label class="subLabelOdontMenu" id="nomeCorretoraMenu"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="logado.html" class="linkMenu"><img src="img/menu-home.png" align="center">TELA INICIAL</a>
+        <a href="venda_index_pf.html" class="linkMenu"><img src="img/menu-vender-pf.png" align="center">VENDER PESSOA FÍSICA</a>
+        <a href="venda_index_pme.html" class="linkMenu colorActive"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
+        <a href="rede_credenciada.html" class="linkMenu"><img src="img/menu-rede-credenciada.png" align="center">BUSCAR REDE CREDENCIADA</a>
+        <a href="lista_proposta.html" class="linkMenu"><img src="img/menu-listas.png" align="center">LISTA DE PROPOSTA</a>
+        <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
+        <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
+        <a href="fale_conosco.html" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
+        <a id="logout" href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
+    </div>
+    <!-- End Menu -->
+    <!-- Bloco 1 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-left imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+                <span class="btnMenu" onclick="openNav()">&#9776;</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <div class="text-center">
+                    <div>
+                        <h1 class="titleOdont text-center">
+                            RESUMO DA PROPOSTA
+                        </h1>
+                        <h2 class="subTitleOdont text-center">
+                            Confira as informações da proposta
+                        </h2>
+                    </div>
+                </div>
+
+                <div id="planos" style="margin-bottom:20px; margin-left:20px; margin-right:20px;">
+                </div>
+
+                <div class="spanInlineLeft">
+                    <span class="labelOdontFocus text-left" style="margin-left: 20px; font-family: Roboto-Black;">Total</span>
+                </div>
+                <div class="spanInlineRight">
+                    <span id="valorTotalResumoPropostaPme"class="labelOdontFocus text-right" style="margin-right: 20px; font-family: Roboto-Black;"></span>
+                </div>
+
+                <div class="boxLabInput">
+                    <div>
+                        <label class="labelBlue" style="margin-bottom: 10px; margin-top:40px;">DADOS DA EMPRESA</label>
+                    </div>
+                    <div>
+                        <label class="label-cnpj labelOdontBlur">CNPJ</label>
+                    </div>
+                    <div>
+                        <input id="cnpjResumo" type="text" class=" cnpj inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-razao-social labelOdontBlur">Razão social</label>
+                    </div>
+                    <div>
+                        <input id="razaoSocialResumo" type="text" class="razao-social inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-nome-fantasia labelOdontBlur">Nome fantasia</label>
+                    </div>
+                    <div>
+                        <input id="nomeFantasiaResumo" type="text" class="nome-fantasia inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-ramo-atividade labelOdontBlur">Ramo de atividade</label>
+                    </div>
+                    <div>
+                        <input id="ramoAtividadeResumo" type="text" class="ramo-atividade inputLabelBlur" disabled>
+                    </div>
+                    <!--<div>
+            <label class="label-inscricao-estadual labelOdontBlur">Inscrição estadual</label>
+        </div>
+        <div>
+            <input type="text" class="inscricao-estadual data inputLabelBlur" disabled>
+        </div>-->
+                    <div>
+                        <label class="label-representante-legal labelOdontBlur">Representante legal</label>
+                    </div>
+                    <div>
+                        <input id="representanteLegalResumo" type="text" class="representante-legal inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-cpf labelOdontBlur">CPF</label>
+                    </div>
+                    <div>
+                        <input id="cpfResumo" type="text" class="cpf inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-telefone labelOdontBlur">Telefone</label>
+                    </div>
+                    <div>
+                        <input id="telefoneResumo" type="text" class="telefone inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-celular labelOdontBlur">Celular</label>
+                    </div>
+                    <div>
+                        <input id="celularResumo" type="text" class="celular inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-email labelOdontBlur">E-mail</label>
+                    </div>
+                    <div>
+                        <input id="emailResumo" type="text" class="email inputLabelBlur" disabled>
+                    </div>
+
+                    <!-- <input type="checkbox" value="" class="exemplo2 checkbox inputLabelFocus">
+        <label class="Label-checkbox labelOdontFocus checkbox-inline">
+
+        </label> -->
+
+                    <div>
+                        <label class="labelCheckOdontBlur">
+                            * O representante legal é o contato na empresa
+                        </label>
+                    </div>
+                    <div>
+                        <label class="labelBlue" style="margin-bottom: 10px; margin-top:40px;">ENDEREÇO DA EMPRESA</label>
+                    </div>
+                    <div>
+                        <label class="label-cep labelOdontBlur">CEP</label>
+                    </div>
+                    <div>
+                        <input id="cepResumo" type="text" class="cep inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-endereco labelOdontBlur">Endereço</label>
+                    </div>
+                    <div>
+                        <input id="enderecoResumo" type="text" class="endereco inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-numero labelOdontBlur">Número</label>
+                    </div>
+                    <div>
+                        <input id="numeroResumo" type="number" class="numero inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-complemento labelOdontBlur">Complemento</label>
+                    </div>
+                    <div>
+                        <input id="complementoResumo" type="text" class="complemento inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-bairro labelOdontBlur">Bairro</label>
+                    </div>
+                    <div>
+                        <input id="bairroResumo" type="text" class="bairro inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-cidade labelOdontBlur">Cidade</label>
+                    </div>
+                    <div>
+                        <input id="cidadeResumo" type="text" class="cidade inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="label-estado labelOdontBlur">Estado</label>
+                    </div>
+                    <div>
+                        <input id="estadoResumo" type="text" class="estado inputLabelBlur" disabled>
+                    </div>
+                    <div>
+                        <label class="labelCheckOdontBlur">
+                            * O endereço de correspondência é o mesmo
+                        </label>
+                    </div>
+
+                    <div>
+                        <label class="labelBlue" style="margin-bottom: 10px; margin-top:40px;">BENEFICIÁRIOS</label>
+                    </div>
+
+                    <div class="lista" id="lista">
+                    </div>
+
+                    <a class="btn btn-lg btn-block btnTranspOdontBenef" style="margin-bottom: 5%; margin-top: 5%;" onclick="adicionarBenef()" role="button">ADICIONAR BENEFICIÁRIO</a>
+
+                    <div>
+                        <label class="labelBlue" style="margin-bottom: 10px; margin-top:40px;">DATAS OPERACIONAIS</label>
+                    </div>
+                    <!--<div>
+            <label class="labelBold">Número da proposta:</label>
+            <label class="labelLight">224.232</label>
+        </div>-->
+                    <div>
+                        <label class="labelBold">Data da fatura:</label>
+                        <label id="vencimento" class="labelLight"></label>
+                    </div>
+                    <div>
+                        <label class="labelBold">Data de corte de movimentação:</label>
+                        <label id="corte" class="labelLight"></label>
+                    </div>
+                    <div>
+                        <label class="labelBold">Data de vigência:</label>
+                        <label id="vigencia" class="labelLight"></label>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="row">
+            <!--<div class="col-md-12 btnPadBtm">
+                <a href="" class="btn btn-lg btn-block btnOdont" id="" role="button">EDITAR PROPOSTA</a>
+            </div>-->
+            <div class="col-md-12 btnPadBtm">
+                <a href="proposta_pme_enviada.html" class="btn btn-lg btn-block btnOdont" id="" role="button">ENVIAR</a>
+            </div>
+        </div>
+    </div>
+    <!-- End Bloco 1 -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/scripts.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="js/jquery.3.2.1.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
+    <script src="app/coordenador.js"></script>
+    <script src="js/odonto-Valida.js"></script>
+    <script type="text/javascript" charset="iso-8859-1" src="app/pmeResumoPropostaController.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/sweetalert.min.js"></script>
+</body>
+</html>

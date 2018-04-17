@@ -1,0 +1,14 @@
+﻿.boxDependente-c {
+    height: 50pt;
+    border: 1px solid #EDEDED;
+    border-radius: 18px;
+    margin-bottom: 41pt;
+    box-shadow: 2px 5px 15px 0px #EDEDED;
+}
+
+.labelDependente {
+    font-family: Roboto-Bold;
+    font-size: 16pt;
+    position: absolute;
+    margin-top: 14pt;
+}
