@@ -4,6 +4,40 @@ $(document).ready(function () {
     buscarPlanosSelecionados();
     carregarProposta();
     localStorage.removeItem("dependentePfEmEdicao");
+
+    $(".nome").blur(function () {
+
+        $(".nome").val($(".nome").val().trim());
+
+    });
+
+    $("#dataNascimentoTitular").blur(function () {
+
+        if ($("#dataNascimentoTitular").val() == "") return;
+
+        var date = toDate($("#dataNascimentoTitular").val());
+
+        if (isMaiorDeIdade(date)) {
+
+            $(".representanteContratual").addClass('hide');
+            return;
+        }
+
+        $(".representanteContratual").removeClass('hide');
+
+    });
+
+    $(".nome").keyup(function () {
+
+        var capturandoEspaco = $(".nome").val().substring($(".nome").val().length - 2, $(".nome").val().length);
+
+        if (capturandoEspaco == "  ") {
+
+            $(".nome").val($(".nome").val().substring(0, $(".nome").val().length - 1))
+
+        }
+    });
+
 });
 
 function addDependente() {
@@ -125,6 +159,12 @@ function addDependente() {
         }
     }
 
+    if (!menorQueSeteAnos(date)) {
+
+        swal("Ops!", "No plano dente de leite titular deve ter menos que 7 anos", "error");
+        return false;
+    }
+
     if ($("#radio-1").is(":checked") == false && $("#radio-2").is(":checked") == false) {
         swal("Ops!", "Selecione o Sexo", "error");
         $(".dependentes").val(0);
@@ -217,21 +257,7 @@ function buscarPlanosSelecionados() {
 //    }
 //});
 
-$("#dataNascimentoTitular").blur(function () {
 
-    if ($("#dataNascimentoTitular").val() == "") return;
-
-    var date = toDate($("#dataNascimentoTitular").val());
-
-    if (isMaiorDeIdade(date)) {
-
-        $(".representanteContratual").addClass('hide');
-        return;
-    }
-
-    $(".representanteContratual").removeClass('hide');
-
-});
 
 function excluirPlano(obj) {
 
@@ -300,14 +326,13 @@ function salvarRascunho() {
         return;
     }
 
-    if (!validarData($(".nascimento").val())) {
-        swal("Ops!", "Preencha uma data de nascimento correta", "error");
+    if ($(".nascimento").val() == "") {
+        swal("Ops!", "Preencha a Data de Nascimento", "error");
         return;
     }
 
-
-    if ($(".nascimento").val() == "") {
-        swal("Ops!", "Preencha a Data de Nascimento", "error");
+    if (!validarData($(".nascimento").val())) {
+        swal("Ops!", "Preencha uma data de nascimento correta", "error");
         return;
     }
 
@@ -380,6 +405,14 @@ function salvarRascunho() {
             $(".dependentes").val(0);
             return;
         }
+    }
+
+    if (!menorQueSeteAnos(date)) {
+
+        swal("Ops!", "No plano dente de leite titular deve ter menos que 7 anos", "error");
+        return false;
+
+
     }
 
     if (!ValidaNome($("#nomeMae").val())) {

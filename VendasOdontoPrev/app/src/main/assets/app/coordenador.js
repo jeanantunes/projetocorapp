@@ -115,22 +115,7 @@ $(function () {
     });
 });
 
-$(".nome").keyup(function () {
 
-    var capturandoEspaco = $(".nome").val().substring($(".nome").val().length - 2, $(".nome").val().length);
-
-    if (capturandoEspaco == "  ") {
-
-        $(".nome").val($(".nome").val().substring(0, $(".nome").val().length - 1))
-
-    }
-});
-
-$(".nome").blur(function () {
-
-    $(".nome").val($(".nome").val().trim());
-
-});
 
 
 function validarData(data) {
@@ -848,6 +833,18 @@ function isMaiorDeIdade(date) {
     if (!birthday.isValid()) {
         // INVALID DATE
     } else if (eightYearsAgo.isAfter(birthday)) return true;
+
+    return false;
+}
+
+function menorQueSeteAnos(date) {
+
+    var eightYearsAgo = moment().subtract(7, "years");
+    var birthday = moment(date);
+
+    if (!birthday.isValid()) {
+        // INVALID DATE
+    } else if (!eightYearsAgo.isAfter(birthday)) return true;
 
     return false;
 }

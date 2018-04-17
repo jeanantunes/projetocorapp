@@ -114,7 +114,7 @@ function SalvarDependentes() {
         }
 
         if ($(this).find(".cpf").val() != "" && !TestaCPF($(this).find(".cpf").val().replace(/\D/g, ''))) {
-            swal("Ops!", "O CPF do " + $(this).find(".depends").html().toLowerCase + " é inválido.", "error");           
+            swal("Ops!", "O CPF do " + $(this).find(".depends").html().toLowerCase() + " é inválido.", "error");           
             stop = true;
             $(this).find(".cpf").focus();
             return;

@@ -1613,6 +1613,58 @@ input[type=checkbox] {
 
 /*********************************** End SQUARED ONE ****************************************/
 
+
+/*********************************** SQUARED TERMO USUARIO PRE CADASTRADO ****************************************/
+
+.squaredOneTermoCadastrado {
+    width: 20px;
+    position: relative;
+}
+
+    .squaredOneTermoCadastrado label {
+        cursor: pointer;
+        padding-left: 20px;
+        top: 0;
+        border-radius: 4px;
+        border: 2px solid #D9487F;
+        margin-bottom: 30px;
+    }
+
+        .squaredOneTermoCadastrado label:after {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            filter: alpha(opacity=0);
+            opacity: 0;
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 10px;
+            background: transparent;
+            top: 2px;
+            left: 2px;
+            border: 3px solid #1974CE;
+            border-top: none;
+            border-right: none;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+
+        .squaredOneTermoCadastrado label:hover::after {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            opacity: 0.3;
+        }
+
+    .squaredOneTermoCadastrado input[type=checkbox]:checked + label:after {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: alpha(opacity=100);
+        opacity: 1;
+    }
+
+/*********************************** End SQUARED TERMO USUARIO PRE CADASTRADO ****************************************/
+
 /*********************************** SQUARED TWO ****************************************/
 
 .squaredTwo {

@@ -96,7 +96,7 @@ function carregarListaOffline() {
             acao = "sincronizar";
             link = "logado.html";
             acaoseta = "";
-        } else if (item.status == "CRITICADA") {
+        } else if (item.status == "CRITICADA" || item.status == "Criticado") {
             status = "Criticada";
             css = "colorCirc3";
             acao = "ver detalhes";
@@ -145,7 +145,7 @@ function carregarListaOffline() {
             acao = "sincronizar";
             link = "logado.html";
             acaoseta = "";
-        } else if (item.status == "CRITICADA") {
+        } else if (item.status == "CRITICADA" || item.status == "Criticado") {
             status = "Criticada";
             css = "colorCirc3";
             acao = "ver detalhes";
@@ -234,7 +234,7 @@ function carregarListaOnline() {
                 acao = "sincronizar";
                 link = "logado.html";
                 acaoseta = "";
-            } else if (item.status == "CRITICADA") {
+            } else if (item.status == "CRITICADA" || item.status == "Criticado") {
                 status = "Criticada";
                 css = "colorCirc3";
                 acao = "ver detalhes";
