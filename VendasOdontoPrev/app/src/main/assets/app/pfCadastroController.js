@@ -1,9 +1,11 @@
 ﻿var preenchidos = false;
 
 $(document).ready(function () {
+
     buscarPlanosSelecionados();
     carregarProposta();
     localStorage.removeItem("dependentePfEmEdicao");
+
 
     $(".nome").blur(function () {
 
@@ -154,14 +156,19 @@ function addDependente() {
 
         if ($("#radio-3").is(":checked") == false && $("#radio-4").is(":checked") == false) {
             swal("Ops!", "Selecione o sexo do responsável legal", "error");
-            $(".dependentes").val(0);
             return;
         }
     }
 
-    if (!menorQueSeteAnos(date)) {
+    var proposta = get("propostaPf");
+    var planos = get("CodPlanos");
+    var plano = planos.filter(function (x) { return x.cdPlano == proposta.planos[0].cdPlano });
 
-        swal("Ops!", "No plano dente de leite titular deve ter menos que 7 anos", "error");
+
+
+    if (!menorQueSeteAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
+
+        swal("Ops!", "No plano dente de leite o titular deve ter menos que 7 anos", "error");
         return false;
     }
 
@@ -407,12 +414,16 @@ function salvarRascunho() {
         }
     }
 
-    if (!menorQueSeteAnos(date)) {
+    var proposta = get("propostaPf");
+    var planos = get("CodPlanos");
+    var plano = planos.filter(function (x) { return x.cdPlano == proposta.planos[0].cdPlano });
 
-        swal("Ops!", "No plano dente de leite titular deve ter menos que 7 anos", "error");
+
+
+    if (!menorQueSeteAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
+
+        swal("Ops!", "No plano dente de leite o titular deve ter menos que 7 anos", "error");
         return false;
-
-
     }
 
     if (!ValidaNome($("#nomeMae").val())) {

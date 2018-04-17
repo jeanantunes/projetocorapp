@@ -79,6 +79,18 @@ function SalvarDependente() {
         return;
     }
 
+    var date = toDate($(".nascimento").val());
+
+    var proposta = get("propostaPf");
+    var planos = get("CodPlanos");
+    var plano = planos.filter(function (x) { return x.cdPlano == proposta.planos[0].cdPlano });
+
+    if (!menorQueSeteAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
+
+        swal("Ops!", "No plano dente de leite o dependente deve ter menos que 7 anos", "error");
+        return false;
+    }
+
     if ($(".nome-mae").val() == "") {
         swal("Ops!", "Preencha o Nome da Mãe", "error");
         return;

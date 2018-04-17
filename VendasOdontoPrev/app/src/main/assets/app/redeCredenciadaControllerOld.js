@@ -1,6 +1,10 @@
-﻿$(document).ready(function () {
+﻿
+
+$(document).ready(function () {
+
     especialidades();
     estados();
+
 });
 
 function initMap(redeCredenciada) {
@@ -9,11 +13,6 @@ function initMap(redeCredenciada) {
 }
 
 var t;
-
-var autoCompleteCidades = [];
-var dadosCidades = [];
-var autoCompleteBairros = [];
-var dadosBairros = [];
 
 function callEspecialidades(callback, token) {
 
@@ -81,7 +80,7 @@ function callCidade(callback, token, uf) {
 
     swal({
         title: "Aguarde",
-        text: 'Estamos buscando as cidades',
+        text: 'Estamos procurando as cidades',
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
@@ -111,7 +110,7 @@ function callBairro(callback, token, uf, codigoCidade) {
 
     swal({
         title: "Aguarde",
-        text: 'Estamos buscando os bairros',
+        text: 'Estamos procurando dentistas',
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
@@ -267,162 +266,94 @@ function estados() {
     });
 }
 
-$('#bairros').blur(function () {
-
-    $('#bairros').val($('#bairros').val().trim());
-
-});
-
 $("#estados").change(function () {
 
-    $('#cidades').val("");
-    $('#bairros').val("");
+    $('#cidades').empty();
+    $('#bairros').empty();
 
-    dadosCidades = [];
-
-    autoCompleteCidades = [];
-
-    var uf = $("#estados").val().trim();
+    var uf = $("#estados").val();
 
     callTokenProd(function (dataToken) {
 
         callCidade(function (dataCidade) {
 
-            //var sel = document.getElementById('cidades');
-            //
-            //var opt = document.createElement('option');
-            ////console.log(dataEspecialidades[i].descricao);
-            //opt.setAttribute('value', "selecione");
-            ////console.log(dataEspecialidades[i].codigo);
-            //var selecione = "Selecione...";
-            //opt.appendChild(document.createTextNode(selecione));
-            //sel.appendChild(opt);
+            var sel = document.getElementById('cidades');
 
-            autoCompleteCidades = [];
-            dadosCidades = [];
-            autoCompleteBairros = [];
-            dadosBairros = [];
+            var opt = document.createElement('option');
+            //console.log(dataEspecialidades[i].descricao);
+            opt.setAttribute('value', "selecione");
+            //console.log(dataEspecialidades[i].codigo);
+            var selecione = "Selecione...";
+            opt.appendChild(document.createTextNode(selecione));
+            sel.appendChild(opt);
 
             for (var i = 0; i < dataCidade.length; i++) {
 
                 //if (dataCidade[i].codigoUf == 0) continue
 
-                //var opt = document.createElement('option');
-                ////console.log(dataEspecialidades[i].descricao);
-                //opt.setAttribute('value', dataCidade[i].codigoCidade);
-                //opt.setAttribute('data-id', dataCidade[i].codigoMicroregiao);
-                ////console.log(dataEspecialidades[i].codigo);
-                //opt.appendChild(document.createTextNode(dataCidade[i].nome));
-                //
-
-                var cidades = new Object();
-                cidades.nome = removerAcentos(dataCidade[i].nome.toUpperCase().trim());
-                cidades.codigoMicroregiao = dataCidade[i].codigoMicroregiao;
-                cidades.codigoCidade = dataCidade[i].codigoCidade;
-
-                dadosCidades.push(cidades);
-
-                autoCompleteCidades.push(removerAcentos(dataCidade[i].nome.toUpperCase()).trim());
-                //
-                //sel.appendChild(opt);
+                var opt = document.createElement('option');
+                //console.log(dataEspecialidades[i].descricao);
+                opt.setAttribute('value', dataCidade[i].codigoCidade);
+                opt.setAttribute('data-id', dataCidade[i].codigoMicroregiao);
+                //console.log(dataEspecialidades[i].codigo);
+                opt.appendChild(document.createTextNode(dataCidade[i].nome));
+                sel.appendChild(opt);
             }
 
-            $("#cidades").autocomplete({
-                source: autoCompleteCidades,
-                minLength: 0,
-                search: function (event, ui) {
-                    $(this).val(removerAcentos($(this).val().toUpperCase()));
-                }
-            }).focus(function () {
-
-                $(this).autocomplete("search");
-            });
-
-            //document.getElementById('cidades').value = "selecione";
+            document.getElementById('cidades').value = "selecione";
 
             swal.close();
         }, dataToken.access_token, uf);
     });
 });
 
-$("#cidades").keyup(function () {
+$("#cidades").change(function () {
 
-    if ($("#estados").val() == "selecione") swal("Ops!", "Escolha um estado", "info");
+    $('#bairros').empty();
 
-});
-
-$("#cidades").focus(function () {
-   
-});
-
-$("#cidades").blur(function () {
-
-    if ($("#cidades").val() == "") return;
-
-    var cidade = dadosCidades.filter(function (x) { if (x.nome == $("#cidades").val().trim()) { return x.nome; } });
-
-    if (cidade.length == 0) return;
-
-    $('#bairros').val("");
-
-    var codigoCidade = cidade[0].codigoCidade;//$("#cidades").val();
-    var uf = $("#estados").val().trim();
+    var codigoCidade = $("#cidades").val();
+    var uf = $("#estados").val();
 
     callTokenProd(function (dataToken) {
 
         callBairro(function (dataBairro) {
 
+            var sel = document.getElementById('bairros');
+
             if (dataBairro.status == 422) {
 
-                $('#bairros').val("");
+                var opt = document.createElement('option');
+                //console.log(dataEspecialidades[i].descricao);
+                opt.setAttribute('value', 0);
+                //console.log(dataEspecialidades[i].codigo);
+                var selecione = "TODOS";
+                opt.appendChild(document.createTextNode(selecione));
+                sel.appendChild(opt);
+
                 return;
             }
 
-            //var opt = document.createElement('option');
-            ////console.log(dataEspecialidades[i].descricao);
-            //opt.setAttribute('value', "selecione");
-            ////console.log(dataEspecialidades[i].codigo);
-            //var selecione = "Selecione...";
-            //opt.appendChild(document.createTextNode(selecione));
-            //sel.appendChild(opt);
-
-            autoCompleteBairros = [];
-            dadosBairros = [];
+            var opt = document.createElement('option');
+            //console.log(dataEspecialidades[i].descricao);
+            opt.setAttribute('value', "selecione");
+            //console.log(dataEspecialidades[i].codigo);
+            var selecione = "Selecione...";
+            opt.appendChild(document.createTextNode(selecione));
+            sel.appendChild(opt);
 
             for (var i = 0; i < dataBairro.length; i++) {
 
-                var bairros = new Object();
+                //if (dataCidade[i].codigoUf == 0) continue
 
-                bairros.nome = removerAcentos(dataBairro[i].nome.replace("JD", "JARDIM").toUpperCase()).trim();
-                bairros.codigo = dataBairro[i].codigo;
-
-                dadosBairros.push(bairros);
-
-                autoCompleteBairros.push(removerAcentos(dataBairro[i].nome.replace("JD", "JARDIM").toUpperCase()).trim());
-
-                //var opt = document.createElement('option');
+                var opt = document.createElement('option');
                 //console.log(dataEspecialidades[i].descricao);
-                //opt.setAttribute('value', dataBairro[i].codigo);
+                opt.setAttribute('value', dataBairro[i].codigo);
                 //console.log(dataEspecialidades[i].codigo);
-                //opt.appendChild(document.createTextNode(dataBairro[i].nome));
-                //sel.appendChild(opt);
+                opt.appendChild(document.createTextNode(dataBairro[i].nome));
+                sel.appendChild(opt);
             }
 
-            $("#bairros").blur();
-
-            $("#bairros").autocomplete({
-                source: autoCompleteBairros,
-                minLength: 0,
-                search: function (event, ui) {
-                    $(this).val(removerAcentos($(this).val().toUpperCase()));
-                }
-
-            }).focus(function () {
-
-                $(this).autocomplete("search");
-                });
-
-            //document.getElementById('bairros').value = "selecione";
+            document.getElementById('bairros').value = "selecione";
 
             swal.close();
 
@@ -438,15 +369,9 @@ $("#btnBuscar").click(function () {
         return;
     }
 
-    if ($('#cidades').val() == "") {
+    if ($('#cidades').val() == "selecione") {
 
-        swal("Ops!", "Digite uma cidade", "info");
-        return;
-    }
-
-    if ($('#bairros').val() == "" && $('#cidades').val() == "SAO PAULO") {
-
-        swal("Ops!", "Digite uma cidade", "info");
+        swal("Ops!", "Selecione uma cidade", "info");
         return;
     }
 
@@ -455,14 +380,9 @@ $("#btnBuscar").click(function () {
     var codigoMarca = "1";
     var codBeneficiario = "375796040";
     var estado = $("#estados").val();
-
-    var bairro = dadosBairros.filter(function (x) { if (x.nome == $("#bairros").val().trim()) { return x.nome; } });
-    var cidade = dadosCidades.filter(function (x) { if (x.nome == $("#cidades").val().trim()) { return x.nome; } });
-
-    var codBairro = bairro.length > 0 ? bairro[0].codigo : "selecione";   //$("#bairros").val(); 
-
-    var codigoMicroregiao = cidade[0].codigoMicroregiao;//$("#cidades").find(':selected').data('id');
-    var codCidade = cidade[0].codigoCidade; //$("#cidades").val();
+    var codBairro = $("#bairros").val();
+    var codigoMicroregiao = $("#cidades").find(':selected').data('id');
+    var codCidade = $("#cidades").val();
 
     callTokenProd(function (dataToken) {
 
@@ -472,7 +392,7 @@ $("#btnBuscar").click(function () {
 
                 initMap(dataRedeCredenciada);
 
-
+        
 
             }, dataToken.access_token, codBeneficiario, estado, codigoEspecialidade, codigoMicroregiao, privian, codigoMarca, "0", codCidade);
 
@@ -501,6 +421,7 @@ $("#btnBuscar").click(function () {
 $("#closeModalRedeCredenciada").click(function () {
 
     $('#myModal').modal('toggle');
+
 
 });
 

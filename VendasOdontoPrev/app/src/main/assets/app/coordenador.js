@@ -518,6 +518,19 @@ function setPlanosHmlCod() {
     //planos.push(plano);
 
 
+    ////// CODIGO PLANOS DENTE DE LEITE ////////
+
+    var plano = new Object();
+    plano.cdPlano = 11;
+    plano.nome = "DENTE DE LEITE MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 12;
+    plano.nome = "DENTE DE LEITE ANUAL";
+    planos.push(plano);
+
+
     //////// CODIGO PLANOS DENTAL ESTETICA /////////
 
     var plano = new Object();
@@ -630,25 +643,25 @@ function setPlanosHml() {
     //
     //planos.push(plano);
 
-    //plano = getRepository("plano");
-    //plano.cdPlano = 6;
-    //plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
-    //plano.valor = "14";
-    //plano.centavo = "98";
-    //plano.desc = "Mensal";
-    //plano.css = "colorSlick2";
-    //
-    //planos.push(plano);
-    //
-    //plano = getRepository("plano");
-    //plano.cdPlano = 7;
-    //plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
-    //plano.valor = "149";
-    //plano.centavo = "80";
-    //plano.desc = "Anual";
-    //plano.css = "colorSlick2";
-    //
-    //planos.push(plano);
+    plano = getRepository("plano");
+    plano.cdPlano = 11;
+    plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
+    plano.valor = "14";
+    plano.centavo = "98";
+    plano.desc = "Mensal";
+    plano.css = "colorSlick2";
+    
+    planos.push(plano);
+    
+    plano = getRepository("plano");
+    plano.cdPlano = 12;
+    plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
+    plano.valor = "149";
+    plano.centavo = "80";
+    plano.desc = "Anual";
+    plano.css = "colorSlick2";
+    
+    planos.push(plano);
 
     plano = getRepository("plano");
     plano.cdPlano = 1;

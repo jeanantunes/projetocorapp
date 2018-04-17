@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    <!--<div class="col-md-12 boxPlanos item">
+                    <div class="col-md-12 boxPlanos item">
                         <h1 class="titleBoxVendas titleSlick2">DENTE DE LEITE DE 0 A 7 ANOS</h1>
                         <div class="row pVPlanoVenda">
                             <label>Coberturas:</label>
@@ -133,7 +133,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div onclick="iniciarProposta(6)" class="btn btn-lg btn-block btnOdontPlano btnSlick2" href="venda_pf_dados_proposta.html" role="button">
+                                <div id="denteDeLeiteMensal" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick2" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                     <div class="spanInlineLeft">
                                         <span>Mensal</span>
                                     </div>
@@ -142,7 +142,7 @@
                                     </div>
                                 </div>
                                 <p class="pInfoPlanoSlick2">Sem carência</p>
-                                    <div onclick="iniciarProposta(7)" class="btn btn-lg btn-block btnOdontPlano btnSlick2" href="venda_pf_dados_proposta.html" role="button">
+                                    <div id="denteDeLeiteAnual" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick2" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                         <div class="spanInlineLeft">
                                             <span>Anual</span>
                                         </div>
@@ -153,7 +153,7 @@
                                     <p class="pInfoPlanoSlick2">Sem carência</p>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
 
                     <div class="col-md-12 boxPlanos item">
                         <h1 class="titleBoxVendas titleSlick3">DENTAL ESTÉTICA</h1>

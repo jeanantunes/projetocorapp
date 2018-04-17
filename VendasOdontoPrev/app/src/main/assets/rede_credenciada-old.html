@@ -12,7 +12,6 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
     <link href="css/sweetalert.css" rel="stylesheet" />
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 
     <script type="text/javascript">
         function mapa(abc) {
@@ -41,9 +40,9 @@
                 for (var i = 0; i < abc.dentistas.length; i++) {
 
                     var filter = dentistas.filter(function (x) { return x == abc.dentistas[i].codigoDentista });
-
+                    
                     if (filter.length > 0) continue;
-
+                    
                     dentistas.push(abc.dentistas[i].codigoDentista);
 
                     var latlng2 = new google.maps.LatLng((abc.dentistas[i].endereco.cidade.latitude), (abc.dentistas[i].endereco.cidade.longitude));
@@ -67,7 +66,7 @@
                             marker.setIcon('img/pin_rosa.png');
                             selectedMarker = marker;
 
-
+                            
                             //console.log("Dentro da funcão Click:  " + contentString[i]);
                             //infowindow.setContent('<div><strong>' + abc.dentistas[i].nomeDentista + '</strong><br>');
                             //infowindow.open(map, marker);
@@ -85,7 +84,7 @@
                             $("#tipoPessoaDentista").html(abc.dentistas[i].tipoPrestador);
 
                             //document.getElementById('nomeDentista').innerHTML = abc.dentistas[i].nomeDentista;
-
+                            
                             //document.getElementById('croDentista').innerHTML = abc.dentistas[i].numeroCRO;
                             //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
                             //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
@@ -94,9 +93,9 @@
                             //document.getElementById('telefoneDentista').innerHTML = abc.dentistas[i].numeroFone;
                             //document.getElementById('tipoPessoaDentista').innerHTML = abc.dentistas[i].tipoPrestador;
 
-
+                            
                             $('#myModal').modal('show');
-
+                            
                         }
                     })(marker, i));
                 }
@@ -192,15 +191,12 @@
 
                     <div class="form-group">
                         <label for="" class="label-cidade labelOdontBlur">CIDADE</label>
-                        <input type="text" class="form-control cidade selectListBlur autocomplete" id="cidades" />
-
+                        <select class="form-control cidade selectListBlur" id="cidades"></select>
                     </div>
 
                     <div class="form-group">
                         <label for="" class="label-bairro labelOdontBlur">BAIRRO</label>
-                        <input class="form-control bairro selectListBlur autocomplete" id="bairros" />
-
-                        <!--<select class="form-control bairro selectListBlur" id="bairros"></select>-->
+                        <select class="form-control bairro selectListBlur" id="bairros"></select>
                     </div>
 
                 </div>
@@ -216,7 +212,7 @@
         </div>
 
         <div id="map" class="nopadding">
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYhoOl5Kervzx0pOvSAL8qIIWcPHg5Zyk&callback=mapa">
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJVbswYP8yLVKCQGtTN3Xsifugqm8BBkQ&callback=mapa">
             </script>
         </div>
 
@@ -275,8 +271,6 @@
         </div>
     </div>
     <!-- End Modal -->
-
-
     <script src="js/jquery.3.2.1.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -288,18 +282,5 @@
     <script src="js/sweetalert.min.js"></script>
     <script src="app/coordenador.js"></script>
     <script src="app/redeCredenciadaController.js"></script>
-    <script src="js/jquery-ui.js"></script>
-
-    <style>
-        .ui-autocomplete {
-            max-height: 350px;
-            overflow-y: auto;
-            /* prevent horizontal scrollbar */
-            overflow-x: hidden;
-            /* add padding to account for vertical scrollbar */
-            padding-right: 20px;
-        }
-    </style>
-
 </body>
 </html>
