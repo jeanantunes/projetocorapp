@@ -190,17 +190,18 @@ function resyncPropostasPF() {
 
     $.each(propostasPF, function (i, item) {
 
+
         var o = propostasPF.filter(function (x) { return x.cpf == item.cpf });
         var propostas = propostasPF.filter(function (x) { return x.cpf != item.cpf });
 
-        propostasPF = []; //limpar
+        var salvarPropostas = []; //limpar
 
         $.each(propostas, function (i, item) {
-            propostasPF.push(item);
+            salvarPropostas.push(item);
         });
 
         if (item.status != "SYNC")
-            return
+            return;
 
         var now = new Date(item.horaSync);
         var date = new Date();
@@ -212,13 +213,13 @@ function resyncPropostasPF() {
 
         o[0].status = "PRONTA";
 
-        propostasPF.push(o[0]);
+        salvarPropostas.push(o[0]);
 
-        put("pessoas", JSON.stringify(propostasPF));
+        put("pessoas", JSON.stringify(salvarPropostas));
 
         sincronizarPessoa(function (dataProposta) {
             console.log(dataProposta);
-        }, o, false);
+        }, o, true);
 
         atualizarDashBoard();
 
@@ -250,14 +251,14 @@ function resyncPropostasPME() {
         var propostas = propostasPME.filter(function (x) { return x.cnpj != item.cnpj });
         var b = beneficiarios.filter(function (x) { return x.cnpj == item.cnpj });
 
-        propostasPME = []; //limpar
+        var salvarPropostasPME = []; //limpar
 
         $.each(propostas, function (i, item) {
-            propostasPME.push(item);
+            salvarPropostasPME.push(item);
         });
 
         if (item.status != "SYNC") {
-            propostasPME.push(o[0]);
+            salvarPropostasPME.push(o[0]);
             return;
         }
 
@@ -266,16 +267,17 @@ function resyncPropostasPME() {
 
         var olderDate = moment(date).subtract(time.timeResync, 'minutes').toDate();
 
-        if (!(olderDate > now))
-            return;
+        if (!(olderDate > now)) return;
 
         o[0].status = "PRONTA";
 
-        propostasPME.push(o[0]);
+        salvarPropostasPME.push(o[0]);
 
-        put("empresas", JSON.stringify(propostasPME));
+        put("empresas", JSON.stringify(salvarPropostasPME));
 
-        sincronizarEmpresa(o, b);
+        sincronizarEmpresa(function (dataVendaPme) {
+
+        }, o, b, true);
 
         atualizarDashBoard();
 

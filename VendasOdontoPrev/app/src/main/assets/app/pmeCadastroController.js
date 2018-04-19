@@ -322,8 +322,11 @@ function verificarSePropostaExiste() {
                         function (isConfirm) {
                             if (isConfirm) {
                                 var empresasExcetoExcluidas = empresas.filter(function (x) { return x.cnpj != $('#cnpjEmpresa').val() });
-                                put("empresas", JSON.stringify(empresasExcetoExcluidas));
+                                var beneficiarios = get("beneficiarios");
+                                var beneficiariosExcetoExcluidos = beneficiarios.filter(function (x) { return x.cnpj != $('#cnpjEmpresa').val() });
 
+                                put("empresas", JSON.stringify(empresasExcetoExcluidas));
+                                put("beneficiarios", JSON.stringify(beneficiariosExcetoExcluidos));
                                 window.location.href = "venda_pme_dados_proposta.html"
                                 //buscarEmpresa();
                             } else {

@@ -115,9 +115,6 @@ $(function () {
     });
 });
 
-
-
-
 function validarData(data) {
     var bits = data.split('/');
 
@@ -216,7 +213,6 @@ function ValidaNome(fieldValue) {
     return true
 }
 
-
 function setPlanosProd() {
     planos = [];
 
@@ -272,6 +268,26 @@ function setPlanosProd() {
     plano.desc = "Anual";
     plano.css = "colorSlick3";
     
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 11;
+    plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
+    plano.valor = "14";
+    plano.centavo = "98";
+    plano.desc = "Mensal";
+    plano.css = "colorSlick2";
+
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 12;
+    plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
+    plano.valor = "149";
+    plano.centavo = "80";
+    plano.desc = "Anual";
+    plano.css = "colorSlick2";
+
     planos.push(plano);
 
     //plano = getRepository("plano");
@@ -397,7 +413,6 @@ function setPlanosProd() {
     setPlanosProdCod()
 }
 
-
 function setPlanosProdCod() {
 
     planos = [];
@@ -410,6 +425,18 @@ function setPlanosProdCod() {
     var plano = new Object();
     plano.cdPlano = 102;
     plano.nome = "MASTER LE";
+    planos.push(plano);
+
+    ////// CODIGO PLANOS DENTE DE LEITE ////////
+
+    var plano = new Object();
+    plano.cdPlano = 11;
+    plano.nome = "DENTE DE LEITE MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 12;
+    plano.nome = "DENTE DE LEITE ANUAL";
     planos.push(plano);
 
     ////// CODIGO PLANOS DENTAL BEM - ESTAR ////////
@@ -944,9 +971,6 @@ function atualizarDashBoard() {
     $("#finalizada").html(qtdFinalizada);
 }
 
-
-
-
 function sincronizar() {
 
     if (navigator.onLine) {
@@ -989,7 +1013,7 @@ function sincronizar() {
                     sincronizarEmpresa(function (dataVendaPme) {
                         swal.close();
 
-                    }, o, b);
+                    }, o, b, false);
                     atualizarDashBoard();
                 }
             });
@@ -1195,42 +1219,24 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
     console.log(json);
 
-    if (reSync){
-
-        swal({
-            title: "Aguarde",
-            text: 'Estamos enviando a sua proposta',
-            content: "input",
-            imageUrl: "img/load.gif",
-            showCancelButton: false,
-            showConfirmButton: false,
-            icon: "info",
-            button: {
-                text: "...",
-                closeModal: false,
-            },
-        });
-
-    }
-
-
-
 
     callTokenProd(function (dataToken) {
 
-        swal({
-            title: "Aguarde",
-            text: 'Estamos enviando a sua proposta',
-            content: "input",
-            imageUrl: "img/load.gif",
-            showCancelButton: false,
-            showConfirmButton: false,
-            icon: "info",
-            button: {
-                text: "...",
-                closeModal: false,
-            },
-        });
+        if (!reSync) {
+            swal({
+                title: "Aguarde",
+                text: 'Estamos enviando a sua proposta',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+        }
 
         $.ajax({
             async: true,
@@ -1267,7 +1273,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                     put("pessoas", JSON.stringify(todosExcetoExclusao));
 
                 }
-                
+                swal.close();
                 atualizarDashBoard();
                 callback(result);
 
@@ -1280,7 +1286,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
     });
 }
 
-function sincronizarEmpresa(callback, proposta, beneficiarios) {
+function sincronizarEmpresa(callback, proposta, beneficiarios, reSync) {
 
     console.log(proposta);
 
@@ -1292,20 +1298,21 @@ function sincronizarEmpresa(callback, proposta, beneficiarios) {
 
     callTokenProd(function (dataToken) {
 
-        swal({
-            title: "Aguarde",
-            text: 'Estamos enviando a sua proposta',
-            content: "input",
-            imageUrl: "img/load.gif",
-            showCancelButton: false,
-            showConfirmButton: false,
-            icon: "info",
-            button: {
-                text: "...",
-                closeModal: false,
-            },
-        });
-
+        if (!reSync){
+            swal({
+                title: "Aguarde",
+                text: 'Estamos enviando a sua proposta',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+        }
 
         $.ajax({
             url: URLBase + "/corretorservicos/1.0/vendapme",
