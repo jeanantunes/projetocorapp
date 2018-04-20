@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    var termo = getComponent("termoCadastro");
+
+    localStorage.removeItem("reCadastro");
+
+    $(".componenteTermo").append(termo);
+
     $("#nomeNaoCadastrado").blur(function () {
 
         $("#nomeNaoCadastrado").val($("#nomeNaoCadastrado").val().trim());
@@ -66,6 +72,7 @@ $(document).ready(function () {
 
                         return;
                     }
+                    // || dataDadosUsuario.statusForcaVenda.toUpperCase() == "INATIVO" || dataDadosUsuario.statusForcaVenda.toUpperCase() == "REPROVADO"
 
                     if (dataDadosUsuario.cdForcaVenda != null && dataDadosUsuario.statusForcaVenda.toUpperCase() == "PRÉ-CADASTRO") {
 
@@ -80,9 +87,25 @@ $(document).ready(function () {
                         localStorage.setItem("dadosUsuario", JSON.stringify(dataDadosUsuario));
 
                     }
+
+                    //else if (dataDadosUsuario.cdForcaVenda != null && (dataDadosUsuario.statusForcaVenda.toUpperCase() == "INATIVO" || dataDadosUsuario.statusForcaVenda.toUpperCase() == "REPROVADO")) {
+                    //
+                    //    swal.close();
+                    //    put("reCadastro", true);
+                    //    console.log(dataDadosUsuario);
+                    //    $("#divCadastroInativo").removeClass("hide");
+                    //    $("#cpfOdont").addClass("hide");
+                    //    $("#nomeInativoCadastrado").val(dataDadosUsuario.nome);
+                    //    $("#celularInativoCadastrado").val(dataDadosUsuario.celular);
+                    //    $("#emailInativoCadastrado").val(dataDadosUsuario.email);
+                    //
+                    //    localStorage.setItem("dadosUsuario", JSON.stringify(dataDadosUsuario));
+                    //
+                    //}
                     else if (dataDadosUsuario.cdForcaVenda == null) {
                         swal.close();
                         console.log(dataDadosUsuario);
+                        put("reCadastro", false);
                         $("#celOdontCorretora").removeClass("hide");
                         $("#cpfOdont").addClass("hide");
                     }
@@ -111,21 +134,48 @@ $(document).ready(function () {
                 $("#cadastroSucessoCorretora").removeClass("hide");
                 //$("#termoOdontNCadastrado").removeClass('hide');
 
-                var codCorretora = dataCorretora.cdCorretora;
-                var nome = $("#nomeNaoCadastrado").val();
-                var cpfTratado = $("#cpf").val().replace(/\D/g, '');
-                var celularTratado = $("#celularNaoCadastrado").val().replace(/\D/g, '');
-                var email = $("#emailNaoCadastrado").val();
-                var senha = $("#confirmar-senhaCpfFalse").val();
-                var dataNascimento = "11/08/2001";
+                var reCadastro = get("reCadastro");
 
-                console.log(dataNascimento);
+                if (!reCadastro) {
+                    var codCorretora = dataCorretora.cdCorretora;
+                    var nome = $("#nomeNaoCadastrado").val();
+                    var cpfTratado = $("#cpf").val().replace(/\D/g, '');
+                    var celularTratado = $("#celularNaoCadastrado").val().replace(/\D/g, '');
+                    var email = $("#emailNaoCadastrado").val();
+                    var senha = $("#confirmar-senhaCpfFalse").val();
+                    var dataNascimento = "12/09/2002";
 
-                callInputForcaVenda(function (dataForcaVenda) {
 
-                    console.log(dataForcaVenda);
+                    console.log(dataNascimento);
 
-                }, dataToken.access_token, cpfTratado, celularTratado, email, codCorretora, nome, senha, dataNascimento);
+                    callInputForcaVenda(function (dataForcaVenda) {
+
+                        console.log(dataForcaVenda);
+
+                    }, dataToken.access_token, cpfTratado, celularTratado, email, codCorretora, nome, senha, dataNascimento);
+
+
+                } else {
+
+                    var dadosUsuario = get("dadosUsuario");
+                    var codCorretora = dataCorretora.cdCorretora;
+                    var nome = $("#nomeInativoCadastrado").val();
+                    
+                    var cpfTratado = $("#cpf").val().replace(/\D/g, '');
+                    var celularTratado = $("#celularInativoCadastrado").val().replace(/\D/g, '');
+                    var email = $("#emailInativoCadastrado").val();
+                    var senha = $("#confirmar-senhaCpfFalse").val();
+                    var dataNascimento = "12/09/2002";
+
+                    callPutForcaVenda(function () {
+
+
+
+                    }, dataToken.access_token);
+
+                }
+
+
 
 
             }, dataToken.access_token, cnpjValidado);

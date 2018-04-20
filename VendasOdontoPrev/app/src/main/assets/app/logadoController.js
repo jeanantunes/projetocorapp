@@ -1,8 +1,8 @@
 ﻿var preenchidos = false;
 
 $(document).ready(function () {
-    atualizarDashBoard();
     validarVersaoApp();
+    atualizarDashBoard(); 
     resyncPropostasPME();
     resyncPropostasPF();
     checkStatusPropostas();
@@ -21,10 +21,11 @@ function validarVersaoApp()
                 swal({
                     title: "Ops",
                     text: "Sua versão do aplicativo está desatualizada, atualize na Play Store",
-                    type: "warning"
+                    type: "warning",
+                    closeOnConfirm: false
                 }, function () {
                    // Redirect the user
-                    window.location = "https://play.google.com/store/apps/details?id=com.vendaodonto.vendasodontoprev";
+                    window.location = "market://details?id=com.vendaodonto.vendasodontoprev";
                 });
             }
 

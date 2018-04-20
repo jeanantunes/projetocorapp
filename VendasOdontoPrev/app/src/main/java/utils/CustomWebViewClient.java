@@ -2,6 +2,7 @@ package utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.webkit.WebView;
@@ -45,15 +46,26 @@ public class CustomWebViewClient extends WebViewClient {
     @SuppressWarnings("deprecation")
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        final Uri uri = Uri.parse(url);
-        try {
-            Log.d("MeuLog", "Instanciou Logado");
-            return handleUri(view, url);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+
+        Log.d("MeuLog", "URL: " + url);
+
+        if (url.startsWith("market://")){
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            context.startActivity(intent);
+            return true;
         }
-        return false;
-    }
+        else {
+            final Uri uri = Uri.parse(url);
+            try {
+                Log.d("MeuLog", "Instanciou Logado");
+                return handleUri(view, url);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+     }
 
 //    @TargetApi(Build.VERSION_CODES.N)
 //    @Override

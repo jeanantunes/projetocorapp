@@ -16,11 +16,18 @@ $(document).ready(function(){
         return false;
     });
 
+    $("#btnInativoCelOdont").click(function () {
+        $("#divCadastroInativo").addClass("hide")
+        $("#keyOdontCorretora").removeClass("hide")
+        return false;
+    });
+
     $("#btnkeyOdont").click(function(){
         $( "#keyOdont" ).addClass( "hide" )
         $( "#termoOdont" ).removeClass( "hide" )
         return false;
     });
+
     $("#btnTermo").click(function(){
         $( "#termoOdont" ).addClass( "hide" )
         $( "#cadastroSucesso" ).removeClass( "hide" )
@@ -32,16 +39,19 @@ $(document).ready(function(){
     //     $( "#cpfOdontCorretora" ).addClass( "hide" )
     //     return false;
     // });
+
     $("#btnCelOdontNCpf").click(function(){
         $( "#celOdontCorretora" ).addClass( "hide" )
         $( "#keyOdontCorretora" ).removeClass( "hide" )
         return false;
     });
+
     // $("#linkBuscarCorretora").click(function(){
     //     $( "#infoCorretora" ).addClass( "hide" )
     //     $( "#buscarCorretora" ).removeClass( "hide" )
     //     return false;
     // });
+
     $("#btnkeyOdontNCpf").click(function () {
 
         $("#keyOdontCorretora").addClass("hide")
@@ -49,7 +59,6 @@ $(document).ready(function(){
         
         return false;
     });
-
 
 });
 
