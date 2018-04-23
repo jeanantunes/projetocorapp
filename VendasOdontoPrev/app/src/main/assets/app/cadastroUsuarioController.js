@@ -88,20 +88,20 @@ $(document).ready(function () {
 
                     }
 
-                    //else if (dataDadosUsuario.cdForcaVenda != null && (dataDadosUsuario.statusForcaVenda.toUpperCase() == "INATIVO" || dataDadosUsuario.statusForcaVenda.toUpperCase() == "REPROVADO")) {
-                    //
-                    //    swal.close();
-                    //    put("reCadastro", true);
-                    //    console.log(dataDadosUsuario);
-                    //    $("#divCadastroInativo").removeClass("hide");
-                    //    $("#cpfOdont").addClass("hide");
-                    //    $("#nomeInativoCadastrado").val(dataDadosUsuario.nome);
-                    //    $("#celularInativoCadastrado").val(dataDadosUsuario.celular);
-                    //    $("#emailInativoCadastrado").val(dataDadosUsuario.email);
-                    //
-                    //    localStorage.setItem("dadosUsuario", JSON.stringify(dataDadosUsuario));
-                    //
-                    //}
+                    else if (dataDadosUsuario.cdForcaVenda != null && (dataDadosUsuario.statusForcaVenda.toUpperCase() == "INATIVO" || dataDadosUsuario.statusForcaVenda.toUpperCase() == "REPROVADO")) {
+                    
+                        swal.close();
+                        put("reCadastro", true);
+                        console.log(dataDadosUsuario);
+                        $("#divCadastroInativo").removeClass("hide");
+                        $("#cpfOdont").addClass("hide");
+                        $("#nomeInativoCadastrado").val(dataDadosUsuario.nome);
+                        $("#celularInativoCadastrado").val(dataDadosUsuario.celular);
+                        $("#emailInativoCadastrado").val(dataDadosUsuario.email);
+                    
+                        localStorage.setItem("dadosUsuario", JSON.stringify(dataDadosUsuario));
+                    
+                    }
                     else if (dataDadosUsuario.cdForcaVenda == null) {
                         swal.close();
                         console.log(dataDadosUsuario);
@@ -130,13 +130,16 @@ $(document).ready(function () {
                     return;
                 }
 
-                $("#infoCorretora").addClass('hide');
-                $("#cadastroSucessoCorretora").removeClass("hide");
+
                 //$("#termoOdontNCadastrado").removeClass('hide');
 
                 var reCadastro = get("reCadastro");
 
                 if (!reCadastro) {
+
+
+
+
                     var codCorretora = dataCorretora.cdCorretora;
                     var nome = $("#nomeNaoCadastrado").val();
                     var cpfTratado = $("#cpf").val().replace(/\D/g, '');
@@ -150,12 +153,15 @@ $(document).ready(function () {
 
                     callInputForcaVenda(function (dataForcaVenda) {
 
-                        console.log(dataForcaVenda);
+                        $("#infoCorretora").addClass('hide');
+                        $("#cadastroSucessoCorretora").removeClass("hide");
 
                     }, dataToken.access_token, cpfTratado, celularTratado, email, codCorretora, nome, senha, dataNascimento);
 
 
                 } else {
+
+
 
                     var dadosUsuario = get("dadosUsuario");
                     var codCorretora = dataCorretora.cdCorretora;
@@ -167,11 +173,12 @@ $(document).ready(function () {
                     var senha = $("#confirmar-senhaCpfFalse").val();
                     var dataNascimento = "12/09/2002";
 
-                    callPutForcaVenda(function () {
+                    callPutSenhaForcaVenda(function () {
 
+                        $("#infoCorretora").addClass('hide');
+                        $("#cadastroSucessoCorretora").removeClass("hide");
 
-
-                    }, dataToken.access_token);
+                    }, dataToken.access_token, dadosUsuario.cdForcaVenda, nome, celularTratado, email, senha, codCorretora);
 
                 }
 
@@ -299,6 +306,9 @@ $(document).ready(function () {
                     put("dadosUsuario", JSON.stringify(forca));
 
                     login.salvarDadosUsuario(JSON.stringify(forca));
+
+                    $("#termoOdont").addClass("hide")
+                    $("#cadastroSucesso").removeClass("hide")
 
                 }, dataToken.access_token, cpf);
 
@@ -603,6 +613,42 @@ function callPutForcaVenda(callback, token, codForca, nome, celular, email, senh
         },
         processData: false,
         "data": "{\r\n\r\n    \"cdForcaVenda\": " + codForca + ",\r\n\r\n    \"nome\": \"" + nome + "\",\r\n\r\n    \"celular\": \"" + celular + "\",\r\n\r\n    \"email\": \"" + email + "\",\r\n\r\n    \"senha\": \"" + senha + "\",\r\n\r\n    \"nomeEmpresa\": \"" + nomeEmpresa + "\",\r\n\r\n    \"nomeGerente\": \"" + nomeGerente + "\",\r\n\r\n    \"responsavel\": \"" + responsavel + "\",\r\n\r\n    \"rg\": 0,\r\n\r\n    \"canalVenda\": " + canalVenda + "\r\n\r\n}",
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+
+        }
+    });
+}
+
+function callPutSenhaForcaVenda(callback, token, codForca, nome, celular, email, senha, cdCorretora) {
+
+    var setarPreCadastro = 1;
+
+    var json = {
+        "cdForcaVenda": codForca,
+        "nome": nome,
+        "celular": celular,
+        "email": email,
+        "senha": senha,
+        "corretora": {
+            "cdCorretora": parseInt(cdCorretora)
+        },
+        "statusForcaVenda": setarPreCadastro
+    };
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/forcavenda",
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+            "Authorization": "Bearer " + token
+        },
+        processData: false,
+        data: JSON.stringify(json),
         success: function (resp) {
             callback(resp);
         },

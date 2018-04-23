@@ -28,12 +28,15 @@ $(document).ready(function(){
         return false;
     });
 
-    $("#btnTermo").click(function(){
-        $( "#termoOdont" ).addClass( "hide" )
-        $( "#cadastroSucesso" ).removeClass( "hide" )
-        return false;
-    });
+    //$("#btnTermo").click(function(){ btn termo
+    //
+    //    return false;
+    //});
 
+
+
+
+    //
     // $("#btnCpfOdont").click(function(){
     //     $( "#celOdontCorretora" ).removeClass( "hide" )
     //     $( "#cpfOdontCorretora" ).addClass( "hide" )
