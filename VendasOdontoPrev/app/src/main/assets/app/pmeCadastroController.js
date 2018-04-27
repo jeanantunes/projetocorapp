@@ -438,19 +438,19 @@ function buscarEmpresa() {
                     //put('cpnjValido', dataConsulta.getElementsByTagName("situacao")[0].textContent);
                     
                     //console.log(empresaAtiva);
-                    try { $("#rua").val(dataConsulta.getElementsByTagName("Nome")[0].textContent); } catch (Exception) { }
-                    try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent); } catch (Exception) { $("#razao-social").prop('disabled', false); }
-                    try { $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent); } catch (Exception) { $("#ramo-atividade").prop('disabled', false); }
-                    try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent); } catch (Exception) { $("#representante-legal").prop('disabled', false); }
-                    try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent); } catch (Exception) { $("#cpf-representante").prop('disabled', false); }
-                    try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent); } catch (Exception) { $("#nome-fantasia").prop('disabled', false); }
-                    try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[0].textContent); } catch (Exception) { }
-                    try { $("#cep").val(dataConsulta.getElementsByTagName("cep")[0].textContent); } catch (Exception) { }
-                    try { $("#uf").val(dataConsulta.getElementsByTagName("uf")[0].textContent); } catch (Exception) { }
-                    try { $("#cidade").val(dataConsulta.getElementsByTagName("cidade")[0].textContent); } catch (Exception) { }
-                    try { $("#bairro").val(dataConsulta.getElementsByTagName("bairro")[0].textContent); } catch (Exception) { }
-                    try { $("#numeroEndereco").val(dataConsulta.getElementsByTagName("Numero")[0].textContent); } catch (Exception) { }
-                    try { $("#complemento").val(dataConsulta.getElementsByTagName("Complemento")[0].textContent); } catch (Exception) { }
+                    try { $("#rua").val(dataConsulta.getElementsByTagName("Nome")[0].textContent.trim()); } catch (Exception) { }
+                    try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent.trim()); } catch (Exception) { $("#razao-social").prop('disabled', false); }
+                    try { $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent.trim()); } catch (Exception) { $("#ramo-atividade").prop('disabled', false); }
+                    try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent.trim()); } catch (Exception) { $("#representante-legal").prop('disabled', false); }
+                    try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent.trim()); } catch (Exception) { $("#cpf-representante").prop('disabled', false); }
+                    try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent.trim()); } catch (Exception) { $("#nome-fantasia").prop('disabled', false); }
+                    try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[0].textContent.trim()); } catch (Exception) { }
+                    try { $("#cep").val(dataConsulta.getElementsByTagName("cep")[0].textContent.trim()); } catch (Exception) { }
+                    try { $("#uf").val(dataConsulta.getElementsByTagName("uf")[0].textContent.trim()); } catch (Exception) { }
+                    try { $("#cidade").val(dataConsulta.getElementsByTagName("cidade")[0].textContent.trim()); } catch (Exception) { }
+                    try { $("#bairro").val(dataConsulta.getElementsByTagName("bairro")[0].textContent.trim()); } catch (Exception) { }
+                    try { $("#numeroEndereco").val(dataConsulta.getElementsByTagName("Numero")[0].textContent.trim()); } catch (Exception) { }
+                    try { $("#complemento").val(dataConsulta.getElementsByTagName("Complemento")[0].textContent.trim()); } catch (Exception) { }
 
                     //29294771000110
 
@@ -615,21 +615,21 @@ function carregarProposta() {
 
     var proposta = get("proposta");
 
-    $("#cnpjEmpresa").val(proposta.cnpj);
+    $("#cnpjEmpresa").val(proposta.cnpj.trim());
 
     if (proposta.razaoSocial == "" && $("#cnpjEmpresa").val() != "") $("#razao-social").prop('disabled', false);
-    $("#razao-social").val(proposta.razaoSocial);
+    $("#razao-social").val(proposta.razaoSocial.trim());
 
-    $("#inscricao-estadual").val(proposta.incEstadual);
+    $("#inscricao-estadual").val(proposta.incEstadual.trim());
 
     if (proposta.ramoAtividade == "" && $("#cnpjEmpresa").val() != "") $("#ramo-atividade").prop('disabled', false);
-    $("#ramo-atividade").val(proposta.ramoAtividade);
+    $("#ramo-atividade").val(proposta.ramoAtividade.trim());
 
     if (proposta.nomeFantasia == "" && $("#cnpjEmpresa").val() != "") $("#nome-fantasia").prop('disabled', false);
-    $("#nome-fantasia").val(proposta.nomeFantasia);
+    $("#nome-fantasia").val(proposta.nomeFantasia.trim());
 
     if (proposta.representanteLegal == "" && $("#cnpjEmpresa").val() != "") $("#representante-legal").prop('disabled', false);
-    $("#representante-legal").val(proposta.representanteLegal);
+    $("#representante-legal").val(proposta.representanteLegal.trim());
 
     if (proposta.contatoEmpresa) {
         $("#squaredOne").attr("checked", true);

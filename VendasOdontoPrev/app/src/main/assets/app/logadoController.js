@@ -1,6 +1,9 @@
 ﻿var preenchidos = false;
 
 $(document).ready(function () {
+
+    validarStatusUsuario();
+
     validarVersaoApp();
     atualizarDashBoard(); 
     resyncPropostasPME();
@@ -30,6 +33,77 @@ function validarVersaoApp()
             }
 
         }, dataToken.access_token);
+    });
+}
+
+
+function validarStatusUsuario() {
+
+    var dadosForca = get("dadosUsuario");
+
+    callTokenProdSemMsgErro(function (dataToken) {
+
+        callDadosForcaVenda(function (dadosForca) {
+
+            var status = dadosForca.statusForcaVenda.toUpperCase();
+
+            if (status == "REPROVADO") {
+
+                swal({
+                    title: "Ops",
+                    text: "Você foi reprovado",
+                    type: "error",
+                    closeOnConfirm: false
+                }, function () {
+                    // Redirect the user
+                    logout.removerRegistroLogin();
+                    window.location = "index.html";
+                });
+
+                return;
+
+            } else if (status == "INATIVO") {
+
+                swal({
+                    title: "Ops",
+                    text: "Você foi inativado",
+                    type: "error",
+                    closeOnConfirm: false
+                }, function () {
+
+                    logout.removerRegistroLogin();
+                    window.location = "index.html";
+                });
+
+                return;
+            }
+
+
+        }, dataToken.access_token, dadosForca.cpf);
+    });
+
+}
+
+
+function callDadosForcaVenda(callback, token, cpf) {
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/forcavenda/" + cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+            "Authorization": "Bearer " + token
+        },
+        success: function (resp) {
+
+            callback(resp);
+
+        },
+        error: function (xhr) {
+
+        }
     });
 }
 

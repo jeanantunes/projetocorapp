@@ -175,10 +175,10 @@ function SalvarDependentes() {
 
         var benef = get("beneficiario");
         var dependente = getRepository("dependente");
-        dependente.nome = removerAcentos($(this).find(".nome-dependente").val());
+        dependente.nome = $(this).find(".nome-dependente").val();
         dependente.dataNascimento = $(this).find(".nascimento").val();
         dependente.cpf = $(this).find(".cpf").val();
-        dependente.nomeMae = removerAcentos($(this).find(".nome-mae").val());
+        dependente.nomeMae = $(this).find(".nome-mae").val();
         dependente.dataNascimento = $(this).find(".nascimento").val();
         dependente.sexo = $(this).find(".sexo").val();
 

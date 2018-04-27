@@ -16,12 +16,6 @@ function callLogin(callback, token, login, password) {
         },
         error: function (xhr) {
 
-
-            //console.log(JSON.stringify(resp.statusText));
-            //ob.imprimirAlgo(JSON.stringify(resp.statusText));
-            //console.log(xhr.status);
-            //$("#loadingLogin").addClass('hide');
-
             if (xhr.status == 403) {
                 swal("Ops!", "Login ou senha inválida.", "error");
                 $("#erroLogin").removeClass('hide');
@@ -29,8 +23,8 @@ function callLogin(callback, token, login, password) {
 
                 return;
             } else if (xhr.status == 0) {
+
                 swal("Ops!", "Erro na conexão, tente novamente.", "error");
-                //swal.close();
                 return;
             }
 
@@ -54,19 +48,7 @@ $("#continuarLogin").click(function () {
 
     logarETrazerDadosUsuario();
 
-    swal({
-        title: "Aguarde",
-        text: 'Estamos procurando seus dados',
-        content: "input",
-        showCancelButton: false,
-        showConfirmButton: false,
-        imageUrl: "img/load.gif",
-        icon: "info",
-        button: {
-            text: "...",
-            closeModal: false,
-        },
-    });
+
 });
 
 function callDadosForcaVenda(callback, token, cpf) {
@@ -81,20 +63,19 @@ function callDadosForcaVenda(callback, token, cpf) {
             "Authorization": "Bearer " + token
         },
         success: function (resp) {
-            //$("#loadingLogin").addClass('hide');
+
             callback(resp);
-            swal.close();
+            
         },
         error: function (xhr) {
-            //$("#loadingLogin").addClass('hide');
+
             console.log(xhr);
             if (xhr.status == 0) {
 
                 swal.close();
                 return;
             }
-            //console.log(JSON.stringify(resp.statusText));
-            //ob.imprimirAlgo(JSON.stringify(resp.statusText));
+
             swal.close();
         }
     });
@@ -127,46 +108,108 @@ function verificarInputs() {
     return true;
 }
 
-
-//$("#continuarLogin").click(function () {
-//
-//    logarETrazerDadosUsuario();
-//
-//    //window.location = "logado.html";
-//
-//});
-
 function logarETrazerDadosUsuario() {
-
-    //$("#loadingLogin").removeClass('hide');
 
     var online = navigator.onLine;
     if (!online) {
-        //$("#loadingLogin").addClass('hide');
+
         $("#erroLogin").removeClass('hide');
         $("#erroLogin").html("Erro na conexão, tente novamente.");
         return;
     }
     var cpfTratado = $("#cpf").val().replace(/\D/g, '');
 
-    $("divLoading").removeClass('hide');
+    swal({
+        title: "Aguarde",
+        text: 'Estamos procurando seus dados',
+        content: "input",
+        showCancelButton: false,
+        showConfirmButton: false,
+        imageUrl: "img/load.gif",
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false,
+        },
+    });
 
     callTokenProd(function (dataToken) {
 
-        callLogin(function (dataLogin) {
+        callDadosForcaVenda(function (dataDadosUsuario) {
 
-            //ob.imprimirSucess();
-            //console.log(dataUsuarios);
+            if (dataDadosUsuario.cdForcaVenda == null) {
 
-            //var teste = dataUsuarios.status;
+                swal({
+                    title: "Ops!",
+                    text: "Você não está cadastrado, deseja se cadastrar?",
+                    type: "warning",
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Sim",
+                    cancelButtonText: "Não",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
 
-            callDadosForcaVenda(function (dataDadosUsuario) { // Essa request salva os dados dos corretores no localstorage
+                            window.location = "cadastro_usuario.html";
+                        }
+                    });
 
-                swal.close();
-                //console.log(dataDadosUsuario);
-                //console.log(JSON.stringify(dataDadosUsuario));
-                //ob.imprimirSucess();
-                //console.log(dataDadosUsuario);
+                return;
+
+            }
+
+            var status = dataDadosUsuario.statusForcaVenda.toUpperCase();
+
+            if (status == "REPROVADO") {
+
+                swal({
+                    title: "Ops!",
+                    text: "Você foi reprovado pela sua corretora, deseja se cadastrar novamente?",
+                    type: "warning",
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Sim",
+                    cancelButtonText: "Não",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+
+                            window.location = "cadastro_usuario.html";
+                        }
+                    });
+
+                return;
+
+            } else if (status == "INATIVO") {
+
+                swal({
+                    title: "Ops!",
+                    text: "Você foi inativado pela sua corretora, deseja se cadastrar novamente?",
+                    type: "warning",
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Sim",
+                    cancelButtonText: "Não",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+
+                        window.location = "cadastro_usuario.html";
+                    }
+                });
+
+                return;
+            }
+
+            callLogin(function (dataLogin) {
+
                 var forca = getRepository("dadosUsuario");
 
                 forca.nome = dataDadosUsuario.nome;
@@ -185,17 +228,16 @@ function logarETrazerDadosUsuario() {
                 forca.codigo = dataLogin.codigoUsuario;
 
                 put("dadosUsuario", JSON.stringify(forca));
-                //console.log(JSON.stringify(dataDadosUsuario));
-                //ob.imprimirAlgo(JSON.stringify(dataDadosUsuario));
+
                 //Marcelo
                 ob.salvarDadosUsuario(JSON.stringify(forca));
-                //ob.salvarDadosUsuario();
-               
+
+                swal.close();
                 window.location = "logado.html";
 
-            }, dataToken.access_token, cpfTratado);
+            }, dataToken.access_token, cpfTratado, $("#password").val());
 
-        }, dataToken.access_token, cpfTratado, $("#password").val());
+        }, dataToken.access_token, cpfTratado);
 
     });
 

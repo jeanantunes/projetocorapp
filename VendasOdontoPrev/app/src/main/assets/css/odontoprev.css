@@ -797,8 +797,8 @@ h5, .subListBox {
 }
 
 .labelBold {
-    font-family: Roboto-Bold;
-    font-size: 16pt;
+    font-family: Roboto-Light;
+    font-size: 14pt;
     color: #ACAAA5;
 }
 
@@ -829,14 +829,14 @@ h5, .subListBox {
 
 .labelBoldModal {
     font-family: Roboto-Bold;
-    font-size: 18pt;
-    color: #fff;
+    font-size: 12pt;
+    color: #1974CE;
 }
 
 .labelLightModal {
-    font-family: Roboto-Light;
+    font-family: Roboto-Bold;
     font-size: 16pt;
-    color: #fff;
+    color: #1974CE;
 }
 
 .labelBoldModalPlano {
@@ -1322,6 +1322,19 @@ h5, .subListBox {
     border-bottom: 1px solid #ACAAA5;
 }
 
+
+/****Auto Complete****/
+
+.ui-autocomplete {
+    max-height: 350px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding to account for vertical scrollbar */
+    padding-right: 20px;
+}
+
+
 /*********************************** End Fonts ****************************************/
 
 .modal-header-OdontMed {
@@ -1333,10 +1346,15 @@ h5, .subListBox {
 }
 
 .modal-body-OdontMed {
-    padding-bottom: 60px;
-    padding-top: 60px;
+    padding-bottom: 5px;
+    padding-top: 5px;
     background-color: #F8F8F8;
     text-align: center;
+}
+
+.marginEspecsRede {
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .editDados {
@@ -1362,6 +1380,8 @@ h5, .subListBox {
 
 .modalConteiner {
     top: -2.5%;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .closeModal {

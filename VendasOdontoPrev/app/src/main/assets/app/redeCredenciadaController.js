@@ -1,6 +1,16 @@
 ﻿$(document).ready(function () {
     especialidades();
     estados();
+
+    $("#closeModalRedeCredenciada").click(function () {
+
+        $('#myModal').modal('toggle');
+
+    });
+
+    $("#map").html('<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYhoOl5Kervzx0pOvSAL8qIIWcPHg5Zyk&callback=mapa"></script>');
+
+
 });
 
 function initMap(redeCredenciada) {
@@ -498,10 +508,89 @@ $("#btnBuscar").click(function () {
     });
 });
 
-$("#closeModalRedeCredenciada").click(function () {
+function mapa(abc) {
 
-    $('#myModal').modal('toggle');
+    var latlng = { lat: -23.5432147, lng: -46.7356894 };
+    var selectedMarker;
 
-});
+    //initMap(latlng);
 
+    if (abc == null) {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: latlng,
+            disableDefaultUI: true
+        });
+    }
+    else if (abc != null) {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: { lat: parseFloat(abc.dentistas[0].endereco.cidade.latitude), lng: parseFloat(abc.dentistas[0].endereco.cidade.longitude) },
+            disableDefaultUI: true
+        });
+
+        var dentistas = [];
+
+        for (var i = 0; i < abc.dentistas.length; i++) {
+
+            var filter = dentistas.filter(function (x) { return x == abc.dentistas[i].codigoDentista });
+
+            if (filter.length > 0) continue;
+
+            dentistas.push(abc.dentistas[i].codigoDentista);
+
+            var latlng2 = new google.maps.LatLng((abc.dentistas[i].endereco.cidade.latitude), (abc.dentistas[i].endereco.cidade.longitude));
+
+            var marker = new google.maps.Marker({
+                position: latlng2,
+                map: map,
+                center: latlng2,
+                icon: 'img/pin_azul.png'
+            });
+
+            var infowindow = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+
+                    if (selectedMarker) {
+                        selectedMarker.setIcon('img/pin_azul.png');
+                    }
+
+                    marker.setIcon('img/pin_rosa.png');
+                    selectedMarker = marker;
+
+
+                    //console.log("Dentro da funcão Click:  " + contentString[i]);
+                    //infowindow.setContent('<div><strong>' + abc.dentistas[i].nomeDentista + '</strong><br>');
+                    //infowindow.open(map, marker);
+
+                    $("#nomeDentista").html("Dr(a). " + abc.dentistas[i].nomeDentista);
+                    $("#croDentista").html("CRO: " + abc.dentistas[i].numeroCRO);
+
+                    //$("#especialidadeDentista").html(abc.dentistas[i].especialidade.descricaoEspecialidade);
+
+                    var especialidades = abc.dentistas[i].especialidade.descricaoEspecialidade.split(",");
+
+                    var appendEspecs = "";
+                    $("#especialidadeDentista").html("");
+                    $.each(especialidades, function (i, item) {
+
+                        $("#especialidadeDentista").append('<label class="labelBold marginEspecsRede" style="color:gray">' + item + '</label>');
+
+                    });
+
+
+                    $("#enderecoDentista").html(abc.dentistas[i].endereco.enderecoCompleto);
+                    $("#cepDentista").html(abc.dentistas[i].endereco.cep);
+                    $("#telefoneDentista").html(abc.dentistas[i].numeroFone);
+                    $("#tipoPessoaDentista").html(abc.dentistas[i].tipoPrestador);
+
+                    $('#myModal').modal('show');
+
+                }
+            })(marker, i));
+        }
+    }
+}
 
