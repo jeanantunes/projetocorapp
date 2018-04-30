@@ -66,7 +66,7 @@ function validarStatusUsuario() {
 
                 swal({
                     title: "Ops",
-                    text: "Você foi inativado",
+                    text: "A corretora nos informou que você não faz mais parte de sua equipe. Se asssocie à uma nova corretora.",
                     type: "error",
                     closeOnConfirm: false
                 }, function () {

@@ -167,7 +167,7 @@ function logarETrazerDadosUsuario() {
 
                 swal({
                     title: "Ops!",
-                    text: "Você foi reprovado pela sua corretora, deseja se cadastrar novamente?",
+                    text: "A corretora recusou sua solicitação. Por favor, entre em contato com a corretora e tente novamente, ou informe uma nova corretora",
                     type: "warning",
                     confirmButtonClass: "btn-danger",
                     confirmButtonText: "Sim",
@@ -189,7 +189,7 @@ function logarETrazerDadosUsuario() {
 
                 swal({
                     title: "Ops!",
-                    text: "Você foi inativado pela sua corretora, deseja se cadastrar novamente?",
+                    text: "A corretora nos informou que você não faz mais parte de sua equipe. Deseja se asssociar à uma nova corretora?",
                     type: "warning",
                     confirmButtonClass: "btn-danger",
                     confirmButtonText: "Sim",
