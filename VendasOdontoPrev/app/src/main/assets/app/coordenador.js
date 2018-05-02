@@ -8,8 +8,11 @@ var conexao;
 
 $(document).ready(function () {
 
-    $("a[href='meus_dados.html']").hide()
+    $("a[href='meus_dados.html']").hide();
 
+    var menu = getComponent("menu");
+
+    $("#componenteMenu").append(menu);
     
     carregarDadosUsuario();
 
@@ -23,6 +26,7 @@ $(document).ready(function () {
         localStorage.removeItem("propostaPf");
         localStorage.removeItem("proposta");
     });
+
 });
 
 function defineConexao() {

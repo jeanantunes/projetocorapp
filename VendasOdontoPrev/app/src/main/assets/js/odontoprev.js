@@ -172,6 +172,7 @@ function closeNav() {
     $("#mySidenav").removeClass("zIndex99999999");
     $("#botaoMenu").addClass("closeNav");
     $(".container-fluid").removeClass("fixed");
+    $("html,body").css({ "overflow": "auto" });
 
 }
 // End Menu //
