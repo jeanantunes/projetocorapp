@@ -168,6 +168,7 @@ function openNav() {
 function closeNav() {
 
     document.getElementById("mySidenav").style.width = "0";
+
     $("#main").removeClass("overlay");
     $("#mySidenav").removeClass("zIndex99999999");
     $("#botaoMenu").addClass("closeNav");
