@@ -153,6 +153,7 @@ function logarETrazerDadosUsuario() {
                     function (isConfirm) {
                         if (isConfirm) {
 
+                            
                             window.location = "cadastro_usuario.html";
                         }
                     });
@@ -167,7 +168,7 @@ function logarETrazerDadosUsuario() {
 
                 swal({
                     title: "Ops!",
-                    text: "A corretora recusou sua solicitação. Por favor, entre em contato com a corretora e tente novamente, ou informe uma nova corretora",
+                    text: "A corretora recusou sua solicitação. Por favor entre em contato com a corretora e tente novamente, ou gostaria de informar uma nova corretora?",
                     type: "warning",
                     confirmButtonClass: "btn-danger",
                     confirmButtonText: "Sim",
@@ -178,7 +179,8 @@ function logarETrazerDadosUsuario() {
                 },
                     function (isConfirm) {
                         if (isConfirm) {
-
+                            put("dadosUsuario", JSON.stringify(dataDadosUsuario));
+                            put("recadastroLogin", true);
                             window.location = "cadastro_usuario.html";
                         }
                     });
@@ -198,13 +200,22 @@ function logarETrazerDadosUsuario() {
                     closeOnConfirm: false,
                     closeOnCancel: true
                 },
-                function (isConfirm) {
-                    if (isConfirm) {
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            put("dadosUsuario", JSON.stringify(dataDadosUsuario));
+                            put("recadastroLogin", true);
+                            window.location = "cadastro_usuario.html";
+                        }
+                    });
 
-                        window.location = "cadastro_usuario.html";
-                    }
-                });
+                return;
+            } else if (status == "AGUARDANDO APROVAÇÃO") {
 
+                swal("Ops!", "Seu cadastro está aguardando aprovação da corretora!", "warning");
+                return;
+            } else if (status == "PRÉ CADASTRO") {
+
+                swal("Ops!", "Você está pré cadastrado, por favor finalize seu cadastro!", "warning");
                 return;
             }
 
@@ -230,7 +241,7 @@ function logarETrazerDadosUsuario() {
                 put("dadosUsuario", JSON.stringify(forca));
 
                 //Marcelo
-                ob.salvarDadosUsuario(JSON.stringify(forca));
+                //ob.salvarDadosUsuario(JSON.stringify(forca));
 
                 swal.close();
                 window.location = "logado.html";

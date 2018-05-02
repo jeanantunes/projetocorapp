@@ -4,6 +4,21 @@ $(document).ready(function () {
 
     localStorage.removeItem("reCadastro");
 
+    var recadastroLogin = get("recadastroLogin");
+    
+    if(recadastroLogin == true){ 
+
+        var dadosUsuario = get("dadosUsuario");
+        $("#nomeInativoCadastrado").val(dadosUsuario.nome);
+        $("#cpf").val(dadosUsuario.cpf);
+        $("#celularInativoCadastrado").val(dadosUsuario.celular);
+        $("#emailInativoCadastrado").val(dadosUsuario.email);
+        $("#confirmar-senhaCpfFalse").val(dadosUsuario.senha);
+        put("reCadastro", true);
+        $("#cpfOdont").addClass("hide");
+        $("#infoCorretora").removeClass("hide");
+    }
+
     $(".componenteTermo").append(termo);
 
     $("#nomeNaoCadastrado").blur(function () {
