@@ -77,7 +77,7 @@
     border: 1px solid #fff;
     box-shadow: 0px 0px 50px 0px #EFEFEF;
     padding: 50px 0px 0px 0px;
-    margin: 20px;
+    margin: 15px;
 }
 
 .btnEnter {
@@ -215,14 +215,14 @@
     right: 0;
     background-color: #1974CE;
     overflow-x: hidden;
-    transition: 0.5s;
+    transition: .5s;
 }
 
     .sidenav a {
         padding: 8px 8px 8px 24px;
         text-decoration: none;
         display: block;
-        transition: 0.3s;
+        transition: .3s;
     }
 
         .sidenav a:hover {
@@ -939,7 +939,8 @@ h5, .subListBox {
     font-size: 10pt;
     background-color: #F9B40A;
     padding: 20px;
-    margin-top: 20%;
+    /*margin-top: 20%;*/
+    float:left;
     border-radius: 10px;
     text-align: center;
     display: inline-block;
@@ -955,7 +956,8 @@ h5, .subListBox {
     font-size: 10pt;
     background-color: #FF4141;
     padding: 20px;
-    margin-top: 20%;
+    /*margin-top: 20%;*/
+    float:right;
     border-radius: 10px;
     text-align: center;
     display: inline-block;
@@ -989,6 +991,7 @@ h5, .subListBox {
     margin-bottom: 20%;
     text-align: center;
     display: inline-block;
+    float:right;
     width: 150px;
     height: 110px;
     margin-right: 20px;
@@ -1026,7 +1029,7 @@ h5, .subListBox {
         font-size: 16pt;
         background-color: #F9B40A;
         padding: 20px;
-        margin-top: 20%;
+        /*margin-top: 20%;*/
         border-radius: 10px;
         text-align: center;
         display: inline-block;
@@ -1042,7 +1045,7 @@ h5, .subListBox {
         font-size: 16pt;
         background-color: #FF4141;
         padding: 20px;
-        margin-top: 14px;
+        /*margin-top: 14px;*/
         border-radius: 10px;
         /* margin-bottom: 20%; */
         text-align: center;
@@ -2003,10 +2006,10 @@ input[type=checkbox] {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: black;
-    opacity: .5;
+    /*background-color: black;
+    opacity: .5;*/
     z-index: 999;
-    transition: 0.5s;
+    /*transition: 1s;*/
 }
 
 .zIndex99999999{

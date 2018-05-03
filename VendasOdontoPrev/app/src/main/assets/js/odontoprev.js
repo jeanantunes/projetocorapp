@@ -161,21 +161,33 @@ $(".closeNav").click(function () {
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.backgroundColor = "rgba(0,0,0,0.5)";
     $("#main").addClass("overlay");
     $("#mySidenav").addClass("zIndex99999999");
+    //$("#main").removeClass("hide");
+    $("#botaoMenu").removeClass("hide");
+
 }
 
 function closeNav() {
 
     document.getElementById("mySidenav").style.width = "0";
-
+    document.getElementById("main").style.backgroundColor = "white";
     $("#main").removeClass("overlay");
     $("#mySidenav").removeClass("zIndex99999999");
-    $("#botaoMenu").addClass("closeNav");
+    $("#botaoMenu").addClass("hide");
     $(".container-fluid").removeClass("fixed");
     $("html,body").css({ "overflow": "auto" });
-
+    //$("#main").addClass("hide");
 }
+
+
+$("#main").click(function () {
+
+
+    console.log("teste");
+
+})
 // End Menu //
 
 //Grafico Vendas//

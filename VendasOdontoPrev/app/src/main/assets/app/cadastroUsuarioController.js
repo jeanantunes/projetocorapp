@@ -17,6 +17,7 @@ $(document).ready(function () {
         put("reCadastro", true);
         $("#cpfOdont").addClass("hide");
         $("#infoCorretora").removeClass("hide");
+        localStorage.removeItem("recadastroLogin");
     }
 
     $(".componenteTermo").append(termo);
