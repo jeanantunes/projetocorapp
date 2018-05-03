@@ -194,7 +194,7 @@ function callRedeCredenciada(callback, token, CodBeneficiario, uf, codigoEspecia
 
     swal({
         title: "Aguarde",
-        text: 'Estamos procurando dentitas',
+        text: 'Estamos procurando dentistas',
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,

@@ -939,8 +939,7 @@ h5, .subListBox {
     font-size: 10pt;
     background-color: #F9B40A;
     padding: 20px;
-    /*margin-top: 20%;*/
-    float:left;
+    margin-top: 10px;
     border-radius: 10px;
     text-align: center;
     display: inline-block;
@@ -956,8 +955,7 @@ h5, .subListBox {
     font-size: 10pt;
     background-color: #FF4141;
     padding: 20px;
-    /*margin-top: 20%;*/
-    float:right;
+    margin-top: 10px;
     border-radius: 10px;
     text-align: center;
     display: inline-block;
@@ -991,14 +989,12 @@ h5, .subListBox {
     margin-bottom: 20%;
     text-align: center;
     display: inline-block;
-    float:right;
     width: 150px;
     height: 110px;
     margin-right: 20px;
     margin-top: 20px;
     box-shadow: 2px 10px 20px 0px #E1E1E1;
 }
-
 
 @media screen and (min-width: 680px) {
 
