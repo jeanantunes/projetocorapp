@@ -436,7 +436,7 @@ function buscarEmpresa() {
 
                 try {
                     //put('cpnjValido', dataConsulta.getElementsByTagName("situacao")[0].textContent);
-                    
+                    console.log(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim());
                     //console.log(empresaAtiva);
                     try { $("#rua").val(dataConsulta.getElementsByTagName("Nome")[0].textContent.trim()); } catch (Exception) { }
                     try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent.trim()); } catch (Exception) { $("#razao-social").prop('disabled', false); }
@@ -444,7 +444,7 @@ function buscarEmpresa() {
                     try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent.trim()); } catch (Exception) { $("#representante-legal").prop('disabled', false); }
                     try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent.trim()); } catch (Exception) { $("#cpf-representante").prop('disabled', false); }
                     try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent.trim()); } catch (Exception) { $("#nome-fantasia").prop('disabled', false); }
-                    try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[0].textContent.trim()); } catch (Exception) { }
+                    try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim()); } catch (Exception) { }
                     try { $("#cep").val(dataConsulta.getElementsByTagName("cep")[0].textContent.trim()); } catch (Exception) { }
                     try { $("#uf").val(dataConsulta.getElementsByTagName("uf")[0].textContent.trim()); } catch (Exception) { }
                     try { $("#cidade").val(dataConsulta.getElementsByTagName("cidade")[0].textContent.trim()); } catch (Exception) { }
