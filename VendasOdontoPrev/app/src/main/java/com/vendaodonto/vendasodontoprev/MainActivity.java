@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         ctx = this;
 
+
         setContentView(R.layout.activity_main);
         String urlAssets = "file:///android_asset/";
 
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 Log.d("MeuLog", "Nâo existe cadastro salvo");
                 myWebView.loadUrl("file:///android_asset/index.html");
-           }
+            }
 
 
             //myWebView.loadDataWithBaseURL("file:///android_asset/", total.toString(), "text/html", "UTF-8", null);

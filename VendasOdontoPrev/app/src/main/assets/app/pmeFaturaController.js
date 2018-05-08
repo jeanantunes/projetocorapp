@@ -137,9 +137,7 @@ function isEffectiveDate(dayDueDate) {
     var day = currentTime.format('DD');
     var year = currentTime.format('YYYY');
 
-
     $("#divProximoMes").addClass('hide');
-
 
     switch (dayDueDate) {
 

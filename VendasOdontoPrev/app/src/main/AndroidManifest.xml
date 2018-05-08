@@ -23,6 +23,7 @@
         android:theme="@style/AppTheme"
         >        <!--android:roundIcon="@mipmap/ic_launcher_round"
         -->
+
         <activity android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
@@ -32,6 +33,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".GaleriaActivity"></activity>
+
+
     </application>
 
 </manifest>

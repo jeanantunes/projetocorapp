@@ -397,9 +397,9 @@ function checkStatusPropostas() {
                     }
                 });
 
-                if (proposta == undefined) return; // Caso não encontre nenhuma proposta, retorna
+                if (proposta == undefined) return; // Caso nao encontre nenhuma proposta, retorna
 
-                if (proposta.dataAtualizacao == undefined) // Checa se o registro não contem data de atualização, caso nao tenha sera setado uma data no registro
+                if (proposta.dataAtualizacao == undefined) // Checa se o registro nao contem data de atualizacao, caso nao tenha sera setado uma data no registro
                 {
                     proposta.dataAtualizacao = new Date();
                 

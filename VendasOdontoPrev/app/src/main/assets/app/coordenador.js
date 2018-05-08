@@ -8,13 +8,15 @@ var conexao;
 
 $(document).ready(function () {
 
-    $("a[href='meus_dados.html']").hide();
-
     var menu = getComponent("menu");
-
-    $("#componenteMenu").append(menu);
     
+    $("body").append(menu);
+
+    $("a[href='meus_dados.html']").hide();
+ 
     carregarDadosUsuario();
+
+    setColorMenu();
 
     $("#logout").click(function () {
         logout.removerRegistroLogin();
@@ -28,6 +30,25 @@ $(document).ready(function () {
     });
 
 });
+
+function setColorMenu() {
+
+    var url = window.location.href;
+
+    if (url.indexOf("pme") !== -1) 
+        $("a[href='venda_index_pme.html']").addClass('colorActive');
+    if (url.indexOf("pf") !== -1)
+        $("a[href='venda_index_pf.html']").addClass('colorActive');
+    else if (url.indexOf("logado") !== -1)
+        $("a[href='logado.html']").addClass('colorActive');
+    else if (url.indexOf("rede_credenciada") !== -1)
+        $("a[href='rede_credenciada.html']").addClass('colorActive');
+    else if (url.indexOf("lista_proposta") !== -1)
+        $("a[href='lista_proposta.html']").addClass('colorActive');
+    else if (url.indexOf("fale_conosco") !== -1)
+        $("a[href='fale_conosco.html']").addClass('colorActive');
+    
+}
 
 function defineConexao() {
 
@@ -1295,6 +1316,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
                     var pessoas = get("pessoas");
                     pessoa[0].status = "ENVIADA";
+                    pessoa[0].cdVenda = result.CdVenda;
                     pessoa[0].dataAtualizacao = new Date();
 
                     var todosExcetoExclusao = pessoas.filter(function (x) { return x.cpf != pessoa[0].cpf });

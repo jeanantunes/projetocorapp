@@ -15,117 +15,116 @@
   </head>
   <body>
 
-          <div id="componenteMenu"></div>
+      <!-- Menu -->
+      <div id="componenteMenu"></div>
+      <!-- End Menu -->
 
-          <!-- Bloco 1 -->
-          <div class="container-fluid" style="padding-left:20px; padding-right:20px;" id="">
+      <!-- Bloco 1 -->
+      <div class="container-fluid" style="padding-left:20px; padding-right:20px;" id="">
 
+          <div class="row">
+              <div class="col-md-12 boxHeader">
+                  <div class="col-md-12 text-left imgLogoODPVHeader">
+                      <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                  </div>
+                  <span class="btnMenu" onclick="openNav()">&#9776;</span>
+                  <!-- <a class="btn btn-sm btnOdontSell" href="vender.html" role="button">Vender</a> -->
+              </div>
+          </div>
+          <div class="col-md-12 odontBoxCenter">
               <div class="row">
-                  <div class="col-md-12 boxHeader">
-                      <div class="col-md-12 text-left imgLogoODPVHeader">
-                          <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
-                      </div>
-                      <span class="btnMenu" onclick="openNav()">&#9776;</span>
-                      <!-- <a class="btn btn-sm btnOdontSell" href="vender.html" role="button">Vender</a> -->
+                  <div class="perfil">
+                      <!--data-toggle="modal" data-target="#myModal"-->
+                      <img src="img/avatar.png" class="imgPerfil" alt="" id="imagePerfil">
                   </div>
               </div>
-              <div class="col-md-12 odontBoxCenter">
-                  <div class="row">
-                      <div class="perfil">
-                          <!--data-toggle="modal" data-target="#myModal"-->
-                          <img src="img/avatar.png" class="imgPerfil" alt="" id="imagePerfil">
+              <div class="row">
+                  <div class="text-center">
+                      <div>
+                          <label class="labelOdont" id="nomeCorretor"></label>
                       </div>
-                  </div>
-                  <div class="row">
-                      <div class="text-center">
-                          <div>
-                              <label class="labelOdont" id="nomeCorretor"></label>
-                          </div>
-                          <div>
-                              <label class="subLabelOdont" id="nomeCorretora"></label>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="btnOdontEnter">
-                          <a class="btn btn-lg btn-block btnPinkOdont" style="margin-bottom: 2%; margin-top: 20px;" href="venda_index_pf.html" role="button">VENDER PARA PESSOA FÍSICA</a>
-                      </div>
-                      <div class="btnPadBtm">
-                          <a class="btn btn-lg btn-block btnOdont" href="venda_index_pme.html" role="button">VENDER PARA PME</a>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <label class="labelBlueAlert">ALERTAS</label>
-                      <div class="text-center">
-                          <div class="boxAlertIcomp" onclick="window.location.href='lista_proposta.html'">
-                              <!-- <img src="img/alarm.png" class="imgAlarm" align="left"> -->
-                              <label class="label-Icomp"><p id="digitando"></p> Propostas incompletas</label>
-                          </div>
-                          <div class="boxAlertCritico" onclick="window.location.href='lista_proposta.html'">
-                              <!-- <img src="img/delete.png" class="imgDel" align="left"> -->
-                              <label class="label-Critico"><p id="criticada"></p> Propostas criticadas</label>
-                          </div>
-                      </div>
-                      <div class="text-center">
-                          <div class="boxAlertPendente" style="float:left;margin-left:10px;" onclick="sincronizar()">
-                              <!-- <img src="img/alarm.png" class="imgAlarm" align="left"> -->
-                              <label class="label-Icomp"><p id="pronta"></p> Propostas não enviadas</label>
-                          </div>
-                      </div>
-                  </div>
-
-              </div>
-                  <div class="row">
-                      <!--<div class="boxVendas">
-                        <label class="labelBlue">PROPOSTAS</label>
-                        <div class="dropdown">
-                            <button class="btnDropOdont dropdown-toggle" type="button" data-toggle="dropdown">
-                                Valor R$/mês
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">...</a></li>
-                            </ul>
-                        </div>
-                        <section class="grafico-barras">
-                            <ul>
-                                <span class="barra-fondo">
-                                    <label class="labelVendGrafic">PESSOA FÍSICA</label>
-                                    <li class="space-top-5 barras" data-value="75"><span class="valor-vendar">R$ 350,00</span></li>
-                                </span>
-
-                                <span class="barra-fondo">
-                                    <label class="labelVendGrafic">PME</label>
-                                    <li class="space-top-5 barras" data-value="100"><span class="valor-vendar">R$ 100,00</span></li>
-                                </span>
-                            </ul>
-                        </section>
-                    </div>-->
-                  </div>
-              </div>
-
-              <!-- Modal -->
-              <div class="modal fade" id="myModal" role="dialog">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              <h4 class="modal-title">Foto Perfil</h4>
-                          </div>
-                          <div class="modal-body">
-                              <p>Escolha uma opção.</p>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="abrirgaleria()">Galeria</button>
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Remover</button>
-                          </div>
+                      <div>
+                          <label class="subLabelOdont" id="nomeCorretora"></label>
                       </div>
                   </div>
               </div>
-              <!-- End Modal -->
-         
+              <div class="row">
+                  <div class="btnOdontEnter">
+                      <a class="btn btn-lg btn-block btnPinkOdont" style="margin-bottom: 2%; margin-top: 20px;" href="venda_index_pf.html" role="button">VENDER PARA PESSOA FÍSICA</a>
+                  </div>
+                  <div class="btnPadBtm">
+                      <a class="btn btn-lg btn-block btnOdont" href="venda_index_pme.html" role="button">VENDER PARA PME</a>
+                  </div>
+              </div>
+              <div class="row">
+                  <label class="labelBlueAlert">ALERTAS</label>
+                  <div class="text-center">
+                      <div class="boxAlertIcomp" onclick="window.location.href='lista_proposta.html'">
+                          <!-- <img src="img/alarm.png" class="imgAlarm" align="left"> -->
+                          <label class="label-Icomp"><p id="digitando"></p> Propostas incompletas</label>
+                      </div>
+                      <div class="boxAlertCritico" onclick="window.location.href='lista_proposta.html'">
+                          <!-- <img src="img/delete.png" class="imgDel" align="left"> -->
+                          <label class="label-Critico"><p id="criticada"></p> Propostas criticadas</label>
+                      </div>
+                  </div>
+                  <div class="text-center">
+                      <div class="boxAlertPendente" style="float:left;margin-left:10px;" onclick="sincronizar()">
+                          <!-- <img src="img/alarm.png" class="imgAlarm" align="left"> -->
+                          <label class="label-Icomp"><p id="pronta"></p> Propostas não enviadas</label>
+                      </div>
+                  </div>
+              </div>
 
-      
+          </div>
+          <div class="row">
+              <!--<div class="boxVendas">
+                <label class="labelBlue">PROPOSTAS</label>
+                <div class="dropdown">
+                    <button class="btnDropOdont dropdown-toggle" type="button" data-toggle="dropdown">
+                        Valor R$/mês
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">...</a></li>
+                    </ul>
+                </div>
+                <section class="grafico-barras">
+                    <ul>
+                        <span class="barra-fondo">
+                            <label class="labelVendGrafic">PESSOA FÍSICA</label>
+                            <li class="space-top-5 barras" data-value="75"><span class="valor-vendar">R$ 350,00</span></li>
+                        </span>
+
+                        <span class="barra-fondo">
+                            <label class="labelVendGrafic">PME</label>
+                            <li class="space-top-5 barras" data-value="100"><span class="valor-vendar">R$ 100,00</span></li>
+                        </span>
+                    </ul>
+                </section>
+            </div>-->
+          </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Foto Perfil</h4>
+                  </div>
+                  <div class="modal-body">
+                      <p>Escolha uma opção.</p>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal" onclick="abrirgaleria()">Galeria</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Remover</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- End Modal -->
       <!-- End Bloco 1 -->
       <script src="js/jquery.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
