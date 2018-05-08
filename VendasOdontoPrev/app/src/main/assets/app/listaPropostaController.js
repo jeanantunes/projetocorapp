@@ -83,6 +83,7 @@ function carregarListaOffline() {
         var css = "";
         var acao = "";
         var link = "";
+        var acaoseta = "";
 
         if (item.status == "DIGITANDO") {
             status = "Proposta incompleta";
@@ -100,7 +101,7 @@ function carregarListaOffline() {
             status = "Criticada";
             css = "colorCirc3";
             acao = "ver detalhes";
-            link = "venda_pf_editar.html?cpf=" + item.cpf;
+            link = 'href="venda_pf_editar.html?cpf=' + item.cpf+'"';
             acaoseta = "";
         } else if (item.status == "ENVIADA" || item.status == "Aprovado") {
             status = "Enviada";
@@ -205,10 +206,10 @@ function carregarListaOnlineAtualizarProposta() {
 
                 var checkCodVenda = propostasNaoRepetidas.filter(function (x) { return x.cdVenda == item.cdVenda });
 
-                //if (checkCodVenda.length == 1 ) return; // 
+                //if (checkCodVenda.length == 1 ) return; // TO DO Filtrar 1 propostas por titular
 
                 propostasNaoRepetidas.push(item);
-
+             
                 var atualizarPropostaPf = get("pessoas");
 
                 var proposta = atualizarPropostaPf.filter(function (x) { return x.cdVenda == item.cdVenda }); // Buscando proposta local com o mesmo cpf
@@ -240,19 +241,23 @@ function carregarListaOnlineAtualizarProposta() {
                 var acao = "";
                 var link = "";
                 var acaoseta = "";
+                var cdVenda = "";
 
                 if (item.statusVenda == "Aprovado" && item.criticas == null) {
 
                     status = "Aprovada";
                     css = "colorCirc2";
-                    acaoseta = "hide";
-
+                    acaoseta = "";
+                    acao = "ver detalhes";
+                    cdVenda = item.cdVenda;
 
                 } else { // if (item.statusVenda == "Criticado" || (item.statusVenda == "Aprovado" && item.criticas != null))
 
                     status = "Criticada";
                     css = "colorCirc3";
-                    acaoseta = "hide";
+                    acaoseta = "";
+                    acao = "ver detalhes";
+                    cdVenda = item.cdVenda;
                 }
                 //} else if (item.statusVenda == "Criticada Envio") {
                 //
@@ -268,7 +273,8 @@ function carregarListaOnlineAtualizarProposta() {
                 itemLista = itemLista.replace("{ACAO}", acao);
                 itemLista = itemLista.replace("{LINK}", link);
                 itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
-
+                itemLista = itemLista.replace("{CDVENDA}", cdVenda);
+                
                 $("#listaPessoas").append(itemLista);
 
                 $("#totalClientes").html(qtdPessoas);
@@ -390,6 +396,7 @@ function carregarListaOnlineAtualizarProposta() {
                 status = "Sincronizando";
                 css = "colorCirc5";
                 acaoseta = "hide";
+
             }
 
             itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
@@ -478,6 +485,12 @@ function carregarListaOnlineAtualizarProposta() {
 
     $("#totalEmpresas").html(qtdEmpresas);
     $("#total").html(qtdEmpresas + qtdPessoas);
+
+}
+
+function verDetalheProposta(dataId) {
+
+    
 
 }
 
