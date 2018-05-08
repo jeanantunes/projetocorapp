@@ -7,7 +7,7 @@ $(document).ready(function () {
         return;
     }
 
-    carregarListaOnline();
+    carregarListaOnlineAtualizarProposta();
 
 });
 
@@ -174,11 +174,11 @@ function carregarListaOffline() {
 }
 
 
-function carregarListaOnline() {
+function carregarListaOnlineAtualizarProposta() {
 
     swal({
         title: "Aguarde",
-        text: 'Estamos procurando seus dados',
+        text: 'Estamos buscando e atualizando buscando suas propostas',
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
@@ -188,6 +188,96 @@ function carregarListaOnline() {
             text: "...",
             closeModal: false,
         },
+    });
+
+
+    var TokenAcess;
+
+    callTokenProd(function (dataToken) {
+
+        TokenAcess = dataToken.access_token;
+
+        callDashBoardPF(function (dataDashPf) {
+
+            var propostasNaoRepetidas = [];
+
+            $.each(dataDashPf.dashboardPropostasPF, function (i, item) {
+
+                var checkCodVenda = propostasNaoRepetidas.filter(function (x) { return x.cdVenda == item.cdVenda });
+
+                //if (checkCodVenda.length == 1 ) return; // 
+
+                propostasNaoRepetidas.push(item);
+
+                var atualizarPropostaPf = get("pessoas");
+
+                var proposta = atualizarPropostaPf.filter(function (x) { return x.cdVenda == item.cdVenda }); // Buscando proposta local com o mesmo cpf
+                var propostas = atualizarPropostaPf.filter(function (x) { return x.cdVenda != item.cdVenda });
+                var putPropostas = [];
+                
+
+                if (proposta.length == 1) {
+
+                    $.each(propostas, function (i, item) {
+
+                        putPropostas.push(item);
+
+                    });
+
+                    proposta[0].status = item.statusVenda;
+                    putPropostas.push(proposta[0]);
+
+                    put("pessoas", JSON.stringify(putPropostas));
+
+                }
+                
+                qtdPessoas++;
+
+                var itemLista = getComponent("itemLista");
+
+                var status = "";
+                var css = "";
+                var acao = "";
+                var link = "";
+                var acaoseta = "";
+
+                if (item.statusVenda == "Aprovado" && item.criticas == null) {
+
+                    status = "Aprovada";
+                    css = "colorCirc2";
+                    acaoseta = "hide";
+
+
+                } else { // if (item.statusVenda == "Criticado" || (item.statusVenda == "Aprovado" && item.criticas != null))
+
+                    status = "Criticada";
+                    css = "colorCirc3";
+                    acaoseta = "hide";
+                }
+                //} else if (item.statusVenda == "Criticada Envio") {
+                //
+                //    status = "Criticado";
+                //    css = "colorCirc3";
+                //    acaoseta = "hide";
+                //
+                //}
+
+                itemLista = itemLista.replace("{NOME}", item.nome);
+                itemLista = itemLista.replace("{STATUS}", status);
+                itemLista = itemLista.replace("{CSS}", css);
+                itemLista = itemLista.replace("{ACAO}", acao);
+                itemLista = itemLista.replace("{LINK}", link);
+                itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
+
+                $("#listaPessoas").append(itemLista);
+
+                $("#totalClientes").html(qtdPessoas);
+
+                $("#totalEmpresas").html(qtdEmpresas);
+                $("#total").html(qtdEmpresas + qtdPessoas);
+
+            });
+        }, TokenAcess);
     });
 
     var pessoas = get("pessoas");
@@ -257,63 +347,7 @@ function carregarListaOnline() {
         }
     });
 
-    var TokenAcess;
 
-    callTokenProd(function (dataToken) {
-
-        TokenAcess = dataToken.access_token;
-
-        callDashBoardPF(function (dataDashPf) {
-
-            $.each(dataDashPf.dashboardPropostasPF, function (i, item) {
-
-                qtdPessoas++;
-
-                var itemLista = getComponent("itemLista");
-
-                var status = "";
-                var css = "";
-                var acao = "";
-                var link = "";
-                var acaoseta = "";
-
-                if (item.statusVenda == "Aprovado" && item.criticas == null) {
-
-                    status = "Aprovada";
-                    css = "colorCirc2";
-                    acaoseta = "hide";
-
-                } else { // if (item.statusVenda == "Criticado" || (item.statusVenda == "Aprovado" && item.criticas != null))
-
-                    status = "Criticada";
-                    css = "colorCirc3";
-                    acaoseta = "hide";
-                }
-                //} else if (item.statusVenda == "Criticada Envio") {
-                //
-                //    status = "Criticado";
-                //    css = "colorCirc3";
-                //    acaoseta = "hide";
-                //
-                //}
-
-                itemLista = itemLista.replace("{NOME}", item.nome);
-                itemLista = itemLista.replace("{STATUS}", status);
-                itemLista = itemLista.replace("{CSS}", css);
-                itemLista = itemLista.replace("{ACAO}", acao);
-                itemLista = itemLista.replace("{LINK}", link);
-                itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
-
-                $("#listaPessoas").append(itemLista);
-
-                $("#totalClientes").html(qtdPessoas);
-
-                $("#totalEmpresas").html(qtdEmpresas);
-                $("#total").html(qtdEmpresas + qtdPessoas);
-
-            });
-        }, TokenAcess);
-    });
 
     $("#totalClientes").html(qtdPessoas);
 
