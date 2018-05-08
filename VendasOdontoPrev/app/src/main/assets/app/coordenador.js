@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     var menu = getComponent("menu");
     
-    $("body").append(menu);
+    $("#componenteMenu").append(menu);
 
     $("a[href='meus_dados.html']").hide();
  
