@@ -84,12 +84,13 @@ function carregarListaOffline() {
         var acao = "";
         var link = "";
         var acaoseta = "";
+        var onClick = "";
 
         if (item.status == "DIGITANDO") {
             status = "Proposta incompleta";
             css = "colorCirc1";
             acao = "ver detalhes";
-            link = "venda_pf_editar.html?cpf=" + item.cpf;
+            link = 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
             acaoseta = "";
         } else if (item.status == "PRONTA") {
             status = "Aguardando sincronismo";
@@ -242,6 +243,7 @@ function carregarListaOnlineAtualizarProposta() {
                 var link = "";
                 var acaoseta = "";
                 var cdVenda = "";
+                var onClick = "";
 
                 if (item.statusVenda == "Aprovado" && item.criticas == null) {
 
@@ -250,7 +252,7 @@ function carregarListaOnlineAtualizarProposta() {
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
-
+                    onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '))"';
                 } else { // if (item.statusVenda == "Criticado" || (item.statusVenda == "Aprovado" && item.criticas != null))
 
                     status = "Criticada";
@@ -258,6 +260,7 @@ function carregarListaOnlineAtualizarProposta() {
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
+                    onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '))"';
                 }
                 //} else if (item.statusVenda == "Criticada Envio") {
                 //
@@ -274,6 +277,7 @@ function carregarListaOnlineAtualizarProposta() {
                 itemLista = itemLista.replace("{LINK}", link);
                 itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
                 itemLista = itemLista.replace("{CDVENDA}", cdVenda);
+                itemLista = itemLista.replace("{ONCLICK}", onClick);
                 
                 $("#listaPessoas").append(itemLista);
 
@@ -306,8 +310,6 @@ function carregarListaOnlineAtualizarProposta() {
 
         if (item.status != "ENVIADA" && item.status != "Aprovado") {
 
-
-
             qtdPessoas++;
 
             var itemLista = getComponent("itemLista");
@@ -317,24 +319,26 @@ function carregarListaOnlineAtualizarProposta() {
             var acao = "";
             var link = "";
             var acaoseta = "";
+            var onClick = "";
 
             if (item.status == "DIGITANDO") {
                 status = "Proposta incompleta";
                 css = "colorCirc1";
                 acao = "ver detalhes";
-                link = "venda_pf_editar.html?cpf=" + item.cpf;
+                link = 'href="venda_pf_editar.html?cpf=' + item.cpf +'"';
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
                 status = "Aguardando sincronismo";
                 css = "colorCirc4";
                 acao = "sincronizar";
-                link = "logado.html";
+                link = 'href="logado.html"';
                 acaoseta = "";
             } else if (item.status == "CRITICADA" || item.status == "Criticado") {
                 status = "Criticada";
                 css = "colorCirc3";
                 acao = "ver detalhes";
-                link = "venda_pf_editar.html?cpf=" + item.cpf;
+                onClick = "";
+                link = 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
                 acaoseta = "";
             } else if (item.status == "SYNC") {
                 status = "Sincronizando";
@@ -348,6 +352,7 @@ function carregarListaOnlineAtualizarProposta() {
             itemLista = itemLista.replace("{ACAO}", acao);
             itemLista = itemLista.replace("{LINK}", link);
             itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
+            itemLista = itemLista.replace("{ONCLICK}", onClick);
 
             $("#listaPessoas").append(itemLista);
         }
@@ -363,6 +368,7 @@ function carregarListaOnlineAtualizarProposta() {
         var css = "";
         var acao = "";
         var link = "";
+        var onClick = "";
 
         if (item.status != "ENVIADA") {
 
@@ -374,7 +380,7 @@ function carregarListaOnlineAtualizarProposta() {
                 status = "Incompleta";
                 css = "colorCirc1";
                 acao = "ver detalhes";
-                link = "venda_pme_editar.html?cnpj=" + item.cnpj;
+                link = 'href="venda_pme_editar.html?cnpj=' + item.cnpj + '"';
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
                 status = "Aguardando sincronismo";
@@ -386,7 +392,7 @@ function carregarListaOnlineAtualizarProposta() {
                 status = "Criticada";
                 css = "colorCirc3";
                 acao = "ver detalhes";
-                link = "venda_pme_editar.html?cnpj=" + item.cnpj;
+                link = 'href="venda_pme_editar.html?cnpj=' + item.cnpj + '"';
                 acaoseta = "";
             } else if (item.status == "ENVIADA") {
                 status = "Enviada";
@@ -405,6 +411,7 @@ function carregarListaOnlineAtualizarProposta() {
             itemLista = itemLista.replace("{ACAO}", acao);
             itemLista = itemLista.replace("{LINK}", link);
             itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
+            itemLista = itemLista.replace("{ONCLICK}", onClick);
 
             $("#listaEmpresas").append(itemLista);
 
@@ -488,9 +495,104 @@ function carregarListaOnlineAtualizarProposta() {
 
 }
 
+
+function buscarDetalheProposta() {
+
+    var proposta = {  
+      "status":"Aprovado",
+      "cpf":"422.295.652-06",
+      "nome":"sadsad dsadsadas",
+      "dataNascimento":"22/05/1998",
+      "sexo":"m",
+      "titular":"",
+      "celular":"(11) 11111-1111",
+      "email":"dasdasda@hotmail.com",
+      "nomeMae":"dsadasd dsadasdas",
+      "dadosBancarios":{  
+         "codigoBanco":"",
+         "agencia":"",
+         "tipoConta":"",
+         "conta":""
+      },
+      "endereco":{  
+         "cep":"05542-020",
+         "logradouro":"Rua João José dos Santos",
+         "numero":"307",
+         "complemento":"",
+         "bairro":"Jardim Olympia",
+         "cidade":"São Paulo",
+         "estado":"SP"
+      },
+      "planos":[  
+         {  
+            "cdPlano":"7",
+            "nome":"",
+            "desc":"",
+            "valor":"",
+            "centavo":"",
+            "tipo":"",
+            "css":""
+         }
+      ],
+      "dependentes":[  
+
+      ],
+      "responsavelContratual":{  
+         "nome":"",
+         "cpf":"",
+         "dataNascimento":"",
+         "email":"",
+         "celular":"",
+         "sexo":"",
+         "endereco":{  
+            "cep":"",
+            "logradouro":"",
+            "numero":"",
+            "complemento":"",
+            "bairro":"",
+            "cidade":"",
+            "estado":"",
+            "tipoEndereco":null
+         }
+      },
+      "contatoEmpresa":false,
+      "horaSync":"2018-05-08T19:28:28.099Z",
+      "cdVenda":2390,
+      "dataAtualizacao": "2018-05-08T19:28:28.865Z",
+      "erros": ["erro 1", "erro 2", "erro 3"]
+    };
+
+
+
+    return proposta;
+
+}
+
 function verDetalheProposta(dataId) {
 
-    
+
+    swal({
+        title: "Aguarde",
+        text: 'Estamos buscando sua proposta',
+        content: "input",
+        showCancelButton: false,
+        showConfirmButton: false,
+        imageUrl: "img/load.gif",
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false,
+        },
+    });
+
+    callTokenProd(function (dataToken) {
+
+        put("propostaPf", JSON.stringify(buscarDetalheProposta()));
+
+        window.location = "venda_pf_dados_proposta.html?erro=true";
+
+    });
+
 
 }
 

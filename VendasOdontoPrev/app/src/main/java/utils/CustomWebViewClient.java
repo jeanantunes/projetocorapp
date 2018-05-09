@@ -8,6 +8,8 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.vendaodonto.vendasodontoprev.MyFirebaseInstanceIDService;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -118,6 +120,8 @@ public class CustomWebViewClient extends WebViewClient {
         view.addJavascriptInterface(classeInstanciada, "ob");
 
         SairDaConta logout = new SairDaConta(context);
+
+
 
         view.addJavascriptInterface(logout, "logout");
 

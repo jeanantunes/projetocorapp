@@ -5,7 +5,7 @@ $(document).ready(function () {
     buscarPlanosSelecionados();
     carregarProposta();
     localStorage.removeItem("dependentePfEmEdicao");
-
+    abrirPropostaComErros();
 
     $(".nome").blur(function () {
 
@@ -40,7 +40,46 @@ $(document).ready(function () {
         }
     });
 
+
+    
+
+    
+
 });
+
+function abrirPropostaComErros() {
+
+    var propostaComErro = getUrlParameter("erro");
+
+    if (propostaComErro == undefined) return;
+
+    if (propostaComErro)
+    {
+        $("input").prop('disabled', true);
+        $("#adicionarDependente").prop('disabled', true);
+        $("#continuarProposta").prop('disabled', true);
+        $("#btnExcluirPlano").addClass('hide');
+
+        var proposta = get("propostaPf");
+
+        if (proposta.erros.length > 0) {
+
+            $("#divErros").removeClass('hide');
+
+            var erros;
+
+            $.each(proposta.erros, function (i, item) {
+
+                $("#divErros").append('<p class="labelRedErrosFont">. ' + item +'</p>');
+                
+              
+            });
+
+            $("#divErros").append("<br/>");
+        }
+        
+    }
+}
 
 function addDependente() {
 

@@ -29,6 +29,8 @@ $(document).ready(function () {
         localStorage.removeItem("proposta");
     });
 
+    getTokenDevice(); //Busca o TOKEN DO APP
+
 });
 
 function setColorMenu() {
@@ -100,6 +102,25 @@ function callTokenProd(callback) {
         }
     });
 };
+
+
+function getTokenDevice() {
+
+    console.log("Gerando Token");
+    //var tokenDevice = fireBase.getToken();
+    console.log("Token Gerado");
+    console.log(tokenDevice);
+
+    var tokenDevice = "dsadasdasdsa";
+
+    var dadosDevice = {
+        "tokenDevice": tokenDevice,
+        "SO": "Android"
+    };
+
+    put("dadosDevice", JSON.stringify(dadosDevice));
+
+}
 
 function callTokenProdSemMsgErro(callback) {
 

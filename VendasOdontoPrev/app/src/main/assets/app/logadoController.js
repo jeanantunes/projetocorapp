@@ -9,7 +9,6 @@ $(document).ready(function () {
     resyncPropostasPME();
     resyncPropostasPF();
     checkStatusPropostas();
-
 });
 
 function validarVersaoApp()

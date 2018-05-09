@@ -509,6 +509,20 @@ h1, .titleListBox {
     margin-bottom: 10pt;
 }
 
+.labelRedErro {
+    font-family: Roboto-Bold;
+    font-size: 14pt;
+    color: red;
+
+}
+
+.labelRedErrosFont {
+    font-family: Roboto-Regular;
+    font-size: 14pt;
+    color: red;
+    margin-bottom: 0pt;
+}
+
 .labelBlueAlert {
     font-family: Roboto-Bold;
     font-size: 20pt;
