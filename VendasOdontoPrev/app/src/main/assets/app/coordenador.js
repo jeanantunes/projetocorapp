@@ -144,6 +144,10 @@ function callTokenProdSemMsgErro(callback) {
     });
 };
 
+String.prototype.capitalize = function (lower) {
+    return (lower ? this.toLowerCase() : this).replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+};
+
 //$(function () {
 //    var regex = new RegExp('[^ a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ\b]', 'g');
 //    // repare a flag "g" de global, para substituir todas as ocorrências

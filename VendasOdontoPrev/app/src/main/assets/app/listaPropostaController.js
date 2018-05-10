@@ -201,6 +201,42 @@ function carregarListaOnlineAtualizarProposta() {
 
         callDashBoardPF(function (dataDashPf) {
 
+            var attCdVendaPropostas = get("pessoas");
+            
+            $.each(attCdVendaPropostas, function (indiceProposta, iProposta){
+            
+                var cdVenda = iProposta.cdVenda;
+            
+                if (cdVenda == undefined) {
+            
+                    var propostaSemCdVenda = dataDashPf.dashboardPropostasPF.filter(function (x) { return x.cpf == iProposta.cpf.replace(/\D/g, '') });
+            
+                    if (propostaSemCdVenda.length == 1) {
+            
+                        iProposta.cdVenda = propostaSemCdVenda[0].cdVenda;
+            
+                        var salvarPropostas = [];
+            
+                        var propostaSemCdVenda = attCdVendaPropostas.filter(function (x) { return x.cpf != iProposta.cpf });
+            
+                        $.each(propostaSemCdVenda, function (indiceSavePropostas, itemSavePropostas) {
+                            salvarPropostas.push(itemSavePropostas);
+                        });
+            
+                        
+                        salvarPropostas.push(iProposta);
+
+                        put("pessoas", JSON.stringify(salvarPropostas));
+            
+                    }
+            
+                }
+            
+            });
+
+
+
+
             var propostasNaoRepetidas = [];
 
             $.each(dataDashPf.dashboardPropostasPF, function (i, item) {
@@ -213,7 +249,7 @@ function carregarListaOnlineAtualizarProposta() {
              
                 var atualizarPropostaPf = get("pessoas");
 
-                var proposta = atualizarPropostaPf.filter(function (x) { return x.cdVenda == item.cdVenda }); // Buscando proposta local com o mesmo cpf
+                var proposta = atualizarPropostaPf.filter(function (x) { return x.cdVenda == item.cdVenda }); // Buscando proposta local com o mesmo cdVenda
                 var propostas = atualizarPropostaPf.filter(function (x) { return x.cdVenda != item.cdVenda });
                 var putPropostas = [];
                 
@@ -305,8 +341,6 @@ function carregarListaOnlineAtualizarProposta() {
     //}
 
     $.each(pessoas, function (i, item) {
-
-        console.log(item);
 
         if (item.status != "ENVIADA" && item.status != "Aprovado") {
 
@@ -496,76 +530,137 @@ function carregarListaOnlineAtualizarProposta() {
 }
 
 
-function buscarDetalheProposta() {
+function buscarDetalheProposta(callback, token, cdVenda) {
 
-    var proposta = {  
-      "status":"Aprovado",
-      "cpf":"422.295.652-06",
-      "nome":"sadsad dsadsadas",
-      "dataNascimento":"22/05/1998",
-      "sexo":"m",
-      "titular":"",
-      "celular":"(11) 11111-1111",
-      "email":"dasdasda@hotmail.com",
-      "nomeMae":"dsadasd dsadasdas",
-      "dadosBancarios":{  
-         "codigoBanco":"",
-         "agencia":"",
-         "tipoConta":"",
-         "conta":""
-      },
-      "endereco":{  
-         "cep":"05542-020",
-         "logradouro":"Rua João José dos Santos",
-         "numero":"307",
-         "complemento":"",
-         "bairro":"Jardim Olympia",
-         "cidade":"São Paulo",
-         "estado":"SP"
-      },
-      "planos":[  
-         {  
-            "cdPlano":"7",
-            "nome":"",
-            "desc":"",
-            "valor":"",
-            "centavo":"",
-            "tipo":"",
-            "css":""
-         }
-      ],
-      "dependentes":[  
+    $.ajax({
+        async: true,
+        url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+        }
+    });
 
-      ],
-      "responsavelContratual":{  
-         "nome":"",
-         "cpf":"",
-         "dataNascimento":"",
-         "email":"",
-         "celular":"",
-         "sexo":"",
-         "endereco":{  
-            "cep":"",
-            "logradouro":"",
-            "numero":"",
-            "complemento":"",
-            "bairro":"",
-            "cidade":"",
-            "estado":"",
-            "tipoEndereco":null
-         }
-      },
-      "contatoEmpresa":false,
-      "horaSync":"2018-05-08T19:28:28.099Z",
-      "cdVenda":2390,
-      "dataAtualizacao": "2018-05-08T19:28:28.865Z",
-      "erros": ["erro 1", "erro 2", "erro 3"]
+
+
+    var dataPropostaCriticada = {
+        "venda": {
+            "cdVenda": 1927,
+            "cdEmpresa": null,
+            "cdPlano": 7,
+            "cdForcaVenda": 6,
+            "dataVenda": "2018-04-06",
+            "cdStatusVenda": 1,
+            "faturaVencimento": 0,
+            "tipoPagamento": null,
+            "titulares": [
+                {
+                    "cdVida": 2500,
+                    "cdTitular": 0,
+                    "celular": "15111111111",
+                    "cpf": "38601556280",
+                    "cnpj": null,
+                    "dataNascimento": "27/06/1980",
+                    "email": "almeida@hotmail.com",
+                    "nome": "Yago Almeida Santos Filho",
+                    "nomeMae": "Maria Jose da Silva",
+                    "pfPj": null,
+                    "sexo": "M",
+                    "cdPlano": 0,
+                    "cdVenda": 0,
+                    "dadosBancarios": null,
+                    "endereco": {
+                        "cep": "05542020",
+                        "logradouro": "Rua Joao Jose dos Santos",
+                        "numero": "307",
+                        "complemento": "complemento",
+                        "bairro": "Jardim Olympia",
+                        "cidade": "Sao Paulo",
+                        "estado": "SP",
+                        "tipoEndereco": null
+                    },
+                    "dependentes": null
+                },
+                {
+                    "cdVida": 2501,
+                    "cdTitular": 2500,
+                    "celular": "15111111111",
+                    "cpf": "38601556280",
+                    "cnpj": null,
+                    "dataNascimento": "27/06/1980",
+                    "email": "almeida@hotmail.com",
+                    "nome": "Dependente Almeida Santos",
+                    "nomeMae": "Joaquina da Silva",
+                    "pfPj": null,
+                    "sexo": "f",
+                    "cdPlano": 0,
+                    "cdVenda": 0,
+                    "dadosBancarios": null,
+                    "endereco": null,
+                    "dependentes": null
+                }
+            ],
+            "cdDCSSUsuario": null,
+            "responsavelContratual": {
+                "nome": "Yago Almeida Santos",
+                "cpf": "38601556280",
+                "dataNascimento": "27/06/1980",
+                "email": "almeida@hotmail.com",
+                "celular": "15111111111",
+                "sexo": "M",
+                "endereco": {
+                    "cep": "05542020",
+                    "logradouro": "Rua Joao Jose dos Santos",
+                    "numero": "307",
+                    "complemento": "complemento",
+                    "bairro": "Jardim Olympia",
+                    "cidade": "Sao Paulo",
+                    "estado": "SP"
+                }
+            },
+            "plano": {
+                "cdPlano": 7,
+                "titulo": "Dental Bem Estar IFLE 1 PHF 180D",
+                "descricao": "Dental Bem Estar IFLE 1 PHF 180D",
+                "sigla": "TUJ",
+                "valor": "45.6",
+                "tipo": "1",
+                "cdVenda": 0
+            },
+            "criticas": [
+                {
+                    "nrSeqRegistro": 1,
+                    "nrImportacao": 13171827,
+                    "nrAtendimento": "APP000000028523",
+                    "dsErroRegistro": " BENEFICIÁRIO JÁ CADASTRADO EMPRESA / CPF.",
+                    "nome": "YAGO ALMEIDA SANTOS FILHO"
+                },
+                {
+                    "nrSeqRegistro": 2,
+                    "nrImportacao": 13171827,
+                    "nrAtendimento": "APP000000028523",
+                    "dsErroRegistro": " BENEFICIÁRIO TITULAR COM ERRO CRÍTICO. CPF DO DEPENDENTE DEVE SER DIFERENTE DO TITULAR. BENEFICIÁRIO JÁ CADASTRADO EMPRESA / CPF.",
+                    "nome": "DEPENDENTE ALMEIDA SANTOS"
+                }
+            ],
+            "propostaDcms": "APP000000028523",
+            "dadosBancariosVenda": {
+                "codigoBanco": "033",
+                "agencia": "0001-2",
+                "tipoConta": "CC",
+                "conta": "01420000-1"
+            }
+        }
     };
 
-
-
-    return proposta;
-
+    
 }
 
 function verDetalheProposta(dataId) {
@@ -587,9 +682,82 @@ function verDetalheProposta(dataId) {
 
     callTokenProd(function (dataToken) {
 
-        put("propostaPf", JSON.stringify(buscarDetalheProposta()));
 
-        window.location = "venda_pf_dados_proposta.html?erro=true";
+        buscarDetalheProposta(function (dataPropostaCriticada) {
+
+            var retorno = getRepository("propostaPf");
+            retorno.cdVenda = dataPropostaCriticada.venda.cdVenda;
+            retorno.cpf = dataPropostaCriticada.venda.titulares[0].cpf;
+            retorno.nome = dataPropostaCriticada.venda.titulares[0].nome;
+            retorno.dataNascimento = dataPropostaCriticada.venda.titulares[0].dataNascimento;
+            retorno.email = dataPropostaCriticada.venda.titulares[0].email;
+            retorno.nomeMae = dataPropostaCriticada.venda.titulares[0].nomeMae;
+            retorno.sexo = dataPropostaCriticada.venda.titulares[0].sexo;
+            retorno.celular = dataPropostaCriticada.venda.titulares[0].celular;
+
+            if (dataPropostaCriticada.venda.dadosBancariosVenda != null) {
+
+                retorno.dadosBancarios.codigoBanco = dataPropostaCriticada.venda.dadosBancariosVenda.codigoBanco;
+                retorno.dadosBancarios.agencia = dataPropostaCriticada.venda.dadosBancariosVenda.agencia;
+                retorno.dadosBancarios.tipoConta = dataPropostaCriticada.venda.dadosBancariosVenda.tipoConta;
+                retorno.dadosBancarios.conta = dataPropostaCriticada.venda.dadosBancariosVenda.conta;
+
+            }
+
+            retorno.endereco.cep = dataPropostaCriticada.venda.titulares[0].endereco.cep;
+            retorno.endereco.logradouro = dataPropostaCriticada.venda.titulares[0].endereco.logradouro;
+            retorno.endereco.numero = dataPropostaCriticada.venda.titulares[0].endereco.numero;
+            retorno.endereco.complemento = dataPropostaCriticada.venda.titulares[0].endereco.complemento;
+            retorno.endereco.bairro = dataPropostaCriticada.venda.titulares[0].endereco.bairro;
+            retorno.endereco.cidade = dataPropostaCriticada.venda.titulares[0].endereco.cidade;
+            retorno.endereco.estado = dataPropostaCriticada.venda.titulares[0].endereco.estado;
+            retorno.planos.push({ cdPlano: dataPropostaCriticada.venda.plano.cdPlano });
+            retorno.responsavelContratual.cpf = dataPropostaCriticada.venda.titulares[0].cpf;
+            retorno.responsavelContratual.nome = dataPropostaCriticada.venda.titulares[0].nome;
+            retorno.responsavelContratual.dataNascimento = dataPropostaCriticada.venda.titulares[0].dataNascimento;
+            retorno.responsavelContratual.email = dataPropostaCriticada.venda.titulares[0].email;
+            retorno.responsavelContratual.sexo = dataPropostaCriticada.venda.titulares[0].sexo;
+            retorno.responsavelContratual.celular = dataPropostaCriticada.venda.titulares[0].celular;
+            retorno.responsavelContratual.endereco.cep = dataPropostaCriticada.venda.titulares[0].endereco.cep;
+            retorno.responsavelContratual.endereco.logradouro = dataPropostaCriticada.venda.titulares[0].endereco.logradouro;
+            retorno.responsavelContratual.endereco.numero = dataPropostaCriticada.venda.titulares[0].endereco.numero;
+            retorno.responsavelContratual.endereco.complemento = dataPropostaCriticada.venda.titulares[0].endereco.complemento;
+            retorno.responsavelContratual.endereco.bairro = dataPropostaCriticada.venda.titulares[0].endereco.bairro;
+            retorno.responsavelContratual.endereco.cidade = dataPropostaCriticada.venda.titulares[0].endereco.cidade;
+            retorno.responsavelContratual.endereco.estado = dataPropostaCriticada.venda.titulares[0].endereco.estado;
+
+
+            var dependentes = [];
+
+            $.each(dataPropostaCriticada.venda.titulares, function (i, item) {
+
+                if (item.cdTitular == 0) return;
+
+                var dependente = getRepository("dependente");
+
+                dependente.nome = dataPropostaCriticada.venda.titulares[i].nome;
+                dependente.nomeMae = dataPropostaCriticada.venda.titulares[i].nomeMae;
+                dependente.sexo = dataPropostaCriticada.venda.titulares[i].sexo;
+                dependente.celular = dataPropostaCriticada.venda.titulares[i].celular;
+                dependente.cpf = dataPropostaCriticada.venda.titulares[i].cpf;
+                dependente.email = dataPropostaCriticada.venda.titulares[i].email;
+                dependente.dataNascimento = dataPropostaCriticada.venda.titulares[i].dataNascimento;
+
+
+                dependentes.push(dependente);
+            });
+
+            retorno.dependentes = dependentes;
+            retorno.criticas = dataPropostaCriticada.venda.criticas;
+
+
+            put("propostaPf", JSON.stringify(retorno));
+
+            window.location = "venda_pf_dados_proposta.html?erro=true";
+
+        }, dataToken.access_token, dataId);
+
+
 
     });
 

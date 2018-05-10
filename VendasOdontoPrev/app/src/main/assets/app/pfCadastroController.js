@@ -59,25 +59,38 @@ function abrirPropostaComErros() {
         $("#adicionarDependente").prop('disabled', true);
         $("#continuarProposta").prop('disabled', true);
         $("#btnExcluirPlano").addClass('hide');
+        $(".btnEditar").addClass('hide');
+        $(".btnExcluir").addClass('hide');
 
         var proposta = get("propostaPf");
 
-        if (proposta.erros.length > 0) {
+        if (proposta.criticas.length > 0) {
 
             $("#divErros").removeClass('hide');
+           
+            $.each(proposta.criticas, function (i, item) {
 
-            var erros;
-
-            $.each(proposta.erros, function (i, item) {
-
-                $("#divErros").append('<p class="labelRedErrosFont">. ' + item +'</p>');
+                if (item.nome != null){
+                    $("#divErros").append('<p class="labelRedErrosFontBenef">' + item.nome.toLowerCase().capitalize() + ':</p>');
+                }
                 
-              
-            });
+                var erros = item.dsErroRegistro.split('.');
 
-            $("#divErros").append("<br/>");
-        }
-        
+                $.each(erros, function (indErro, erroSplit) {
+
+                    if (erroSplit == "") return;
+
+                    var capitalize = erroSplit.trim().split(" ");
+
+                    $("#divErros").append('<p class="labelRedErrosFont">. ' + erroSplit.trim().toLowerCase().replace(capitalize[0].toLowerCase(), capitalize[0].toLowerCase().capitalize()) + '</p>');
+
+                });
+
+                $("#divErros").append("<br/>");
+
+            });
+            
+        }   
     }
 }
 
