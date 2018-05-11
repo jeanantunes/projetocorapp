@@ -534,7 +534,8 @@ function buscarDetalheProposta(callback, token, cdVenda) {
 
     $.ajax({
         async: true,
-        url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
+        //url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
+        url: "http://172.16.244.160:8080/propostaCritica/buscarPropostaCritica/" + cdVenda,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -547,9 +548,7 @@ function buscarDetalheProposta(callback, token, cdVenda) {
         error: function (xhr) {
         }
     });
-
-
-
+    
     var dataPropostaCriticada = {
         "venda": {
             "cdVenda": 1927,

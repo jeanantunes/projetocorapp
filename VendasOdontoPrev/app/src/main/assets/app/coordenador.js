@@ -29,6 +29,7 @@ $(document).ready(function () {
         localStorage.removeItem("proposta");
     });
 
+    //fireBase.getToken();
     //getTokenDevice(); //Busca o TOKEN DO APP
 
 });
@@ -77,6 +78,51 @@ function defineConexao() {
         Token = conexao.chaveHomolog;
         setPlanosHml();
     }
+}
+
+
+function callDashBoardPF(callback, Token) {
+    var statusTodasPropostas = 0;
+    var dadosForca = get("dadosUsuario");
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+            swal("Ops!", "Erro na conexão, tente mais tarde", "error");
+        }
+    });
+}
+
+function callDashBoardPME(callback, Token) {
+    var statusTodasPropostas = 0;
+    var dadosForca = get("dadosUsuario");
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+            swal("Ops!", "Erro na conexão, tente mais tarde", "error");
+        }
+    });
 }
 
 

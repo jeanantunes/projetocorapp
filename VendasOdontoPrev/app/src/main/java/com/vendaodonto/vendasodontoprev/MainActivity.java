@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.JavascriptInterface;
 import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ctx = this;
-
 
         setContentView(R.layout.activity_main);
         String urlAssets = "file:///android_asset/";
@@ -133,17 +131,16 @@ public class MainActivity extends AppCompatActivity {
             {
                 Log.d("MeuLog", "Nâo existe cadastro salvo");
                 myWebView.loadUrl("file:///android_asset/index.html");
-            }
+           }
 
-            MyFirebaseInstanceIDService fireBase = new MyFirebaseInstanceIDService();
-
-            myWebView.addJavascriptInterface(fireBase, "fireBase");
 
             //myWebView.loadDataWithBaseURL("file:///android_asset/", total.toString(), "text/html", "UTF-8", null);
 
             Log.d("MeuLog", "Classe instanciada");
 
             //selectTableLogin();
+
+
 
         } catch (Exception xxx) {
             Log.e("MeuLog", "Load assets ", xxx);

@@ -9,6 +9,9 @@ $(document).ready(function () {
     resyncPropostasPME();
     resyncPropostasPF();
     checkStatusPropostas();
+
+    atualizarPropostaComApiDash();
+
 });
 
 function validarVersaoApp()
@@ -35,6 +38,44 @@ function validarVersaoApp()
     });
 }
 
+function atualizarPropostaComApiDash() {
+
+    if (!navigator.onLine) return;
+
+    callTokenProdSemMsgErro(function (dataToken) {
+
+        var qtdCriticadasPf = 0;
+        var qtdCriticadasPME = 0;
+
+
+        callDashBoardPFReprovado(function (dashPf) {
+
+            qtdCriticadasPf = dashPf.dashboardPropostasPF.length;
+
+            var qtdCriticaLocal = parseInt($("#criticada").html());
+
+            $("#criticada").html(qtdCriticadasPf + qtdCriticaLocal);
+
+            callDashBoardPMEReprovado(function (dashPme) {
+
+                qtdCriticadasPME = dashPme.dashboardPropostasPME.length;
+
+                var qtdCriticaLocal = parseInt($("#criticada").html());
+
+                $("#criticada").html(qtdCriticadasPME + qtdCriticaLocal);
+
+            }, dataToken.access_token);
+
+        }, dataToken.access_token);
+
+
+
+
+    });
+
+
+
+}
 
 function validarStatusUsuario() {
 
@@ -154,9 +195,9 @@ function setarDados() {
     //document.getElementsByClassName('.nomeCorretor').innerHTML = "" + dadosTratados.nome;
 }
 
-function callDashBoardPF(callback, Token) {
+function callDashBoardPFReprovado(callback, Token) {
 
-    var statusTodasPropostas = 0;
+    var statusTodasPropostas = 2;
     var dadosForca = get("dadosUsuario");
 
     $.ajax({
@@ -177,9 +218,9 @@ function callDashBoardPF(callback, Token) {
     });
 }
 
-function callDashBoardPME(callback, Token) {
+function callDashBoardPMEReprovado(callback, Token) {
 
-    var statusTodasPropostas = 0;
+    var statusTodasPropostas = 2;
     var dadosForca = get("dadosUsuario");
 
     $.ajax({
