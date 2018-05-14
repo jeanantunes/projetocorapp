@@ -105,7 +105,7 @@ function carregarListaOffline() {
             link = 'href="venda_pf_editar.html?cpf=' + item.cpf+'"';
             acaoseta = "";
         } else if (item.status == "ENVIADA" || item.status == "Aprovado") {
-            status = "Enviada";
+            status = "Processada";
             css = "colorCirc2";
             acaoseta = "hide";
         } else if (item.status == "SYNC") {
@@ -154,7 +154,7 @@ function carregarListaOffline() {
             link = "venda_pme_editar.html?cnpj=" + item.cnpj;
             acaoseta = "";
         } else if (item.status == "ENVIADA") {
-            status = "Enviada";
+            status = "Processada";
             css = "colorCirc2";
             acaoseta = "hide";
 
@@ -214,7 +214,8 @@ function carregarListaOnlineAtualizarProposta() {
                     if (propostaSemCdVenda.length == 1) {
             
                         iProposta.cdVenda = propostaSemCdVenda[0].cdVenda;
-            
+                        iProposta.numeroDaProposta = propostaSemCdVenda[0].propostaDcms;
+
                         var salvarPropostas = [];
             
                         var propostaSemCdVenda = attCdVendaPropostas.filter(function (x) { return x.cpf != iProposta.cpf });
@@ -233,9 +234,6 @@ function carregarListaOnlineAtualizarProposta() {
                 }
             
             });
-
-
-
 
             var propostasNaoRepetidas = [];
 
@@ -283,7 +281,7 @@ function carregarListaOnlineAtualizarProposta() {
 
                 if (item.statusVenda == "Aprovado" && item.criticas == null) {
 
-                    status = "Aprovada";
+                    status = "Processada";
                     css = "colorCirc2";
                     acaoseta = "";
                     acao = "ver detalhes";

@@ -25,7 +25,9 @@ import controllers.cadastro_planoController;
 import models.Cliente;
 import models.DataBase;
 import models.ForcaVenda;
+import models.Notificacao;
 import models.Plano;
+import models.TableNotificacao;
 import models.tableCorretora;
 import models.tableEndereco;
 import models.tableForcaVendas;
@@ -87,8 +89,10 @@ public class MainActivity extends AppCompatActivity {
         //getContact(1);
 
         int qt = 0;
-        //tableLogin tb = new tableLogin(this);
-        //tb.insertTeste();
+
+        TableNotificacao tbNotification = new TableNotificacao(this);
+        tbNotification.insertNotificacao();
+
         try {
 
             Log.e("MeuLog", "======================");
@@ -121,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
             //forcaLogin = buscar(1);
 
-            Log.d("MeuLog", "Erro na busca do login");
+            //Log.d("MeuLog", "Erro na busca do login");
 
             if(forcaLogin != null)
             {
@@ -146,7 +150,9 @@ public class MainActivity extends AppCompatActivity {
             Log.e("MeuLog", "Load assets ", xxx);
         }
 
+         Notificacao noti = buscarNotificao(1);
 
+        //Log.d("MeuLog", "Notificacao: " + noti.getTitulo());
 
         // TESTE CRUD
 
@@ -157,6 +163,42 @@ public class MainActivity extends AppCompatActivity {
         ///////////////////////////////////////////////
 
     }
+
+    public Notificacao buscarNotificao(int codigo) {
+
+        try {
+            Notificacao notificacao = new Notificacao();
+
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("SELECT * ");
+            sql.append("FROM TBOD_NOTIFICACAO ");
+            sql.append("WHERE CD_NOTIFICACAO = " + codigo);
+
+            SQLiteDatabase dbs = db.getReadableDatabase();
+
+            Cursor resultado = dbs.rawQuery(sql.toString(), null);
+
+
+            if (resultado.getCount() > 0) {
+                resultado.moveToFirst();
+
+                notificacao.setTitulo(resultado.getString(resultado.getColumnIndexOrThrow("NM_TITULO")));
+                notificacao.setDescricao(resultado.getString(resultado.getColumnIndexOrThrow("DS_NOTIFICACAO")));
+                //notificacao.setDataNoficacao(resultado.getString( resultado.getColumnIndexOrThrow("DT_NOTIFICACAO")));
+                notificacao.setTipoNotificacao(resultado.getString(resultado.getColumnIndexOrThrow("CD_TIPO_NOTIFICACAO")));
+
+
+                Log.d("MeuLog", "Executou TableNotification");
+                return notificacao;
+            }
+        } catch (Exception e){
+            Log.d("MeuLog", "" + e.toString());
+        }
+
+        return null;
+    }
+
 
     public ForcaVenda buscar(int codigo) {
 

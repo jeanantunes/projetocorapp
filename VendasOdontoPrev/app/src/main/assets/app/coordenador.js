@@ -1387,6 +1387,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                     var pessoas = get("pessoas");
                     pessoa[0].status = "ENVIADA";
                     pessoa[0].cdVenda = result.id;
+                    pessoa[0].numeroDaProposta = result.mensagem.split("[")[2].split("]")[0];
                     pessoa[0].dataAtualizacao = new Date();
 
                     var todosExcetoExclusao = pessoas.filter(function (x) { return x.cpf != pessoa[0].cpf });

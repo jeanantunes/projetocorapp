@@ -53,6 +53,12 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(tablePlanosCoberturas.getTablePlanosCoberturas());
         db.execSQL(tableStatusForcaVendas.getTableStatusForcaVendas());
         db.execSQL(tableTipoDocumento.getTableTipoDocumento());
+        try {
+            db.execSQL(TableNotificacao.getTableTableNotificacao());
+        }catch (Exception e){
+
+            Log.d("MeuLog", "" + e.toString());
+        }
     }
 
     @Override
