@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        MyFirebaseInstanceIDService oFireBaseIdService = new MyFirebaseInstanceIDService();
+        oFireBaseIdService.getToken();
+
         ctx = this;
 
         setContentView(R.layout.activity_main);

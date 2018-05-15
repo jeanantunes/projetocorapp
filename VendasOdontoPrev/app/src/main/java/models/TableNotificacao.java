@@ -24,7 +24,7 @@ public class TableNotificacao {
     {
         String tableStatusForcaVendas = "CREATE TABLE IF NOT EXISTS [TBOD_NOTIFICACAO] ( [CD_NOTIFICACAO] integer NOT NULL, " +
                 "[DS_NOTIFICACAO] varchar(250) NOT NULL, [NM_TITULO] varchar(250) NOT NULL, [DT_NOTIFICACAO] DATETIME NOT NULL, " +
-                "[CD_TIPO_NOTIFICACAO] varchar(50) NOT NULL, PRIMARY KEY ([CD_NOTIFICACAO]) )";
+                "[CD_TIPO_NOTIFICACAO] varchar(50) NOT NULL, [CD_LIDA] boolean NOT NULL, PRIMARY KEY ([CD_NOTIFICACAO]) )";
 
         return tableStatusForcaVendas;
     }
@@ -43,7 +43,7 @@ public class TableNotificacao {
             values.put("NM_TITULO", "Aprovado");
             values.put("DT_NOTIFICACAO", "2007-01-01 10:00:00");
             values.put("CD_TIPO_NOTIFICACAO", "Aprovado");
-
+            values.put("CD_LIDA", 0);
             dbs.insert("TBOD_NOTIFICACAO", null, values);
 
             Log.d("MeuLog", "Notificacao inserida!");
