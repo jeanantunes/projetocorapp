@@ -202,38 +202,41 @@ function carregarListaOnlineAtualizarProposta() {
         callDashBoardPF(function (dataDashPf) {
 
             var attCdVendaPropostas = get("pessoas");
-            
-            $.each(attCdVendaPropostas, function (indiceProposta, iProposta){
-            
-                var cdVenda = iProposta.cdVenda;
-            
-                if (cdVenda == undefined) {
-            
-                    var propostaSemCdVenda = dataDashPf.dashboardPropostasPF.filter(function (x) { return x.cpf == iProposta.cpf.replace(/\D/g, '') });
-            
-                    if (propostaSemCdVenda.length == 1) {
-            
-                        iProposta.cdVenda = propostaSemCdVenda[0].cdVenda;
-                        iProposta.numeroDaProposta = propostaSemCdVenda[0].propostaDcms;
 
-                        var salvarPropostas = [];
-            
-                        var propostaSemCdVenda = attCdVendaPropostas.filter(function (x) { return x.cpf != iProposta.cpf });
-            
-                        $.each(propostaSemCdVenda, function (indiceSavePropostas, itemSavePropostas) {
-                            salvarPropostas.push(itemSavePropostas);
-                        });
-            
-                        
-                        salvarPropostas.push(iProposta);
+            if (attCdVendaPropostas != undefined) {
 
-                        put("pessoas", JSON.stringify(salvarPropostas));
-            
+                $.each(attCdVendaPropostas, function (indiceProposta, iProposta) {
+
+                    var cdVenda = iProposta.cdVenda;
+
+                    if (cdVenda == undefined) {
+
+                        var propostaSemCdVenda = dataDashPf.dashboardPropostasPF.filter(function (x) { return x.cpf == iProposta.cpf.replace(/\D/g, '') });
+
+                        if (propostaSemCdVenda.length == 1) {
+
+                            iProposta.cdVenda = propostaSemCdVenda[0].cdVenda;
+                            iProposta.numeroDaProposta = propostaSemCdVenda[0].propostaDcms;
+
+                            var salvarPropostas = [];
+
+                            var propostaSemCdVenda = attCdVendaPropostas.filter(function (x) { return x.cpf != iProposta.cpf });
+
+                            $.each(propostaSemCdVenda, function (indiceSavePropostas, itemSavePropostas) {
+                                salvarPropostas.push(itemSavePropostas);
+                            });
+
+
+                            salvarPropostas.push(iProposta);
+
+                            put("pessoas", JSON.stringify(salvarPropostas));
+
+                        }
+
                     }
-            
-                }
-            
-            });
+
+                });
+            }
 
             var propostasNaoRepetidas = [];
 
@@ -247,24 +250,26 @@ function carregarListaOnlineAtualizarProposta() {
              
                 var atualizarPropostaPf = get("pessoas");
 
-                var proposta = atualizarPropostaPf.filter(function (x) { return x.cdVenda == item.cdVenda }); // Buscando proposta local com o mesmo cdVenda
-                var propostas = atualizarPropostaPf.filter(function (x) { return x.cdVenda != item.cdVenda });
-                var putPropostas = [];
-                
+                if (atualizarPropostaPf != undefined) {
+                    var proposta = atualizarPropostaPf.filter(function (x) { return x.cdVenda == item.cdVenda }); // Buscando proposta local com o mesmo cdVenda
+                    var propostas = atualizarPropostaPf.filter(function (x) { return x.cdVenda != item.cdVenda });
+                    var putPropostas = [];
 
-                if (proposta.length == 1) {
 
-                    $.each(propostas, function (i, item) {
+                    if (proposta.length == 1) {
 
-                        putPropostas.push(item);
+                        $.each(propostas, function (i, item) {
 
-                    });
+                            putPropostas.push(item);
 
-                    proposta[0].status = item.statusVenda;
-                    putPropostas.push(proposta[0]);
+                        });
 
-                    put("pessoas", JSON.stringify(putPropostas));
+                        proposta[0].status = item.statusVenda;
+                        putPropostas.push(proposta[0]);
 
+                        put("pessoas", JSON.stringify(putPropostas));
+
+                    }
                 }
                 
                 qtdPessoas++;

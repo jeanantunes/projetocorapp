@@ -8,9 +8,8 @@ var conexao;
 
 $(document).ready(function () {
 
-    var menu = getComponent("menu");
-    
-    $("body").append(menu);
+    var menu = getComponent("menu"); // busca componente do menu   
+    $("#componenteMenu").append(menu); // seta o menu na pagina
 
     $("a[href='meus_dados.html']").hide();
  

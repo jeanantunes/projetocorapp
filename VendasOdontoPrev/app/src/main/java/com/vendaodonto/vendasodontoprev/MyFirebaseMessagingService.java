@@ -20,6 +20,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage message) {
+        Log.d("MeuLog", "Mensagem recebida: " + message.getNotification().getTitle());
         try {
             sendMyNotification(message.getNotification().getTitle() ,message.getNotification().getBody());
 
@@ -40,7 +41,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.icon_status_bar)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
@@ -48,6 +49,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setLights(Color.BLUE,1,1)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
+
+        Log.d("MeuLog", "Mensagem recebida: " + message);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) createChannel(notificationManager);

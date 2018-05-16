@@ -966,7 +966,8 @@ h5, .subListBox {
     display: inline-block;
     width: 150px;
     height: 110px;
-    margin-right: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
     box-shadow: 2px 10px 20px 0px #E1E1E1;
 }
 
@@ -977,22 +978,9 @@ h5, .subListBox {
     background-color: #FF4141;
     padding: 20px;
     margin-top: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
     border-radius: 10px;
-    text-align: center;
-    display: inline-block;
-    width: 150px;
-    height: 110px;
-    box-shadow: 2px 10px 20px 0px #E1E1E1;
-}
-
-.boxAlertSucess {
-    font-family: Roboto-Light;
-    color: #fff;
-    font-size: 10pt;
-    background-color: #83BC00;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20%;
     text-align: center;
     display: inline-block;
     width: 150px;
@@ -1007,15 +995,49 @@ h5, .subListBox {
     background-color: #EDEDED;
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20%;
+    /*margin-bottom: 20%;*/
     text-align: center;
     display: inline-block;
     width: 150px;
     height: 110px;
-    margin-right: 20px;
-    margin-top: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 10px;
     box-shadow: 2px 10px 20px 0px #E1E1E1;
 }
+
+.boxAlertInvisible {
+    font-family: Roboto-Light;
+    color: #656565;
+    font-size: 10pt;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    /*margin-bottom: 20%;*/
+    text-align: center;
+    display: inline-block;
+    width: 150px;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 20px;
+}
+
+.boxAlertSucess {
+    font-family: Roboto-Light;
+    color: #fff;
+    font-size: 10pt;
+    background-color: #83BC00;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20%;
+    text-align: center;
+
+    width: 150px;
+    height: 110px;
+    box-shadow: 2px 10px 20px 0px #E1E1E1;
+}
+
+
 
 @media screen and (min-width: 680px) {
 
@@ -1065,6 +1087,7 @@ h5, .subListBox {
         /*margin-top: 14px;*/
         border-radius: 10px;
         /* margin-bottom: 20%; */
+        margin-right: 20px;
         text-align: center;
         display: inline-block;
         width: 300px;
@@ -1094,7 +1117,6 @@ h5, .subListBox {
         background-color: #EDEDED;
         padding: 20px;
         border-radius: 10px;
-        margin-bottom: 20%;
         text-align: center;
         display: inline-block;
         width: 300px;
@@ -1102,6 +1124,20 @@ h5, .subListBox {
         margin-right: 20px;
         margin-top: 20px;
         box-shadow: 2px 10px 20px 0px #E1E1E1;
+    }
+
+    .boxAlertInvisible {
+        font-family: Roboto-Light;
+        color: #656565;
+        font-size: 16pt;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        display: inline-block;
+        width: 300px;
+        margin-right: 20px;
+        margin-top: 20px;
     }
 
 

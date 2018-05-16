@@ -62,7 +62,10 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL(TableNotificacao.getTableTableNotificacao());
+
+    }
 
     public void addCliente(Cliente cliente)
     {
