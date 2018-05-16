@@ -23,6 +23,52 @@
     text-align: center;
 } */
 
+/**************************************************************************************/
+
+.horasNotication {
+    font-family: Roboto-Light;
+    color: #3c91e6;
+    margin-top: 15px;
+}
+
+.descNotification {
+    font-family: Roboto-Light;
+    color: #656565;
+    font-size: 6pt;
+}
+
+.titleNotification {
+    font-family: Roboto-Bold;
+    font-size: 10pt;
+    color: #656565;
+    text-align: left;
+}
+
+
+.listCircNotification {
+    position: relative;
+    right: 30px;
+    top: 20px;
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+}
+
+.listBarraNotification {
+    border-left: 2px solid #ededed;
+    padding: 0px 0px 0px 20px;
+    position: relative;
+    left: -20px;
+    margin-top: 3px;
+    margin-bottom: 1-10px;
+}
+
+
+
+
+
+
+
 /*********************************** Imagem Usuário ****************************************/
 
 .perfil {
