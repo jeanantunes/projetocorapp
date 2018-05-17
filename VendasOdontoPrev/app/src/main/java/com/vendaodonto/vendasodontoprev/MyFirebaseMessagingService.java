@@ -40,11 +40,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent intent = new Intent(this, MainActivity.class);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0 /* request code */, intent,PendingIntent.FLAG_ONE_SHOT);
-//
+
         long[] pattern = {500,500,500,500,500};
-//
+
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//
+
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.icon_status_bar)
                 .setContentTitle(title)
@@ -54,9 +54,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setLights(Color.BLUE,1,1)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
-//
+
         Log.d("MeuLog", "Mensagem recebida: " + message);
-//
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) createChannel(notificationManager);
 
@@ -76,7 +76,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //Uri soundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         //NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
         //        .setSmallIcon(R.mipmap.ic_launcher_round)
-        //        .setContentTitle(title)
+        //        .setContentTitle(title)+
         //        .setContentText(message)
         //        .setAutoCancel(true)
         //        .setVibrate(pattern)
@@ -139,4 +139,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         mChannel.setLightColor(Color.BLUE);
         notificationManager.createNotificationChannel(mChannel);
     }
+
 }

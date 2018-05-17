@@ -539,6 +539,7 @@ function buscarDetalheProposta(callback, token, cdVenda) {
         async: true,
         //url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
         url: "http://172.16.244.160:8080/propostaCritica/buscarPropostaCritica/" + cdVenda,
+        //url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -551,118 +552,7 @@ function buscarDetalheProposta(callback, token, cdVenda) {
         error: function (xhr) {
         }
     });
-    
-    var dataPropostaCriticada = {
-        "venda": {
-            "cdVenda": 1927,
-            "cdEmpresa": null,
-            "cdPlano": 7,
-            "cdForcaVenda": 6,
-            "dataVenda": "2018-04-06",
-            "cdStatusVenda": 1,
-            "faturaVencimento": 0,
-            "tipoPagamento": null,
-            "titulares": [
-                {
-                    "cdVida": 2500,
-                    "cdTitular": 0,
-                    "celular": "15111111111",
-                    "cpf": "38601556280",
-                    "cnpj": null,
-                    "dataNascimento": "27/06/1980",
-                    "email": "almeida@hotmail.com",
-                    "nome": "Yago Almeida Santos Filho",
-                    "nomeMae": "Maria Jose da Silva",
-                    "pfPj": null,
-                    "sexo": "M",
-                    "cdPlano": 0,
-                    "cdVenda": 0,
-                    "dadosBancarios": null,
-                    "endereco": {
-                        "cep": "05542020",
-                        "logradouro": "Rua Joao Jose dos Santos",
-                        "numero": "307",
-                        "complemento": "complemento",
-                        "bairro": "Jardim Olympia",
-                        "cidade": "Sao Paulo",
-                        "estado": "SP",
-                        "tipoEndereco": null
-                    },
-                    "dependentes": null
-                },
-                {
-                    "cdVida": 2501,
-                    "cdTitular": 2500,
-                    "celular": "15111111111",
-                    "cpf": "38601556280",
-                    "cnpj": null,
-                    "dataNascimento": "27/06/1980",
-                    "email": "almeida@hotmail.com",
-                    "nome": "Dependente Almeida Santos",
-                    "nomeMae": "Joaquina da Silva",
-                    "pfPj": null,
-                    "sexo": "f",
-                    "cdPlano": 0,
-                    "cdVenda": 0,
-                    "dadosBancarios": null,
-                    "endereco": null,
-                    "dependentes": null
-                }
-            ],
-            "cdDCSSUsuario": null,
-            "responsavelContratual": {
-                "nome": "Yago Almeida Santos",
-                "cpf": "38601556280",
-                "dataNascimento": "27/06/1980",
-                "email": "almeida@hotmail.com",
-                "celular": "15111111111",
-                "sexo": "M",
-                "endereco": {
-                    "cep": "05542020",
-                    "logradouro": "Rua Joao Jose dos Santos",
-                    "numero": "307",
-                    "complemento": "complemento",
-                    "bairro": "Jardim Olympia",
-                    "cidade": "Sao Paulo",
-                    "estado": "SP"
-                }
-            },
-            "plano": {
-                "cdPlano": 7,
-                "titulo": "Dental Bem Estar IFLE 1 PHF 180D",
-                "descricao": "Dental Bem Estar IFLE 1 PHF 180D",
-                "sigla": "TUJ",
-                "valor": "45.6",
-                "tipo": "1",
-                "cdVenda": 0
-            },
-            "criticas": [
-                {
-                    "nrSeqRegistro": 1,
-                    "nrImportacao": 13171827,
-                    "nrAtendimento": "APP000000028523",
-                    "dsErroRegistro": " BENEFICIÁRIO JÁ CADASTRADO EMPRESA / CPF.",
-                    "nome": "YAGO ALMEIDA SANTOS FILHO"
-                },
-                {
-                    "nrSeqRegistro": 2,
-                    "nrImportacao": 13171827,
-                    "nrAtendimento": "APP000000028523",
-                    "dsErroRegistro": " BENEFICIÁRIO TITULAR COM ERRO CRÍTICO. CPF DO DEPENDENTE DEVE SER DIFERENTE DO TITULAR. BENEFICIÁRIO JÁ CADASTRADO EMPRESA / CPF.",
-                    "nome": "DEPENDENTE ALMEIDA SANTOS"
-                }
-            ],
-            "propostaDcms": "APP000000028523",
-            "dadosBancariosVenda": {
-                "codigoBanco": "033",
-                "agencia": "0001-2",
-                "tipoConta": "CC",
-                "conta": "01420000-1"
-            }
-        }
-    };
-
-    
+        
 }
 
 function verDetalheProposta(dataId) {
@@ -686,6 +576,13 @@ function verDetalheProposta(dataId) {
 
 
         buscarDetalheProposta(function (dataPropostaCriticada) {
+
+            if (dataPropostaCriticada.venda.cdStatusVenda == 2 && dataPropostaCriticada.venda.criticas.length == 0) {
+
+
+                swal("Ops", "Proposta sem critica", "error");
+                return;
+            }
 
             var retorno = getRepository("propostaPf");
             retorno.cdVenda = dataPropostaCriticada.venda.cdVenda;
