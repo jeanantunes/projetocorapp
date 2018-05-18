@@ -8,11 +8,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -22,6 +24,9 @@ import java.util.Date;
 import java.util.Random;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
+    private NotificationChannel mChannel;
+    private NotificationManager notifManager;
 
     @Override
     public void onMessageReceived(RemoteMessage message) {
@@ -37,32 +42,106 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sendMyNotification(String title,String message) {
 
-        Intent intent = new Intent(this, MainActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0 /* request code */, intent,PendingIntent.FLAG_ONE_SHOT);
-
-        long[] pattern = {500,500,500,500,500};
-
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.icon_status_bar)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setVibrate(pattern)
-                .setLights(Color.BLUE,1,1)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        Log.d("MeuLog", "Mensagem recebida: " + message);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) createChannel(notificationManager);
-
         int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
 
-        notificationManager.notify(m /* ID of notification */, notificationBuilder.build());
+        if (notifManager == null) {
+            notifManager = (NotificationManager) getSystemService
+                    (Context.NOTIFICATION_SERVICE);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationCompat.Builder builder;
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            if (mChannel == null) {
+                mChannel = new NotificationChannel
+                        ("0", title, importance);
+                mChannel.setDescription(message);
+                mChannel.enableVibration(true);
+                notifManager.createNotificationChannel(mChannel);
+            }
+            builder = new NotificationCompat.Builder(this, "0");
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, m, intent, PendingIntent.FLAG_ONE_SHOT);
+            builder.setContentTitle(title)
+                    .setSmallIcon(getNotificationIcon()) // required
+                    .setContentText(message)  // required
+
+                    .setAutoCancel(true)
+                    .setLargeIcon(BitmapFactory.decodeResource
+                            (getResources(), R.drawable.icon_status_bar))
+                    .setBadgeIconType(R.drawable.icon_status_bar)
+                    .setContentIntent(pendingIntent)
+                    .setSound(RingtoneManager.getDefaultUri
+                            (RingtoneManager.TYPE_NOTIFICATION));
+            Notification notification = builder.build();
+            notifManager.notify(0, notification);
+        } else {
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = null;
+
+            pendingIntent = PendingIntent.getActivity(this, m, intent, PendingIntent.FLAG_ONE_SHOT);
+
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setAutoCancel(true)
+                    .setColor(ContextCompat.getColor(getBaseContext(), R.color.common_google_signin_btn_text_dark))
+                    .setSound(defaultSoundUri)
+                    .setSmallIcon(getNotificationIcon())
+                    .setContentIntent(pendingIntent)
+                    .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).bigText(message));
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            notificationManager.notify(m, notificationBuilder.build());
+        }
+    }
+
+        //Intent intent = new Intent(this, MainActivity.class);
+        ////intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(this,0 /* request code */, intent,PendingIntent.FLAG_ONE_SHOT);
+//
+        //long[] pattern = {500,500,500,500,500};
+//
+        //Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//
+        //NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+        //        .setSmallIcon(R.drawable.ic_action_spotify)
+        //        .setContentTitle(title)
+        //        .setContentText(message)
+        //        .setAutoCancel(true)
+        //        .setVibrate(pattern)
+        //        .setLights(Color.BLUE,1,1)
+        //        .setSound(defaultSoundUri)
+        //        .setContentIntent(pendingIntent);
+//
+        //Log.d("MeuLog", "Mensagem recebida: " + message);
+//
+        //NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//
+      /*// Create or update. */
+        //    NotificationChannel channel = new NotificationChannel("my_channel_01",
+        //            "Channel human readable title",
+        //            NotificationManager.IMPORTANCE_HIGH);
+        //    notificationManager.createNotificationChannel(channel);
+        //}
+//
+        //int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+//
+        //notificationManager.notify(m /* ID of notification */, notificationBuilder.build());
+
+
+
 
 
 
@@ -125,7 +204,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //        .setContentInfo("Info");
 //
         //notificationManager.notify(/*notification id*/1, notificationBuilder.build());
-    }
+
 
     @TargetApi(26)
     private void createChannel(NotificationManager notificationManager) {
@@ -138,6 +217,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         mChannel.enableLights(true);
         mChannel.setLightColor(Color.BLUE);
         notificationManager.createNotificationChannel(mChannel);
+    }
+
+    private int getNotificationIcon() {
+        boolean useWhiteIcon = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+        return useWhiteIcon ? R.drawable.ic_action_spotify : R.drawable.icon_status_bar;
     }
 
 }

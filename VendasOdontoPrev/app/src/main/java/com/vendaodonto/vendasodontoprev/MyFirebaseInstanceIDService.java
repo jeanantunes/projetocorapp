@@ -35,6 +35,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         onTokenRefresh();
         Log.d("MeuLog", "Gerou Token");
         return token;
+
     }
 
     @JavascriptInterface
@@ -42,6 +43,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         Log.d("MeuLog", "Modelo do celular: " + android.os.Build.MODEL);
         return android.os.Build.MODEL;
+
     }
 
     // [END refresh_token]
