@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import com.vendaodonto.vendasodontoprev.MyFirebaseInstanceIDService;
+
 import models.DataBase;
 
 /**
@@ -37,6 +39,22 @@ public class SairDaConta {
         dbs.close();
 
         Log.d("MeuLog", "removeu registro");
+    }
+
+    @JavascriptInterface
+    public String getModel(){
+
+        Log.d("MeuLog", "Modelo do celular: " + android.os.Build.MODEL);
+        return android.os.Build.MODEL;
+
+    }
+
+    @JavascriptInterface
+    public String getToken(){
+
+        MyFirebaseInstanceIDService oIdService = new MyFirebaseInstanceIDService();
+        return oIdService.getToken();
+
     }
 
 

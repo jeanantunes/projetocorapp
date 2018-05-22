@@ -29,7 +29,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         sendRegistrationToServer(refreshedToken);
     }
 
-    @JavascriptInterface
+
     public String getToken(){
 
         onTokenRefresh();
@@ -38,13 +38,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     }
 
-    @JavascriptInterface
-    public String getModel(){
 
-        Log.d("MeuLog", "Modelo do celular: " + android.os.Build.MODEL);
-        return android.os.Build.MODEL;
-
-    }
 
     // [END refresh_token]
 

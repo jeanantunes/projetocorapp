@@ -49,6 +49,8 @@ function setColorMenu() {
         $("a[href='lista_proposta.html']").addClass('colorActive');
     else if (url.indexOf("fale_conosco") !== -1)
         $("a[href='fale_conosco.html']").addClass('colorActive');
+    else if (url.indexOf("materiais_de_comunicacao") !== -1)
+        $("a[href='materiais_de_comunicacao.html']").addClass('colorActive');
     
 }
 
@@ -79,8 +81,8 @@ function defineConexao() {
     }
 }
 
-
 function callDashBoardPF(callback, Token) {
+
     var statusTodasPropostas = 0;
     var dadosForca = get("dadosUsuario");
 
@@ -103,6 +105,7 @@ function callDashBoardPF(callback, Token) {
 }
 
 function callDashBoardPME(callback, Token) {
+
     var statusTodasPropostas = 0;
     var dadosForca = get("dadosUsuario");
 
@@ -123,7 +126,6 @@ function callDashBoardPME(callback, Token) {
         }
     });
 }
-
 
 function callTokenProd(callback) {
 
@@ -148,23 +150,33 @@ function callTokenProd(callback) {
     });
 };
 
+function putDeviceToken(callback, token, tokenDevice, modeloCelular, sistemaOperacional) {
 
-function getTokenDevice() {
-
-    console.log("Gerando Token");
-    var tokenDevice = fireBase.getToken();
-    console.log("Token Gerado");
-    console.log(tokenDevice);
-
-
-    var dadosDevice = {
-        "tokenDevice": tokenDevice,
-        "SO": "Android"
+    var request = {
+        "token": tokenDevice,
+        "modelo": modeloCelular,
+        "sistemaOperacional": sistemaOperacional
     };
 
-    put("dadosDevice", JSON.stringify(dadosDevice));
-
+    $.ajax({
+        async: true,
+        url: URLBase + "/forcavenda/devicetoken",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+            "Authorization": "Bearer " + dataToken.access_token
+        },
+        data: JSON.stringify(request),
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+        }
+    });
 }
+
+
 
 function callTokenProdSemMsgErro(callback) {
 

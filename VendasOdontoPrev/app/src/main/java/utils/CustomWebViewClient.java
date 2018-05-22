@@ -8,6 +8,8 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.vendaodonto.vendasodontoprev.MyFirebaseInstanceIDService;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -120,6 +122,11 @@ public class CustomWebViewClient extends WebViewClient {
         SairDaConta logout = new SairDaConta(context);
 
         view.addJavascriptInterface(logout, "logout");
+
+        MyFirebaseInstanceIDService fireBase = new MyFirebaseInstanceIDService();
+
+        view.addJavascriptInterface(fireBase, "fireBase");
+
 
         Log.d("MeuLog", "Classe instanciada");
 

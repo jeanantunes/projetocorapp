@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Odontoprev</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet" />
+</head>
+<body>
+
+    <label id="setToken"></label>
+    <label id="setModel"></label>
+    <!-- End Modal -->
+    <!-- End Bloco 1 -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+   
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+
+
+            getTokenDevice();
+
+        });
+
+        function getTokenDevice() {
+
+            console.log("Gerando Token");
+            var tokenDevice = logout.getToken();
+            console.log("Gerando Modelo");
+            var modelDevice = logout.getModel();
+
+            $("#setToken").html(tokenDevice);
+            $("#setModel").html(modelDevice);
+
+        }
+
+    </script>
+
+</body>
+</html>
