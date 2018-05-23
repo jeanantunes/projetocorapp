@@ -88,84 +88,11 @@
             <div>
 
                 <label class="titlePessoaFisica">Pessoa Física</label>
-
-                <div class="carousel" id="slickPF">
-
-                    <!--<div class="boxMateriaisPlanos">
-        <div class="squarePf">
-
-            <img src="https://i.imgur.com/3aIutJi.png" alt="js" />
-
-        </div>
-    </div>-->
-
-                    <div class="boxMateriaisPlanos">
-                        <!--<img style="margin-left:100px;" src="https://i.imgur.com/rWtGeQ0.png" alt="java" />-->
-
-                        <div class="squarePf"></div>
-                            <img class="resizeImg" src="img/planos-pme-post-master-le.jpg">
-                        <div>
-                            <label class="descricaoSlick">Descrição</label>
-                            <div>
-                                <label class="downloadSlick">Download</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="boxMateriaisPlanos">
-                        <!--<img style="margin-left:100px;" src="https://i.imgur.com/rWtGeQ0.png" alt="java" />-->
-
-                        <div class="squarePf"></div>
-
-                        <div>
-                            <label class="descricaoSlick">Descrição</label>
-                            <div>
-                                <label class="downloadSlick">Download</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="boxMateriaisPlanos">
-                        <!--<img style="margin-left:100px;" src="https://i.imgur.com/rWtGeQ0.png" alt="java" />-->
-
-                        <div class="squarePf"></div>
-
-                        <div>
-                            <label class="descricaoSlick">Descrição</label>
-                            <div>
-                                <label class="downloadSlick">Download</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="boxMateriaisPlanos">
-                        <!--<img style="margin-left:100px;" src="https://i.imgur.com/rWtGeQ0.png" alt="java" />-->
-
-                        <div class="squarePf"></div>
-
-                        <div>
-                            <label class="descricaoSlick">Descrição</label>
-                            <div>
-                                <label class="downloadSlick">Download</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="boxMateriaisPlanos">
-                        <!--<img style="margin-left:100px;" src="https://i.imgur.com/rWtGeQ0.png" alt="java" />-->
-
-                        <div class="squarePf"></div>
-
-                        <div>
-                            <label class="descricaoSlick">Descrição</label>
-                            <div>
-                                <label class="downloadSlick">Download</label>
-                            </div>
-                        </div>
-                    </div>
+                
+                <div class="carousel" id="slickPf"></div>
 
 
-                </div>
+
 
 
 
@@ -175,20 +102,14 @@
 
                 <label class="titlePessoaFisica">PME</label>
 
-                <div class="carousel" id="slickPME">
-                    <div class="boxMateriaisPlanos"><img src="https://i.imgur.com/3aIutJi.png" alt="js" /></div>
-                    <div class="boxMateriaisPlanos"><img src="https://i.imgur.com/rWtGeQ0.png" alt="java" /></div>
-                    <div class="boxMateriaisPlanos"><img src="https://i.imgur.com/8946bSF.png" alt="python" /></div>
-                    <div class="boxMateriaisPlanos"><img src="https://i.imgur.com/9Hc7hjb.png" alt="kotlin" /></div>
-                    <div class="boxMateriaisPlanos"><img src="https://i.imgur.com/uZDEpjX.png" alt="scala" /></div>
-                    <div class="boxMateriaisPlanos"><img src="https://i.imgur.com/eQoyQjy.png" alt="C#" /></div>
-                    <div class="boxMateriaisPlanos"><img src="https://i.imgur.com/ko3iAbu.png" alt="PHP" /></div>
-                    <div class="boxMateriaisPlanos"><img src="https://i.imgur.com/Afkz5od.png" alt="dotnet" /></div>
-                </div>
+                <div class="carousel" id="slickPme"></div>
 
 
 
             </div>
+
+
+            <div style="margin-bottom:93px;"></div>
 
 
 
@@ -197,6 +118,20 @@
         </div>
     </div>
     <!-- End Bloco 1 -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog" style="padding-top:50px;">
+        <div class="modal-dialog modalContainerMateriais">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="img/btn-excluir.png" class="closeModalMateriais btnExcluir" data-dismiss="modal" alt=""/>
+                    <div id="imagem"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
 
     <script src="js/jquery-2.2.0.min.js"></script>
     <script src="slick/slick.js" type="text/javascript" charset="utf-8"></script>
