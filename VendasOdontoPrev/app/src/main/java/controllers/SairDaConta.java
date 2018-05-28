@@ -50,10 +50,10 @@ public class SairDaConta {
     }
 
     @JavascriptInterface
-    public String getToken(){
+    public String getTokenDevice(){
 
         MyFirebaseInstanceIDService oIdService = new MyFirebaseInstanceIDService();
-        return oIdService.getToken();
+        return oIdService.getTokenDevice();
 
     }
 

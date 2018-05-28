@@ -5,8 +5,8 @@ $(document).ready(function () {
     localStorage.removeItem("reCadastro");
 
     var recadastroLogin = get("recadastroLogin");
-    
-    if(recadastroLogin == true){ 
+
+    if (recadastroLogin == true) {
 
         var dadosUsuario = get("dadosUsuario");
         $("#nomeInativoCadastrado").val(dadosUsuario.nome);
@@ -42,13 +42,13 @@ $(document).ready(function () {
     $("#termoNCadastrado").scroll(function () {
 
         if ($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight) {
-     
-             console.log("estou aqui");
-             $("#squaredOne").prop('disabled', false);
-             $("#squaredOneLabel").prop('disabled', false);
-             
-         }
-     
+
+            console.log("estou aqui");
+            $("#squaredOne").prop('disabled', false);
+            $("#squaredOneLabel").prop('disabled', false);
+
+        }
+
     });
 
     $("#termoCadastrado").scroll(function () {
@@ -105,7 +105,7 @@ $(document).ready(function () {
                     }
 
                     else if (dataDadosUsuario.cdForcaVenda != null && (dataDadosUsuario.statusForcaVenda.toUpperCase() == "INATIVO" || dataDadosUsuario.statusForcaVenda.toUpperCase() == "REPROVADO")) {
-                    
+
                         swal.close();
                         put("reCadastro", true);
                         console.log(dataDadosUsuario);
@@ -114,9 +114,9 @@ $(document).ready(function () {
                         $("#nomeInativoCadastrado").val(dataDadosUsuario.nome);
                         $("#celularInativoCadastrado").val(dataDadosUsuario.celular);
                         $("#emailInativoCadastrado").val(dataDadosUsuario.email);
-                    
+
                         localStorage.setItem("dadosUsuario", JSON.stringify(dataDadosUsuario));
-                    
+
                     }
                     else if (dataDadosUsuario.cdForcaVenda == null) {
                         swal.close();
@@ -137,6 +137,7 @@ $(document).ready(function () {
         var cnpjValidado = $("#cnpjNaoCadastrado").val().replace(/\D/g, '');
 
         callTokenProd(function (dataToken) {
+
             callCorretora(function (dataCorretora) {
 
                 if (dataCorretora.cdCorretora == 0) {
@@ -146,15 +147,11 @@ $(document).ready(function () {
                     return;
                 }
 
-
                 //$("#termoOdontNCadastrado").removeClass('hide');
 
                 var reCadastro = get("reCadastro");
 
                 if (!reCadastro) {
-
-
-
 
                     var codCorretora = dataCorretora.cdCorretora;
                     var nome = $("#nomeNaoCadastrado").val();
@@ -164,25 +161,28 @@ $(document).ready(function () {
                     var senha = $("#confirmar-senhaCpfFalse").val();
                     var dataNascimento = "12/09/2002";
 
-
-                    console.log(dataNascimento);
-
                     callInputForcaVenda(function (dataForcaVenda) {
 
-                        $("#infoCorretora").addClass('hide');
-                        $("#cadastroSucessoCorretora").removeClass("hide");
+                        var tokenDevice = getTokenDevice();
+                        var modelDevice = getModelDevice();
+                        var sistemaOperacional = "ANDROID";
+
+                        postDeviceToken(function (dataDeviceToken) {
+
+                            $("#infoCorretora").addClass('hide');
+                            $("#cadastroSucessoCorretora").removeClass("hide");
+
+                        }, dataToken.access_token, dataForcaVenda.id, tokenDevice, modelDevice, sistemaOperacional);
 
                     }, dataToken.access_token, cpfTratado, celularTratado, email, codCorretora, nome, senha, dataNascimento);
 
 
                 } else {
 
-
-
                     var dadosUsuario = get("dadosUsuario");
                     var codCorretora = dataCorretora.cdCorretora;
                     var nome = $("#nomeInativoCadastrado").val();
-                    
+
                     var cpfTratado = $("#cpf").val().replace(/\D/g, '');
                     var celularTratado = $("#celularInativoCadastrado").val().replace(/\D/g, '');
                     var email = $("#emailInativoCadastrado").val();
@@ -191,8 +191,16 @@ $(document).ready(function () {
 
                     callPutSenhaForcaVenda(function () {
 
-                        $("#infoCorretora").addClass('hide');
-                        $("#cadastroSucessoCorretora").removeClass("hide");
+                        var tokenDevice = getTokenDevice();
+                        var modelDevice = getModelDevice();
+                        var sistemaOperacional = "ANDROID";
+
+                        postDeviceToken(function (dataDeviceToken) {
+
+                            $("#infoCorretora").addClass('hide');
+                            $("#cadastroSucessoCorretora").removeClass("hide");
+
+                        }, dataToken.access_token, dadosUsuario.cdForcaVenda, tokenDevice, modelDevice, sistemaOperacional);
 
                     }, dataToken.access_token, dadosUsuario.cdForcaVenda, nome, celularTratado, email, senha, codCorretora);
 

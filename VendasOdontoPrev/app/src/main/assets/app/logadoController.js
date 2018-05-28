@@ -11,7 +11,7 @@ $(document).ready(function () {
     checkStatusPropostas();
 
     atualizarPropostaComApiDash();
-
+    atualizarTokenDevice();
 });
 
 function validarVersaoApp()
@@ -35,6 +35,27 @@ function validarVersaoApp()
             }
 
         }, dataToken.access_token);
+    });
+}
+
+function atualizarTokenDevice() {
+
+    var tokenDevice = getTokenDevice();
+    var modelDevice = getModelDevice();
+    var sistemaOperacional = "ANDROID";
+    var dadosUsuario = get("dadosUsuario");
+
+    console.log("Executando device Token");
+
+    callTokenProdSemMsgErro(function (dataToken) {
+
+        postDeviceToken(function (dataDeviceToken) {
+
+            console.log("Executou postDeviceToken");
+            console.log(dataDeviceToken);
+
+        }, dataToken.access_token, dadosUsuario.cdForcaVenda, tokenDevice, modelDevice, sistemaOperacional);
+
     });
 }
 

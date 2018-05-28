@@ -114,7 +114,14 @@ function carregarListaOffline() {
             acaoseta = "hide";
         }
 
-        itemLista = itemLista.replace("{NOME}", item.nome);
+        if (item.nome == "") {
+            itemLista = itemLista.replace("{NOME}", 'a');
+            itemLista = itemLista.replace("{STYLE}", 'style = "color: #fff"');
+        } else {
+            itemLista = itemLista.replace("{NOME}", item.nome);
+            itemLista = itemLista.replace("{STYLE}", "");
+        }
+        
         itemLista = itemLista.replace("{STATUS}", status);
         itemLista = itemLista.replace("{CSS}", css);
         itemLista = itemLista.replace("{ACAO}", acao);
@@ -309,7 +316,13 @@ function carregarListaOnlineAtualizarProposta() {
                 //
                 //}
 
-                itemLista = itemLista.replace("{NOME}", item.nome);
+                if (item.nome == "") {
+                    itemLista = itemLista.replace("{NOME}", 'a');
+                    itemLista = itemLista.replace("{STYLE}", 'style = "color: #fff"');
+                } else {
+                    itemLista = itemLista.replace("{NOME}", item.nome);
+                    itemLista = itemLista.replace("{STYLE}", "");
+                }
                 itemLista = itemLista.replace("{STATUS}", status);
                 itemLista = itemLista.replace("{CSS}", css);
                 itemLista = itemLista.replace("{ACAO}", acao);
@@ -383,7 +396,13 @@ function carregarListaOnlineAtualizarProposta() {
                 acaoseta = "hide";
             }
 
-            itemLista = itemLista.replace("{NOME}", item.nome);
+            if (item.nome == "") {
+                itemLista = itemLista.replace("{NOME}", 'a');
+                itemLista = itemLista.replace("{STYLE}", 'style = "color: #fff"');
+            } else {
+                itemLista = itemLista.replace("{NOME}", item.nome);
+                itemLista = itemLista.replace("{STYLE}", "");
+            }
             itemLista = itemLista.replace("{STATUS}", status);
             itemLista = itemLista.replace("{CSS}", css);
             itemLista = itemLista.replace("{ACAO}", acao);
@@ -538,8 +557,9 @@ function buscarDetalheProposta(callback, token, cdVenda) {
     $.ajax({
         async: true,
         //url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
-        url: "http://172.16.244.160:8080/propostaCritica/buscarPropostaCritica/" + cdVenda,
+        //url: "http://172.16.244.160:8080/propostaCritica/buscarPropostaCritica/" + cdVenda,
         //url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
+        url: URLBase + "/corretorservicos/1.0/proposta/dados/critica/venda/" + cdVenda,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -574,12 +594,9 @@ function verDetalheProposta(dataId) {
 
     callTokenProd(function (dataToken) {
 
-
         buscarDetalheProposta(function (dataPropostaCriticada) {
 
             if (dataPropostaCriticada.venda.cdStatusVenda == 2 && dataPropostaCriticada.venda.criticas.length == 0) {
-
-
                 swal("Ops", "Proposta sem critica", "error");
                 return;
             }

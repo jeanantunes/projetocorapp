@@ -52,9 +52,13 @@
             <div id="planos" style="margin-bottom:20px;">
             </div>
 
+            
+            <div class="text-center" id="adicionarPlano">
+
+                <label class="linkOdontAddPlanos colorSlick3">ADICIONAR PLANO</label>
+            </div>
+
             <div class="row boxLabInput">
-
-
 
                 <div>
                     <label class="labelBlue">TITULAR DO PLANO</label>
@@ -110,18 +114,17 @@
                 </div>
 
                 <!-- <input type="checkbox" value="" class="exemplo2 checkbox inputLabelFocus">
-                <label class="Label-checkbox labelOdontFocus checkbox-inline">
+        <label class="Label-checkbox labelOdontFocus checkbox-inline">
 
-                </label> -->
+        </label> -->
                 <!--<div class="squaredOne">
-                    <input type="checkbox" value="None" id="squaredOne" name="check" class="checkbox inputLabelCheckFocus" />
-                    <label for="squaredOne" class="Label-checkbox labelCheckOdontFocus checkbox-inline">
-                        <span class="spanCheckbox">
-                            O representante legal é o titular do plano
-                        </span>
-                    </label>
-                </div>-->
-
+            <input type="checkbox" value="None" id="squaredOne" name="check" class="checkbox inputLabelCheckFocus" />
+            <label for="squaredOne" class="Label-checkbox labelCheckOdontFocus checkbox-inline">
+                <span class="spanCheckbox">
+                    O representante legal é o titular do plano
+                </span>
+            </label>
+        </div>-->
                 <!--Bloco Responsavel -->
                 <div class="representanteContratual hide">
                     <div class="row" id="divProximoMes">
@@ -204,7 +207,7 @@
                     <label class="label-complemento labelOdontBlur">Complemento</label>
                 </div>
                 <div>
-                    <input type="text" class="complemento inputLabelBlur">
+                    <input type="text" class="complemento inputLabelBlur" maxlength="100">
                 </div>
                 <div>
                     <label class="label-bairro labelOdontBlur">Bairro</label>
@@ -222,7 +225,7 @@
                     <label class="label-cidade labelOdontBlur">Cidade</label>
                 </div>
                 <div>
-                    <input type="text" class="cidade inputLabelBlur" id="cidade">
+                    <input type="text" class="cidade inputLabelBlur" id="cidade" maxlength="150">
                 </div>
             </div>
 
@@ -233,15 +236,15 @@
 
             <div class="row">
                 <div class="col-md-12 btnPadBtm">
-                    <button class="btn btn-lg btn-block btnOdont" id="adicionarDependente" onclick="addDependente()" role="button" >ADICIONAR DEPENDENTE</button>
+                    <button class="btn btn-lg btn-block btnOdont" id="adicionarDependente" onclick="addDependente()" role="button">ADICIONAR DEPENDENTE</button>
                     <!-- <div class="row">
-                        <div class="text-center">
-                            <a href=""><label for="senha" class="linkOdontSalvar">SALVAR E FINALIZAR PROPOSTA DEPOIS</label></a>
-                        </div>
-                    </div> -->
+                <div class="text-center">
+                    <a href=""><label for="senha" class="linkOdontSalvar">SALVAR E FINALIZAR PROPOSTA DEPOIS</label></a>
+                </div>
+            </div> -->
                 </div>
                 <div class="col-md-12 btnPadBtm">
-                    <button class="btn btn-lg btn-block btnOdont" id="continuarProposta" role="button" onclick="salvarRascunho()" >CONTINUAR</button>
+                    <button class="btn btn-lg btn-block btnOdont" id="continuarProposta" role="button" onclick="salvarRascunho()">CONTINUAR</button>
                 </div>
             </div>
         </div>

@@ -494,7 +494,17 @@ function salvarRascunho() {
         return;
     }
 
+    if ($("#telefone").val().length < 14) {
+        swal("Ops!", "Preencha o telefone", "error");
+        return;
+    }
+
     if ($("#celular").val() == "") {
+        swal("Ops!", "Preencha o celular", "error");
+        return;
+    }
+
+    if ($("#celular").val().length < 14) {
         swal("Ops!", "Preencha o celular", "error");
         return;
     }

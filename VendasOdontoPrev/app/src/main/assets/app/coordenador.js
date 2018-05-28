@@ -33,6 +33,21 @@ $(document).ready(function () {
 
 });
 
+
+function getTokenDevice() {
+
+    var tokenDevice = fireBase.getTokenDevice();
+
+    return tokenDevice;
+}
+
+function getModelDevice() {
+
+    var modelDevice = fireBase.getModel();
+
+    return modelDevice;
+}
+
 function setColorMenu() {
 
     var url = window.location.href;
@@ -150,7 +165,7 @@ function callTokenProd(callback) {
     });
 };
 
-function putDeviceToken(callback, token, tokenDevice, modeloCelular, sistemaOperacional) {
+function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelular, sistemaOperacional) {
 
     var request = {
         "token": tokenDevice,
@@ -160,12 +175,12 @@ function putDeviceToken(callback, token, tokenDevice, modeloCelular, sistemaOper
 
     $.ajax({
         async: true,
-        url: URLBase + "/forcavenda/devicetoken",
+        url: URLBase + "/corretorservicos/forcavenda/devicetoken" + cdForcaVenda,
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Cache-Control": "no-cache",
-            "Authorization": "Bearer " + dataToken.access_token
+            "Authorization": "Bearer " + token
         },
         data: JSON.stringify(request),
         success: function (resp) {
@@ -357,7 +372,7 @@ function setPlanosProd() {
     plano.centavo = "60";
     plano.valorFloat = 45.60;
     plano.desc = "Mensal";
-    plano.css = "colorSlick3";
+    plano.css = "colorSlick1";
 
     planos.push(plano);
 
@@ -368,7 +383,7 @@ function setPlanosProd() {
     plano.centavo = "00";
     plano.valorFloat = 456.00;
     plano.desc = "Anual";
-    plano.css = "colorSlick3";
+    plano.css = "colorSlick1";
 
     planos.push(plano);
 
@@ -379,7 +394,7 @@ function setPlanosProd() {
     plano.centavo = "20";
     plano.valorFloat = 547.20;
     plano.desc = "Anual";
-    plano.css = "colorSlick3";
+    plano.css = "colorSlick1";
     
     planos.push(plano);
 
@@ -758,7 +773,7 @@ function setPlanosHml() {
     plano.centavo = "60";
     plano.valorFloat = 45.60;
     plano.desc = "Mensal";
-    plano.css = "colorSlick3";
+    plano.css = "colorSlick1";
 
     planos.push(plano);
 
@@ -769,7 +784,7 @@ function setPlanosHml() {
     plano.centavo = "00";
     plano.valorFloat = 456.00;
     plano.desc = "Anual";
-    plano.css = "colorSlick3";
+    plano.css = "colorSlick1";
 
     planos.push(plano);
 

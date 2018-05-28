@@ -80,8 +80,21 @@ public class CustomWebViewClient extends WebViewClient {
     @SuppressLint("JavascriptInterface")
     private boolean handleUri(WebView view, String uri) throws ClassNotFoundException
     {
-        Log.d("MeuLog", "scheme =" + uri);
 
+
+        loginController login = new loginController(context);
+
+        view.addJavascriptInterface(login, "login");
+
+        SairDaConta logout = new SairDaConta(context);
+
+        view.addJavascriptInterface(logout, "logout");
+
+        MyFirebaseInstanceIDService fireBase = new MyFirebaseInstanceIDService();
+
+        view.addJavascriptInterface(fireBase, "fireBase");
+
+        Log.d("MeuLog", "scheme =" + uri);
         String arquivo = uri.replace("file:///android_asset/", "");
         arquivo = arquivo.replace(".html", "");
 
@@ -111,21 +124,13 @@ public class CustomWebViewClient extends WebViewClient {
             Log.i("MeuLog", "InvocationTargetException arq= " + arquivo + " erro: " + e.toString() );
         }
 
-        loginController login = new loginController(context);
 
-        view.addJavascriptInterface(login, "login");
 
         Log.d("MeuLog", "Arquivo: " + arquivo);
 
         view.addJavascriptInterface(classeInstanciada, "ob");
 
-        SairDaConta logout = new SairDaConta(context);
 
-        view.addJavascriptInterface(logout, "logout");
-
-        MyFirebaseInstanceIDService fireBase = new MyFirebaseInstanceIDService();
-
-        view.addJavascriptInterface(fireBase, "fireBase");
 
 
         Log.d("MeuLog", "Classe instanciada");

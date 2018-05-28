@@ -1,9 +1,12 @@
 package com.vendaodonto.vendasodontoprev;
 
+import android.*;
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -12,6 +15,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     CustomWebView myWebView;
 
+    private final int PERMISSAO_REQUEST = 2;
+
     DataBase db;
 
     public static Context ctx;
@@ -63,19 +70,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+
         //OneSignal.startInit(this).init();
 
         db = new DataBase(this);
 
         super.onCreate(savedInstanceState);
 
-        MyFirebaseInstanceIDService oFireBaseIdService = new MyFirebaseInstanceIDService();
-        oFireBaseIdService.getToken();
+        //MyFirebaseInstanceIDService oFireBaseIdService = new MyFirebaseInstanceIDService();
+        //oFireBaseIdService.getTokenDevice();
 
         ctx = this;
 
         setContentView(R.layout.activity_main);
         String urlAssets = "file:///android_asset/";
+
+        checkPermission();
 
         myWebView = (CustomWebView) this.findViewById(R.id.webView);
         myWebView.setWebViewClient(new CustomWebViewClient(ctx));
@@ -83,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
         myWebView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
+
+                checkPermission();
+
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
                 request.setMimeType(mimeType);
@@ -98,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimeType));
                 DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                 dm.enqueue(request);
-                Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -308,4 +322,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GaleriaActivity.class);
         startActivity(intent);
     }
+
+    public void checkPermission(){
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]
+                        {
+                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSAO_REQUEST);
+            }
+        }
+
+    }
+
 }

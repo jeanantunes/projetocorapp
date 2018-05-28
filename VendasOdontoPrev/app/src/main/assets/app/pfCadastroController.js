@@ -13,6 +13,13 @@ $(document).ready(function () {
 
     });
 
+    $("#adicionarPlano").click(function () {
+
+        salvarRascunhoMemoria();
+        window.location.href = "venda_index_pf.html";
+
+    });
+
     $("#dataNascimentoTitular").blur(function () {
 
         if ($("#dataNascimentoTitular").val() == "") return;
@@ -39,12 +46,7 @@ $(document).ready(function () {
 
         }
     });
-
-
-    
-
-    
-
+         
 });
 
 function abrirPropostaComErros() {
@@ -131,6 +133,11 @@ function addDependente() {
         return;
     }
 
+    if ($(".celular").val().length < 14) {
+        swal("Ops!", "Preencha o celular", "error");
+        return;
+    }
+
     if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
 
         $("#cpf").focus();
@@ -174,6 +181,11 @@ function addDependente() {
 
         if ($(".celular-representante-legal").val() == "") {
             swal("Ops!", "Preencha o celular do representante legal", "error");
+            return;
+        }
+
+        if ($(".celular-representante-legal").val().length < 14) {
+            swal("Ops!", "Preencha o celular do representante legal", "error"); 
             return;
         }
 
@@ -290,6 +302,12 @@ function buscarPlanosSelecionados() {
         window.location.href = "venda_index_pf.html";
     }
 
+    if (proposta.planos.length > 0) {
+
+        $("#adicionarPlano").addClass('hide');
+
+    }
+
     $.each(proposta.planos, function (i, item) {
         var o = planos.filter(function (x) { return x.cdPlano == item.cdPlano });
         var plano = getComponent("plano");
@@ -309,16 +327,13 @@ function buscarPlanosSelecionados() {
     $(".labelQuantidadeBeneficiarios").addClass('hide');
 }
 
-//$("#cpf").blur(function () {
-//
-//    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
-//        swal("Ops", "CPF inválido", "error");
-//    }
-//});
-
-
-
 function excluirPlano(obj) {
+
+    if ($("#cpf").val() == "") {
+
+        swal("Ops!", "Preencha a CPF do titular", "error");
+        return;
+    }
 
     var container = $(".div-excluir[data-id=" + $(obj).attr("data-id") + "]");
     var proposta = get("propostaPf");
@@ -329,6 +344,7 @@ function excluirPlano(obj) {
 
     var planosExcetoExcluido = proposta.planos.filter(function (x) { return x.cdPlano != container.attr("data-id") });
     proposta.planos = [];
+
     $.each(planosExcetoExcluido, function (i, item) {
         proposta.planos.push(item);
     });
@@ -467,6 +483,13 @@ function salvarRascunho() {
     }
 
     var proposta = get("propostaPf");
+
+    if (proposta.planos.length == 0) {
+
+        swal("Ops!", "Por favor, escolha um plano!", "error");
+        return;
+    }
+
     var planos = get("CodPlanos");
     var plano = planos.filter(function (x) { return x.cdPlano == proposta.planos[0].cdPlano });
 
