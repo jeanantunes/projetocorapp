@@ -241,7 +241,7 @@ function logarETrazerDadosUsuario() {
                 put("dadosUsuario", JSON.stringify(forca));
 
                 //Marcelo
-                //ob.salvarDadosUsuario(JSON.stringify(forca));
+                ob.salvarDadosUsuario(JSON.stringify(forca));
 
                 swal.close();
                 window.location = "logado.html";

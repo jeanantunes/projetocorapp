@@ -21,7 +21,7 @@ $(".selectListBlur").change(function () {
         return;
     }
 
-    setDataFaturaPme($(".selectListBlur").val());
+    isEffectiveDate($(".selectListBlur").val());
     
 });
 
@@ -126,7 +126,7 @@ function atualizarFatura() {
 //    return true;
 //}
 
-function setDataFaturaPme(dayDueDate) {
+function isEffectiveDate(dayDueDate) {
 
     var currentTime = moment();
     currentTime.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
@@ -147,10 +147,12 @@ function setDataFaturaPme(dayDueDate) {
 
             var vencimento;
             var dataVencimento = moment("05-" + month.toString() + "-" + year, "DD-MM-YYYY");
+            var dataVencimento = dataVencimento.add(1, 'M');
+
             var olderDate = moment(dataVencimento).add(-11, "days");
 
-            if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(2, 'M');
-            else vencimento = dataVencimento.add(1, 'M');
+            if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
+            else vencimento = dataVencimento;
 
             var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
 
@@ -167,7 +169,7 @@ function setDataFaturaPme(dayDueDate) {
             var olderDate = moment(dataVencimento).add(-11, "days");
 
             if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
-            else console.log(dataVencimento);
+            else vencimento = dataVencimento;
 
             var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
 
@@ -184,7 +186,7 @@ function setDataFaturaPme(dayDueDate) {
             var olderDate = moment(dataVencimento).add(-11, "days");
 
             if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
-            else console.log(dataVencimento);
+            else vencimento = dataVencimento;
 
             var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
 
@@ -198,55 +200,8 @@ function setDataFaturaPme(dayDueDate) {
 
 }
 
-//function setDatasDeVencimento(dayDueDate) {
-//
-//    if (!dayDueDate) {
-//        console.log('dia informado invalido');
-//        return false;
-//    }
-//
-//    var currentTime = moment();
-//
-//    currentTime.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
-//    currentTime.toISOString();
-//    currentTime.format();
-//
-//    switch (dayDueDate) {
-//        case "05":
-//
-//            var dateCurt = moment("05-" + currentTime.format('MM') + "-" + currentTime.format('YYYY'), "DD-MM-YYYY");
-//            var diff = dateCurt.diff(currentTime, 'days');
-//            var mesVencimento = parseInt(currentTime.format('MM')) + 1;
-//            var vencimento = moment("05-" + ((mesVencimento < 10) ? "0" + mesVencimento : mesVencimento) + "-" + currentTime.format('YYYY'), "DD-MM-YYYY");
-//            var diffProxMes = vencimento.diff(currentTime, 'days');
-//
-//
-//            if (diff < 11 && diffProxMes > 10) {
-//
-//                var mesVencimento = parseInt(currentTime.format('MM')) + 1;
-//                var vencimento = moment("05-" + ((mesVencimento < 10) ? "0" + mesVencimento : mesVencimento) + "-" + currentTime.format('YYYY'), "DD-MM-YYYY");
-//
-//                console.log(vencimento);
-//
-//            } else  {
-//
-//                var mesVencimento = parseInt(currentTime.format('MM')) + 2;
-//                var vencimento = moment("05-" + ((mesVencimento < 10) ? "0" + mesVencimento : mesVencimento) + "-" + currentTime.format('YYYY'), "DD-MM-YYYY");
-//                console.log(vencimento);
-//            }
-//
-//            break;
-//
-//        case "15":
-//    }
-//
-//
-//
-//}
 
-
-
-function isEffectiveDate(dayDueDate) {
+/*function isEffectiveDate(dayDueDate) {
 
     if (!dayDueDate) {
         console.log('dia informado invalido');
@@ -261,12 +216,6 @@ function isEffectiveDate(dayDueDate) {
     var month = currentTime.getMonth();
     var year = currentTime.getFullYear();
     var day = currentTime.getDate();
-
-
-
-
-
-
 
     //data vencimento
     var DueDate = new Date(year, month, dayDueDate, 0, 0, 0, 0);
@@ -357,3 +306,4 @@ function isEffectiveDate(dayDueDate) {
     }
     return true;
 }
+*/
