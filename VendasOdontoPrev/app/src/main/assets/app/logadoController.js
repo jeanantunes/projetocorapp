@@ -1,12 +1,17 @@
 ﻿var preenchidos = false;
 
 $(document).ready(function () {
-    atualizarDashBoard();
+
+    validarStatusUsuario();
+
     validarVersaoApp();
+    atualizarDashBoard(); 
     resyncPropostasPME();
     resyncPropostasPF();
     checkStatusPropostas();
 
+    atualizarPropostaComApiDash();
+    atualizarTokenDevice();
 });
 
 function validarVersaoApp()
@@ -21,14 +26,145 @@ function validarVersaoApp()
                 swal({
                     title: "Ops",
                     text: "Sua versão do aplicativo está desatualizada, atualize na Play Store",
-                    type: "warning"
+                    type: "warning",
+                    closeOnConfirm: false
                 }, function () {
                    // Redirect the user
-                    window.location = "https://play.google.com/store/apps/details?id=com.vendaodonto.vendasodontoprev";
+                    window.location = "market://details?id=com.vendaodonto.vendasodontoprev";
                 });
             }
 
         }, dataToken.access_token);
+    });
+}
+
+function atualizarTokenDevice() {
+
+    var tokenDevice = getTokenDevice();
+    var modelDevice = getModelDevice();
+    var sistemaOperacional = "ANDROID";
+    var dadosUsuario = get("dadosUsuario");
+
+    console.log("Executando device Token");
+
+    callTokenProdSemMsgErro(function (dataToken) {
+
+        postDeviceToken(function (dataDeviceToken) {
+
+            console.log("Executou postDeviceToken");
+            console.log(dataDeviceToken);
+
+        }, dataToken.access_token, dadosUsuario.cdForcaVenda, tokenDevice, modelDevice, sistemaOperacional);
+
+    });
+}
+
+function atualizarPropostaComApiDash() {
+
+    if (!navigator.onLine) return;
+
+    callTokenProdSemMsgErro(function (dataToken) {
+
+        var qtdCriticadasPf = 0;
+        var qtdCriticadasPME = 0;
+
+
+        callDashBoardPFReprovado(function (dashPf) {
+
+            qtdCriticadasPf = dashPf.dashboardPropostasPF.length;
+
+            var qtdCriticaLocal = parseInt($("#criticada").html());
+
+            $("#criticada").html(qtdCriticadasPf + qtdCriticaLocal);
+
+            callDashBoardPMEReprovado(function (dashPme) {
+
+                qtdCriticadasPME = dashPme.dashboardPropostasPME.length;
+
+                var qtdCriticaLocal = parseInt($("#criticada").html());
+
+                $("#criticada").html(qtdCriticadasPME + qtdCriticaLocal);
+
+            }, dataToken.access_token);
+
+        }, dataToken.access_token);
+
+
+
+
+    });
+
+
+
+}
+
+function validarStatusUsuario() {
+
+    var dadosForca = get("dadosUsuario");
+
+    callTokenProdSemMsgErro(function (dataToken) {
+
+        callDadosForcaVenda(function (dadosForca) {
+
+            var status = dadosForca.statusForcaVenda.toUpperCase();
+
+            if (status == "REPROVADO") {
+
+                swal({
+                    title: "Ops",
+                    text: "Você foi reprovado",
+                    type: "error",
+                    closeOnConfirm: false
+                }, function () {
+                    // Redirect the user
+                    logout.removerRegistroLogin();
+                    window.location = "index.html";
+                });
+
+                return;
+
+            } else if (status == "INATIVO") {
+
+                swal({
+                    title: "Ops",
+                    text: "A corretora nos informou que você não faz mais parte de sua equipe. Se asssocie à uma nova corretora.",
+                    type: "error",
+                    closeOnConfirm: false
+                }, function () {
+
+                    logout.removerRegistroLogin();
+                    window.location = "index.html";
+                });
+
+                return;
+            }
+
+
+        }, dataToken.access_token, dadosForca.cpf);
+    });
+
+}
+
+
+function callDadosForcaVenda(callback, token, cpf) {
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/forcavenda/" + cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+            "Authorization": "Bearer " + token
+        },
+        success: function (resp) {
+
+            callback(resp);
+
+        },
+        error: function (xhr) {
+
+        }
     });
 }
 
@@ -80,9 +216,9 @@ function setarDados() {
     //document.getElementsByClassName('.nomeCorretor').innerHTML = "" + dadosTratados.nome;
 }
 
-function callDashBoardPF(callback, Token) {
+function callDashBoardPFReprovado(callback, Token) {
 
-    var statusTodasPropostas = 0;
+    var statusTodasPropostas = 2;
     var dadosForca = get("dadosUsuario");
 
     $.ajax({
@@ -103,9 +239,9 @@ function callDashBoardPF(callback, Token) {
     });
 }
 
-function callDashBoardPME(callback, Token) {
+function callDashBoardPMEReprovado(callback, Token) {
 
-    var statusTodasPropostas = 0;
+    var statusTodasPropostas = 2;
     var dadosForca = get("dadosUsuario");
 
     $.ajax({
@@ -190,17 +326,18 @@ function resyncPropostasPF() {
 
     $.each(propostasPF, function (i, item) {
 
+
         var o = propostasPF.filter(function (x) { return x.cpf == item.cpf });
         var propostas = propostasPF.filter(function (x) { return x.cpf != item.cpf });
 
-        propostasPF = []; //limpar
+        var salvarPropostas = []; //limpar
 
         $.each(propostas, function (i, item) {
-            propostasPF.push(item);
+            salvarPropostas.push(item);
         });
 
         if (item.status != "SYNC")
-            return
+            return;
 
         var now = new Date(item.horaSync);
         var date = new Date();
@@ -212,13 +349,13 @@ function resyncPropostasPF() {
 
         o[0].status = "PRONTA";
 
-        propostasPF.push(o[0]);
+        salvarPropostas.push(o[0]);
 
-        put("pessoas", JSON.stringify(propostasPF));
+        put("pessoas", JSON.stringify(salvarPropostas));
 
         sincronizarPessoa(function (dataProposta) {
             console.log(dataProposta);
-        }, o, false);
+        }, o, true);
 
         atualizarDashBoard();
 
@@ -250,14 +387,14 @@ function resyncPropostasPME() {
         var propostas = propostasPME.filter(function (x) { return x.cnpj != item.cnpj });
         var b = beneficiarios.filter(function (x) { return x.cnpj == item.cnpj });
 
-        propostasPME = []; //limpar
+        var salvarPropostasPME = []; //limpar
 
         $.each(propostas, function (i, item) {
-            propostasPME.push(item);
+            salvarPropostasPME.push(item);
         });
 
         if (item.status != "SYNC") {
-            propostasPME.push(o[0]);
+            salvarPropostasPME.push(o[0]);
             return;
         }
 
@@ -266,16 +403,17 @@ function resyncPropostasPME() {
 
         var olderDate = moment(date).subtract(time.timeResync, 'minutes').toDate();
 
-        if (!(olderDate > now))
-            return;
+        if (!(olderDate > now)) return;
 
         o[0].status = "PRONTA";
 
-        propostasPME.push(o[0]);
+        salvarPropostasPME.push(o[0]);
 
-        put("empresas", JSON.stringify(propostasPME));
+        put("empresas", JSON.stringify(salvarPropostasPME));
 
-        sincronizarEmpresa(o, b);
+        sincronizarEmpresa(function (dataVendaPme) {
+
+        }, o, b, true);
 
         atualizarDashBoard();
 
@@ -320,9 +458,9 @@ function checkStatusPropostas() {
                     }
                 });
 
-                if (proposta == undefined) return; // Caso não encontre nenhuma proposta, retorna
+                if (proposta == undefined) return; // Caso nao encontre nenhuma proposta, retorna
 
-                if (proposta.dataAtualizacao == undefined) // Checa se o registro não contem data de atualização, caso nao tenha sera setado uma data no registro
+                if (proposta.dataAtualizacao == undefined) // Checa se o registro nao contem data de atualizacao, caso nao tenha sera setado uma data no registro
                 {
                     proposta.dataAtualizacao = new Date();
                 

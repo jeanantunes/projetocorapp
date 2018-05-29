@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "609810972495",
+    "firebase_url": "https://parceiros-odpv.firebaseio.com",
+    "project_id": "parceiros-odpv",
+    "storage_bucket": "parceiros-odpv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609810972495:android:d018dd9f8152eb96",
+        "android_client_info": {
+          "package_name": "com.vendaodonto.vendasodontoprev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609810972495-8a6mcj7svc6vs0dgar4mq2npk7dkur14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOf8gZBlekjhvmIdbauCk03w_C6waIkiw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

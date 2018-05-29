@@ -42,6 +42,7 @@ public class CustomWebView extends WebView {
         this.getSettings().setAllowUniversalAccessFromFileURLs(true);
 
 
+
         this.setOnTouchListener(new OnTouchListener() {
 
           @Override

@@ -1,10 +1,100 @@
 ﻿var preenchidos = false;
 
 $(document).ready(function () {
+
     buscarPlanosSelecionados();
     carregarProposta();
     localStorage.removeItem("dependentePfEmEdicao");
+    abrirPropostaComErros();
+
+    $(".nome").blur(function () {
+
+        $(".nome").val($(".nome").val().trim());
+
+    });
+
+    $("#adicionarPlano").click(function () {
+
+        salvarRascunhoMemoria();
+        window.location.href = "venda_index_pf.html";
+
+    });
+
+    $("#dataNascimentoTitular").blur(function () {
+
+        if ($("#dataNascimentoTitular").val() == "") return;
+
+        var date = toDate($("#dataNascimentoTitular").val());
+
+        if (isMaiorDeIdade(date)) {
+
+            $(".representanteContratual").addClass('hide');
+            return;
+        }
+
+        $(".representanteContratual").removeClass('hide');
+
+    });
+
+    $(".nome").keyup(function () {
+
+        var capturandoEspaco = $(".nome").val().substring($(".nome").val().length - 2, $(".nome").val().length);
+
+        if (capturandoEspaco == "  ") {
+
+            $(".nome").val($(".nome").val().substring(0, $(".nome").val().length - 1))
+
+        }
+    });
+         
 });
+
+function abrirPropostaComErros() {
+
+    var propostaComErro = getUrlParameter("erro");
+
+    if (propostaComErro == undefined) return;
+
+    if (propostaComErro)
+    {
+        $("input").prop('disabled', true);
+        $("#adicionarDependente").prop('disabled', true);
+        $("#continuarProposta").prop('disabled', true);
+        $("#btnExcluirPlano").addClass('hide');
+        $(".btnEditar").addClass('hide');
+        $(".btnExcluir").addClass('hide');
+
+        var proposta = get("propostaPf");
+
+        if (proposta.criticas.length > 0) {
+
+            $("#divErros").removeClass('hide');
+           
+            $.each(proposta.criticas, function (i, item) {
+
+                if (item.nome != null){
+                    $("#divErros").append('<p class="labelRedErrosFontBenef">' + item.nome.toLowerCase().capitalize() + ':</p>');
+                }
+                
+                var erros = item.dsErroRegistro.split('.');
+
+                $.each(erros, function (indErro, erroSplit) {
+
+                    if (erroSplit == "") return;
+
+                    var capitalize = erroSplit.trim().split(" ");
+
+                    $("#divErros").append('<p class="labelRedErrosFont">. ' + erroSplit.trim().toLowerCase().replace(capitalize[0].toLowerCase(), capitalize[0].toLowerCase().capitalize()) + '</p>');
+
+                });
+
+                $("#divErros").append("<br/>");
+
+            });
+            
+        }   
+    }
+}
 
 function addDependente() {
 
@@ -39,6 +129,11 @@ function addDependente() {
     }
 
     if ($(".celular").val() == "") {
+        swal("Ops!", "Preencha o celular", "error");
+        return;
+    }
+
+    if ($(".celular").val().length < 14) {
         swal("Ops!", "Preencha o celular", "error");
         return;
     }
@@ -89,6 +184,11 @@ function addDependente() {
             return;
         }
 
+        if ($(".celular-representante-legal").val().length < 14) {
+            swal("Ops!", "Preencha o celular do representante legal", "error"); 
+            return;
+        }
+
         if ($("#cpf-representante").val() == "") {
 
             swal("Ops!", "Preencha o CPF do representante legal", "error");
@@ -120,9 +220,20 @@ function addDependente() {
 
         if ($("#radio-3").is(":checked") == false && $("#radio-4").is(":checked") == false) {
             swal("Ops!", "Selecione o sexo do responsável legal", "error");
-            $(".dependentes").val(0);
             return;
         }
+    }
+
+    var proposta = get("propostaPf");
+    var planos = get("CodPlanos");
+    var plano = planos.filter(function (x) { return x.cdPlano == proposta.planos[0].cdPlano });
+
+
+
+    if (!menorQueSeteAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
+
+        swal("Ops!", "No plano dente de leite o titular deve ter menos que 7 anos", "error");
+        return false;
     }
 
     if ($("#radio-1").is(":checked") == false && $("#radio-2").is(":checked") == false) {
@@ -191,6 +302,12 @@ function buscarPlanosSelecionados() {
         window.location.href = "venda_index_pf.html";
     }
 
+    if (proposta.planos.length > 0) {
+
+        $("#adicionarPlano").addClass('hide');
+
+    }
+
     $.each(proposta.planos, function (i, item) {
         var o = planos.filter(function (x) { return x.cdPlano == item.cdPlano });
         var plano = getComponent("plano");
@@ -210,30 +327,13 @@ function buscarPlanosSelecionados() {
     $(".labelQuantidadeBeneficiarios").addClass('hide');
 }
 
-//$("#cpf").blur(function () {
-//
-//    if (!TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
-//        swal("Ops", "CPF inválido", "error");
-//    }
-//});
+function excluirPlano(obj) {
 
-$("#dataNascimentoTitular").blur(function () {
+    if ($("#cpf").val() == "") {
 
-    if ($("#dataNascimentoTitular").val() == "") return;
-
-    var date = toDate($("#dataNascimentoTitular").val());
-
-    if (isMaiorDeIdade(date)) {
-
-        $(".representanteContratual").addClass('hide');
+        swal("Ops!", "Preencha a CPF do titular", "error");
         return;
     }
-
-    $(".representanteContratual").removeClass('hide');
-
-});
-
-function excluirPlano(obj) {
 
     var container = $(".div-excluir[data-id=" + $(obj).attr("data-id") + "]");
     var proposta = get("propostaPf");
@@ -244,6 +344,7 @@ function excluirPlano(obj) {
 
     var planosExcetoExcluido = proposta.planos.filter(function (x) { return x.cdPlano != container.attr("data-id") });
     proposta.planos = [];
+
     $.each(planosExcetoExcluido, function (i, item) {
         proposta.planos.push(item);
     });
@@ -300,14 +401,13 @@ function salvarRascunho() {
         return;
     }
 
-    if (!validarData($(".nascimento").val())) {
-        swal("Ops!", "Preencha uma data de nascimento correta", "error");
+    if ($(".nascimento").val() == "") {
+        swal("Ops!", "Preencha a Data de Nascimento", "error");
         return;
     }
 
-
-    if ($(".nascimento").val() == "") {
-        swal("Ops!", "Preencha a Data de Nascimento", "error");
+    if (!validarData($(".nascimento").val())) {
+        swal("Ops!", "Preencha uma data de nascimento correta", "error");
         return;
     }
 
@@ -380,6 +480,25 @@ function salvarRascunho() {
             $(".dependentes").val(0);
             return;
         }
+    }
+
+    var proposta = get("propostaPf");
+
+    if (proposta.planos.length == 0) {
+
+        swal("Ops!", "Por favor, escolha um plano!", "error");
+        return;
+    }
+
+    var planos = get("CodPlanos");
+    var plano = planos.filter(function (x) { return x.cdPlano == proposta.planos[0].cdPlano });
+
+
+
+    if (!menorQueSeteAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
+
+        swal("Ops!", "No plano dente de leite o titular deve ter menos que 7 anos", "error");
+        return false;
     }
 
     if (!ValidaNome($("#nomeMae").val())) {

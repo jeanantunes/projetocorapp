@@ -16,32 +16,45 @@ $(document).ready(function(){
         return false;
     });
 
+    $("#btnInativoCelOdont").click(function () {
+        $("#divCadastroInativo").addClass("hide")
+        $("#keyOdontCorretora").removeClass("hide")
+        return false;
+    });
+
     $("#btnkeyOdont").click(function(){
         $( "#keyOdont" ).addClass( "hide" )
         $( "#termoOdont" ).removeClass( "hide" )
         return false;
     });
-    $("#btnTermo").click(function(){
-        $( "#termoOdont" ).addClass( "hide" )
-        $( "#cadastroSucesso" ).removeClass( "hide" )
-        return false;
-    });
 
+    //$("#btnTermo").click(function(){ btn termo
+    //
+    //    return false;
+    //});
+
+
+
+
+    //
     // $("#btnCpfOdont").click(function(){
     //     $( "#celOdontCorretora" ).removeClass( "hide" )
     //     $( "#cpfOdontCorretora" ).addClass( "hide" )
     //     return false;
     // });
+
     $("#btnCelOdontNCpf").click(function(){
         $( "#celOdontCorretora" ).addClass( "hide" )
         $( "#keyOdontCorretora" ).removeClass( "hide" )
         return false;
     });
+
     // $("#linkBuscarCorretora").click(function(){
     //     $( "#infoCorretora" ).addClass( "hide" )
     //     $( "#buscarCorretora" ).removeClass( "hide" )
     //     return false;
     // });
+
     $("#btnkeyOdontNCpf").click(function () {
 
         $("#keyOdontCorretora").addClass("hide")
@@ -49,7 +62,6 @@ $(document).ready(function(){
         
         return false;
     });
-
 
 });
 
@@ -120,54 +132,75 @@ $(".btnExcluir").click(function(){
 
 // Menu //
 
-    $(".btnMenu").click(function(){
-        $("html,body").css({"overflow":"hidden"});
-    });
+$(".btnMenu").click(function () {
+    $("html,body").css({ "overflow": "hidden" });
+});
 
-    $(".closeNav").click(function(){
-        $("html,body").css({"overflow":"auto"});
-    });
+$(".closeNav").click(function () {
+    $("html,body").css({ "overflow": "auto" });
+});
 
-    $('#mySidenav .modal-content').bind('scroll', function() {
+$('#mySidenav .modal-content').bind('scroll', function () {
 
-        var $conteudo = $(this);
+    var $conteudo = $(this);
 
-        if ($conteudo.scrollTop() + $conteudo.innerHeight() >= this.scrollHeight) {
-            $("html, body").css({"overflow":"auto"});
-        }
-    });
-
-    $(".btnMenu").click(function(){
-        $( ".closeNav" ).removeClass( "hide" )
-        $( ".container-fluid" ).addClass( "fixed" )
-    });
-
-    $(".closeNav").click(function(){
-        $( ".closeNav" ).addClass( "hide" )
-        $( ".container-fluid" ).removeClass( "fixed" )
-    });
-
-    function openNav() {
-        document.getElementById("mySidenav").style.width = "256px";
-        
-    }   
-
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
+    if ($conteudo.scrollTop() + $conteudo.innerHeight() >= this.scrollHeight) {
+        $("html, body").css({ "overflow": "auto" });
     }
+});
+
+$(".btnMenu").click(function () {
+    $(".closeNav").removeClass("hide")
+    $(".container-fluid").addClass("fixed");
+});
+
+$(".closeNav").click(function () {
+    $(".closeNav").addClass("hide")
+    $(".container-fluid").removeClass("fixed")
+});
+
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.backgroundColor = "rgba(0,0,0,0.5)";
+    $("#main").addClass("overlay");
+    $("#mySidenav").addClass("zIndex99999999");
+    //$("#main").removeClass("hide");
+    $("#botaoMenu").removeClass("hide");
+
+}
+
+function closeNav() {
+
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.backgroundColor = "white";
+    $("#main").removeClass("overlay");
+    $("#mySidenav").removeClass("zIndex99999999");
+    $("#botaoMenu").addClass("hide");
+    $(".container-fluid").removeClass("fixed");
+    $("html,body").css({ "overflow": "auto" });
+    //$("#main").addClass("hide");
+}
+
+
+$("#main").click(function () {
+
+
+    console.log("teste");
+
+})
 // End Menu //
 
 //Grafico Vendas//
-    $(document).ready(function() {
-        $('.barras').each(function() {
-            var dataWidth = $(this).data('value');
-            $(this).css("width", dataWidth + "%");
-            $(this).css("max-width", "100%");
-            if (dataWidth <=25) { $(this).css("background-color", "red"); }
-            else if (dataWidth >25 && dataWidth <=50){ $(this).css("background-color", "#FF4141"); }
-            else if (dataWidth >50 && dataWidth <=75) { $(this).css("background-color", "#4ED6FF"); }
-            else if (dataWidth >75 && dataWidth <=100) { $(this).css("background-color", "#C3EB3B"); } 
-        });
+$(document).ready(function () {
+    $('.barras').each(function () {
+        var dataWidth = $(this).data('value');
+        $(this).css("width", dataWidth + "%");
+        $(this).css("max-width", "100%");
+        if (dataWidth <= 25) { $(this).css("background-color", "red"); }
+        else if (dataWidth > 25 && dataWidth <= 50) { $(this).css("background-color", "#FF4141"); }
+        else if (dataWidth > 50 && dataWidth <= 75) { $(this).css("background-color", "#4ED6FF"); }
+        else if (dataWidth > 75 && dataWidth <= 100) { $(this).css("background-color", "#C3EB3B"); }
     });
+});
 
   //End Grafico Vendas//

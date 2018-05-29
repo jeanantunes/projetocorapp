@@ -53,10 +53,19 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(tablePlanosCoberturas.getTablePlanosCoberturas());
         db.execSQL(tableStatusForcaVendas.getTableStatusForcaVendas());
         db.execSQL(tableTipoDocumento.getTableTipoDocumento());
+        try {
+            db.execSQL(TableNotificacao.getTableTableNotificacao());
+        }catch (Exception e){
+
+            Log.d("MeuLog", "" + e.toString());
+        }
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL(TableNotificacao.getTableTableNotificacao());
+
+    }
 
     public void addCliente(Cliente cliente)
     {

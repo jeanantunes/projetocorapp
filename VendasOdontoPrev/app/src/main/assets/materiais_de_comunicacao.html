@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Odontoprev</title>
+
+
+    <link rel="stylesheet" type="text/css" href="slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Menu -->
+    <div id="componenteMenu"></div>
+    <!-- End Menu -->
+    <!-- Bloco 1 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-left imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+                <span class="btnMenu" onclick="openNav()">&#9776;</span>
+            </div>
+        </div>
+        <div class="col-md-12 odontBoxCenter">
+
+            <!-- Title e desciption da page -->
+            <div class="row">
+                <div class="text-center ">
+                    <div>
+                        <h1 class="titleOdont text-center">
+                            MATERIAIS DE
+                            DIVULGAÇÃO
+                        </h1>
+                        <h2 class="subTitleOdont text-center">
+                            Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore.
+
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End Title e desciption da page -->
+            <!-- Iframe do video -->
+            <div class="materialIframeVideo">
+
+                <div id="video-wrapper">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/bgudwPagUzM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <label class="titleLblDesc">Descrição</label>
+                <div>
+                    <label class="lblDesc">
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu fugiat nulla pariatur.
+                    </label>
+                </div>
+            </div>
+            <!-- End Iframe do video -->
+
+            <div>
+                <label class="titleBoxPlanos">PLANOS</label>
+                <div>
+                    <label class="lblDesc">
+                        Sed ut perspiciatis unde omnis iste natus error si
+                        voluptatem accusantium doloremque laudantiue,
+                        totam rem aperiam, eaque ipsa quae ab illo in
+                        tore veritatis et.
+
+                    </label>
+
+                </div>
+            </div>
+
+            <div>
+
+                <label class="titlePessoaFisica">Pessoa Física</label>
+                
+                <div class="carousel" id="slickPf"></div>
+
+
+
+
+
+
+            </div>
+
+            <div>
+
+                <label class="titlePessoaFisica">PME</label>
+
+                <div class="carousel" id="slickPme"></div>
+
+
+
+            </div>
+
+
+            <div style="margin-bottom:93px;"></div>
+
+
+
+
+
+        </div>
+    </div>
+    <!-- End Bloco 1 -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog" style="padding-top:50px;">
+        <div class="modal-dialog modalContainerMateriais">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="img/btn-excluir.png" class="closeModalMateriais btnExcluir" data-dismiss="modal" alt=""/>
+                    <div id="imagem"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="slick/slick.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="app/coordenador.js"></script>
+    <script src="app/materiaisDeComunicacaoController.js"></script>
+
+</body>
+</html>

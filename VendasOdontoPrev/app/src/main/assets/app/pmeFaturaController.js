@@ -126,9 +126,80 @@ function atualizarFatura() {
 //    return true;
 //}
 
-
-
 function isEffectiveDate(dayDueDate) {
+
+    var currentTime = moment();
+    currentTime.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+    currentTime.toISOString();
+    currentTime.format();
+
+    var month = currentTime.format('MM');
+    var day = currentTime.format('DD');
+    var year = currentTime.format('YYYY');
+
+    $("#divProximoMes").addClass('hide');
+
+    switch (dayDueDate) {
+
+        case "05":
+
+            var vencimento;
+            var dataVencimento = moment("05-" + month.toString() + "-" + year, "DD-MM-YYYY");
+            var dataVencimento = dataVencimento.add(1, 'M');
+
+            var olderDate = moment(dataVencimento).add(-11, "days");
+
+            if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
+            else vencimento = dataVencimento;
+
+            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
+
+            $("#corte").html('Data de corte de movimentação:<br>' + dataDeCorteDeMovimentacao.format("DD/MM/YYYY"));
+            $("#vencimento").html('Data de vencimento:<br>' + vencimento.format("DD/MM/YYYY"));
+            $("#vigencia").html('Data de vigência:<br>' + vencimento.format("DD/MM/YYYY"));
+
+            break;
+
+        case "15": 
+
+            var vencimento;
+            var dataVencimento = moment("15-" + month.toString() + "-" + year, "DD-MM-YYYY");
+            var olderDate = moment(dataVencimento).add(-11, "days");
+
+            if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
+            else vencimento = dataVencimento;
+
+            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
+
+            $("#corte").html('Data de corte de movimentação:<br>' + dataDeCorteDeMovimentacao.format("DD/MM/YYYY"));
+            $("#vencimento").html('Data de vencimento:<br>' + vencimento.format("DD/MM/YYYY"));
+            $("#vigencia").html('Data de vigência:<br>' + vencimento.format("DD/MM/YYYY"));
+
+            break;
+
+        case "25":
+
+            var vencimento;
+            var dataVencimento = moment("25-" + month.toString() + "-" + year, "DD-MM-YYYY");
+            var olderDate = moment(dataVencimento).add(-11, "days");
+
+            if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
+            else vencimento = dataVencimento;
+
+            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
+
+            $("#corte").html('Data de corte de movimentação:<br>' + dataDeCorteDeMovimentacao.format("DD/MM/YYYY"));
+            $("#vencimento").html('Data de vencimento:<br>' + vencimento.format("DD/MM/YYYY"));
+            $("#vigencia").html('Data de vigência:<br>' + vencimento.format("DD/MM/YYYY"));
+
+            break;
+
+    }
+
+}
+
+
+/*function isEffectiveDate(dayDueDate) {
 
     if (!dayDueDate) {
         console.log('dia informado invalido');
@@ -136,11 +207,13 @@ function isEffectiveDate(dayDueDate) {
     }
 
     var currentTime = new Date();
+
     currentTime.setHours(0, 0, 0, 0);
 
     var dateCurt = new Date();
     var month = currentTime.getMonth();
     var year = currentTime.getFullYear();
+    var day = currentTime.getDate();
 
     //data vencimento
     var DueDate = new Date(year, month, dayDueDate, 0, 0, 0, 0);
@@ -153,10 +226,29 @@ function isEffectiveDate(dayDueDate) {
     var addMonth = 1;
 
     switch (dayDueDate) {
-        case "05":         
+        case "05":
+
             effectiveDate = new Date(year, month, 5, 0, 0, 0, 0);
             movingDate = new Date(year, month, 25, 0, 0, 0, 0);
+            OlderMovingDate = moment(movingDate).subtract(11, 'days').toDate();
+
+            OlderMovingDate.diff(currentTime);
+
+
+
+            movingDate = new Date(year, month, 25, 0, 0, 0, 0);
+
+
+            var mes = moment(movingDate, "DD-MM-YYYY");
+            var ProxMes = moment("24-05-2018", "DD-MM-YYYY");
+
+            var olderDate = ProxMes.diff(mes, 'days');
+
+            var olderDate = moment(movingDate).subtract(currentTime, 'month').toDate();
+
             dateCurt = new Date(movingDate);
+
+
             //year, month, 24, 0, 0, 0, 0
             break;
 
@@ -212,3 +304,4 @@ function isEffectiveDate(dayDueDate) {
     }
     return true;
 }
+*/

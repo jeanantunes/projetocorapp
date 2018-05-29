@@ -1,15 +1,30 @@
 package com.vendaodonto.vendasodontoprev;
 
+import android.*;
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
@@ -21,7 +36,9 @@ import controllers.cadastro_planoController;
 import models.Cliente;
 import models.DataBase;
 import models.ForcaVenda;
+import models.Notificacao;
 import models.Plano;
+import models.TableNotificacao;
 import models.tableCorretora;
 import models.tableEndereco;
 import models.tableForcaVendas;
@@ -37,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     CustomWebView myWebView;
 
+    private final int PERMISSAO_REQUEST = 2;
+
     DataBase db;
 
     public static Context ctx;
@@ -51,19 +70,51 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+
         //OneSignal.startInit(this).init();
 
         db = new DataBase(this);
 
         super.onCreate(savedInstanceState);
 
+        //MyFirebaseInstanceIDService oFireBaseIdService = new MyFirebaseInstanceIDService();
+        //oFireBaseIdService.getTokenDevice();
+
         ctx = this;
 
         setContentView(R.layout.activity_main);
         String urlAssets = "file:///android_asset/";
 
+        checkPermission();
+
         myWebView = (CustomWebView) this.findViewById(R.id.webView);
         myWebView.setWebViewClient(new CustomWebViewClient(ctx));
+
+        myWebView.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
+
+                checkPermission();
+
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+
+                request.setMimeType(mimeType);
+                //------------------------COOKIE!!------------------------
+                String cookies = CookieManager.getInstance().getCookie(url);
+                request.addRequestHeader("cookie", cookies);
+                //------------------------COOKIE!!------------------------
+                request.addRequestHeader("User-Agent", userAgent);
+                request.setDescription("Downloading file...");
+                request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimeType));
+                request.allowScanningByMediaScanner();
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimeType));
+                DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                dm.enqueue(request);
+                //Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
+            }
+        });
 
         getSupportActionBar().hide();
 
@@ -83,8 +134,10 @@ public class MainActivity extends AppCompatActivity {
         //getContact(1);
 
         int qt = 0;
-        //tableLogin tb = new tableLogin(this);
-        //tb.insertTeste();
+
+        TableNotificacao tbNotification = new TableNotificacao(this);
+        tbNotification.insertNotificacao();
+
         try {
 
             Log.e("MeuLog", "======================");
@@ -117,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
             //forcaLogin = buscar(1);
 
-            Log.d("MeuLog", "Erro na busca do login");
+            //Log.d("MeuLog", "Erro na busca do login");
 
             if(forcaLogin != null)
             {
@@ -142,7 +195,9 @@ public class MainActivity extends AppCompatActivity {
             Log.e("MeuLog", "Load assets ", xxx);
         }
 
+         Notificacao noti = buscarNotificao(1);
 
+        //Log.d("MeuLog", "Notificacao: " + noti.getTitulo());
 
         // TESTE CRUD
 
@@ -153,6 +208,42 @@ public class MainActivity extends AppCompatActivity {
         ///////////////////////////////////////////////
 
     }
+
+    public Notificacao buscarNotificao(int codigo) {
+
+        try {
+            Notificacao notificacao = new Notificacao();
+
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("SELECT * ");
+            sql.append("FROM TBOD_NOTIFICACAO ");
+            sql.append("WHERE CD_NOTIFICACAO = " + codigo);
+
+            SQLiteDatabase dbs = db.getReadableDatabase();
+
+            Cursor resultado = dbs.rawQuery(sql.toString(), null);
+
+
+            if (resultado.getCount() > 0) {
+                resultado.moveToFirst();
+
+                notificacao.setTitulo(resultado.getString(resultado.getColumnIndexOrThrow("NM_TITULO")));
+                notificacao.setDescricao(resultado.getString(resultado.getColumnIndexOrThrow("DS_NOTIFICACAO")));
+                //notificacao.setDataNoficacao(resultado.getString( resultado.getColumnIndexOrThrow("DT_NOTIFICACAO")));
+                notificacao.setTipoNotificacao(resultado.getString(resultado.getColumnIndexOrThrow("CD_TIPO_NOTIFICACAO")));
+
+
+                Log.d("MeuLog", "Executou TableNotification");
+                return notificacao;
+            }
+        } catch (Exception e){
+            Log.d("MeuLog", "" + e.toString());
+        }
+
+        return null;
+    }
+
 
     public ForcaVenda buscar(int codigo) {
 
@@ -231,4 +322,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GaleriaActivity.class);
         startActivity(intent);
     }
+
+    public void checkPermission(){
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]
+                        {
+                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSAO_REQUEST);
+            }
+        }
+
+    }
+
 }

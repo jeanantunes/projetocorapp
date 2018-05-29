@@ -23,8 +23,74 @@
     text-align: center;
 } */
 
-/*********************************** Imagem Usuário ****************************************/
+/**************************************************************************************/
 
+.horasNotication {
+    font-family: Roboto-Light;
+    color: #3c91e6;
+    margin-top: 15px;
+    margin-left: 5%;
+}
+
+.descNotification {
+    font-family: Roboto-Light;
+    color: #656565;
+    font-size: 6pt;
+    margin-left: 5%;
+}
+
+.titleNotification {
+    font-family: Roboto-Bold;
+    font-size: 10pt;
+    color: #656565;
+    text-align: left;
+    margin-left: 3%;
+    width: 75%;
+   
+}
+
+.spanLightListOdontNotification {
+    font-family: Roboto-Light;
+    font-size: 10pt;
+    color: #ACAAA5;
+    display: block;
+}
+
+
+.listCircNotification {
+    right: 13%;
+    width: 15%;
+    height: 15%;
+    margin-left: 2.5%;
+    
+    /*margin-bottom: 15px;*/
+}
+
+.groupTitleNotification {
+    margin-left: -14%;
+}
+
+.listBarraNotification {
+    border-left: 2px solid #ededed;
+    padding: 0px 0px 0px 20px;
+    position: relative;
+    margin-left: -2.5%;
+    margin-top: 3px;
+    margin-bottom: 10px;
+}
+
+.positionIconNotification {
+    position: relative;
+    right: 30px;
+    top: 20px;
+    max-width: 200px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+}
+
+/*********************************** Imagem Usuário ****************************************/
+    
 .perfil {
     border: 15px solid #EDEDED;
     background-color: #ffffff;
@@ -53,6 +119,163 @@
 
 /*********************************** End Imagem Usuário ****************************************/
 
+
+/****************************** Inicio Materiais de Divulgação *********************************/
+
+
+.materialIframeVideo {
+    margin-top: 26px;
+  
+}
+
+/*.closeModalMateriais {
+    position: absolute;
+    left: 95%;
+    top: 20px;
+}*/
+
+.closeModalMateriais {
+    margin: 0;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 23px;
+    height: 23px;
+    border-radius: 23px;
+    background-color: #00aeef;
+    color: #ffe300;
+    font-size: 9px;
+    opacity: 1;
+    z-index: 10;
+}
+
+.modalContainerMateriais {
+    top: -2.5%;
+    margin-left: 15px;
+    margin-right: 15px;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    display: table;
+    max-width: 90%;
+}
+
+.titleLblDesc {
+    margin-top: 14.8px;
+    color: #acaaa5;
+    font-family: Roboto-Medium;
+    font-size: 15px;
+    text-align: left;
+}
+
+.lblDesc {
+    color: #acaaa5;
+    font-family: Roboto-Light;
+    font-size: 15px;
+    text-align: left;
+}
+
+.titleBoxPlanos {
+    font-family: Roboto-Bold;
+    font-size: 20px;
+    color: #1974ce;
+    margin-top: 70px;
+    margin-bottom: 10px;
+}
+
+.titlePessoaFisica {
+
+    font-family: Roboto-Bold;
+    font-size: 18px;
+    color: #8e8e8e;
+    margin-bottom: 11px;
+    margin-top: 20px;
+
+}
+
+@media screen and (min-width: 800px) {
+    .boxMateriasPlanos {
+        height: 211px !important;
+    }
+}
+
+.boxMateriaisPlanos {
+    height: auto;
+    width: auto;
+    border: 1px solid #fff;
+    margin-bottom: 19px;
+}
+
+.descricaoSlick {
+
+    font-family: Roboto-Light;
+    font-size: 15px;
+    color: #acaaa5;
+    margin-top: 9.6px;
+    margin-left: 5px;
+    margin-bottom: 0px;
+}
+
+.downloadSlick {
+    font-family: Roboto-Light;
+    font-size: 15px;
+    color: #1974ce;
+    margin-top: 3px;
+    margin-left: 5px;
+}
+
+/*.squarePf {
+    width: 211px;
+    height: 211px;
+    text-align: center;
+    /*background-color: #e5e5e5;*/
+    /*margin-left: 20%;*/
+    margin-top: 0px !important;
+
+}*/
+
+.product .img-responsive {
+    margin: 0 auto;
+}
+
+.resizeImg {
+
+    width: 60%;
+    height: 50%;
+    position: relative;
+}
+
+#video-wrapper {
+    width: 100%;
+    height: 56.25vw;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56.25vw;
+    max-height: 450px;
+}
+
+.layer {
+    width: 10px;
+    height: 21px;
+    font-family: Roboto-Bold;
+    font-size: 18px;
+    color: #5f5f5f;
+    margin-top: 50%;
+    margin-left: 50%;
+}
+
+/****************************** End Materiais de Divulgação *********************************/
+
+
 .boxLabInput {
     margin-bottom: 10%;
     margin-top: 5%;
@@ -77,6 +300,7 @@
     border: 1px solid #fff;
     box-shadow: 0px 0px 50px 0px #EFEFEF;
     padding: 50px 0px 0px 0px;
+    margin: 15px;
 }
 
 .btnEnter {
@@ -214,14 +438,14 @@
     right: 0;
     background-color: #1974CE;
     overflow-x: hidden;
-    transition: 0.5s;
+    transition: .5s;
 }
 
     .sidenav a {
-        padding: 8px 8px 8px 32px;
+        padding: 8px 8px 8px 24px;
         text-decoration: none;
         display: block;
-        transition: 0.3s;
+        transition: .3s;
     }
 
         .sidenav a:hover {
@@ -237,9 +461,9 @@
     }
 
 .userLog {
-    padding-top: 37px;
+    padding-top: 25px;
     background-color: #F1F9FF;
-    padding-bottom: 37px;
+    padding-bottom: 20px;
 }
 
 .btnMenu {
@@ -261,10 +485,13 @@
         }
 }
 
+.materiasDivulg {
+    width: 20px;
+    height: 20px;
+    margin: 5px 5px 5px 5px;
+}
 /*********************************** End Menu ****************************************/
-
 /*********************************** Footer Fale Conosco ****************************************/
-
 .ans {
     margin-top: 8px;
 }
@@ -373,10 +600,6 @@
 
 .colorSlick5 {
     color: #52A4E3;
-}
-
-.colorSlick5 {
-    color: #D9487F;
 }
 
 .colorSlick6 {
@@ -506,6 +729,27 @@ h1, .titleListBox {
     font-size: 16pt;
     color: #1974CE;
     margin-bottom: 10pt;
+}
+
+.labelRedErro {
+    font-family: Roboto-Bold;
+    font-size: 16pt;
+    color: red;
+
+}
+
+.labelRedErrosFont {
+    font-family: Roboto-Regular;
+    font-size: 12pt;
+    color: red;
+    margin-bottom: 0pt;
+}
+
+.labelRedErrosFontBenef {
+    font-family: Roboto-Bold;
+    font-size: 14pt;
+    color: red;
+    margin-bottom: 0pt;
 }
 
 .labelBlueAlert {
@@ -797,8 +1041,8 @@ h5, .subListBox {
 }
 
 .labelBold {
-    font-family: Roboto-Bold;
-    font-size: 16pt;
+    font-family: Roboto-Light;
+    font-size: 14pt;
     color: #ACAAA5;
 }
 
@@ -829,14 +1073,14 @@ h5, .subListBox {
 
 .labelBoldModal {
     font-family: Roboto-Bold;
-    font-size: 18pt;
-    color: #fff;
+    font-size: 12pt;
+    color: #1974CE;
 }
 
 .labelLightModal {
-    font-family: Roboto-Light;
+    font-family: Roboto-Bold;
     font-size: 16pt;
-    color: #fff;
+    color: #1974CE;
 }
 
 .labelBoldModalPlano {
@@ -938,13 +1182,14 @@ h5, .subListBox {
     font-size: 10pt;
     background-color: #F9B40A;
     padding: 20px;
-    margin-top: 20%;
+    margin-top: 10px;
     border-radius: 10px;
     text-align: center;
     display: inline-block;
     width: 150px;
     height: 110px;
-    margin-right: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
     box-shadow: 2px 10px 20px 0px #E1E1E1;
 }
 
@@ -954,23 +1199,10 @@ h5, .subListBox {
     font-size: 10pt;
     background-color: #FF4141;
     padding: 20px;
-    margin-top: 20%;
+    margin-top: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
     border-radius: 10px;
-    text-align: center;
-    display: inline-block;
-    width: 150px;
-    height: 110px;
-    box-shadow: 2px 10px 20px 0px #E1E1E1;
-}
-
-.boxAlertSucess {
-    font-family: Roboto-Light;
-    color: #fff;
-    font-size: 10pt;
-    background-color: #83BC00;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20%;
     text-align: center;
     display: inline-block;
     width: 150px;
@@ -985,15 +1217,48 @@ h5, .subListBox {
     background-color: #EDEDED;
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20%;
+    /*margin-bottom: 20%;*/
     text-align: center;
     display: inline-block;
     width: 150px;
     height: 110px;
-    margin-right: 20px;
-    margin-top: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 10px;
     box-shadow: 2px 10px 20px 0px #E1E1E1;
 }
+
+.boxAlertInvisible {
+    font-family: Roboto-Light;
+    color: #656565;
+    font-size: 10pt;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    /*margin-bottom: 20%;*/
+    text-align: center;
+    display: inline-block;
+    width: 150px;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 20px;
+}
+
+.boxAlertSucess {
+    font-family: Roboto-Light;
+    color: #fff;
+    font-size: 10pt;
+    background-color: #83BC00;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20%;
+    text-align: center;
+
+    width: 150px;
+    height: 110px;
+    box-shadow: 2px 10px 20px 0px #E1E1E1;
+}
+
 
 
 @media screen and (min-width: 680px) {
@@ -1025,7 +1290,7 @@ h5, .subListBox {
         font-size: 16pt;
         background-color: #F9B40A;
         padding: 20px;
-        margin-top: 20%;
+        /*margin-top: 20%;*/
         border-radius: 10px;
         text-align: center;
         display: inline-block;
@@ -1041,9 +1306,10 @@ h5, .subListBox {
         font-size: 16pt;
         background-color: #FF4141;
         padding: 20px;
-        margin-top: 14px;
+        /*margin-top: 14px;*/
         border-radius: 10px;
         /* margin-bottom: 20%; */
+        margin-right: 20px;
         text-align: center;
         display: inline-block;
         width: 300px;
@@ -1073,7 +1339,6 @@ h5, .subListBox {
         background-color: #EDEDED;
         padding: 20px;
         border-radius: 10px;
-        margin-bottom: 20%;
         text-align: center;
         display: inline-block;
         width: 300px;
@@ -1081,6 +1346,20 @@ h5, .subListBox {
         margin-right: 20px;
         margin-top: 20px;
         box-shadow: 2px 10px 20px 0px #E1E1E1;
+    }
+
+    .boxAlertInvisible {
+        font-family: Roboto-Light;
+        color: #656565;
+        font-size: 16pt;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        display: inline-block;
+        width: 300px;
+        margin-right: 20px;
+        margin-top: 20px;
     }
 
 
@@ -1322,6 +1601,19 @@ h5, .subListBox {
     border-bottom: 1px solid #ACAAA5;
 }
 
+
+/****Auto Complete****/
+
+.ui-autocomplete {
+    max-height: 350px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding to account for vertical scrollbar */
+    padding-right: 20px;
+}
+
+
 /*********************************** End Fonts ****************************************/
 
 .modal-header-OdontMed {
@@ -1333,10 +1625,15 @@ h5, .subListBox {
 }
 
 .modal-body-OdontMed {
-    padding-bottom: 60px;
-    padding-top: 60px;
+    padding-bottom: 5px;
+    padding-top: 5px;
     background-color: #F8F8F8;
     text-align: center;
+}
+
+.marginEspecsRede {
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .editDados {
@@ -1361,7 +1658,9 @@ h5, .subListBox {
 }
 
 .modalConteiner {
-    top: -5%;
+    top: -2.5%;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .closeModal {
@@ -1524,10 +1823,10 @@ h5, .subListBox {
     overflow: auto;
 }
 
-.fixed {
+/*.fixed {
     position: fixed;
     width: 100%;
-}
+}*/
 
 .spanCheckbox {
     padding-left: 10px;
@@ -1612,6 +1911,58 @@ input[type=checkbox] {
     }
 
 /*********************************** End SQUARED ONE ****************************************/
+
+
+/*********************************** SQUARED TERMO USUARIO PRE CADASTRADO ****************************************/
+
+.squaredOneTermoCadastrado {
+    width: 20px;
+    position: relative;
+}
+
+    .squaredOneTermoCadastrado label {
+        cursor: pointer;
+        padding-left: 20px;
+        top: 0;
+        border-radius: 4px;
+        border: 2px solid #D9487F;
+        margin-bottom: 30px;
+    }
+
+        .squaredOneTermoCadastrado label:after {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            filter: alpha(opacity=0);
+            opacity: 0;
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 10px;
+            background: transparent;
+            top: 2px;
+            left: 2px;
+            border: 3px solid #1974CE;
+            border-top: none;
+            border-right: none;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+
+        .squaredOneTermoCadastrado label:hover::after {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            opacity: 0.3;
+        }
+
+    .squaredOneTermoCadastrado input[type=checkbox]:checked + label:after {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: alpha(opacity=100);
+        opacity: 1;
+    }
+
+/*********************************** End SQUARED TERMO USUARIO PRE CADASTRADO ****************************************/
 
 /*********************************** SQUARED TWO ****************************************/
 
@@ -1926,10 +2277,18 @@ input[type=checkbox] {
     margin-bottom: 50%;
 }
 
-.loadingBack {
-    position: relative;
-    z-index: 9999;
-    background-color: black;
-    opacity: 0.5;
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /*background-color: black;
+    opacity: .5;*/
+    z-index: 999;
+    /*transition: 1s;*/
 }
+
+.zIndex99999999{
+    z-index: 999999;
+}
+
 /*********************************** End Dropdown ****************************************/

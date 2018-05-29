@@ -44,6 +44,15 @@ function setIdPlano() {
     var plano = planos.filter(function (x) { if (x.nome == "DENTAL ESTETICA ANUAL") { return x.nome; } });
     $("#esteticaAnual").attr("data-id", plano[0].cdPlano);
 
+
+    /////////////////////// DENTE DE LEITE //////////////////
+
+    var plano = planos.filter(function (x) { if (x.nome == "DENTE DE LEITE MENSAL") { return x.nome; } });
+    $("#denteDeLeiteMensal").attr("data-id", plano[0].cdPlano);
+
+    var plano = planos.filter(function (x) { if (x.nome == "DENTE DE LEITE ANUAL") { return x.nome; } });
+    $("#denteDeLeiteAnual").attr("data-id", plano[0].cdPlano);
+
     ///////////////////////// DENTAL ORTO ////////////////////////
 
     var plano = planos.filter(function (x) { if (x.nome == "DENTAL ORTO MENSAL") { return x.nome; } });

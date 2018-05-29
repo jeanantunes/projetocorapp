@@ -12,127 +12,16 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
     <link href="css/sweetalert.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 
     <script type="text/javascript">
-        function mapa(abc) {
-
-            var latlng = { lat: -23.5432147, lng: -46.7356894 };
-            var selectedMarker;
-
-            //initMap(latlng);
-
-            if (abc == null) {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 4,
-                    center: latlng,
-                    disableDefaultUI: true
-                });
-            }
-            else if (abc != null) {
-                map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 13,
-                    center: { lat: parseFloat(abc.dentistas[0].endereco.cidade.latitude), lng: parseFloat(abc.dentistas[0].endereco.cidade.longitude) },
-                    disableDefaultUI: true
-                });
-
-                var dentistas = [];
-
-                for (var i = 0; i < abc.dentistas.length; i++) {
-
-                    var filter = dentistas.filter(function (x) { return x == abc.dentistas[i].codigoDentista });
-                    
-                    if (filter.length > 0) continue;
-                    
-                    dentistas.push(abc.dentistas[i].codigoDentista);
-
-                    var latlng2 = new google.maps.LatLng((abc.dentistas[i].endereco.cidade.latitude), (abc.dentistas[i].endereco.cidade.longitude));
-
-                    var marker = new google.maps.Marker({
-                        position: latlng2,
-                        map: map,
-                        center: latlng2,
-                        icon: 'img/pin_azul.png'
-                    });
-
-                    var infowindow = new google.maps.InfoWindow();
-
-                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                        return function () {
-
-                            if (selectedMarker) {
-                                selectedMarker.setIcon('img/pin_azul.png');
-                            }
-
-                            marker.setIcon('img/pin_rosa.png');
-                            selectedMarker = marker;
-
-                            
-                            //console.log("Dentro da funcão Click:  " + contentString[i]);
-                            //infowindow.setContent('<div><strong>' + abc.dentistas[i].nomeDentista + '</strong><br>');
-                            //infowindow.open(map, marker);
-
-                            $("#nomeDentista").html("Dr(a). " + abc.dentistas[i].nomeDentista);
-                            $("#croDentista").html(abc.dentistas[i].numeroCRO);
-
-                            $("#especialidadeDentista").html(abc.dentistas[i].especialidade.descricaoEspecialidade);
-
-                            var especialidades = abc.dentistas[i].especialidade.descricaoEspecialidade.split(",");
-
-                            $("#enderecoDentista").html(abc.dentistas[i].endereco.enderecoCompleto);
-                            $("#cepDentista").html(abc.dentistas[i].endereco.cep);
-                            $("#telefoneDentista").html(abc.dentistas[i].numeroFone);
-                            $("#tipoPessoaDentista").html(abc.dentistas[i].tipoPrestador);
-
-                            //document.getElementById('nomeDentista').innerHTML = abc.dentistas[i].nomeDentista;
-                            
-                            //document.getElementById('croDentista').innerHTML = abc.dentistas[i].numeroCRO;
-                            //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
-                            //document.getElementById('especialidadeDentista1').innerHTML = abc.dentistas[i].especialidade.descricaoEspecialidade;
-                            //document.getElementById('enderecoDentista').innerHTML = abc.dentistas[i].endereco.enderecoCompleto;
-                            //document.getElementById('cepDentista').innerHTML = abc.dentistas[i].endereco.cep;
-                            //document.getElementById('telefoneDentista').innerHTML = abc.dentistas[i].numeroFone;
-                            //document.getElementById('tipoPessoaDentista').innerHTML = abc.dentistas[i].tipoPrestador;
-
-                            
-                            $('#myModal').modal('show');
-                            
-                        }
-                    })(marker, i));
-                }
-            }
-        }
+        
     </script>
 </head>
 
 <body>
     <!-- Menu -->
-    <div class="closeNav hide" onclick="closeNav()"></div>
-    <div id="mySidenav" class="sidenav">
-        <div class="row">
-            <div class="col-md-12 userLog">
-                <div class="col-md-12">
-                    <div class="perfilMenu">
-                        <img src="img/icone_325x325.png" class="imgPerfil" alt="">
-                        <div>
-                            <label class="labelOdontMenu" id="nomeCorretorMenu"></label>
-                        </div>
-                        <div>
-                            <label class="subLabelOdontMenu" id="nomeCorretoraMenu"></label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a href="logado.html" class="linkMenu"><img src="img/menu-home.png" align="center">TELA INICIAL</a>
-        <a href="venda_index_pf.html" class="linkMenu"><img src="img/menu-vender-pf.png" align="center">VENDER PESSOA FÍSICA</a>
-        <a href="venda_index_pme.html" class="linkMenu"><img src="img/menu-vender-pme.png" align="center">VENDER PME</a>
-        <a href="rede_credenciada.html" class="linkMenu colorActive"><img src="img/menu-rede-credenciada.png" align="center">BUSCAR REDE CREDENCIADA</a>
-        <a href="lista_proposta.html" class="linkMenu"><img src="img/menu-listas.png" align="center">LISTA DE PROPOSTA</a>
-        <!-- <a href="#" class="linkMenu"><img src="img/menu-listas.png" align="center">INFORMAÇÕES DOS PLANOS</a> -->
-        <a href="meus_dados.html" class="linkMenu"><img src="img/menu-meus-dados.png" align="center">MEUS DADOS</a>
-        <a href="fale_conosco.html" class="linkMenu"><img src="img/menu-contato.png" align="center">FALE CONOSCO</a>
-        <a id="logout" href="index.html" class="linkMenu"><img src="img/sair.png" class="sair" width="20px" height="20px" align="center">SAIR</a>
-    </div>
+    <div id="componenteMenu"></div>
     <!-- End Menu -->
     <!-- Bloco 1 -->
     <div class="container-fluid">
@@ -191,12 +80,15 @@
 
                     <div class="form-group">
                         <label for="" class="label-cidade labelOdontBlur">CIDADE</label>
-                        <select class="form-control cidade selectListBlur" id="cidades"></select>
+                        <input type="text" class="form-control cidade selectListBlur autocomplete" id="cidades" />
+
                     </div>
 
                     <div class="form-group">
                         <label for="" class="label-bairro labelOdontBlur">BAIRRO</label>
-                        <select class="form-control bairro selectListBlur" id="bairros"></select>
+                        <input class="form-control bairro selectListBlur autocomplete" id="bairros" />
+
+                        <!--<select class="form-control bairro selectListBlur" id="bairros"></select>-->
                     </div>
 
                 </div>
@@ -212,8 +104,7 @@
         </div>
 
         <div id="map" class="nopadding">
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJVbswYP8yLVKCQGtTN3Xsifugqm8BBkQ&callback=mapa">
-            </script>
+
         </div>
 
         <!--<input type="text" class="hide" id="foco">-->
@@ -228,49 +119,76 @@
             <div class="imgBtnExcluir" id="closeModalRedeCredenciada">
                 <img src="img/btn-excluir.png" class="btnExcluir" alt="">
             </div>
-            <div class="modal-content">
+            <!--<div class="modal-content">
                 <div class="modal-header-OdontMed">
                     <div class="">
-                        <span class="labelBoldModal"><h2 id="nomeDentista"></h2></span>
+                        <span class="labelBoldModal"><h3 id="nomeDentista"></h3></span>
                     </div>
                     <div>
                         <span class="labelLightModal">CRO:<h5 id="croDentista"></h5></span>
                         <label class="labelLightModal"><h5 id="tipoPessoaDentista"></h5></label>
-                        <!--<span class="labelLightModal">Pessoa Física</span>-->
+                 
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="col-md-12 labelBoldModalPlano"><span></span></div>
-            <div class="modal-body-OdontMed">
-                <div class="row">
-                    <label class="labelBoldTitleModal">Especialidades</label>
-                    <div class="text-center">
-                        <label><img src="img/Protese.png" class="" alt=""><p><h5 id="especialidadeDentista" style="color:gray"></h5></p></label>
 
+            <div class="modal-body-OdontMed">
+                
+                <div class="">
+                    <span class="labelBoldModal"><h3 id="nomeDentista"></h3></span>
+                </div>
+                <div>
+                    <label class="labelLightModal" id="croDentista"></label>
+                    <label class="labelLightModal"><h5 id="tipoPessoaDentista"></h5></label>
+                    <!--<span class="labelLightModal">Pessoa Física</span>-->
+                </div>
+
+            </div>
+            <div class="modal-footer-OdontMed">
+                <div>
+                    <br />
+                    <label class="labelBoldPink">Endereço</label>
+                    <div>
+                        <label class="labelBold row" id="enderecoDentista" style="color:gray"><!--<h5 id="enderecoDentista" style="color:gray"></h5>--></label>
+
+                    </div>
+                    <div><label class="labelBold row" id="cepDentista" style="color:gray"><!--<h5 id="cepDentista" style="color:gray"></h5>--></label></div>
+                </div>
+
+                <div>
+                    <label class="labelBoldPink">Contato</label>
+                    <div>
+                        <label class="labelBold marginEspecsRede" id="telefoneDentista" style="color:gray"></label>
+                    </div>
+                    <!--<p class="labelBold">contato@doutorajuliana.com.br</p>-->
+                    <!--<p class="labelBold">www.doutorajuliana.com.br</p>-->
+                </div>
+
+
+                <div class="row">
+                    <label class="labelBoldPink">Especialidades</label>
+                    <div class="text-center" id="especialidadeDentista">
+
+                        <!--<label class="labelBold" id="especialidadeDentista" style="color:gray"></label>-->
+
+
+                        <!--<img src="img/Protese.png" class="" alt="">-->
                         <!--<label><img src="img/Ortodontia.png" class="" alt=""><p>_</p></label>-->
                         <!--<label><img src="img/Consulta.png" class="" alt=""><p>_</p></label>-->
                         <!--<label><img src="img/Cirurgia.png" class="" alt=""><p>_</p></label>-->
 
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer-OdontMed">
-                <div>
-                    <label class="labelBoldPink">Endereço</label>
-                    <p class="labelBold"><h5 id="enderecoDentista" style="color:gray"></h5></p>
-                    <p class="labelBold"><h5 id="cepDentista" style="color:gray"></h5></p>
-                </div>
-                <div>
-                    <label class="labelBoldPink">Contato</label>
-                    <p class="labelBold"><h5 id="telefoneDentista" style="color:gray"></h5></p>
-                    <!--<p class="labelBold">contato@doutorajuliana.com.br</p>-->
-                    <!--<p class="labelBold">www.doutorajuliana.com.br</p>-->
-                </div>
+
                 <br />
+
             </div>
         </div>
     </div>
     <!-- End Modal -->
+
+
     <script src="js/jquery.3.2.1.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -282,5 +200,7 @@
     <script src="js/sweetalert.min.js"></script>
     <script src="app/coordenador.js"></script>
     <script src="app/redeCredenciadaController.js"></script>
+    <script src="js/jquery-ui.js"></script>
+
 </body>
 </html>

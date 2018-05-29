@@ -8,10 +8,14 @@ var conexao;
 
 $(document).ready(function () {
 
-    $("a[href='meus_dados.html']").hide()
+    var menu = getComponent("menu"); // busca componente do menu   
+    $("#componenteMenu").append(menu); // seta o menu na pagina
 
-    
+    $("a[href='meus_dados.html']").hide();
+ 
     carregarDadosUsuario();
+
+    setColorMenu();
 
     $("#logout").click(function () {
         logout.removerRegistroLogin();
@@ -23,7 +27,47 @@ $(document).ready(function () {
         localStorage.removeItem("propostaPf");
         localStorage.removeItem("proposta");
     });
+
+    //fireBase.getToken();
+    //getTokenDevice(); //Busca o TOKEN DO APP
+
 });
+
+
+function getTokenDevice() {
+
+    var tokenDevice = fireBase.getTokenDevice();
+
+    return tokenDevice;
+}
+
+function getModelDevice() {
+
+    var modelDevice = fireBase.getModel();
+
+    return modelDevice;
+}
+
+function setColorMenu() {
+
+    var url = window.location.href;
+
+    if (url.indexOf("pme") !== -1) 
+        $("a[href='venda_index_pme.html']").addClass('colorActive');
+    if (url.indexOf("pf") !== -1)
+        $("a[href='venda_index_pf.html']").addClass('colorActive');
+    else if (url.indexOf("logado") !== -1)
+        $("a[href='logado.html']").addClass('colorActive');
+    else if (url.indexOf("rede_credenciada") !== -1)
+        $("a[href='rede_credenciada.html']").addClass('colorActive');
+    else if (url.indexOf("lista_proposta") !== -1)
+        $("a[href='lista_proposta.html']").addClass('colorActive');
+    else if (url.indexOf("fale_conosco") !== -1)
+        $("a[href='fale_conosco.html']").addClass('colorActive');
+    else if (url.indexOf("materiais_de_comunicacao") !== -1)
+        $("a[href='materiais_de_comunicacao.html']").addClass('colorActive');
+    
+}
 
 function defineConexao() {
 
@@ -52,6 +96,51 @@ function defineConexao() {
     }
 }
 
+function callDashBoardPF(callback, Token) {
+
+    var statusTodasPropostas = 0;
+    var dadosForca = get("dadosUsuario");
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+            swal("Ops!", "Erro na conexão, tente mais tarde", "error");
+        }
+    });
+}
+
+function callDashBoardPME(callback, Token) {
+
+    var statusTodasPropostas = 0;
+    var dadosForca = get("dadosUsuario");
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + Token,
+            "Cache-Control": "no-cache",
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+            swal("Ops!", "Erro na conexão, tente mais tarde", "error");
+        }
+    });
+}
 
 function callTokenProd(callback) {
 
@@ -76,6 +165,34 @@ function callTokenProd(callback) {
     });
 };
 
+function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelular, sistemaOperacional) {
+
+    var request = {
+        "token": tokenDevice,
+        "modelo": modeloCelular,
+        "sistemaOperacional": sistemaOperacional
+    };
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/corretorservicos/forcavenda/devicetoken" + cdForcaVenda,
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+            "Authorization": "Bearer " + token
+        },
+        data: JSON.stringify(request),
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+        }
+    });
+}
+
+
+
 function callTokenProdSemMsgErro(callback) {
 
     $.ajax({
@@ -99,6 +216,10 @@ function callTokenProdSemMsgErro(callback) {
     });
 };
 
+String.prototype.capitalize = function (lower) {
+    return (lower ? this.toLowerCase() : this).replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+};
+
 //$(function () {
 //    var regex = new RegExp('[^ a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ\b]', 'g');
 //    // repare a flag "g" de global, para substituir todas as ocorrências
@@ -114,24 +235,6 @@ $(function () {
         $(this).val($(this).val().replace(regex, ''));
     });
 });
-
-$(".nome").keyup(function () {
-
-    var capturandoEspaco = $(".nome").val().substring($(".nome").val().length - 2, $(".nome").val().length);
-
-    if (capturandoEspaco == "  ") {
-
-        $(".nome").val($(".nome").val().substring(0, $(".nome").val().length - 1))
-
-    }
-});
-
-$(".nome").blur(function () {
-
-    $(".nome").val($(".nome").val().trim());
-
-});
-
 
 function validarData(data) {
     var bits = data.split('/');
@@ -154,6 +257,13 @@ function validarData(data) {
     }
     return !(/\D/.test(String(d))) && d > 0 && d <= daysInMonth[--m];
 }
+
+
+
+$("input").blur(function () {
+
+    $(this).val($(this).val().trim());
+});
 
 
 $(".data").blur(function () {
@@ -231,7 +341,6 @@ function ValidaNome(fieldValue) {
     return true
 }
 
-
 function setPlanosProd() {
     planos = [];
 
@@ -263,7 +372,7 @@ function setPlanosProd() {
     plano.centavo = "60";
     plano.valorFloat = 45.60;
     plano.desc = "Mensal";
-    plano.css = "colorSlick3";
+    plano.css = "colorSlick1";
 
     planos.push(plano);
 
@@ -274,7 +383,7 @@ function setPlanosProd() {
     plano.centavo = "00";
     plano.valorFloat = 456.00;
     plano.desc = "Anual";
-    plano.css = "colorSlick3";
+    plano.css = "colorSlick1";
 
     planos.push(plano);
 
@@ -285,8 +394,28 @@ function setPlanosProd() {
     plano.centavo = "20";
     plano.valorFloat = 547.20;
     plano.desc = "Anual";
-    plano.css = "colorSlick3";
+    plano.css = "colorSlick1";
     
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 11;
+    plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
+    plano.valor = "14";
+    plano.centavo = "98";
+    plano.desc = "Mensal";
+    plano.css = "colorSlick2";
+
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 12;
+    plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
+    plano.valor = "149";
+    plano.centavo = "80";
+    plano.desc = "Anual";
+    plano.css = "colorSlick2";
+
     planos.push(plano);
 
     //plano = getRepository("plano");
@@ -412,7 +541,6 @@ function setPlanosProd() {
     setPlanosProdCod()
 }
 
-
 function setPlanosProdCod() {
 
     planos = [];
@@ -425,6 +553,18 @@ function setPlanosProdCod() {
     var plano = new Object();
     plano.cdPlano = 102;
     plano.nome = "MASTER LE";
+    planos.push(plano);
+
+    ////// CODIGO PLANOS DENTE DE LEITE ////////
+
+    var plano = new Object();
+    plano.cdPlano = 11;
+    plano.nome = "DENTE DE LEITE MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 12;
+    plano.nome = "DENTE DE LEITE ANUAL";
     planos.push(plano);
 
     ////// CODIGO PLANOS DENTAL BEM - ESTAR ////////
@@ -533,6 +673,19 @@ function setPlanosHmlCod() {
     //planos.push(plano);
 
 
+    ////// CODIGO PLANOS DENTE DE LEITE ////////
+
+    var plano = new Object();
+    plano.cdPlano = 11;
+    plano.nome = "DENTE DE LEITE MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 12;
+    plano.nome = "DENTE DE LEITE ANUAL";
+    planos.push(plano);
+
+
     //////// CODIGO PLANOS DENTAL ESTETICA /////////
 
     var plano = new Object();
@@ -620,7 +773,7 @@ function setPlanosHml() {
     plano.centavo = "60";
     plano.valorFloat = 45.60;
     plano.desc = "Mensal";
-    plano.css = "colorSlick3";
+    plano.css = "colorSlick1";
 
     planos.push(plano);
 
@@ -631,7 +784,7 @@ function setPlanosHml() {
     plano.centavo = "00";
     plano.valorFloat = 456.00;
     plano.desc = "Anual";
-    plano.css = "colorSlick3";
+    plano.css = "colorSlick1";
 
     planos.push(plano);
 
@@ -645,25 +798,25 @@ function setPlanosHml() {
     //
     //planos.push(plano);
 
-    //plano = getRepository("plano");
-    //plano.cdPlano = 6;
-    //plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
-    //plano.valor = "14";
-    //plano.centavo = "98";
-    //plano.desc = "Mensal";
-    //plano.css = "colorSlick2";
-    //
-    //planos.push(plano);
-    //
-    //plano = getRepository("plano");
-    //plano.cdPlano = 7;
-    //plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
-    //plano.valor = "149";
-    //plano.centavo = "80";
-    //plano.desc = "Anual";
-    //plano.css = "colorSlick2";
-    //
-    //planos.push(plano);
+    plano = getRepository("plano");
+    plano.cdPlano = 11;
+    plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
+    plano.valor = "14";
+    plano.centavo = "98";
+    plano.desc = "Mensal";
+    plano.css = "colorSlick2";
+    
+    planos.push(plano);
+    
+    plano = getRepository("plano");
+    plano.cdPlano = 12;
+    plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
+    plano.valor = "149";
+    plano.centavo = "80";
+    plano.desc = "Anual";
+    plano.css = "colorSlick2";
+    
+    planos.push(plano);
 
     plano = getRepository("plano");
     plano.cdPlano = 1;
@@ -852,6 +1005,18 @@ function isMaiorDeIdade(date) {
     return false;
 }
 
+function menorQueSeteAnos(date) {
+
+    var eightYearsAgo = moment().subtract(7, "years");
+    var birthday = moment(date);
+
+    if (!birthday.isValid()) {
+        // INVALID DATE
+    } else if (!eightYearsAgo.isAfter(birthday)) return true;
+
+    return false;
+}
+
 function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -934,9 +1099,6 @@ function atualizarDashBoard() {
     $("#finalizada").html(qtdFinalizada);
 }
 
-
-
-
 function sincronizar() {
 
     if (navigator.onLine) {
@@ -979,7 +1141,7 @@ function sincronizar() {
                     sincronizarEmpresa(function (dataVendaPme) {
                         swal.close();
 
-                    }, o, b);
+                    }, o, b, false);
                     atualizarDashBoard();
                 }
             });
@@ -1039,6 +1201,26 @@ function sincronizar() {
     }
 }
 
+function removerAcentosMinusculo(newStringComAcento) {
+    var string = newStringComAcento;
+    var mapaAcentosHex = {
+        a: /[\xE0-\xE6]/gi,
+        e: /[\xE8-\xEB]/gi,
+        i: /[\xEC-\xEF]/gi,
+        o: /[\xF2-\xF6]/gi,
+        u: /[\xF9-\xFC]/gi,
+        c: /\xE7/gi,
+        n: /\xF1/gi
+    };
+
+    for (var letra in mapaAcentosHex) {
+        var expressaoRegular = mapaAcentosHex[letra];
+        string = string.replace(expressaoRegular, letra);
+    }
+
+    return string;
+}
+
 function removerAcentos(newStringComAcento) {
     var string = newStringComAcento;
     var mapaAcentosHex = {
@@ -1080,10 +1262,10 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
             "cdPlano": cdPlano,
             "titulares": [
                 {
-                    "nome": removerAcentos(pessoa[0].nome),
+                    "nome": removerAcentosMinusculo(pessoa[0].nome),
                     "cpf": pessoa[0].cpf,
                     "dataNascimento": pessoa[0].dataNascimento,
-                    "nomeMae": removerAcentos(pessoa[0].nomeMae),
+                    "nomeMae": removerAcentosMinusculo(pessoa[0].nomeMae),
                     "sexo": pessoa[0].sexo,
                     "status": pessoa[0].status,
                     "titular": pessoa[0].titular,
@@ -1098,11 +1280,11 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                     "dependentes": pessoa[0].dependentes,
                     "email": pessoa[0].email,
                     "endereco": {
-                        "bairro": removerAcentos(pessoa[0].endereco.bairro),
+                        "bairro": removerAcentosMinusculo(pessoa[0].endereco.bairro),
                         "cep": pessoa[0].endereco.cep,
-                        "cidade": removerAcentos(pessoa[0].endereco.cidade),
+                        "cidade": removerAcentosMinusculo(pessoa[0].endereco.cidade),
                         "complemento": pessoa[0].endereco.complemento,
-                        "logradouro": removerAcentos(pessoa[0].endereco.logradouro),
+                        "logradouro": removerAcentosMinusculo(pessoa[0].endereco.logradouro),
                         "estado": pessoa[0].endereco.estado,
                         "numero": pessoa[0].endereco.numero
                     }
@@ -1116,11 +1298,11 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                 "celular": pessoa[0].responsavelContratual.celular,
                 "sexo": pessoa[0].responsavelContratual.sexo,
                 "endereco": {
-                    "bairro": removerAcentos(pessoa[0].endereco.bairro),
+                    "bairro": removerAcentosMinusculo(pessoa[0].endereco.bairro),
                     "cep": pessoa[0].endereco.cep,
-                    "cidade": removerAcentos(pessoa[0].endereco.cidade),
+                    "cidade": removerAcentosMinusculo(pessoa[0].endereco.cidade),
                     "complemento": pessoa[0].endereco.complemento,
-                    "logradouro": removerAcentos(pessoa[0].endereco.logradouro),
+                    "logradouro": removerAcentosMinusculo(pessoa[0].endereco.logradouro),
                     "estado": pessoa[0].endereco.estado,
                     "numero": pessoa[0].endereco.numero
                 }
@@ -1133,10 +1315,10 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
             "cdPlano": cdPlano,
             "titulares": [
                 {
-                    "nome": removerAcentos(pessoa[0].nome),
+                    "nome": removerAcentosMinusculo(pessoa[0].nome),
                     "cpf": pessoa[0].cpf,
                     "dataNascimento": pessoa[0].dataNascimento,
-                    "nomeMae": removerAcentos(pessoa[0].nomeMae),
+                    "nomeMae": removerAcentosMinusculo(pessoa[0].nomeMae),
                     "email": pessoa[0].email,
                     "sexo": pessoa[0].sexo,
                     "status": pessoa[0].status,
@@ -1151,29 +1333,29 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                     },
                     "dependentes": pessoa[0].dependentes,
                     "endereco": {
-                        "bairro": removerAcentos(pessoa[0].endereco.bairro),
+                        "bairro": removerAcentosMinusculo(pessoa[0].endereco.bairro),
                         "cep": pessoa[0].endereco.cep,
-                        "cidade": removerAcentos(pessoa[0].endereco.cidade),
+                        "cidade": removerAcentosMinusculo(pessoa[0].endereco.cidade),
                         "complemento": pessoa[0].endereco.complemento,
-                        "logradouro": removerAcentos(pessoa[0].endereco.logradouro),
+                        "logradouro": removerAcentosMinusculo(pessoa[0].endereco.logradouro),
                         "estado": pessoa[0].endereco.estado,
                         "numero": pessoa[0].endereco.numero
                     }
                 }
             ],
             "responsavelContratual": {
-                "nome": removerAcentos(pessoa[0].nome),
+                "nome": removerAcentosMinusculo(pessoa[0].nome),
                 "cpf": pessoa[0].cpf,
                 "dataNascimento": pessoa[0].dataNascimento,
                 "email": pessoa[0].email,
                 "celular": pessoa[0].celular,
                 "sexo": pessoa[0].sexo,
                 "endereco": {
-                    "bairro": removerAcentos(pessoa[0].endereco.bairro),
+                    "bairro": removerAcentosMinusculo(pessoa[0].endereco.bairro),
                     "cep": pessoa[0].endereco.cep,
-                    "cidade": removerAcentos(pessoa[0].endereco.cidade),
+                    "cidade": removerAcentosMinusculo(pessoa[0].endereco.cidade),
                     "complemento": pessoa[0].endereco.complemento,
-                    "logradouro": removerAcentos(pessoa[0].endereco.logradouro),
+                    "logradouro": removerAcentosMinusculo(pessoa[0].endereco.logradouro),
                     "estado": pessoa[0].endereco.estado,
                     "numero": pessoa[0].endereco.numero
                 }
@@ -1185,42 +1367,24 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
     console.log(json);
 
-    if (reSync){
-
-        swal({
-            title: "Aguarde",
-            text: 'Estamos enviando a sua proposta',
-            content: "input",
-            imageUrl: "img/load.gif",
-            showCancelButton: false,
-            showConfirmButton: false,
-            icon: "info",
-            button: {
-                text: "...",
-                closeModal: false,
-            },
-        });
-
-    }
-
-
-
 
     callTokenProd(function (dataToken) {
 
-        swal({
-            title: "Aguarde",
-            text: 'Estamos enviando a sua proposta',
-            content: "input",
-            imageUrl: "img/load.gif",
-            showCancelButton: false,
-            showConfirmButton: false,
-            icon: "info",
-            button: {
-                text: "...",
-                closeModal: false,
-            },
-        });
+        if (!reSync) {
+            swal({
+                title: "Aguarde",
+                text: 'Estamos enviando a sua proposta',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+        }
 
         $.ajax({
             async: true,
@@ -1248,6 +1412,8 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
                     var pessoas = get("pessoas");
                     pessoa[0].status = "ENVIADA";
+                    pessoa[0].cdVenda = result.id;
+                    pessoa[0].numeroDaProposta = result.mensagem.split("[")[2].split("]")[0];
                     pessoa[0].dataAtualizacao = new Date();
 
                     var todosExcetoExclusao = pessoas.filter(function (x) { return x.cpf != pessoa[0].cpf });
@@ -1257,7 +1423,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                     put("pessoas", JSON.stringify(todosExcetoExclusao));
 
                 }
-                
+                swal.close();
                 atualizarDashBoard();
                 callback(result);
 
@@ -1270,7 +1436,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
     });
 }
 
-function sincronizarEmpresa(callback, proposta, beneficiarios) {
+function sincronizarEmpresa(callback, proposta, beneficiarios, reSync) {
 
     console.log(proposta);
 
@@ -1282,20 +1448,21 @@ function sincronizarEmpresa(callback, proposta, beneficiarios) {
 
     callTokenProd(function (dataToken) {
 
-        swal({
-            title: "Aguarde",
-            text: 'Estamos enviando a sua proposta',
-            content: "input",
-            imageUrl: "img/load.gif",
-            showCancelButton: false,
-            showConfirmButton: false,
-            icon: "info",
-            button: {
-                text: "...",
-                closeModal: false,
-            },
-        });
-
+        if (!reSync){
+            swal({
+                title: "Aguarde",
+                text: 'Estamos enviando a sua proposta',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+        }
 
         $.ajax({
             url: URLBase + "/corretorservicos/1.0/vendapme",
