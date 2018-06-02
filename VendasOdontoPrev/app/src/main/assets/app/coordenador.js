@@ -175,7 +175,7 @@ function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelul
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/forcavenda/devicetoken" + cdForcaVenda,
+        url: URLBase + "/corretorservicos/forcavenda/devicetoken/" + cdForcaVenda,
         method: "POST",
         headers: {
             "Content-Type": "application/json",

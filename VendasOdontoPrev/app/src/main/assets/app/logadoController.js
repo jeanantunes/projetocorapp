@@ -40,10 +40,13 @@ function validarVersaoApp()
 
 function atualizarTokenDevice() {
 
-    var tokenDevice = getTokenDevice();
-    var modelDevice = getModelDevice();
+    //var tokenDevice = getTokenDevice();
+    //var modelDevice = getModelDevice();
     var sistemaOperacional = "ANDROID";
     var dadosUsuario = get("dadosUsuario");
+
+    var tokenDevice = "dadasda";
+    var modelDevice = "dadasda";
 
     console.log("Executando device Token");
 
@@ -54,7 +57,7 @@ function atualizarTokenDevice() {
             console.log("Executou postDeviceToken");
             console.log(dataDeviceToken);
 
-        }, dataToken.access_token, dadosUsuario.cdForcaVenda, tokenDevice, modelDevice, sistemaOperacional);
+        }, dataToken.access_token, dadosUsuario.codigo, tokenDevice, modelDevice, sistemaOperacional);
 
     });
 }

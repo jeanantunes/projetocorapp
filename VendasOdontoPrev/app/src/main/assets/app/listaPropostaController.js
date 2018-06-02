@@ -563,13 +563,14 @@ function buscarDetalheProposta(callback, token, cdVenda) {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + Token,
+            "Authorization": "Bearer " + token,
             "Cache-Control": "no-cache",
         },
         success: function (resp) {
             callback(resp);
         },
         error: function (xhr) {
+            callback(xhr);
         }
     });
         
@@ -595,6 +596,12 @@ function verDetalheProposta(dataId) {
     callTokenProd(function (dataToken) {
 
         buscarDetalheProposta(function (dataPropostaCriticada) {
+
+            if (dataPropostaCriticada.status == 404) {
+
+                swal("Ops", "Proposta não encontrada", "error");
+                return;
+            }
 
             if (dataPropostaCriticada.venda.cdStatusVenda == 2 && dataPropostaCriticada.venda.criticas.length == 0) {
                 swal("Ops", "Proposta sem critica", "error");

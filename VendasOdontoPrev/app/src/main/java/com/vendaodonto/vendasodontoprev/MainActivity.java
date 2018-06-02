@@ -70,18 +70,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-
-        //OneSignal.startInit(this).init();
-
-        db = new DataBase(this);
-
         super.onCreate(savedInstanceState);
 
-        //MyFirebaseInstanceIDService oFireBaseIdService = new MyFirebaseInstanceIDService();
-        //oFireBaseIdService.getTokenDevice();
-
         ctx = this;
+
+        db = new DataBase(this);
 
         setContentView(R.layout.activity_main);
         String urlAssets = "file:///android_asset/";
@@ -118,25 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        //setCtx(ctx);
-//        try {
-//
-//            myWebView.getSettings().setJavaScriptEnabled(true);
-//            myWebView.loadUrl(myurl);
-//
-//            //New//Folder//AIDL Folder
-//            //New//File
-//        } catch (Exception e) {
-//            Log.e("MYAPP", "======================");
-//            Log.e("MYAPP", "exception", e);
-//        }
-
-        //getContact(1);
-
         int qt = 0;
-
-        TableNotificacao tbNotification = new TableNotificacao(this);
-        tbNotification.insertNotificacao();
 
         try {
 
@@ -152,25 +127,9 @@ public class MainActivity extends AppCompatActivity {
                 qt ++;
             }
 
-            //Toast.makeText(this.getBaseContext(), String.valueOf(qt), Toast.LENGTH_SHORT).show();
-
-            //myWebView.loadUrl("https://imobottst5.mybluemix.net");
-
             ForcaVenda forcaLogin = buscar(1);
 
             tableLogin tb = new tableLogin(this);
-
-            //Log.d("MeuLog", "Cadastro id: " + forcaLogin.getLogado());
-
-            //if (forcaLogin == null)
-            //{
-            //    Log.d("MeuLog","forcaLogin == null");
-            //    tb.insertTeste();
-            //}
-
-            //forcaLogin = buscar(1);
-
-            //Log.d("MeuLog", "Erro na busca do login");
 
             if(forcaLogin != null)
             {
@@ -182,30 +141,15 @@ public class MainActivity extends AppCompatActivity {
                 myWebView.loadUrl("file:///android_asset/index.html");
            }
 
-
             //myWebView.loadDataWithBaseURL("file:///android_asset/", total.toString(), "text/html", "UTF-8", null);
 
             Log.d("MeuLog", "Classe instanciada");
-
-            //selectTableLogin();
 
 
 
         } catch (Exception xxx) {
             Log.e("MeuLog", "Load assets ", xxx);
         }
-
-         Notificacao noti = buscarNotificao(1);
-
-        //Log.d("MeuLog", "Notificacao: " + noti.getTitulo());
-
-        // TESTE CRUD
-
-        //db.addCliente(new Cliente("Nome", "CPF", "58455", "DSDA", "SDAASDAS"));
-
-        //Toast.makeText(this.getBaseContext(), "Salvo com sucesso", Toast.LENGTH_LONG).show();
-
-        ///////////////////////////////////////////////
 
     }
 
