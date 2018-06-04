@@ -29,20 +29,8 @@ public class CustomWebViewClient extends WebViewClient {
     public CustomWebViewClient(Context ctx)
     {
         this.context = ctx;
-        // do nothing
-    }
 
-//    @Override
-//    public boolean shouldOverrideUrlLoading(WebView view, String url)
-//    {
-////        if(!url.startsWith("file:///android_asset/"))
-////        {
-////            url = "file:///android_asset/" + url;
-////        }
-//        view.loadUrl(url);
-//
-//        return true;
-//    }
+    }
 
 
     @SuppressWarnings("deprecation")
@@ -130,26 +118,8 @@ public class CustomWebViewClient extends WebViewClient {
 
         view.addJavascriptInterface(classeInstanciada, "ob");
 
-
-
-
         Log.d("MeuLog", "Classe instanciada");
 
-        // Based on some condition you need to determine if you are going to load the url
-        // in your web view itself or in a browser.
-        // You can use `host` or `scheme` or any part of the `uri` to decide.
-
-
-//        if (/* any condition */) {
-//            // Returning false means that you are going to load this url in the webView itself
-//            return false;
-//        } else {
-//            // Returning true means that you need to handle what to do with the url
-//            // e.g. open web page in a Browser
-//            final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//            startActivity(intent);
-//            return true;
-//        }
         view.loadUrl(uri);
         return true;
     }

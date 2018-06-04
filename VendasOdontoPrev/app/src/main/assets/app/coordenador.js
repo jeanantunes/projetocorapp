@@ -92,7 +92,8 @@ function defineConexao() {
         URLBase = conexao.homologacaoURL;
         console.log(URLBase);
         Token = conexao.chaveHomolog;
-        setPlanosHml();
+        setPlanosProd();
+        //setPlanosHml();
     }
 }
 

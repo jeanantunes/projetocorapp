@@ -10,7 +10,21 @@
 
     $("#map").html('<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYhoOl5Kervzx0pOvSAL8qIIWcPHg5Zyk&callback=mapa"></script>');
 
+    $("#compartilharCard").click(function () {
 
+        //let compartilharCard = "";
+        //
+        //compartilharCard += $("#nomeDentista").html();
+        //compartilharCard +=$("#croDentista").html();
+        //compartilharCard +=($("#especialidadeDentista").html());
+        //compartilharCard +=($("#enderecoDentista").html());
+        //compartilharCard +=($("#cepDentista").html());
+        //compartilharCard +=($("#telefoneDentista").html());
+        //compartilharCard +=($("#tipoPessoaDentista").html());
+        //
+        ob.compartilharString($(this).val());
+
+    });
 });
 
 function initMap(redeCredenciada) {
@@ -564,13 +578,39 @@ function mapa(abc) {
                     //console.log("Dentro da funcão Click:  " + contentString[i]);
                     //infowindow.setContent('<div><strong>' + abc.dentistas[i].nomeDentista + '</strong><br>');
                     //infowindow.open(map, marker);
-
+                    let dadosDentista = "";
+                                    
                     $("#nomeDentista").html("Dr(a). " + abc.dentistas[i].nomeDentista);
-                    $("#croDentista").html("CRO: " + abc.dentistas[i].numeroCRO);
+                    dadosDentista += "Dr(a). " + abc.dentistas[i].nomeDentista + "\n";
 
-                    //$("#especialidadeDentista").html(abc.dentistas[i].especialidade.descricaoEspecialidade);
+                    $("#croDentista").html("CRO: " + abc.dentistas[i].numeroCRO);
+                    dadosDentista += "CRO " + abc.dentistas[i].numeroCRO + "\n\n" + "Endereço\n";
+
+                    dadosDentista += abc.dentistas[i].endereco.enderecoCompleto + "-" +
+                        abc.dentistas[i].endereco.bairro + "\n";
+
+                    dadosDentista += "CEP " + abc.dentistas[i].endereco.cep + " " +
+                        abc.dentistas[i].endereco.cidade.nome + '\\' +
+                        abc.dentistas[i].endereco.cidade.siglaUF + "\n\n";
+
+                    dadosDentista += "Contato\n";
+
+                    dadosDentista += abc.dentistas[i].numeroFone + "\n\n";
+
+                    dadosDentista += "Especialidades\n";
+
+                    dadosDentista += abc.dentistas[i].especialidade.descricaoEspecialidade;
+
+                    dadosDentista += "\ud83d\ude03";
+
+                    $("#enderecoDentista").html(abc.dentistas[i].endereco.enderecoCompleto);
+                    $("#cepDentista").html(abc.dentistas[i].endereco.cep);
+                    $("#telefoneDentista").html(abc.dentistas[i].numeroFone);
+                    $("#tipoPessoaDentista").html(abc.dentistas[i].tipoPrestador);
+
 
                     var especialidades = abc.dentistas[i].especialidade.descricaoEspecialidade.split(",");
+                    //dadosDentista += abc.dentistas[i].especialidade.descricaoEspecialidade;
 
                     var appendEspecs = "";
                     $("#especialidadeDentista").html("");
@@ -580,14 +620,8 @@ function mapa(abc) {
 
                     });
 
-
-                    $("#enderecoDentista").html(abc.dentistas[i].endereco.enderecoCompleto);
-                    $("#cepDentista").html(abc.dentistas[i].endereco.cep);
-                    $("#telefoneDentista").html(abc.dentistas[i].numeroFone);
-                    $("#tipoPessoaDentista").html(abc.dentistas[i].tipoPrestador);
-
+                    $("#compartilharCard").val(dadosDentista);
                     $('#myModal').modal('show');
-
                 }
             })(marker, i));
         }
