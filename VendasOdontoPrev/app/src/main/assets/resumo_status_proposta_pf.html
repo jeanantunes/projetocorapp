@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Odontoprev</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Menu -->
+    <div id="componenteMenu"></div>
+    <!-- End Menu -->
+
+    <!-- Bloco 1 -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-left imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+                <span class="btnMenu" onclick="openNav()">&#9776;</span>
+            </div>
+        </div>
+        <div class="odontBoxCenter" style="padding-left:0px; padding-right:0px;">
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="text-center">
+                        <div>
+                            <h1 class="titleOdontResumo text-center">
+                                RESUMO DA PROPOSTA
+                            </h1>
+                            <h2 class="subTitleOdont text-center">
+                                Confira o plano escolhido e preencha os dados do cliente abaixo
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="planos" style="margin-bottom:20px;"></div>
+            </div>
+
+
+            <!-- INICIO BOX TITULAR DA PROPOSTA -->
+            <div class="boxResumoStatus">
+                <div>
+                    <label class="labelBlueTitle">TITULAR DO PLANO</label>
+                </div>
+                <div>
+                    <label class="label-cnpj labelBlurResumoStatus">Nome</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="nomeTitular"></label>
+                </div>
+                <div>
+                    <label class="label-email labelBlurResumoStatus">E-mail</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="emailTitular"></label>
+                </div>
+                <div>
+                    <label class="label-celular labelBlurResumoStatus">Celular</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="celularTitular"></label>
+                </div>
+                <div>
+                    <label class="label-cpf labelBlurResumoStatus">CPF</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="cpfTitular"></label>
+                </div>
+                <div>
+                    <label class="label-data-nacimento-titular labelBlurResumoStatus">Data de nascimento</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="dataNascimentoTitular"></label>
+                </div>
+                <div>
+                    <label class="label-sexo labelBlurResumoStatus">Sexo</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="sexoTitular"></label>
+                </div>
+                <div>
+                    <label class="label-telefone labelBlurResumoStatus">Nome da mãe</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="nomeMaeTitular"></label>
+                </div>
+            </div>
+            <!-- END BOX TITULAR DA PROPOSTA -->
+
+            <!-- INICIO BOX DEPENDENTES -->
+            <div class="boxResumoStatus">
+                <div style="margin-top:5px;">
+                    <label class="labelBlueTitle">DEPENDENTES</label>
+                </div>
+            </div>
+            <!-- END BOX DEPENDENTES -->
+
+            <!-- INICIO BOX ENDEREÇO -->
+            <div class="boxResumoStatus">
+
+                <div style="margin-top:5px;">
+                    <label class="labelBlueTitle">ENDEREÇO</label>
+                </div>
+                <div>
+                    <label class="label-cep labelBlurResumoStatus">CEP</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="cepTitular"></label>
+                </div>
+                <div>
+                    <label class="label-endereco labelBlurResumoStatus">Endereço</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="enderecoTitular"></label>
+                </div>
+                <div>
+                    <label class="label-numero labelBlurResumoStatus">Número</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="numeroLogradouroTitular"></label>
+                </div>
+                <div>
+                    <label class="label-complemento labelBlurResumoStatus">Complemento</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="complementoTitular"></label>
+                </div>
+                <div>
+                    <label class="label-bairro labelBlurResumoStatus">Bairro</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="bairroTitular"></label>
+                </div>
+                <div>
+                    <label class="label-cidade labelBlurResumoStatus">Cidade</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="cidadeTitular"></label>
+                </div>
+                <div>
+                    <label class="label-cidade labelBlurResumoStatus">Estado</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="estadoTitular"></label>
+                </div>
+            </div>
+            <!-- END BOX ENDEREÇO -->
+
+            <!-- INICIO BOX FORMA DE PAGAMENTO -->
+            <div class="boxResumoStatus">
+                <div style="margin-top:5px;">
+                    <label class="labelBlueTitle">FORMA DE PAGAMENTO</label>
+                </div>
+            </div>
+            <!-- END BOX FORMA DE PAGAMENTO -->
+
+        </div>
+
+
+    </div>
+    <!-- End Bloco 1 -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="js/jquery.3.2.1.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/odonto-Valida.js"></script>
+    <script src="app/coordenador.js"></script>
+    <script src="app/resumoStatusPropostaPfController.js"></script>
+    <script src="js/moment.js"></script>
+</body>
+</html>

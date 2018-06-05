@@ -578,7 +578,6 @@ function buscarDetalheProposta(callback, token, cdVenda) {
 
 function verDetalheProposta(dataId) {
 
-
     swal({
         title: "Aguarde",
         text: 'Estamos buscando sua proposta',
@@ -603,10 +602,10 @@ function verDetalheProposta(dataId) {
                 return;
             }
 
-            if (dataPropostaCriticada.venda.cdStatusVenda == 2 && dataPropostaCriticada.venda.criticas.length == 0) {
-                swal("Ops", "Proposta sem critica", "error");
-                return;
-            }
+            //if (dataPropostaCriticada.venda.cdStatusVenda == 2 && dataPropostaCriticada.venda.criticas.length == 0) {
+            //    swal("Ops", "Proposta sem critica", "error");
+            //    return;
+            //}
 
             var retorno = getRepository("propostaPf");
             retorno.cdVenda = dataPropostaCriticada.venda.cdVenda;
@@ -673,10 +672,9 @@ function verDetalheProposta(dataId) {
             retorno.dependentes = dependentes;
             retorno.criticas = dataPropostaCriticada.venda.criticas;
 
+            put("resumoStatusPropostaPf", JSON.stringify(retorno));
 
-            put("propostaPf", JSON.stringify(retorno));
-
-            window.location = "venda_pf_dados_proposta.html?erro=true";
+            window.location = "resumo_status_proposta_pf.html";
 
         }, dataToken.access_token, dataId);
 

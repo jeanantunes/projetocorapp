@@ -415,6 +415,8 @@ $("#cidades").blur(function () {
 
             for (var i = 0; i < dataBairro.length; i++) {
 
+
+                console.log(dataBairro.length);
                 var bairros = new Object();
 
                 bairros.nome = removerAcentos(dataBairro[i].nome.replace("JD", "JARDIM").toUpperCase()).trim();
@@ -454,6 +456,12 @@ $("#cidades").blur(function () {
     });
 });
 
+$("#cidades").click(function () {
+
+    dadosBairros = [];
+
+});
+
 $("#btnBuscar").click(function () {
 
     if ($("#estados").val() == "selecione") {
@@ -468,11 +476,17 @@ $("#btnBuscar").click(function () {
         return;
     }
 
-    if ($('#bairros').val() == "" && $('#cidades').val() == "SAO PAULO") {
+    if (dadosBairros.length > 20 && $('#bairros').val() == "" || dadosBairros.length == 0 && $('#bairros').val() == "") {
 
-        swal("Ops!", "Digite uma cidade", "info");
+        swal("Ops!", "Digite um bairro", "info");
         return;
     }
+
+    //if ($('#bairros').val() == "" && $('#cidades').val() == "SAO PAULO") {
+    //
+    //    swal("Ops!", "Digite uma cidade", "info");
+    //    return;
+    //}
 
     var codigoEspecialidade = $('#especs').val();
     var privian = "FALSE";
@@ -522,38 +536,38 @@ $("#btnBuscar").click(function () {
     });
 });
 
-function mapa(abc) {
+function mapa(dataDentistas) {
 
     var latlng = { lat: -23.5432147, lng: -46.7356894 };
     var selectedMarker;
 
     //initMap(latlng);
 
-    if (abc == null) {
+    if (dataDentistas == null) {
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 4,
             center: latlng,
             disableDefaultUI: true
         });
     }
-    else if (abc != null) {
+    else if (dataDentistas != null) {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 13,
-            center: { lat: parseFloat(abc.dentistas[0].endereco.cidade.latitude), lng: parseFloat(abc.dentistas[0].endereco.cidade.longitude) },
+            center: { lat: parseFloat(dataDentistas.dentistas[0].endereco.cidade.latitude), lng: parseFloat(dataDentistas.dentistas[0].endereco.cidade.longitude) },
             disableDefaultUI: true
         });
 
         var dentistas = [];
 
-        for (var i = 0; i < abc.dentistas.length; i++) {
+        for (var i = 0; i < dataDentistas.dentistas.length; i++) {
 
-            var filter = dentistas.filter(function (x) { return x == abc.dentistas[i].codigoDentista });
+            var filter = dentistas.filter(function (x) { return x == dataDentistas.dentistas[i].codigoDentista });
 
             if (filter.length > 0) continue;
 
-            dentistas.push(abc.dentistas[i].codigoDentista);
+            dentistas.push(dataDentistas.dentistas[i].codigoDentista);
 
-            var latlng2 = new google.maps.LatLng((abc.dentistas[i].endereco.cidade.latitude), (abc.dentistas[i].endereco.cidade.longitude));
+            var latlng2 = new google.maps.LatLng((dataDentistas.dentistas[i].endereco.cidade.latitude), (dataDentistas.dentistas[i].endereco.cidade.longitude));
 
             var marker = new google.maps.Marker({
                 position: latlng2,
@@ -576,41 +590,38 @@ function mapa(abc) {
 
 
                     //console.log("Dentro da funcão Click:  " + contentString[i]);
-                    //infowindow.setContent('<div><strong>' + abc.dentistas[i].nomeDentista + '</strong><br>');
+                    //infowindow.setContent('<div><strong>' + dataDentistas.dentistas[i].nomeDentista + '</strong><br>');
                     //infowindow.open(map, marker);
                     let dadosDentista = "";
                                     
-                    $("#nomeDentista").html("Dr(a). " + abc.dentistas[i].nomeDentista);
-                    dadosDentista += "Dr(a). " + abc.dentistas[i].nomeDentista + "\n";
+                    $("#nomeDentista").html("Dr(a). " + dataDentistas.dentistas[i].nomeDentista);
+                    dadosDentista += "Dr(a). " + dataDentistas.dentistas[i].nomeDentista + "\n";
 
-                    $("#croDentista").html("CRO: " + abc.dentistas[i].numeroCRO);
-                    dadosDentista += "CRO " + abc.dentistas[i].numeroCRO + "\n\n" + "Endereço\n";
+                    $("#croDentista").html("CRO: " + dataDentistas.dentistas[i].numeroCRO);
+                    dadosDentista += "CRO " + dataDentistas.dentistas[i].numeroCRO + "\n\n" + "Endereço\n";
 
-                    dadosDentista += abc.dentistas[i].endereco.enderecoCompleto + "-" +
-                        abc.dentistas[i].endereco.bairro + "\n";
+                    dadosDentista += dataDentistas.dentistas[i].endereco.enderecoCompleto + "-" +
+                        dataDentistas.dentistas[i].endereco.bairro + "\n";
 
-                    dadosDentista += "CEP " + abc.dentistas[i].endereco.cep + " " +
-                        abc.dentistas[i].endereco.cidade.nome + '\\' +
-                        abc.dentistas[i].endereco.cidade.siglaUF + "\n\n";
+                    dadosDentista += "CEP " + dataDentistas.dentistas[i].endereco.cep + " " +
+                        dataDentistas.dentistas[i].endereco.cidade.nome + '\\' +
+                        dataDentistas.dentistas[i].endereco.cidade.siglaUF + "\n\n";
 
                     dadosDentista += "Contato\n";
 
-                    dadosDentista += abc.dentistas[i].numeroFone + "\n\n";
+                    dadosDentista += dataDentistas.dentistas[i].numeroFone + "\n\n";
 
                     dadosDentista += "Especialidades\n";
 
-                    dadosDentista += abc.dentistas[i].especialidade.descricaoEspecialidade;
+                    dadosDentista += dataDentistas.dentistas[i].especialidade.descricaoEspecialidade;
 
-                    dadosDentista += "\ud83d\ude03";
+                    $("#enderecoDentista").html(dataDentistas.dentistas[i].endereco.enderecoCompleto);
+                    $("#cepDentista").html(dataDentistas.dentistas[i].endereco.cep);
+                    $("#telefoneDentista").html(dataDentistas.dentistas[i].numeroFone);
+                    $("#tipoPessoaDentista").html(dataDentistas.dentistas[i].tipoPrestador);
 
-                    $("#enderecoDentista").html(abc.dentistas[i].endereco.enderecoCompleto);
-                    $("#cepDentista").html(abc.dentistas[i].endereco.cep);
-                    $("#telefoneDentista").html(abc.dentistas[i].numeroFone);
-                    $("#tipoPessoaDentista").html(abc.dentistas[i].tipoPrestador);
-
-
-                    var especialidades = abc.dentistas[i].especialidade.descricaoEspecialidade.split(",");
-                    //dadosDentista += abc.dentistas[i].especialidade.descricaoEspecialidade;
+                    var especialidades = dataDentistas.dentistas[i].especialidade.descricaoEspecialidade.split(",");
+                    //dadosDentista += dataDentistas.dentistas[i].especialidade.descricaoEspecialidade;
 
                     var appendEspecs = "";
                     $("#especialidadeDentista").html("");

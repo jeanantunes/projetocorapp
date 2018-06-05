@@ -230,8 +230,8 @@
     width: 211px;
     height: 211px;
     text-align: center;
-    /*background-color: #e5e5e5;*/
-    /*margin-left: 20%;*/
+    background-color: #e5e5e5;
+    margin-left: 20%;
     margin-top: 0px !important;
 
 }*/
@@ -275,6 +275,45 @@
 
 /****************************** End Materiais de Divulgação *********************************/
 
+
+/******************************* Inicio resumo status proposta PF ****************************/
+
+.boxResumoStatus {
+    padding-bottom: 10%;
+    border: 1px solid #EDEDED;
+    padding: 10px;
+    margin-bottom: 25px;
+    box-shadow: 2px 5px 15px 0px #EDEDED;
+}
+
+.labelBlurResumoStatus {
+    font-family: Roboto-Light;
+    color: #ACAAA5;
+    font-size: 15px;
+    padding-top: 2%;
+    margin-top: 10px;
+}
+
+.labelDadosResumoStatus {
+    font-family: Roboto-Light;
+    color: #ACAAA5;
+    font-size: 20px;
+}
+
+
+.labelBlueTitle {
+    font-family: Roboto-Light;
+    font-size: 16pt;
+    color: #1974CE;
+    margin-bottom: 10pt;
+}
+
+.titleOdontResumo {
+    font-family: Roboto-Light;
+    color: #1974CE;
+    font-size: 22pt;
+}
+/******************************* End resumo status proposta PF **********************************/
 
 .boxLabInput {
     margin-bottom: 10%;
@@ -368,7 +407,23 @@
     margin-top: 10px;
 }
 
+/******************************** MODAL REDE CREDENCIADA *********************************/
+
+.modalContainerRedeCredenciada {
+    /*top: -2.5%;*/
+    margin-left: 15px;
+    margin-right: 15px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    display: table;
+    max-width: 90%;
+}
+
+
 /*********************************** Radio Button ****************************************/
+
 
 .checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
     margin-left: 24px;
