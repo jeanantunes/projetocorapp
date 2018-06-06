@@ -2,6 +2,8 @@
 
 $(document).ready(function () {
 
+    localStorage.removeItem("resumoStatusPropostaPf");
+
     if (!navigator.onLine) {
         carregarListaOffline();
         return;

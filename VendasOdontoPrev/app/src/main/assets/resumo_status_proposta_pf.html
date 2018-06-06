@@ -8,17 +8,17 @@
 
     <title>Odontoprev</title>
 
+    <link rel="stylesheet" type="text/css" href="slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
-    <link href="css/sweetalert.css" rel="stylesheet" />
 </head>
 
 <body>
     <!-- Menu -->
     <div id="componenteMenu"></div>
     <!-- End Menu -->
-
     <!-- Bloco 1 -->
     <div class="container-fluid">
         <div class="row">
@@ -43,9 +43,16 @@
                             </h2>
                         </div>
                     </div>
+
+                    <div id="divErros" class="hide">
+                        </br>
+                        <label class="labelRedErro">Erros encontrados </label>
+
+
+                    </div>
                 </div>
 
-                <div id="planos" style="margin-bottom:20px;"></div>
+                <div id="BoxPlanos" style="margin-bottom:20px;"></div>
             </div>
 
 
@@ -98,15 +105,18 @@
                 </div>
             </div>
             <!-- END BOX TITULAR DA PROPOSTA -->
-
             <!-- INICIO BOX DEPENDENTES -->
             <div class="boxResumoStatus">
                 <div style="margin-top:5px;">
                     <label class="labelBlueTitle">DEPENDENTES</label>
                 </div>
+                <div id="dependentes">
+
+                </div>
+
+
             </div>
             <!-- END BOX DEPENDENTES -->
-
             <!-- INICIO BOX ENDEREÇO -->
             <div class="boxResumoStatus">
 
@@ -157,11 +167,13 @@
                 </div>
             </div>
             <!-- END BOX ENDEREÇO -->
-
             <!-- INICIO BOX FORMA DE PAGAMENTO -->
             <div class="boxResumoStatus">
                 <div style="margin-top:5px;">
                     <label class="labelBlueTitle">FORMA DE PAGAMENTO</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="formaPagamento"></label>
                 </div>
             </div>
             <!-- END BOX FORMA DE PAGAMENTO -->
@@ -171,16 +183,68 @@
 
     </div>
     <!-- End Bloco 1 -->
-    <script src="js/jquery.min.js"></script>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog" style="padding-top:40px;">
+        <div class="modal-dialog modalContainerMateriais">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="img/btn-excluir.png" class="closeModalMateriais" data-dismiss="modal" alt="" />
+                    <div>
+                        <label class="labelBlueTitle" style="font-size:16px; margin-right:50px;">DADOS DO DEPENDENTE</label>
+                    </div>
+                    <div>
+                        <label class="label-cnpj labelBlurResumoStatusDependente">Nome</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="nomeDependente"></label>
+                    </div>
+                    <div>
+                        <label class="label-email labelBlurResumoStatusDependente">E-mail</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="emailDependente"></label>
+                    </div>
+                    <div>
+                        <label class="label-celular labelBlurResumoStatusDependente">Celular</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="celularDependente"></label>
+                    </div>
+                    <div>
+                        <label class="label-cpf labelBlurResumoStatusDependente">CPF</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="cpfDependente"></label>
+                    </div>
+                    <div>
+                        <label class="label-data-nacimento-titular labelBlurResumoStatusDependente">Data de nascimento</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="dataNascimentoDependente"></label>
+                    </div>
+                    <div>
+                        <label class="label-sexo labelBlurResumoStatusDependente">Sexo</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="sexoDependente"></label>
+                    </div>
+                    <div>
+                        <label class="label-telefone labelBlurResumoStatusDependente">Nome da mãe</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="nomeMaeDependente"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="slick/slick.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
-    <script src="js/odontoprev.js"></script>
-    <script src="js/jquery.3.2.1.js"></script>
-    <script src="js/jquery.mask.min.js"></script>
-    <script src="js/sweetalert.min.js"></script>
-    <script src="js/odonto-Valida.js"></script>
     <script src="app/coordenador.js"></script>
     <script src="app/resumoStatusPropostaPfController.js"></script>
-    <script src="js/moment.js"></script>
+    <script src="js/odontoprev.js"></script>
 </body>
 </html>

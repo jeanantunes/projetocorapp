@@ -294,6 +294,18 @@
     margin-top: 10px;
 }
 
+.labelBlurResumoStatusDependente {
+    font-family: Roboto-Light;
+    color: #ACAAA5;
+    font-size: 15px;
+}
+
+.labelDadosResumoStatusDependente {
+    font-family: Roboto-Light;
+    color: #ACAAA5;
+    font-size: 20px;
+}
+
 .labelDadosResumoStatus {
     font-family: Roboto-Light;
     color: #ACAAA5;
@@ -313,9 +325,79 @@
     color: #1974CE;
     font-size: 22pt;
 }
-/******************************* End resumo status proposta PF **********************************/
 
-.boxLabInput {
+.labelNomeTitular {
+    font-family: Roboto-Bold;
+    font-size: 16pt;
+    position: absolute;
+    margin-top: 15px;
+}
+
+.labelTipoBoxResumo {
+    font-family: Roboto-Light;
+    font-size: 14pt;
+    color: #ACAAA5;
+    position: absolute;
+    margin-top: 40px;
+}
+
+.labelDependentesBoxResumo {
+    font-family: Roboto-Light;
+    font-size: 14pt;
+    color: #ACAAA5;
+    position: absolute;
+    margin-top: 80pt;
+    margin-top: 60px;
+}
+
+.formPagValBoxResumo {
+    font-family: Roboto-Black;
+    font-size: 25pt;
+    position: relative;
+    top: 30pt;
+}
+
+.font-moedaBoxResumo {
+    font-size: 20px !important;
+}
+
+.font-centBoxResumo {
+    font-size: 12px !important;
+    position: relative;
+    bottom: 6px;
+}
+
+.setaDependentes {
+    position: relative;
+    bottom: 50px;
+}
+
+.boxDadosPropostaResumo {
+    height: 80pt;
+    border: 1px solid #EDEDED;
+    border-radius: 18px;
+    box-shadow: 2px 5px 15px 0px #EDEDED;
+}
+
+    @media screen and (max-width: 450px) {
+        .labelNomeTitular {
+            font-size: 10pt !important;
+        }
+
+        .labelTipoBoxResumo {
+            font-size: 10pt !important;
+        }
+
+        .labelDependentesBoxResumo {
+            font-size: 10pt !important;
+        }
+
+        formPagValBoxResumo {
+            font-size: 12pt !important;
+        }
+    }
+    /******************************* End resumo status proposta PF **********************************/
+    .boxLabInput {
     margin-bottom: 10%;
     margin-top: 5%;
     color: #3197EE;
@@ -787,21 +869,21 @@ h1, .titleListBox {
 }
 
 .labelRedErro {
-    font-family: Roboto-Bold;
-    font-size: 16pt;
+    font-family: Roboto-Light;
+    font-size: 15px;
     color: red;
 
 }
 
 .labelRedErrosFont {
-    font-family: Roboto-Regular;
-    font-size: 12pt;
+    font-family: Roboto-Light;
+    font-size: 15px;
     color: red;
     margin-bottom: 0pt;
 }
 
 .labelRedErrosFontBenef {
-    font-family: Roboto-Bold;
+    font-family: Roboto-Light;
     font-size: 14pt;
     color: red;
     margin-bottom: 0pt;
