@@ -25,6 +25,13 @@
         ob.compartilharString($(this).val());
 
     });
+
+    $("#copiarLink").click(function () {
+
+        let teste = "teste 123";
+        ob.clipboardText(teste);
+    });
+
 });
 
 function initMap(redeCredenciada) {

@@ -74,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
         ctx = this;
 
+        MyFirebaseInstanceIDService oToken = new MyFirebaseInstanceIDService();
+
+        oToken.getTokenDevice();
+
         db = new DataBase(this);
 
         setContentView(R.layout.activity_main);
