@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,8 @@ import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     DataBase db;
 
+
     public static Context ctx;
 
     private final int GALERIA_IMAGENS = 1;
@@ -79,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
         oToken.getTokenDevice();
 
         db = new DataBase(this);
+
+        String teste = BuildConfig.TokenApi;
+
+        Log.d("MeuLog", teste);
 
         setContentView(R.layout.activity_main);
         String urlAssets = "file:///android_asset/";
@@ -157,6 +166,34 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        SharedPreferences firstRun = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(!firstRun.getBoolean("firstTime", false)){
+
+            String FILENAME = "hello_file";
+            String string = "hello world!";
+
+            try {
+
+                FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+                fos.write(string.getBytes());
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Toast.makeText(this, "App Installed!!!!.", Toast.LENGTH_LONG).show();
+            SharedPreferences.Editor editor = firstRun.edit();
+            editor.putBoolean("firstTime", true);
+            editor.commit();
+
+        }
+    }
+
     public Notificacao buscarNotificao(int codigo) {
 
         try {
@@ -178,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
                 notificacao.setTitulo(resultado.getString(resultado.getColumnIndexOrThrow("NM_TITULO")));
                 notificacao.setDescricao(resultado.getString(resultado.getColumnIndexOrThrow("DS_NOTIFICACAO")));
-                //notificacao.setDataNoficacao(resultado.getString( resultado.getColumnIndexOrThrow("DT_NOTIFICACAO")));
                 notificacao.setTipoNotificacao(resultado.getString(resultado.getColumnIndexOrThrow("CD_TIPO_NOTIFICACAO")));
 
 
@@ -191,6 +227,8 @@ public class MainActivity extends AppCompatActivity {
 
         return null;
     }
+
+
 
 
     public ForcaVenda buscar(int codigo) {
@@ -278,8 +316,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 ActivityCompat.requestPermissions(this, new String[]
-                        {
-                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSAO_REQUEST);
+                    { android.Manifest.permission.WRITE_EXTERNAL_STORAGE }, PERMISSAO_REQUEST);
             }
         }
 

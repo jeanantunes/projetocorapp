@@ -2,20 +2,7 @@
 
     popularCamposProposta();
 
-    $(".clickDependente").click(function () {
-
-        
-        $("#nomeDependente").html($(this).data("nome"));
-        $("#emailDependente").html($(this).data("email"));
-        $("#celularDependente").html($(this).data("celular"));
-        $("#cpfDependente").html($(this).data("cpf"));
-        $("#dataNascimentoDependente").html($(this).data("nasc"));
-        $("#sexoDependente").html($(this).data("sexo"));
-        $("#nomeMaeDependente").html($(this).data("mae"));
-        $('#myModal').modal('show');
-        
-
-    })
+\
 })
 
 function popularCamposProposta() {

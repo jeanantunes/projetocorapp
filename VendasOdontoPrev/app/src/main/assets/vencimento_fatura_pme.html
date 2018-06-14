@@ -31,14 +31,12 @@
         <div class="row">
             <div class="col-md-12 odontBoxCenter">
                 <h1 class="titleOdont text-center">
-                    DATAS OPERACIONAIS
+                    VENCIMENTO DA FATURA
                 </h1>
-
-                <p class="label-parentesco labelOdontBlur"> Escolha a melhor data vencimento da fatura. </p>
 
                 <div class="boxLabInput">
                     <div class="form-group">
-                        <label for="" class="label-parentesco labelOdontBlur" style="color: #1974CE">Data de vencimento da fatura</label>
+                        <label for="" class="label-parentesco labelBlurResumoStatus" style="color: #1974CE; font-size:12pt;">Dia de vencimento da fatura</label>
                         <select class="form-control parentesco selectListBlur" id="vencOdont" style="color: #1974CE">
                             <option>Selecione...</option>
                             <option>05</option>
@@ -58,30 +56,64 @@
             </div>
         </div>
 
-        <div class="row">
+        <!--<div class="row">
             <div class="col-md-12">
                 <label class="label-parentesco labelOdontBlur" id="corte"></label><br>
                 <label class="label-parentesco labelOdontBlur" id="vencimento"></label><br>
                 <label class="label-parentesco labelOdontBlur" id="vigencia"></label><br><br />
-                <!--<label class="label-parentesco labelOdontBlur" id="movimentacao"></label><br><br />-->
+                <label class="label-parentesco labelOdontBlur" id="movimentacao"></label><br><br />
             </div>
-        </div>
+        </div>-->
 
         <div class="row">
             <div class="col-md-12">
-                <div class="btn btn-lg btn-block btnOdont disabled" href="" id="bntVenc" onclick="atualizarFatura()" role="button" style="background:#1974CE">CONTINUAR</div>
+                <div class="btn btn-lg btn-block btnOdont disabled" href="" id="bntVenc" onclick="" role="button" style="background:#1974CE">CONTINUAR</div>
             </div>
         </div>
 
     </div>
     <!-- End Bloco 1 -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
+    <div class="modal fade" id="myModal" role="dialog" style="padding-top:50px;">
+        <div class="modal-dialog modalContainerVencimento">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 20px;">
+                    <img src="img/btn-excluir.png" class="closeModalMateriais btnExcluir" data-dismiss="modal" alt="" />
+                    <div id="">
+                        <h1 class="titleOdont titleVencimento text-center">
+                            ATENÇÃO
+                        </h1>
+                        <label class="labelBlurResumoStatus text-center" style="color: #1974CE; font-size:14pt;">
+                            Para o dia de vencimento da fatura escolhido: <label class="labelOdontBlur" style="color: #1974CE; font-size:14pt;" id="dataSelecionada"></label>
+                        </label>
+                        <label class="labelBlurResumoStatus text-center" style="color: #1974CE; font-size:14pt;">A data de vigência deste contrato será</label>
+                        <h1 class="titleOdont titleVencimento text-center" id="dataVigencia" font-size="font-size: 18pt !important;"></h1>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn btn-lg btn-block btnOdont" href="" id="bntVenc" onclick="atualizarFatura()" role="button" style="background:#1974CE; margin-top: 5px;">CONTINUAR</div>
+                            </div>
+                        </div>
+
+                        <div class="text-center" style="margin-top:5px;">
+                            <div class="linkOdont" id="escolherOutraData">Escolher outra data</div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script src="js/scripts.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script src="js/odontoprev.js"></script>
     <script src="js/jquery.3.2.1.js"></script>
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/sweetalert.min.js"></script>
     <script src="app/coordenador.js"></script>
     <script src="app/pmeFaturaController.js"></script>

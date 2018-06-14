@@ -129,12 +129,12 @@ function addDependente() {
     }
 
     if ($(".celular").val() == "") {
-        swal("Ops!", "Preencha o celular", "error");
+        swal("Ops!", "Preencha o celular do titular", "error");
         return;
     }
 
     if ($(".celular").val().length < 14) {
-        swal("Ops!", "Preencha o celular", "error");
+        swal("Ops!", "Preencha o celular do titular", "error");
         return;
     }
 
@@ -390,7 +390,12 @@ function salvarRascunho() {
     }
 
     if ($(".celular").val() == "") {
-        swal("Ops!", "Preencha o celular", "error");
+        swal("Ops!", "Preencha o celular do titular", "error");
+        return;
+    }
+
+    if ($(".celular").val().length < 14) {
+        swal("Ops!", "Preencha o celular do titular", "error");
         return;
     }
 
@@ -447,6 +452,11 @@ function salvarRascunho() {
         }
 
         if ($(".celular-representante-legal").val() == "") {
+            swal("Ops!", "Preencha o celular do representante legal", "error");
+            return;
+        }
+
+        if ($(".celular-representante-legal").val().length < 14) {
             swal("Ops!", "Preencha o celular do representante legal", "error");
             return;
         }

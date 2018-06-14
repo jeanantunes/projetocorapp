@@ -1389,7 +1389,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
         $.ajax({
             async: true,
-            //url: URLBase + "vendapf",
+            //url: "http://172.16.244.160:9090/vendapf",
             url: URLBase + "/corretorservicos/1.0/vendapf",
             method: "POST",
             data: json,

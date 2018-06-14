@@ -604,11 +604,6 @@ function verDetalheProposta(dataId) {
                 return;
             }
 
-            //if (dataPropostaCriticada.venda.cdStatusVenda == 2 && dataPropostaCriticada.venda.criticas.length == 0) {
-            //    swal("Ops", "Proposta sem critica", "error");
-            //    return;
-            //}
-
             var retorno = getRepository("propostaPf");
             retorno.cdVenda = dataPropostaCriticada.venda.cdVenda;
             retorno.cpf = dataPropostaCriticada.venda.titulares[0].cpf;

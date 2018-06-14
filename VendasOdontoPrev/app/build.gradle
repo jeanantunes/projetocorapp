@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+def TOKEN_API='"' + TokenApi + '"' ?: "Erro na geracao do token"
+def STRING = 'String'
+
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -9,6 +12,13 @@ android {
         versionCode 13
         versionName "1.2.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        each{type ->
+            type.buildConfigField STRING, 'TokenApi', TOKEN_API
+        }
+        manifestPlaceholders = [
+                TOKEN_API : TokenApi
+        ]
 
     }
     buildTypes {

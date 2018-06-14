@@ -1070,6 +1070,7 @@ h1, .titleListBox {
     font-family: Roboto-Regular;
     color: #1974CE;
     font-size: 22pt;
+    margin-top: 10px !important;
 }
 
 .p-odont {
@@ -1651,6 +1652,10 @@ h5, .subListBox {
     color: #fff !important;
 }
 
+.titleVencimento {
+   text-shadow: 1px 0 #1974CE, 0 1px #1974CE, 1px 0 #1974CE, 0 1px #1974CE;
+}
+
 .btnPinkOdont:hover {
     color: #fff !important;
 }
@@ -2230,6 +2235,19 @@ input[type=checkbox] {
 .pf {
     border: 1px solid #D9487F;
 }
+
+.modalContainerVencimento {
+    top: -2.5%;
+    margin-left: 15px;
+    margin-right: 15px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    display: table;
+    max-width: 90%;
+}
+
 
 /*********************************** End TABS ****************************************/
 

@@ -38,6 +38,10 @@
             android:value="@string/default_notification_channel_id"/>
 
         <meta-data
+            android:name="com.token.api"
+            android:value="{$TOKEN_API}"/>
+
+        <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@android:color/transparent" />
 
@@ -68,6 +72,14 @@
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
+
+        <receiver android:name=".YourReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
 
 
     </application>
