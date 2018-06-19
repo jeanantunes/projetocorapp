@@ -160,11 +160,16 @@ $(".closeNav").click(function () {
 });
 
 function openNav() {
+
     document.getElementById("mySidenav").style.width = "250px";
     document.getElementById("main").style.backgroundColor = "rgba(0,0,0,0.5)";
     $("#main").addClass("overlay");
     $("#mySidenav").addClass("zIndex99999999");
     //$("#main").removeClass("hide");
+    $("#mySidenav").addClass("fixed");
+    $("#mySidenav").css({ "overflow": "hidden" });
+    $(".container-fluid").addClass("fixed");
+    $("html,body").css({ "overflow": "hidden" });
     $("#botaoMenu").removeClass("hide");
 
 }
@@ -175,6 +180,8 @@ function closeNav() {
     document.getElementById("main").style.backgroundColor = "white";
     $("#main").removeClass("overlay");
     $("#mySidenav").removeClass("zIndex99999999");
+    $("#mySidenav").removeClass("fixed");
+    $("#mySidenav").css({ "overflow": "auto" });
     $("#botaoMenu").addClass("hide");
     $(".container-fluid").removeClass("fixed");
     $("html,body").css({ "overflow": "auto" });
