@@ -93,7 +93,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             builder.setContentTitle(title)
                     .setSmallIcon(getNotificationIcon()) // required
                     .setContentText(message)  // required
-
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                     .setAutoCancel(true)
                     .setLargeIcon(BitmapFactory.decodeResource
                             (getResources(), R.drawable.icon_status_bar))
@@ -115,6 +115,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                     .setContentTitle(title)
                     .setContentText(message)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                     .setAutoCancel(true)
                     .setColor(ContextCompat.getColor(getBaseContext(), R.color.common_google_signin_btn_text_dark))
                     .setSound(defaultSoundUri)

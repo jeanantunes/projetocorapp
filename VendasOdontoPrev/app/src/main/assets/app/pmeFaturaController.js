@@ -42,9 +42,6 @@ $(document).ready(function () {
 
 });
 
-
-
-
 function atualizarFatura() {
 
     var proposta = get("proposta");
@@ -60,6 +57,20 @@ function atualizarFatura() {
 
 
 function isEffectiveDate(dayDueDate) {
+
+    let timeVigencia;
+
+    $.ajax({
+        url: "config/timeResync.json",
+        type: "get",
+        async: false,
+        success: function (result) {
+            time = JSON.parse(result).tempoVigencia;
+        },
+        error: function () {
+
+        }
+    });
 
     var currentTime = moment();
     currentTime.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
@@ -80,12 +91,12 @@ function isEffectiveDate(dayDueDate) {
             var dataVencimento = moment("05-" + month.toString() + "-" + year, "DD-MM-YYYY");
             var dataVencimento = dataVencimento.add(1, 'M');
 
-            var olderDate = moment(dataVencimento).add(-11, "days");
+            var olderDate = moment(dataVencimento).add(timeVigencia, "days");
 
             if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
             else vencimento = dataVencimento;
 
-            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
+            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(timeVigencia, "days");
 
             //$("#corte").html('Data de corte de movimentação:<br>' + dataDeCorteDeMovimentacao.format("DD/MM/YYYY"));
             //$("#vencimento").html('Data de vencimento:<br>' + vencimento.format("DD/MM/YYYY"));
@@ -97,12 +108,12 @@ function isEffectiveDate(dayDueDate) {
 
             var vencimento;
             var dataVencimento = moment("15-" + month.toString() + "-" + year, "DD-MM-YYYY");
-            var olderDate = moment(dataVencimento).add(-11, "days");
+            var olderDate = moment(dataVencimento).add(timeVigencia, "days");
 
             if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
             else vencimento = dataVencimento;
 
-            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
+            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(timeVigencia, "days");
 
             //$("#corte").html('Data de corte de movimentação:<br>' + dataDeCorteDeMovimentacao.format("DD/MM/YYYY"));
             //$("#vencimento").html('Data de vencimento:<br>' + vencimento.format("DD/MM/YYYY"));
@@ -114,12 +125,12 @@ function isEffectiveDate(dayDueDate) {
 
             var vencimento;
             var dataVencimento = moment("25-" + month.toString() + "-" + year, "DD-MM-YYYY");
-            var olderDate = moment(dataVencimento).add(-11, "days");
+            var olderDate = moment(dataVencimento).add(timeVigencia, "days");
 
             if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
             else vencimento = dataVencimento;
 
-            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
+            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(timeVigencia, "days");
 
             //$("#corte").html('Data de corte de movimentação:<br>' + dataDeCorteDeMovimentacao.format("DD/MM/YYYY"));
             //$("#vencimento").html('Data de vencimento:<br>' + vencimento.format("DD/MM/YYYY"));

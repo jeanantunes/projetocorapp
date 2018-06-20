@@ -598,6 +598,8 @@ function verDetalheProposta(dataId) {
 
         buscarDetalheProposta(function (dataPropostaCriticada) {
 
+            console.log(dataPropostaCriticada);
+
             if (dataPropostaCriticada.status == 404) {
 
                 swal("Ops", "Proposta não encontrada", "error");
@@ -605,14 +607,7 @@ function verDetalheProposta(dataId) {
             }
 
             var retorno = getRepository("propostaPf");
-            retorno.cdVenda = dataPropostaCriticada.venda.cdVenda;
-            retorno.cpf = dataPropostaCriticada.venda.titulares[0].cpf;
-            retorno.nome = dataPropostaCriticada.venda.titulares[0].nome;
-            retorno.dataNascimento = dataPropostaCriticada.venda.titulares[0].dataNascimento;
-            retorno.email = dataPropostaCriticada.venda.titulares[0].email;
-            retorno.nomeMae = dataPropostaCriticada.venda.titulares[0].nomeMae;
-            retorno.sexo = dataPropostaCriticada.venda.titulares[0].sexo;
-            retorno.celular = dataPropostaCriticada.venda.titulares[0].celular;
+
 
             if (dataPropostaCriticada.venda.dadosBancariosVenda != null) {
 
@@ -623,34 +618,50 @@ function verDetalheProposta(dataId) {
 
             }
 
-            retorno.endereco.cep = dataPropostaCriticada.venda.titulares[0].endereco.cep;
-            retorno.endereco.logradouro = dataPropostaCriticada.venda.titulares[0].endereco.logradouro;
-            retorno.endereco.numero = dataPropostaCriticada.venda.titulares[0].endereco.numero;
-            retorno.endereco.complemento = dataPropostaCriticada.venda.titulares[0].endereco.complemento;
-            retorno.endereco.bairro = dataPropostaCriticada.venda.titulares[0].endereco.bairro;
-            retorno.endereco.cidade = dataPropostaCriticada.venda.titulares[0].endereco.cidade;
-            retorno.endereco.estado = dataPropostaCriticada.venda.titulares[0].endereco.estado;
+
             retorno.planos.push({ cdPlano: dataPropostaCriticada.venda.plano.cdPlano });
-            retorno.responsavelContratual.cpf = dataPropostaCriticada.venda.titulares[0].cpf;
-            retorno.responsavelContratual.nome = dataPropostaCriticada.venda.titulares[0].nome;
-            retorno.responsavelContratual.dataNascimento = dataPropostaCriticada.venda.titulares[0].dataNascimento;
-            retorno.responsavelContratual.email = dataPropostaCriticada.venda.titulares[0].email;
-            retorno.responsavelContratual.sexo = dataPropostaCriticada.venda.titulares[0].sexo;
-            retorno.responsavelContratual.celular = dataPropostaCriticada.venda.titulares[0].celular;
-            retorno.responsavelContratual.endereco.cep = dataPropostaCriticada.venda.titulares[0].endereco.cep;
-            retorno.responsavelContratual.endereco.logradouro = dataPropostaCriticada.venda.titulares[0].endereco.logradouro;
-            retorno.responsavelContratual.endereco.numero = dataPropostaCriticada.venda.titulares[0].endereco.numero;
-            retorno.responsavelContratual.endereco.complemento = dataPropostaCriticada.venda.titulares[0].endereco.complemento;
-            retorno.responsavelContratual.endereco.bairro = dataPropostaCriticada.venda.titulares[0].endereco.bairro;
-            retorno.responsavelContratual.endereco.cidade = dataPropostaCriticada.venda.titulares[0].endereco.cidade;
-            retorno.responsavelContratual.endereco.estado = dataPropostaCriticada.venda.titulares[0].endereco.estado;
+
 
 
             var dependentes = [];
 
             $.each(dataPropostaCriticada.venda.titulares, function (i, item) {
 
-                if (item.cdTitular == 0) return;
+                if (item.cdTitular == 0) {
+
+                    retorno.cdVenda = dataPropostaCriticada.venda.cdVenda;
+                    retorno.cpf = item.cpf;
+                    retorno.nome = item.nome;
+                    retorno.dataNascimento = item.dataNascimento;
+                    retorno.email = item.email;
+                    retorno.nomeMae = item.nomeMae;
+                    retorno.sexo = item.sexo;
+                    retorno.celular = item.celular;
+
+                    retorno.responsavelContratual.cpf = item.cpf;
+                    retorno.responsavelContratual.nome = item.nome;
+                    retorno.responsavelContratual.dataNascimento = item.dataNascimento;
+                    retorno.responsavelContratual.email = item.email;
+                    retorno.responsavelContratual.sexo = item.sexo;
+                    retorno.responsavelContratual.celular = item.celular;
+                    retorno.endereco.cep = item.endereco.cep;
+                    retorno.endereco.logradouro = item.endereco.logradouro;
+                    retorno.endereco.numero = item.endereco.numero;
+                    retorno.endereco.complemento = item.endereco.complemento;
+                    retorno.endereco.bairro = item.endereco.bairro;
+                    retorno.endereco.cidade = item.endereco.cidade;
+                    retorno.endereco.estado = item.endereco.estado;
+
+                    retorno.endereco.cep = item.endereco.cep;
+                    retorno.endereco.logradouro = item.endereco.logradouro;
+                    retorno.endereco.numero = item.endereco.numero;
+                    retorno.endereco.complemento = item.endereco.complemento;
+                    retorno.endereco.bairro = item.endereco.bairro;
+                    retorno.endereco.cidade = item.endereco.cidade;
+                    retorno.endereco.estado = item.endereco.estado;
+
+                    return;
+                }
 
                 var dependente = getRepository("dependente");
 
@@ -669,6 +680,7 @@ function verDetalheProposta(dataId) {
             retorno.dependentes = dependentes;
             retorno.criticas = dataPropostaCriticada.venda.criticas;
 
+            localStorage.removeItem("resumoStatusPropostaPf");
             put("resumoStatusPropostaPf", JSON.stringify(retorno));
 
             window.location = "resumo_status_proposta_pf.html";
@@ -681,5 +693,6 @@ function verDetalheProposta(dataId) {
 
 
 }
+
 
 

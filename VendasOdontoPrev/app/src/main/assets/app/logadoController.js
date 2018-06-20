@@ -45,8 +45,8 @@ function atualizarTokenDevice() {
     var sistemaOperacional = "ANDROID";
     var dadosUsuario = get("dadosUsuario");
 
-    var tokenDevice = "dadasda";
-    var modelDevice = "dadasda";
+    var tokenDevice = getTokenDevice();
+    var modelDevice = getModelDevice();
 
     console.log("Executando device Token");
 

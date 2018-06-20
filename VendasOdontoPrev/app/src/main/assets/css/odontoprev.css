@@ -1073,6 +1073,13 @@ h1, .titleListBox {
     margin-top: 10px !important;
 }
 
+.titleOdontVigencia {
+    font-family: Roboto-Regular;
+    color: red;
+    font-size: 22pt;
+    margin-top: 10px !important;
+}
+
 .p-odont {
     font-family: Roboto-Regular;
     color: #95989A;
@@ -1654,6 +1661,10 @@ h5, .subListBox {
 
 .titleVencimento {
    text-shadow: 1px 0 #1974CE, 0 1px #1974CE, 1px 0 #1974CE, 0 1px #1974CE;
+}
+
+.titleVencimentoData {
+    text-shadow: 1px 0 red, 0 1px red, 1px 0 red, 0 1px red;
 }
 
 .btnPinkOdont:hover {

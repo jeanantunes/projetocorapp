@@ -163,12 +163,14 @@ $(document).ready(function () {
 
                     callInputForcaVenda(function (dataForcaVenda) {
 
-                        var tokenDevice = getTokenDevice();
-                        var modelDevice = getModelDevice();
+                        var tokenDevice = "dsadsadas";//getTokenDevice();
+                        var modelDevice = "dsadsadxcxzas";//getModelDevice();
                         var sistemaOperacional = "ANDROID";
 
+                        console.log("MeuLog: Token Device: " + tokenDevice);
+                        console.log("MeuLog: Model Device: " + modelDevice);
                         postDeviceToken(function (dataDeviceToken) {
-
+                            localStorage.removeItem("dadosUsuario");
                             $("#infoCorretora").addClass('hide');
                             $("#cadastroSucessoCorretora").removeClass("hide");
 
@@ -191,24 +193,20 @@ $(document).ready(function () {
 
                     callPutSenhaForcaVenda(function () {
 
-                        var tokenDevice = getTokenDevice();
-                        var modelDevice = getModelDevice();
+                        var tokenDevice = "dsadsadas";//getTokenDevice();
+                        var modelDevice = "dsadsadxcxzas";//getModelDevice();
                         var sistemaOperacional = "ANDROID";
-
+                        console.log("MeuLog: Token Device: " + tokenDevice);
+                        console.log("MeuLog: Model Device: " + modelDevice);
                         postDeviceToken(function (dataDeviceToken) {
-
+                            localStorage.removeItem("dadosUsuario");
                             $("#infoCorretora").addClass('hide');
                             $("#cadastroSucessoCorretora").removeClass("hide");
 
                         }, dataToken.access_token, dadosUsuario.cdForcaVenda, tokenDevice, modelDevice, sistemaOperacional);
 
                     }, dataToken.access_token, dadosUsuario.cdForcaVenda, nome, celularTratado, email, senha, codCorretora);
-
                 }
-
-
-
-
             }, dataToken.access_token, cnpjValidado);
         });
 

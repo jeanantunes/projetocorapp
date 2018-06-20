@@ -2,8 +2,21 @@
 
     popularCamposProposta();
 
-\
-})
+    $(".clickDependente").click(function () {
+
+
+
+        $("#nomeDependente").html($(this).data("nome"));
+        $("#emailDependente").html($(this).data("email"));
+        $("#celularDependente").html($(this).data("celular"));
+        $("#cpfDependente").html($(this).data("cpf"));
+        $("#dataNascimentoDependente").html($(this).data("nasc"));
+        $("#sexoDependente").html($(this).data("sexo") == "f" ? "Feminino" : "Masculino");
+        $("#nomeMaeDependente").html($(this).data("mae"));
+
+        $("#myModal").modal("show");
+    });
+});
 
 function popularCamposProposta() {
 
@@ -32,7 +45,7 @@ function popularCamposProposta() {
     let valorDoPlano = planoSelecionado[0].valorFloat;
 
     if (planoSelecionado[0].desc == "Mensal") {
-        var valorTotalProposta = (valorDoPlano * (resumoProposta.dependentes.length + 1)) * 12;
+        var valorTotalProposta = (valorDoPlano * (resumoProposta.dependentes.length + 1));
     } else var valorTotalProposta = valorDoPlano * (resumoProposta.dependentes.length + 1);
     valorTotalProposta = valorTotalProposta.toFixed(2);
 
@@ -58,7 +71,7 @@ function popularCamposProposta() {
     componenteBoxPlano = componenteBoxPlano.replace("{DESC}", planoSelecionado[0].desc);
     componenteBoxPlano = componenteBoxPlano.replace("{CSS}", planoSelecionado[0].css);
     componenteBoxPlano = componenteBoxPlano.replace("{CSSVALOR}", planoSelecionado[0].css);
-    componenteBoxPlano = componenteBoxPlano.replace("{QUANTBENEF}", "Total por ano R$ " + valorTotalProposta.replace(".", ","));
+    componenteBoxPlano = componenteBoxPlano.replace("{QUANTBENEF}", "Total da proposta: R$ " + valorTotalProposta.replace(".", ","));
 
     $("#BoxPlanos").html(componenteBoxPlano);
 
@@ -94,32 +107,29 @@ function popularCamposProposta() {
 
     if (resumoProposta.criticas.length > 0) {
 
-            $("#divErros").removeClass('hide');
+        $("#divErros").removeClass('hide');
 
-            $.each(resumoProposta.criticas, function (i, item) {
+        $.each(resumoProposta.criticas, function (i, item) {
 
-                if (item.nome != null) {
-                    $("#divErros").append('<p class="labelRedErrosFontBenef">' + item.nome.toLowerCase().capitalize() + ':</p>');
-                }
+            if (item.nome != null) {
+                $("#divErros").append('<p class="labelRedErrosFontBenef">' + item.nome.toLowerCase().capitalize() + ':</p>');
+            }
 
-                var erros = item.dsErroRegistro.split('.');
+            var erros = item.dsErroRegistro.split('.');
 
-                $.each(erros, function (indErro, erroSplit) {
+            $.each(erros, function (indErro, erroSplit) {
 
-                    if (erroSplit == "") return;
+                if (erroSplit == "") return;
 
-                    var capitalize = erroSplit.trim().split(" ");
+                var capitalize = erroSplit.trim().split(" ");
 
-                    $("#divErros").append('<p class="labelRedErrosFont">. ' + erroSplit.trim().toLowerCase().replace(capitalize[0].toLowerCase(), capitalize[0].toLowerCase().capitalize()) + '</p>');
-
-                });
-
-                $("#divErros").append("<br/>");
+                $("#divErros").append('<p class="labelRedErrosFont">. ' + erroSplit.trim().toLowerCase().replace(capitalize[0].toLowerCase(), capitalize[0].toLowerCase().capitalize()) + '</p>');
 
             });
 
-        }
-    
-    
-    
+            $("#divErros").append("<br/>");
+
+        });
+
+    }
 }
