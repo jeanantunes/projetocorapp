@@ -12,6 +12,8 @@
   "celular": "",
   "email": "",
   "vencimentoFatura": "",
+  "dataVigencia": "",
+  "dataMovimentacao": "",
   "enderecoEmpresa": {
     "cep": "",
     "logradouro": "",
