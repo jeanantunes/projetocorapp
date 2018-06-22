@@ -483,17 +483,11 @@ $("#btnBuscar").click(function () {
         return;
     }
 
-    if (dadosBairros.length > 20 && $('#bairros').val() == "" || dadosBairros.length == 0 && $('#bairros').val() == "") {
-
-        swal("Ops!", "Digite um bairro", "info");
+    if ($('#bairros').val() == "" && $('#cidades').val() == "SAO PAULO") {
+    
+        swal("Ops!", "Digite uma cidade", "info");
         return;
     }
-
-    //if ($('#bairros').val() == "" && $('#cidades').val() == "SAO PAULO") {
-    //
-    //    swal("Ops!", "Digite uma cidade", "info");
-    //    return;
-    //}
 
     var codigoEspecialidade = $('#especs').val();
     var privian = "FALSE";
