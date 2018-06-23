@@ -1781,6 +1781,13 @@ h5, .subListBox {
     padding-right: 20px;
 }
 
+.ui-menu .ui-menu-item a {
+    color: #ACAAA5;
+    font-size: 15pt;
+    font-family: Roboto-Medium;
+}
+
+
 
 /*********************************** End Fonts ****************************************/
 

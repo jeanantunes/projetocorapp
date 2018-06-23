@@ -85,9 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
         db = new DataBase(this);
 
-        String teste = BuildConfig.TokenApi;
+        //String teste = BuildConfig.TokenApi;
 
-        Log.d("MeuLog", teste);
+        //Log.d("MeuLog", teste);
 
         setContentView(R.layout.activity_main);
         String urlAssets = "file:///android_asset/";

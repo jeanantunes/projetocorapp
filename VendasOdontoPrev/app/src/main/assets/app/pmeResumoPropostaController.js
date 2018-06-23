@@ -229,80 +229,71 @@ function isEffectiveDate() {
         return false;
     }
 
-    var currentTime = new Date();
-    currentTime.setHours(0, 0, 0, 0);
+    var currentTime = moment();
+    currentTime.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+    currentTime.toISOString();
+    currentTime.format();
 
-    var dateCurt = new Date();
-    var month = currentTime.getMonth();
-    var year = currentTime.getFullYear();
-
-    //data vencimento
-    var DueDate = new Date(year, month, dayDueDate, 0, 0, 0, 0);
-
-    //data movimento
-    var movingDate = new Date(year, month, dayDueDate, 0, 0, 0, 0);
-    // vigencia
-    var effectiveDate = new Date(year, month, dayDueDate, 0, 0, 0, 0);
-
-    var addMonth = 1;
-
-    switch (dayDueDate) {
-        case "05":
-            effectiveDate = new Date(year, month, 5, 0, 0, 0, 0);
-            movingDate = new Date(year, month, 25, 0, 0, 0, 0);
-            dateCurt = new Date(movingDate);
-            //year, month, 24, 0, 0, 0, 0
-            break;
-
-        case "15":
-            effectiveDate = new Date(year, month, 15, 0, 0, 0, 0);
-            movingDate = new Date(year, month, 5, 0, 0, 0, 0);
-            dateCurt = new Date(year, month, 4, 0, 0, 0, 0);
-            break;
-
-        case "25":
-            effectiveDate = new Date(year, month, 25, 0, 0, 0, 0);
-            movingDate = new Date(year, month, 15, 0, 0, 0, 0);
-            dateCurt = new Date(year, month, 14, 0, 0, 0, 0);
-            break;
-    }
-
-    if (DueDate <= currentTime || currentTime > dateCurt) {
-        DueDate.setMonth(DueDate.getMonth() + addMonth);
-    }
-
-    if (effectiveDate <= currentTime || effectiveDate <= DueDate) {
-        effectiveDate.setMonth(effectiveDate.getMonth() + addMonth);
-    }
-
-    if (movingDate <= currentTime && currentTime > dateCurt) {
-        movingDate.setMonth(movingDate.getMonth() + addMonth);
-    }
-
-    //console.log('Data Atual: ' + currentTime);
-    //console.log('Data de corte: ' + dateCurt);
-    //console.log('Data Vencimento: ' + DueDate);
-    //console.log('Data de vigencia: ' + effectiveDate);
-    //console.log('Data de movimentação: ' + movingDate);
-
-    var newdate = new Date(DueDate);
-
-    newdate.setDate(newdate.getDate() - 11); // minus the date
-
-    var newDateCurt = new Date(newdate);
+    var month = currentTime.format('MM');
+    var day = currentTime.format('DD');
+    var year = currentTime.format('YYYY');
 
     $("#divProximoMes").addClass('hide');
-    $("#vencimento").html(DueDate.toLocaleDateString());
-    $("#corte").html(newDateCurt.toLocaleDateString());
-    $("#vigencia").html(effectiveDate.toLocaleDateString());
 
-    //$("#movimentacao").html('Data de movimentação <br>' + movingDate.toLocaleDateString());
+    switch (dayDueDate) {
 
-    if (movingDate < currentTime) {
-        //$("#divProximoMes").removeClass('hide');
-        //$("#proximoMes").html('Para o vencimento escolhido, a vigência deste contrato ficará para o próximo mês.');
-        //console.log('Para o vencimento escolhido, a vigência deste contrato ficará para o próximo mês.');
-        return false;
+        case "05":
+
+            var vencimento;
+            var dataVencimento = moment("05-" + month.toString() + "-" + year, "DD-MM-YYYY");
+            var dataVencimento = dataVencimento.add(1, 'M');
+
+            var olderDate = moment(dataVencimento).add(-11, "days");
+
+            if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
+            else vencimento = dataVencimento;
+
+            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
+
+            $("#divProximoMes").addClass('hide');
+            $("#vencimento").html(vencimento.format("DD/MM/YYYY"));
+            $("#corte").html(dataDeCorteDeMovimentacao.format("DD/MM/YYYY"));
+            $("#vigencia").html(vencimento.format("DD/MM/YYYY"));
+            return vencimento;
+
+        case "15":
+
+            var vencimento;
+            var dataVencimento = moment("15-" + month.toString() + "-" + year, "DD-MM-YYYY");
+            var olderDate = moment(dataVencimento).add(-11, "days");
+
+            if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
+            else vencimento = dataVencimento;
+
+            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
+
+            $("#divProximoMes").addClass('hide');
+            $("#vencimento").html(vencimento.format("DD/MM/YYYY"));
+            $("#corte").html(dataDeCorteDeMovimentacao.format("DD/MM/YYYY"));
+            $("#vigencia").html(vencimento.format("DD/MM/YYYY"));
+            return vencimento;
+
+        case "25":
+
+            var vencimento;
+            var dataVencimento = moment("25-" + month.toString() + "-" + year, "DD-MM-YYYY");
+            var olderDate = moment(dataVencimento).add(-11, "days");
+
+            if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
+            else vencimento = dataVencimento;
+
+            var dataDeCorteDeMovimentacao = moment(dataVencimento).add(-11, "days");
+
+            $("#divProximoMes").addClass('hide');
+            $("#vencimento").html(vencimento.format("DD/MM/YYYY"));
+            $("#corte").html(dataDeCorteDeMovimentacao.format("DD/MM/YYYY"));
+            $("#vigencia").html(vencimento.format("DD/MM/YYYY"));
+            return vencimento;
+
     }
-    return true;
 }
