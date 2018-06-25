@@ -30,27 +30,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage message) {
 
-        /*
-
-        Log.d("MeuLog", "Mensagem recebida: " + message.getData().get("body"));
-        Log.d("MeuLog", "Titulo recebida: " + message.getData().get("title"));
-
-        Para customizar push notification em background, terá que fazer requisição passando o bloco notification como data.
-
-        "notification" : {
-            "body" : "Você foi aprovado!",
-            "title" : "PARABÉNS!!"
-        }
-
-        Passando como data o firebase forca a aplicação executar o metodo onMessageReceived.
-
-        "data" : {
-            "body" : "Você foi aprovado!",
-            "title" : "PARABÉNS!!"
-        }
-
-        */
-
         try {
 
             Log.d("MeuLog", "Titulo recebida: " + message.getNotification().getTitle());

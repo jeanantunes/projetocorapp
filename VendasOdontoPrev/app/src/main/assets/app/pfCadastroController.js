@@ -36,16 +36,7 @@ $(document).ready(function () {
 
     });
 
-    $(".nome").keyup(function () {
 
-        var capturandoEspaco = $(".nome").val().substring($(".nome").val().length - 2, $(".nome").val().length);
-
-        if (capturandoEspaco == "  ") {
-
-            $(".nome").val($(".nome").val().substring(0, $(".nome").val().length - 1))
-
-        }
-    });
          
 });
 

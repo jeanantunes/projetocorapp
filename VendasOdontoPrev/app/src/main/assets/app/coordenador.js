@@ -237,6 +237,22 @@ $(function () {
     });
 });
 
+$(function () {
+    var regex = new RegExp('[^A-Za-z \]', 'g');
+    // repare a flag "g" de global, para substituir todas as ocorrências
+    $('.nomeRegex').bind('input', function () {
+        $(this).val($(this).val().replace(regex, ''));
+
+        var capturandoEspaco = $(this).val().substring($(this).val().length - 2, $(this).val().length);
+
+        if (capturandoEspaco == "  ") {
+
+            $(this).val($(this).val().substring(0, $(this).val().length - 1))
+
+        }
+    });
+});
+
 function validarData(data) {
     var bits = data.split('/');
 
