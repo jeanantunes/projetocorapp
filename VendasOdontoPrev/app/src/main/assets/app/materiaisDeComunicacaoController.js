@@ -41,7 +41,7 @@
 
 
 
-    
+
 
 
     $("img").click(function () {
@@ -57,7 +57,7 @@
         $('#myModal').modal('show');
         $("html,body").css({ "overflow": "hidden" });
         //$(".container-fluid").addClass("fixed");
-
+        $('#myModal').modal('hide');
     });
 
     $("#myModal").on("hidden.bs.modal", function () {
@@ -65,6 +65,11 @@
         $("html,body").css({ "overflow": "auto" });
         //$(".container-fluid").removeClass("fixed");
 
+    });
+
+    $("#escolherOutraData").click(function () {
+        console.log("teste");
+        $('#myModal').modal("hide");
     });
 
 });

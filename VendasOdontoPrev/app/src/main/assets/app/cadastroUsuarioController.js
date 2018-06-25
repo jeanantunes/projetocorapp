@@ -100,7 +100,7 @@ $(document).ready(function () {
                         $("#celularPreCadastrado").val(dataDadosUsuario.celular);
                         $("#emailPreCadastrado").val(dataDadosUsuario.email);
 
-                        localStorage.setItem("dadosUsuario", JSON.stringify(dataDadosUsuario));
+  
 
                     }
 
@@ -115,7 +115,6 @@ $(document).ready(function () {
                         $("#celularInativoCadastrado").val(dataDadosUsuario.celular);
                         $("#emailInativoCadastrado").val(dataDadosUsuario.email);
 
-                        localStorage.setItem("dadosUsuario", JSON.stringify(dataDadosUsuario));
 
                     }
                     else if (dataDadosUsuario.cdForcaVenda == null) {
@@ -166,9 +165,10 @@ $(document).ready(function () {
                         var tokenDevice = getTokenDevice();
                         var modelDevice = getModelDevice();
                         var sistemaOperacional = "ANDROID";
-
+                        console.log("MeuLog: Token Device: " + tokenDevice);
+                        console.log("MeuLog: Model Device: " + modelDevice);
                         postDeviceToken(function (dataDeviceToken) {
-
+                         
                             $("#infoCorretora").addClass('hide');
                             $("#cadastroSucessoCorretora").removeClass("hide");
 
@@ -194,21 +194,17 @@ $(document).ready(function () {
                         var tokenDevice = getTokenDevice();
                         var modelDevice = getModelDevice();
                         var sistemaOperacional = "ANDROID";
-
+                        console.log("MeuLog: Token Device: " + tokenDevice);
+                        console.log("MeuLog: Model Device: " + modelDevice);
                         postDeviceToken(function (dataDeviceToken) {
-
+                         
                             $("#infoCorretora").addClass('hide');
                             $("#cadastroSucessoCorretora").removeClass("hide");
 
                         }, dataToken.access_token, dadosUsuario.cdForcaVenda, tokenDevice, modelDevice, sistemaOperacional);
 
                     }, dataToken.access_token, dadosUsuario.cdForcaVenda, nome, celularTratado, email, senha, codCorretora);
-
                 }
-
-
-
-
             }, dataToken.access_token, cnpjValidado);
         });
 

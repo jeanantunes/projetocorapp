@@ -48,26 +48,6 @@
 
                 <div class="boxLabInput">
 
-                    <!--<div>
-                        <label class="label-cep labelOdontBlur">CEP</label>
-                        <label class="col-md-6 text-right"><span class=""><h5 id="labelCep"></h5></span></label>
-                    </div>
-                    <div>
-                        <input type="text" class=" cep inputLabelBlur" id="cep">
-                    </div>-->
-                    <!--<div>
-                        <label class="label-bairro labelOdontBlur">BAIRRO</label>
-                    </div>
-                    <div>
-                        <input type="text" class="bairro inputLabelBlur" id="bairro">
-                    </div>-->
-                    <!--<div>
-                        <label class="label-cidade labelOdontBlur">CIDADE</label>
-                    </div>
-                    <div>
-                        <input type="text" class="cidade inputLabelBlur" id="cidade">
-                    </div>-->
-
                     <div class="form-group">
                         <label for="" class="label-especialidade labelOdontBlur">ESPECIALIDADES</label>
                         <select class="form-control especialidade selectListBlur" id="especs"></select>
@@ -88,7 +68,6 @@
                         <label for="" class="label-bairro labelOdontBlur">BAIRRO</label>
                         <input class="form-control bairro selectListBlur autocomplete" id="bairros" />
 
-                        <!--<select class="form-control bairro selectListBlur" id="bairros"></select>-->
                     </div>
 
                 </div>
@@ -98,50 +77,38 @@
 
         <div class="row">
             <div class="col-md-12 btnPadBtm">
-                <!--<a class="btn btn-lg btn-block btnOdont" id="" data-toggle="modal" data-target="#myModal" role="button">BUSCAR</a>-->
-                <button class="btn btn-lg btn-block btnOdont" id="btnBuscar">BUSCAR</button>
+                <button class="btn btn-lg btn-block btnOdont" id="btnBuscar" style="outline: none;">BUSCAR</button>
             </div>
         </div>
 
-        <div id="map" class="nopadding">
 
-        </div>
 
-        <!--<input type="text" class="hide" id="foco">-->
+
+    </div>
+
+    <div id="map" class="nopadding">
 
     </div>
 
 
-    <!-- End Bloco 1 -->
-    <!--<button type="button" class="btnModal" data-backdrop="static" style="border:1px solid white; color:transparent; background-color: transparent;" id="btnModal" data-toggle="modal" data-target="#myModal" BotaoModal</button>-->
     <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modalConteiner">
+        <div class="modal-dialog modalContainerRedeCredenciada">
             <div class="imgBtnExcluir" id="closeModalRedeCredenciada">
                 <img src="img/btn-excluir.png" class="btnExcluir" alt="">
             </div>
-            <!--<div class="modal-content">
-                <div class="modal-header-OdontMed">
-                    <div class="">
-                        <span class="labelBoldModal"><h3 id="nomeDentista"></h3></span>
-                    </div>
-                    <div>
-                        <span class="labelLightModal">CRO:<h5 id="croDentista"></h5></span>
-                        <label class="labelLightModal"><h5 id="tipoPessoaDentista"></h5></label>
-                 
-                    </div>
-                </div>
-            </div>-->
+
             <div class="col-md-12 labelBoldModalPlano"><span></span></div>
 
             <div class="modal-body-OdontMed">
-                
+
                 <div class="">
-                    <span class="labelBoldModal"><h3 id="nomeDentista"></h3></span>
+                    <span class="labelBoldModal"><h3 id="nomeDentista" style="padding-left:10px; padding-right:10px;"></h3></span>
                 </div>
                 <div>
                     <label class="labelLightModal" id="croDentista"></label>
-                    <label class="labelLightModal"><h5 id="tipoPessoaDentista"></h5></label>
-                    <!--<span class="labelLightModal">Pessoa Física</span>-->
+                    <div>
+                        <label class="labelLightModal" style="padding-left: 10px; padding-right: 10px;"><h5 id="tipoPessoaDentista"></h5></label>
+                    </div>
                 </div>
 
             </div>
@@ -150,10 +117,10 @@
                     <br />
                     <label class="labelBoldPink">Endereço</label>
                     <div>
-                        <label class="labelBold row" id="enderecoDentista" style="color:gray"><!--<h5 id="enderecoDentista" style="color:gray"></h5>--></label>
+                        <label class="labelBold row" id="enderecoDentista" style="color:gray; padding-left: 5px; padding-right: 5px;"></label>
 
                     </div>
-                    <div><label class="labelBold row" id="cepDentista" style="color:gray"><!--<h5 id="cepDentista" style="color:gray"></h5>--></label></div>
+                    <div><label class="labelBold row" id="cepDentista" style="color:gray"></label></div>
                 </div>
 
                 <div>
@@ -161,23 +128,27 @@
                     <div>
                         <label class="labelBold marginEspecsRede" id="telefoneDentista" style="color:gray"></label>
                     </div>
-                    <!--<p class="labelBold">contato@doutorajuliana.com.br</p>-->
-                    <!--<p class="labelBold">www.doutorajuliana.com.br</p>-->
+
                 </div>
 
 
                 <div class="row">
                     <label class="labelBoldPink">Especialidades</label>
-                    <div class="text-center" id="especialidadeDentista">
+                    <div class="text-center" id="especialidadeDentista" style="padding-left:20px; padding-right:20px;">
 
-                        <!--<label class="labelBold" id="especialidadeDentista" style="color:gray"></label>-->
-
-
-                        <!--<img src="img/Protese.png" class="" alt="">-->
-                        <!--<label><img src="img/Ortodontia.png" class="" alt=""><p>_</p></label>-->
-                        <!--<label><img src="img/Consulta.png" class="" alt=""><p>_</p></label>-->
-                        <!--<label><img src="img/Cirurgia.png" class="" alt=""><p>_</p></label>-->
-
+                    </div>
+                    <div>
+                        <label style="text-align:center; color: #1974CE; margin-top:20px; margin-bottom: 20px; font-family: Roboto-Bold; font-size: 12pt;">Compartilhar dentista</label>
+                    </div>
+                    <!--<div class="circleRedeCredenciada" style="background-color: #52A4E3;">
+        <img class="" src="img/enviar-por-email.png" style="height: 35px; width:35px;" />
+    </div>
+    <div id="copiarLink" class="circleRedeCredenciada" style="background-color: #EDEDED; margin-left: 40px; margin-right: 40px;">
+        <img class="" src="img/copiar-link.png" style="height: 35px; width:35px;" />
+    </div>-->
+                    <div id="compartilharCard" class="circleRedeCredenciada" style="background-color: #83BC00;">
+                        <img class="" src="img/compartilhar.png" style="height: 35px; width:35px;" />
+                        <!--<button class="btn" id="compartilharCard" style="outline: none;">Compartilhar</button>-->
                     </div>
                 </div>
 
@@ -194,7 +165,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/odontoprev.js"></script>
-
     <script src="js/jquery.mask.min.js"></script>
     <script src="js/odonto-Valida.js"></script>
     <script src="js/sweetalert.min.js"></script>

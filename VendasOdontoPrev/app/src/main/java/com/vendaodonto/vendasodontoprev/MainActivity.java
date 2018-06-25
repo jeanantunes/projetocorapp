@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,8 @@ import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     DataBase db;
 
+
     public static Context ctx;
 
     private final int GALERIA_IMAGENS = 1;
@@ -70,18 +75,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
 
+        ctx = this;
 
-        //OneSignal.startInit(this).init();
+        MyFirebaseInstanceIDService oToken = new MyFirebaseInstanceIDService();
+
+        oToken.getTokenDevice();
 
         db = new DataBase(this);
 
-        super.onCreate(savedInstanceState);
+        //String teste = BuildConfig.TokenApi;
 
-        //MyFirebaseInstanceIDService oFireBaseIdService = new MyFirebaseInstanceIDService();
-        //oFireBaseIdService.getTokenDevice();
-
-        ctx = this;
+        //Log.d("MeuLog", teste);
 
         setContentView(R.layout.activity_main);
         String urlAssets = "file:///android_asset/";
@@ -91,52 +97,34 @@ public class MainActivity extends AppCompatActivity {
         myWebView = (CustomWebView) this.findViewById(R.id.webView);
         myWebView.setWebViewClient(new CustomWebViewClient(ctx));
 
-        myWebView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
-
-                checkPermission();
-
-                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-
-                request.setMimeType(mimeType);
-                //------------------------COOKIE!!------------------------
-                String cookies = CookieManager.getInstance().getCookie(url);
-                request.addRequestHeader("cookie", cookies);
-                //------------------------COOKIE!!------------------------
-                request.addRequestHeader("User-Agent", userAgent);
-                request.setDescription("Downloading file...");
-                request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimeType));
-                request.allowScanningByMediaScanner();
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimeType));
-                DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                dm.enqueue(request);
-                //Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
-            }
-        });
+       // myWebView.setDownloadListener(new DownloadListener() {
+       //     @Override
+       //     public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
+//
+       //         checkPermission();
+//
+       //         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+//
+       //         request.setMimeType(mimeType);
+       //         //------------------------COOKIE!!------------------------
+       //         String cookies = CookieManager.getInstance().getCookie(url);
+       //         request.addRequestHeader("cookie", cookies);
+       //         //------------------------COOKIE!!------------------------
+       //         request.addRequestHeader("User-Agent", userAgent);
+       //         request.setDescription("Downloading file...");
+       //         request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimeType));
+       //         request.allowScanningByMediaScanner();
+       //         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+       //         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimeType));
+       //         DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+       //         dm.enqueue(request);
+       //         //Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
+       //     }
+       // });
 
         getSupportActionBar().hide();
 
-        //setCtx(ctx);
-//        try {
-//
-//            myWebView.getSettings().setJavaScriptEnabled(true);
-//            myWebView.loadUrl(myurl);
-//
-//            //New//Folder//AIDL Folder
-//            //New//File
-//        } catch (Exception e) {
-//            Log.e("MYAPP", "======================");
-//            Log.e("MYAPP", "exception", e);
-//        }
-
-        //getContact(1);
-
         int qt = 0;
-
-        TableNotificacao tbNotification = new TableNotificacao(this);
-        tbNotification.insertNotificacao();
 
         try {
 
@@ -152,25 +140,9 @@ public class MainActivity extends AppCompatActivity {
                 qt ++;
             }
 
-            //Toast.makeText(this.getBaseContext(), String.valueOf(qt), Toast.LENGTH_SHORT).show();
-
-            //myWebView.loadUrl("https://imobottst5.mybluemix.net");
-
             ForcaVenda forcaLogin = buscar(1);
 
             tableLogin tb = new tableLogin(this);
-
-            //Log.d("MeuLog", "Cadastro id: " + forcaLogin.getLogado());
-
-            //if (forcaLogin == null)
-            //{
-            //    Log.d("MeuLog","forcaLogin == null");
-            //    tb.insertTeste();
-            //}
-
-            //forcaLogin = buscar(1);
-
-            //Log.d("MeuLog", "Erro na busca do login");
 
             if(forcaLogin != null)
             {
@@ -182,12 +154,9 @@ public class MainActivity extends AppCompatActivity {
                 myWebView.loadUrl("file:///android_asset/index.html");
            }
 
-
             //myWebView.loadDataWithBaseURL("file:///android_asset/", total.toString(), "text/html", "UTF-8", null);
 
             Log.d("MeuLog", "Classe instanciada");
-
-            //selectTableLogin();
 
 
 
@@ -195,55 +164,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("MeuLog", "Load assets ", xxx);
         }
 
-         Notificacao noti = buscarNotificao(1);
-
-        //Log.d("MeuLog", "Notificacao: " + noti.getTitulo());
-
-        // TESTE CRUD
-
-        //db.addCliente(new Cliente("Nome", "CPF", "58455", "DSDA", "SDAASDAS"));
-
-        //Toast.makeText(this.getBaseContext(), "Salvo com sucesso", Toast.LENGTH_LONG).show();
-
-        ///////////////////////////////////////////////
-
     }
-
-    public Notificacao buscarNotificao(int codigo) {
-
-        try {
-            Notificacao notificacao = new Notificacao();
-
-            StringBuilder sql = new StringBuilder();
-
-            sql.append("SELECT * ");
-            sql.append("FROM TBOD_NOTIFICACAO ");
-            sql.append("WHERE CD_NOTIFICACAO = " + codigo);
-
-            SQLiteDatabase dbs = db.getReadableDatabase();
-
-            Cursor resultado = dbs.rawQuery(sql.toString(), null);
-
-
-            if (resultado.getCount() > 0) {
-                resultado.moveToFirst();
-
-                notificacao.setTitulo(resultado.getString(resultado.getColumnIndexOrThrow("NM_TITULO")));
-                notificacao.setDescricao(resultado.getString(resultado.getColumnIndexOrThrow("DS_NOTIFICACAO")));
-                //notificacao.setDataNoficacao(resultado.getString( resultado.getColumnIndexOrThrow("DT_NOTIFICACAO")));
-                notificacao.setTipoNotificacao(resultado.getString(resultado.getColumnIndexOrThrow("CD_TIPO_NOTIFICACAO")));
-
-
-                Log.d("MeuLog", "Executou TableNotification");
-                return notificacao;
-            }
-        } catch (Exception e){
-            Log.d("MeuLog", "" + e.toString());
-        }
-
-        return null;
-    }
-
 
     public ForcaVenda buscar(int codigo) {
 
@@ -330,8 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 ActivityCompat.requestPermissions(this, new String[]
-                        {
-                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSAO_REQUEST);
+                    { android.Manifest.permission.WRITE_EXTERNAL_STORAGE }, PERMISSAO_REQUEST);
             }
         }
 

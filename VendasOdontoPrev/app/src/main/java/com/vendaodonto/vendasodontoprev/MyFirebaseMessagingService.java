@@ -73,6 +73,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
             NotificationCompat.Builder builder;
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -93,16 +94,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             builder.setContentTitle(title)
                     .setSmallIcon(getNotificationIcon()) // required
                     .setContentText(message)  // required
-
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                     .setAutoCancel(true)
                     .setLargeIcon(BitmapFactory.decodeResource
-                            (getResources(), R.drawable.icon_status_bar))
-                    .setBadgeIconType(R.drawable.icon_status_bar)
+                            (getResources(), R.drawable.ic_push))
+                    .setBadgeIconType(R.drawable.ic_push)
                     .setContentIntent(pendingIntent)
                     .setSound(RingtoneManager.getDefaultUri
                             (RingtoneManager.TYPE_NOTIFICATION));
             Notification notification = builder.build();
             notifManager.notify(m, notification);
+
         } else {
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -115,6 +117,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                     .setContentTitle(title)
                     .setContentText(message)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                     .setAutoCancel(true)
                     .setColor(ContextCompat.getColor(getBaseContext(), R.color.common_google_signin_btn_text_dark))
                     .setSound(defaultSoundUri)
@@ -132,9 +135,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private int getNotificationIcon() {
 
         boolean useWhiteIcon = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-        return useWhiteIcon ? R.drawable.ic_action_spotify : R.drawable.icon_status_bar;
+        return useWhiteIcon ? R.drawable.ic_push : R.drawable.icon_status_bar;
     }
 
-
-
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("Messages", "Messages", importance);
+            channel.setDescription("All messages.");
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 }

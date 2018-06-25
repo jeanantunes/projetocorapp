@@ -92,7 +92,8 @@ function defineConexao() {
         URLBase = conexao.homologacaoURL;
         console.log(URLBase);
         Token = conexao.chaveHomolog;
-        setPlanosHml();
+        setPlanosProd();
+        //setPlanosHml();
     }
 }
 
@@ -175,7 +176,7 @@ function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelul
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/forcavenda/devicetoken" + cdForcaVenda,
+        url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda,
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -1197,7 +1198,7 @@ function sincronizar() {
         }
     }
     else {
-        swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");0
+        swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
     }
 }
 
@@ -1388,7 +1389,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
 
         $.ajax({
             async: true,
-            //url: URLBase + "vendapf",
+            //url: "http://172.16.244.160:9090/vendapf",
             url: URLBase + "/corretorservicos/1.0/vendapf",
             method: "POST",
             data: json,

@@ -29,7 +29,7 @@
      See README(https://goo.gl/l4GJaQ) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_action_spotify" />
+            android:resource="@drawable/ic_push" />
         <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more. -->
 
@@ -38,8 +38,12 @@
             android:value="@string/default_notification_channel_id"/>
 
         <meta-data
+            android:name="com.token.api"
+            android:value="{$TOKEN_API}"/>
+
+        <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/common_google_signin_btn_text_dark" />
+            android:resource="@android:color/transparent" />
 
         <activity android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
@@ -49,6 +53,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".GaleriaActivity"></activity>
 
         <!-- [START firebase_service] -->
@@ -67,6 +72,14 @@
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
+
+        <receiver android:name=".YourReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
 
 
     </application>
