@@ -73,6 +73,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
             NotificationCompat.Builder builder;
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -96,13 +97,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                     .setAutoCancel(true)
                     .setLargeIcon(BitmapFactory.decodeResource
-                            (getResources(), R.drawable.icon_status_bar))
-                    .setBadgeIconType(R.drawable.icon_status_bar)
+                            (getResources(), R.drawable.ic_push))
+                    .setBadgeIconType(R.drawable.ic_push)
                     .setContentIntent(pendingIntent)
                     .setSound(RingtoneManager.getDefaultUri
                             (RingtoneManager.TYPE_NOTIFICATION));
             Notification notification = builder.build();
             notifManager.notify(m, notification);
+
         } else {
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -133,7 +135,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private int getNotificationIcon() {
 
         boolean useWhiteIcon = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-        return useWhiteIcon ? R.drawable.ic_action_spotify : R.drawable.icon_status_bar;
+        return useWhiteIcon ? R.drawable.ic_push : R.drawable.icon_status_bar;
     }
 
     private void createNotificationChannel() {
@@ -149,7 +151,4 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
     }
-
-
-
 }
