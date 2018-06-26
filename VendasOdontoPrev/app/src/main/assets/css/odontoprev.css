@@ -1,3 +1,54 @@
+/***** PROMO COPA ******/
+
+.btnSlickCopa {
+    background-color: #82bc3c;
+}
+
+.pInfoPlanoCopa {
+    font-family: Roboto-Medium;
+    color: #82bc3c;
+    font-size: 80%;
+    padding: 7px;
+}
+
+.btnSlickCopa2 {
+    background-color: #1d75c9;
+}
+
+.pInfoPlanoCopa2 {
+    font-family: Roboto-Medium;
+    color: #1D75C9;
+    font-size: 80%;
+}
+
+.infoCopa {
+    font-family: Roboto-Medium;
+    background-color: #fddc58;
+    color: #1D75C9;
+    padding: 6px;
+    padding-left: 11px;
+    padding-right: 11px;
+    text-align: center;
+}
+
+.titleSlickCopa {
+    color: #82bc3c;
+}
+
+.colorSlickCopa {
+    color: #82bc3c;
+}
+
+.textCopa {
+    font-size: 20px; 
+    font-family: Roboto-Light;
+}
+
+/******** END PROMO COPA **********/
+
+
+
+
 .backFrontOdont {
     background-color: #F1F9FF;
 }
