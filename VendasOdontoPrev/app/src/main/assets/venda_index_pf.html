@@ -23,6 +23,7 @@
     <div id="componenteMenu"></div>
     <!-- End Menu -->
     <!-- Bloco 1 -->
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 boxHeader">
@@ -32,6 +33,7 @@
                 <span class="btnMenu" onclick="openNav()">&#9776;</span>
             </div>
         </div>
+
         <div class="col-md-12 odontBoxCenter">
             <div class="row">
                 <div class="text-center">
@@ -76,7 +78,7 @@
                                         <span class="font-moeda">R$ 45,<span class="font-cent">60</span></span>
                                     </div>
                                 </div>
-                                <p class="pInfoPlanoSlick1">Carência reduzida: 30 dias para tratamentos e 30 dias para prótese</p>
+                                <p class="pInfoPlanoCopa">Carência reduzida: 30 dias</p>
 
                                 <div id="bemEstarAnual" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlickCopa2" href="venda_pf_dados_proposta.html" role="button" data-id="">
                                     <div class="spanInlineLeft">
@@ -86,7 +88,7 @@
                                         <span class="font-moeda">R$ 456,<span class="font-cent">00</span></span>
                                     </div>
                                 </div>
-                                <p class="pInfoPlanoSlick1">Sem carência</p>
+                                <p class="pInfoPlanoCopa2">Sem carência</p>
 
                             </div>
                         </div>
@@ -95,87 +97,85 @@
 
                     <!-- INICIO PLANO BEM ESTAR SPRINT 7 -->
                     <!--<div class="col-md-12 boxPlanos item">
-        <h1 class="titleBoxVendas titleSlick1">DENTAL BEM-ESTAR</h1>
-        <div class="row pVPlanoVenda">
-            <label>Coberturas:</label>
-            <p>Limpeza</p>
-            <p>Restaurações</p>
-            <p>Tratamento de Gengiva e Canal</p>
-            <p>Emergências 24h</p>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div id="bemEstarMensal" onclick="iniciarProposta( $(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button" data-id="">
-                    <div class="spanInlineLeft">
-                        <span>Mensal</span>
-                    </div>
-                    <div class="spanInlineRight">
-                        <span class="font-moeda">R$ 45,<span class="font-cent">60</span></span>
-                    </div>
+                <h1 class="titleBoxVendas titleSlick1">DENTAL BEM-ESTAR</h1>
+                <div class="row pVPlanoVenda">
+                    <label>Coberturas:</label>
+                    <p>Limpeza</p>
+                    <p>Restaurações</p>
+                    <p>Tratamento de Gengiva e Canal</p>
+                    <p>Emergências 24h</p>
                 </div>
-                <p class="pInfoPlanoSlick1">Carência: 90 dias para tratamentos e 180 para prótese</p>
-                <div id="bemEstarAnual" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button" data-id="">
-                    <div class="spanInlineLeft">
-                        <span>Anual</span>
-                    </div>
-                    <div class="spanInlineRight">
-                        <span class="font-moeda">R$ 456,<span class="font-cent">00</span></span>
-                    </div>
-                </div>
-
-                <p class="pInfoPlanoSlick1">Carência: 60 dias para tratamentos e 90 para prótese</p>
-
-                <div id="divBemEstar">
-                    <div id="bemEstarAnualSCarencia" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button" data-id="">
-                        <div class="spanInlineLeft">
-                            <span>Anual</span>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="bemEstarMensal" onclick="iniciarProposta( $(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button" data-id="">
+                            <div class="spanInlineLeft">
+                                <span>Mensal</span>
+                            </div>
+                            <div class="spanInlineRight">
+                                <span class="font-moeda">R$ 45,<span class="font-cent">60</span></span>
+                            </div>
                         </div>
-                        <div class="spanInlineRight">
-                            <span class="font-moeda">R$ 547,<span class="font-cent">20</span></span>
+                        <p class="pInfoPlanoSlick1">Carência: 90 dias para tratamentos e 180 para prótese</p>
+                        <div id="bemEstarAnual" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button" data-id="">
+                            <div class="spanInlineLeft">
+                                <span>Anual</span>
+                            </div>
+                            <div class="spanInlineRight">
+                                <span class="font-moeda">R$ 456,<span class="font-cent">00</span></span>
+                            </div>
+                        </div>
+
+                        <p class="pInfoPlanoSlick1">Carência: 60 dias para tratamentos e 90 para prótese</p>
+
+                        <div id="divBemEstar">
+                            <div id="bemEstarAnualSCarencia" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick1" href="venda_pf_dados_proposta.html" role="button" data-id="">
+                                <div class="spanInlineLeft">
+                                    <span>Anual</span>
+                                </div>
+                                <div class="spanInlineRight">
+                                    <span class="font-moeda">R$ 547,<span class="font-cent">20</span></span>
+                                </div>
+                            </div>
+                            <p class="pInfoPlanoSlick1">Sem carência</p>
                         </div>
                     </div>
-                    <p class="pInfoPlanoSlick1">Sem carência</p>
                 </div>
-            </div>
-        </div>
-    </div>-->
-
+            </div>-->
                     <!-- END PLANO BEM ESTAR 26/06/2018 -->
-
                     <!--<div class="col-md-12 boxPlanos item">
-        <h1 class="titleBoxVendas titleSlick2">DENTE DE LEITE DE 0 A 7 ANOS</h1>
-        <div class="row pVPlanoVenda">
-            <label>Coberturas:</label>
-            <p>Consultas</p>
-            <p>Extrações</p>
-            <p>Restaurações</p>
-            <p>Limpeza</p>
-            <p>Emergências</p>
-            <p>Tratamento de Gengiva e Canal</p>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div id="denteDeLeiteMensal" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick2" href="venda_pf_dados_proposta.html" role="button" data-id="">
-                    <div class="spanInlineLeft">
-                        <span>Mensal</span>
-                    </div>
-                    <div class="spanInlineRight">
-                        <span class="font-moeda">R$ 14,<span class="font-cent">98</span></span>
+                <h1 class="titleBoxVendas titleSlick2">DENTE DE LEITE DE 0 A 7 ANOS</h1>
+                <div class="row pVPlanoVenda">
+                    <label>Coberturas:</label>
+                    <p>Consultas</p>
+                    <p>Extrações</p>
+                    <p>Restaurações</p>
+                    <p>Limpeza</p>
+                    <p>Emergências</p>
+                    <p>Tratamento de Gengiva e Canal</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="denteDeLeiteMensal" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick2" href="venda_pf_dados_proposta.html" role="button" data-id="">
+                            <div class="spanInlineLeft">
+                                <span>Mensal</span>
+                            </div>
+                            <div class="spanInlineRight">
+                                <span class="font-moeda">R$ 14,<span class="font-cent">98</span></span>
+                            </div>
+                        </div>
+                        <p class="pInfoPlanoSlick2">Sem carência</p>
+                            <div id="denteDeLeiteAnual" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick2" href="venda_pf_dados_proposta.html" role="button" data-id="">
+                                <div class="spanInlineLeft">
+                                    <span>Anual</span>
+                                </div>
+                                <div class="spanInlineRight">
+                                    <span class="font-moeda">R$ 149,<span class="font-cent">80</span></span>
+                                </div>
+                            </div>
+                            <p class="pInfoPlanoSlick2">Sem carência</p>
                     </div>
                 </div>
-                <p class="pInfoPlanoSlick2">Sem carência</p>
-                    <div id="denteDeLeiteAnual" onclick="iniciarProposta($(this).attr('data-id'))" class="btn btn-lg btn-block btnOdontPlano btnSlick2" href="venda_pf_dados_proposta.html" role="button" data-id="">
-                        <div class="spanInlineLeft">
-                            <span>Anual</span>
-                        </div>
-                        <div class="spanInlineRight">
-                            <span class="font-moeda">R$ 149,<span class="font-cent">80</span></span>
-                        </div>
-                    </div>
-                    <p class="pInfoPlanoSlick2">Sem carência</p>
-            </div>
-        </div>
-    </div>-->
+            </div>-->
 
                     <div class="col-md-12 boxPlanos item">
                         <h1 class="titleBoxVendas titleSlick3">DENTAL ESTÉTICA</h1>
@@ -313,6 +313,8 @@
             </div>
         </div>
     </div>
+
+
     <!-- End Bloco 1 -->
 
     <script src="js/jquery-2.2.0.min.js"></script>

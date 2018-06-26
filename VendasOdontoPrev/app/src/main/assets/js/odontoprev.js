@@ -171,7 +171,7 @@ function openNav() {
     $(".container-fluid").addClass("fixed");
     $("html,body").css({ "overflow": "hidden" });
     $("#botaoMenu").removeClass("hide");
-
+    $("html,body").addClass("fixed");
 }
 
 function closeNav() {
@@ -181,11 +181,12 @@ function closeNav() {
     $("#main").removeClass("overlay");
     $("#mySidenav").removeClass("zIndex99999999");
     $("#mySidenav").removeClass("fixed");
-    $("#mySidenav").css({ "overflow": "auto" });
+    //$("#mySidenav").css({ "overflow": "auto" });
     $("#botaoMenu").addClass("hide");
     $(".container-fluid").removeClass("fixed");
     $("html,body").css({ "overflow": "auto" });
     //$("#main").addClass("hide");
+   
 }
 
 

@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
     setIdPlano();
+    console.log(screen.height);
+    console.log($("#divImg").height());
 });
 
 function setIdPlano() {
@@ -103,4 +105,5 @@ function iniciarProposta(cdPlano) {
     put("propostaPf", JSON.stringify(proposta));
 
     window.location.href = "venda_pf_dados_proposta.html";
+    
 }

@@ -22,6 +22,7 @@
 }
 
 .infoCopa {
+
     font-family: Roboto-Medium;
     background-color: #fddc58;
     color: #1D75C9;
@@ -33,6 +34,18 @@
 
 .titleSlickCopa {
     color: #82bc3c;
+}
+
+.pInfoPlanoSlickCopa {
+    font-family: Roboto-Medium;
+    color: #82bc3c;
+    font-size: 10pt;
+}
+
+.pInfoPlanoSlickCopa2 {
+    font-family: Roboto-Medium;
+    color: #1d75c9;
+    font-size: 10pt;
 }
 
 .colorSlickCopa {
@@ -47,7 +60,9 @@
 /******** END PROMO COPA **********/
 
 
-
+.nomeRegex {
+    text-transform: uppercase;
+}
 
 .backFrontOdont {
     background-color: #F1F9FF;
@@ -641,6 +656,7 @@
     right: 0;
     background-color: #1974CE;
     overflow-x: hidden;
+    overflow-y: hidden;
     transition: .5s;
 }
 
@@ -649,10 +665,14 @@
         text-decoration: none;
         display: block;
         transition: .3s;
+        overflow-x: hidden;
+        overflow-y: hidden;
     }
 
         .sidenav a:hover {
             color: #f1f1f1;
+            overflow-x: hidden;
+            overflow-y: hidden;
         }
 
     .sidenav .closebtn {
@@ -661,6 +681,8 @@
         right: 25px;
         font-size: 36px;
         margin-left: 50px;
+        overflow-x: hidden;
+        overflow-y: hidden;
     }
 
 .userLog {
