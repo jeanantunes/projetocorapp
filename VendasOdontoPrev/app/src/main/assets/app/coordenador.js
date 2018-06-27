@@ -238,6 +238,14 @@ $(function () {
 });
 
 $(function () {
+
+    $('.complemento').bind('input', function () {
+        if ($(this).val().length > 20) $(this).val($(this).val().substring(0, 20));
+    });
+});
+
+
+$(function () {
     var regex = new RegExp('[^A-Za-z \]', 'g');
     // repare a flag "g" de global, para substituir todas as ocorrências
     $('.nomeRegex').bind('input', function () {
