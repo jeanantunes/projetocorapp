@@ -22,7 +22,7 @@ function validarVersaoApp()
 
             var versao = dataVersao.versao;
 
-            if (versao != '4') {
+            if (versao != '5') {
                 swal({
                     title: "Ops",
                     text: "Sua versão do aplicativo está desatualizada, atualize na Play Store",
