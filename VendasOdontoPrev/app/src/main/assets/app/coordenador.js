@@ -237,6 +237,34 @@ $(function () {
     });
 });
 
+$(function () {
+
+    $('.complemento').bind('input', function () {
+        if ($(this).val().length > 20) $(this).val($(this).val().substring(0, 20));
+    });
+});
+
+
+$(function () {
+    var regex = new RegExp('[^A-Za-z \]', 'g');
+
+    
+    // repare a flag "g" de global, para substituir todas as ocorrências
+    $('.nomeRegex').bind('input', function () {
+
+        $(this).val(removerAcentos($(this).val()).toUpperCase());
+        $(this).val($(this).val().replace(regex, ''));
+
+        var capturandoEspaco = $(this).val().substring($(this).val().length - 2, $(this).val().length);
+
+        if (capturandoEspaco == "  ") {
+
+            $(this).val($(this).val().substring(0, $(this).val().length - 1))
+
+        }
+    });
+});
+
 function validarData(data) {
     var bits = data.split('/');
 
@@ -366,9 +394,36 @@ function setPlanosProd() {
 
     planos.push(plano);
 
+
+    // Inicio planos bem estar COPA
+
+    plano = getRepository("plano");
+    plano.cdPlano = 84;
+    plano.nome = "DENTAL BEM-ESTAR";
+    plano.valor = "45";
+    plano.centavo = "60";
+    plano.valorFloat = 45.60;
+    plano.desc = "Mensal";
+    plano.css = "colorSlickCopa";
+
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 85;
+    plano.nome = "DENTAL BEM-ESTAR";
+    plano.valor = "456";
+    plano.centavo = "00";
+    plano.valorFloat = 456.00;
+    plano.desc = "Anual";
+    plano.css = "colorSlickCopa";
+
+    planos.push(plano);
+
+    // Fim planos bem estar COPA
+
     plano = getRepository("plano");
     plano.cdPlano = 67;
-    plano.nome = "DENTAL BEM-ESTAR";
+    plano.nome = "DENTAL BEM-ESTAR Principal";
     plano.valor = "45";
     plano.centavo = "60";
     plano.valorFloat = 45.60;
@@ -379,7 +434,7 @@ function setPlanosProd() {
 
     plano = getRepository("plano");
     plano.cdPlano = 66;
-    plano.nome = "DENTAL BEM-ESTAR";
+    plano.nome = "DENTAL BEM-ESTAR Principal";
     plano.valor = "456";
     plano.centavo = "00";
     plano.valorFloat = 456.00;
@@ -390,7 +445,7 @@ function setPlanosProd() {
 
     plano = getRepository("plano");
     plano.cdPlano = 68;
-    plano.nome = "DENTAL BEM-ESTAR";
+    plano.nome = "DENTAL BEM-ESTAR Principal";
     plano.valor = "547";
     plano.centavo = "20";
     plano.valorFloat = 547.20;
@@ -568,21 +623,33 @@ function setPlanosProdCod() {
     plano.nome = "DENTE DE LEITE ANUAL";
     planos.push(plano);
 
-    ////// CODIGO PLANOS DENTAL BEM - ESTAR ////////
+    ////// CODIGO PLANOS DENTAL BEM - ESTAR PRINCIPAL ////////
 
     var plano = new Object();
     plano.cdPlano = 67;
-    plano.nome = "DENTAL BEM-ESTAR MENSAL";
+    plano.nome = "DENTAL BEM-ESTAR MENSAL Principal";
     planos.push(plano);
 
     var plano = new Object();
     plano.cdPlano = 66;
-    plano.nome = "DENTAL BEM-ESTAR ANUAL";
+    plano.nome = "DENTAL BEM-ESTAR ANUAL Principal";
     planos.push(plano);
 
     var plano = new Object();
     plano.cdPlano = 68;
-    plano.nome = "DENTAL BEM-ESTAR ANUAL S/CARENCIA";
+    plano.nome = "DENTAL BEM-ESTAR ANUAL S/CARENCIA Principal";
+    planos.push(plano);
+
+    // PLANOS BEM ESTAR COPA
+
+    var plano = new Object();
+    plano.cdPlano = 84;
+    plano.nome = "DENTAL BEM-ESTAR MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 85;
+    plano.nome = "DENTAL BEM-ESTAR ANUAL";
     planos.push(plano);
 
     

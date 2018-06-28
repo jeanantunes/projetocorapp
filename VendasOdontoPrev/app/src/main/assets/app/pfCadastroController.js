@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
 
+    atualizarPropostaMundial();
     buscarPlanosSelecionados();
     carregarProposta();
     localStorage.removeItem("dependentePfEmEdicao");
@@ -34,20 +35,37 @@ $(document).ready(function () {
 
         $(".representanteContratual").removeClass('hide');
 
-    });
-
-    $(".nome").keyup(function () {
-
-        var capturandoEspaco = $(".nome").val().substring($(".nome").val().length - 2, $(".nome").val().length);
-
-        if (capturandoEspaco == "  ") {
-
-            $(".nome").val($(".nome").val().substring(0, $(".nome").val().length - 1))
-
-        }
-    });
-         
+    });        
 });
+
+function atualizarPropostaMundial() {
+
+    let planoProposta = get("propostaPf");
+
+
+
+    if (planoProposta.planos[0].cdPlano == 66 || planoProposta.planos[0].cdPlano == 68) {
+
+        planoProposta.planos[0].cdPlano = 85;
+
+        put("propostaPf", JSON.stringify(planoProposta));
+
+
+    } else if (planoProposta.planos[0].cdPlano == 67) {
+
+        planoProposta.planos[0].cdPlano = 84;
+
+        put("propostaPf", JSON.stringify(planoProposta));
+
+    }
+
+    let planoDaProposta = planoProposta.planos[0].cdPlano;
+
+    if (planoDaProposta == 84 || planoDaProposta == 85) {
+        $("#boxMundial").html('<div class="infoCopa"><p class="textCopa">#VAI<strong> TER</strong> JOGO</p><small>Durante o mundial venda planos BEM-ESTAR com condições especiais!</small></div>');
+
+    }
+}
 
 function abrirPropostaComErros() {
 
@@ -257,17 +275,17 @@ function addDependente() {
         return;
     }
 
-    if ($(".rua").val() == "") {
+    if ($("#rua").val() == "") {
         swal("Ops!", "Preencha o endereço", "error");
         return;
     }
 
-    if ($(".numeroEndereco").val() == "") {
+    if ($(".numero").val() == "") {
         swal("Ops!", "Preencha o número do endereço", "error");
         return;
     }
 
-    if ($(".bairro").val() == "") {
+    if ($("#bairro").val() == "") {
         swal("Ops!", "Preencha o bairro", "error");
         return;
     }
@@ -314,7 +332,7 @@ function buscarPlanosSelecionados() {
 
         plano = plano.replace("{CDPLANO}", o[0].cdPlano);
         plano = plano.replace("{CDPLANO-BT}", o[0].cdPlano);
-        plano = plano.replace("{NOME}", o[0].nome);
+        plano = plano.replace("{NOME}", o[0].nome.replace("Principal",""));
         plano = plano.replace("{DESC}", o[0].desc);
         plano = plano.replace("{VALOR}", o[0].valor);
         plano = plano.replace("{CENTAVO}", o[0].centavo);
@@ -331,7 +349,7 @@ function excluirPlano(obj) {
 
     if ($("#cpf").val() == "") {
 
-        swal("Ops!", "Preencha a CPF do titular", "error");
+        swal("Ops!", "Preencha o CPF do titular", "error");
         return;
     }
 
@@ -521,17 +539,17 @@ function salvarRascunho() {
         return;
     }
 
-    if ($(".rua").val() == "") {
+    if ($("#rua").val() == "") {
         swal("Ops!", "Preencha o endereço", "error");
         return;
     }
 
-    if ($(".numeroEndereco").val() == "") {
+    if ($(".numero").val() == "") {
         swal("Ops!", "Preencha o número do endereço", "error");
         return;
     }
 
-    if ($(".bairro").val() == "") {
+    if ($("#bairro").val() == "") {
         swal("Ops!", "Preencha o bairro", "error");
         return;
     }
