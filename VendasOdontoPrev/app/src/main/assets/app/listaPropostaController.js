@@ -10,7 +10,7 @@ $(document).ready(function () {
     }
 
     carregarListaOnlineAtualizarProposta();
-
+    localStorage.removeItem("resumoStatusPropostaPf");
 });
 
 function callDashBoardPF(callback, Token) {
@@ -380,11 +380,15 @@ function carregarListaOnlineAtualizarProposta() {
                 link = 'href="venda_pf_editar.html?cpf=' + item.cpf +'"';
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
+
                 status = "Aguardando sincronismo";
                 css = "colorCirc4";
-                acao = "sincronizar";
-                link = 'href="logado.html"';
+                acao = "Sincronizar";
+                link = "";
+                onClick = "onclick='" + "sincronizarProposta" + '("' + item.cpf + '")' + "'"
                 acaoseta = "";
+
+
             } else if (item.status == "CRITICADA" || item.status == "Criticado") {
                 status = "Criticada";
                 css = "colorCirc3";
@@ -578,6 +582,84 @@ function buscarDetalheProposta(callback, token, cdVenda) {
         
 }
 
+function sincronizarProposta(cpfProposta) {
+
+    let propostasASincronizar = get("pessoas");
+    let enviarProposta = propostasASincronizar.filter(function (x) { return x.cpf == cpfProposta });
+
+    if (!navigator.onLine) {
+        swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
+        return;
+    }
+
+    if (enviarProposta != null) {
+
+        if (enviarProposta[0].status == "PRONTA") {
+
+            var propostasDiferentes = propostasASincronizar.filter(function (x) { return x.cpf != enviarProposta[0].cpf });
+
+            propostasASincronizar = []; //limpar
+
+            $.each(propostasDiferentes, function (i, item) {
+                propostasASincronizar.push(item);
+            });
+
+            enviarProposta[0].status = "SYNC";
+            enviarProposta[0].horaSync = new Date();
+            propostasASincronizar.push(enviarProposta[0]);
+
+            put("pessoas", JSON.stringify(propostasASincronizar));
+
+            swal({
+                title: "Aguarde",
+                text: 'Estamos enviando a sua proposta',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+
+            sincronizarPf(function (dataProposta) {
+
+                if (dataProposta.status == 200) {
+
+                    if (dataProposta.id == 0) {
+
+                        enviarProposta[0].status = "CRITICADA";
+                        atualizarPessoas(enviarProposta[0]);
+                        console.log("Erro");
+
+                    } else {
+
+                        var pessoas = get("pessoas");
+                        var todosExcetoExclusao = pessoas.filter(function (x) { return x.cpf != enviarProposta[0].cpf });
+                        //todosExcetoExclusao.push(proposta);
+
+                        console.log(todosExcetoExclusao);
+                        put("pessoas", JSON.stringify(todosExcetoExclusao));
+
+                        
+                    }
+                }
+                else {
+
+                    enviarProposta[0].status = "PRONTA";
+                    atualizarPessoas(enviarProposta[0]);
+                    swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error")
+                }
+
+                atualizarDashBoard();
+
+            }, enviarProposta[0]);
+        }
+    }
+}
+
 function verDetalheProposta(dataId) {
 
     swal({
@@ -608,7 +690,6 @@ function verDetalheProposta(dataId) {
 
             var retorno = getRepository("propostaPf");
 
-
             if (dataPropostaCriticada.venda.dadosBancariosVenda != null) {
 
                 retorno.dadosBancarios.codigoBanco = dataPropostaCriticada.venda.dadosBancariosVenda.codigoBanco;
@@ -618,10 +699,7 @@ function verDetalheProposta(dataId) {
 
             }
 
-
             retorno.planos.push({ cdPlano: dataPropostaCriticada.venda.plano.cdPlano });
-
-
 
             var dependentes = [];
 
@@ -659,7 +737,6 @@ function verDetalheProposta(dataId) {
                     retorno.endereco.bairro = item.endereco.bairro;
                     retorno.endereco.cidade = item.endereco.cidade;
                     retorno.endereco.estado = item.endereco.estado;
-
                     return;
                 }
 
@@ -672,8 +749,6 @@ function verDetalheProposta(dataId) {
                 dependente.cpf = dataPropostaCriticada.venda.titulares[i].cpf;
                 dependente.email = dataPropostaCriticada.venda.titulares[i].email;
                 dependente.dataNascimento = dataPropostaCriticada.venda.titulares[i].dataNascimento;
-
-
                 dependentes.push(dependente);
             });
 
@@ -686,9 +761,6 @@ function verDetalheProposta(dataId) {
             window.location = "resumo_status_proposta_pf.html";
 
         }, dataToken.access_token, dataId);
-
-
-
     });
 
 

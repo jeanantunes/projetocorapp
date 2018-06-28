@@ -55,5 +55,10 @@ function buscarPlanosSelecionados() {
 
 function pagarComBoleto()
 {
-    window.location = "compra_pf_boleto.html";
+    let atualizarPropostaParaPronta = get("propostaPf");
+    atualizarPropostaParaPronta.status = "PRONTA";
+    atualizarPessoas(atualizarPropostaParaPronta);
+    put("propostaPf", JSON.stringify(atualizarPropostaParaPronta));
+
+    enviarPropostaPf(); 
 }

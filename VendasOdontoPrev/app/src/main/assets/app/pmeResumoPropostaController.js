@@ -297,3 +297,80 @@ function isEffectiveDate() {
 
     }
 }
+
+function enviarPropostaPme() {
+
+    if (!navigator.onLine) {
+        swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
+        return;
+    }
+
+    swal({
+        title: "Aguarde",
+        text: 'Estamos enviando a sua proposta',
+        content: "input",
+        imageUrl: "img/load.gif",
+        showCancelButton: false,
+        showConfirmButton: false,
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false,
+        },
+    });
+
+    var proposta = get("proposta");
+    var empresas = get("empresas");
+    var beneficiarios = get("beneficiarios");
+
+    proposta.status = "PRONTA";
+    atualizarEmpresas(proposta);
+    put("proposta", JSON.stringify(proposta));
+
+    var beneficiarios = beneficiarios.filter(function (x) { return x.cnpj == proposta.cnpj });
+    var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != proposta.cnpj });
+
+    proposta.status = "SYNC";
+    proposta.horaSync = new Date();
+
+    todosExcetoExclusao.push(proposta);
+
+    put("empresas", JSON.stringify(todosExcetoExclusao));
+
+    var parametroEmpresa = [];
+    parametroEmpresa.push(proposta);
+
+    sincronizarPME(function (dataVendaPme) {
+
+        if (dataVendaPme.id != undefined) {
+
+            if (dataVendaPme.id == 0) {
+                proposta.status = "CRITICADA";
+                atualizarEmpresas(proposta);
+            }
+            else {
+                var empresas = get("empresas");
+                var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != proposta.cnpj });
+
+                proposta.status = "ENVIADA";
+
+                todosExcetoExclusao.push(proposta);
+
+                put("empresas", JSON.stringify(todosExcetoExclusao));
+
+                atualizarDashBoard();
+                swal.close();
+
+            }
+
+        } else {
+
+            let atualizarProposta = get("proposta");
+            atualizarProposta.status = "PRONTA";
+            put("proposta", JSON.stringify(atualizarProposta));
+            atualizarEmpresas(atualizarProposta);
+            swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error");
+        }
+
+    }, parametroEmpresa, beneficiarios);
+}
