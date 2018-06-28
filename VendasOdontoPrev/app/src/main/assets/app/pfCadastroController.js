@@ -275,17 +275,17 @@ function addDependente() {
         return;
     }
 
-    if ($(".rua").val() == "") {
+    if ($("#rua").val() == "") {
         swal("Ops!", "Preencha o endereço", "error");
         return;
     }
 
-    if ($(".numeroEndereco").val() == "") {
+    if ($(".numero").val() == "") {
         swal("Ops!", "Preencha o número do endereço", "error");
         return;
     }
 
-    if ($(".bairro").val() == "") {
+    if ($("#bairro").val() == "") {
         swal("Ops!", "Preencha o bairro", "error");
         return;
     }
@@ -349,7 +349,7 @@ function excluirPlano(obj) {
 
     if ($("#cpf").val() == "") {
 
-        swal("Ops!", "Preencha a CPF do titular", "error");
+        swal("Ops!", "Preencha o CPF do titular", "error");
         return;
     }
 
@@ -539,17 +539,17 @@ function salvarRascunho() {
         return;
     }
 
-    if ($(".rua").val() == "") {
+    if ($("#rua").val() == "") {
         swal("Ops!", "Preencha o endereço", "error");
         return;
     }
 
-    if ($(".numeroEndereco").val() == "") {
+    if ($(".numero").val() == "") {
         swal("Ops!", "Preencha o número do endereço", "error");
         return;
     }
 
-    if ($(".bairro").val() == "") {
+    if ($("#bairro").val() == "") {
         swal("Ops!", "Preencha o bairro", "error");
         return;
     }

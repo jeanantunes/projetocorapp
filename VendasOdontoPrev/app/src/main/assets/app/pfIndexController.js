@@ -63,11 +63,8 @@ function setIdPlano() {
     var plano = planos.filter(function (x) { if (x.nome == "DENTAL ORTO ANUAL") { return x.nome; } });
     $("#ortoAnual").attr("data-id", plano[0].cdPlano);
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    if (conexao.producaoLigado){
     
-        var plano = planos.filter(function (x) { if (x.nome == "DENTAL ORTO ANUAL") { return x.nome; } });
+        var plano = planos.filter(function (x) { if (x.nome == "DENTAL ORTO ANUAL S/CARENCIA") { return x.nome; } });
         $("#ortoAnualSCarencia").attr("data-id", plano[0].cdPlano);
     
         var plano = planos.filter(function (x) { if (x.nome == "DENTAL ESTETICA ANUAL S/CARENCIA") { return x.nome; } });
@@ -79,13 +76,7 @@ function setIdPlano() {
         //var plano = planos.filter(function (x) { if (x.nome == "DENTAL BEM-ESTAR ANUAL S/CARENCIA") { return x.nome; } }); TODO: Remover comentario fim do mundial
         //$("#bemEstarAnualSCarencia").attr("data-id", plano[0].cdPlano);
     
-        return;
-    }
 
-    $("#divBemEstar").addClass('hide');
-    $("#divEstetica").addClass('hide');
-    $("#divVip").addClass('hide');
-    $("#divOrto").addClass('hide');
     return;
 }
 

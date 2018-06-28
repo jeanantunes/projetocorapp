@@ -247,8 +247,12 @@ $(function () {
 
 $(function () {
     var regex = new RegExp('[^A-Za-z \]', 'g');
+
+    
     // repare a flag "g" de global, para substituir todas as ocorrências
     $('.nomeRegex').bind('input', function () {
+
+        $(this).val(removerAcentos($(this).val()).toUpperCase());
         $(this).val($(this).val().replace(regex, ''));
 
         var capturandoEspaco = $(this).val().substring($(this).val().length - 2, $(this).val().length);
