@@ -248,7 +248,7 @@ function isEffectiveDate() {
             var dataVencimento = moment("05-" + month.toString() + "-" + year, "DD-MM-YYYY");
             var dataVencimento = dataVencimento.add(1, 'M');
 
-            var olderDate = moment(dataVencimento).add(-11, "days");
+            var olderDate = moment(dataVencimento).add(-12, "days");
 
             if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
             else vencimento = dataVencimento;
@@ -265,7 +265,7 @@ function isEffectiveDate() {
 
             var vencimento;
             var dataVencimento = moment("15-" + month.toString() + "-" + year, "DD-MM-YYYY");
-            var olderDate = moment(dataVencimento).add(-11, "days");
+            var olderDate = moment(dataVencimento).add(-12, "days");
 
             if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
             else vencimento = dataVencimento;
@@ -282,7 +282,7 @@ function isEffectiveDate() {
 
             var vencimento;
             var dataVencimento = moment("25-" + month.toString() + "-" + year, "DD-MM-YYYY");
-            var olderDate = moment(dataVencimento).add(-11, "days");
+            var olderDate = moment(dataVencimento).add(-12, "days");
 
             if (currentTime.isAfter(olderDate)) vencimento = dataVencimento.add(1, 'M');
             else vencimento = dataVencimento;
@@ -360,6 +360,8 @@ function enviarPropostaPme() {
 
                 atualizarDashBoard();
                 swal.close();
+
+                window.location.href = "proposta_pme_enviada.html";
 
             }
 

@@ -171,7 +171,12 @@ function sincronizarPf(callback, pessoa) {
 
     console.log(json);
 
-    callTokenProd(function (dataToken) {
+    callTokenVendas(function (dataToken) {
+
+        if (dataToken.status != undefined) {
+
+            callback(dataToken);
+        }
 
         $.ajax({
             async: true,
@@ -314,6 +319,29 @@ function callTokenProd(callback) {
         },
         error: function (xhr) {
             swal("Ops!", "Erro na conexão, tente mais tarde", "error");
+        }
+    });
+};
+
+function callTokenVendas(callback) {
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/token",
+        method: "POST",
+        headers: {
+            "Authorization": "Basic " + Token,
+            "Cache-Control": "no-cache",
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        data: {
+            "grant_type": "client_credentials"
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+            callback(xhr);
         }
     });
 };
@@ -1466,10 +1494,7 @@ function enviarPropostaPf() {
 
             sincronizarPf(function (dataProposta) {
 
-                dataProposta.status = 200;
-                dataProposta.id = 1;
-
-                if (dataProposta.status == 200) {
+                if (dataProposta.id != undefined) {
 
                     if (dataProposta.id == 0) {
 
@@ -1490,11 +1515,10 @@ function enviarPropostaPf() {
                             window.location.href = "compra_pf_sucesso.html";
                         } else {
 
-                            window.location = "compra_pf_boleto.html";
+                            window.location.href = "compra_pf_boleto.html";
                         }
                     }
-                }
-                else {
+                } else {
 
                     let atualizarProposta = get("propostaPf");
                     atualizarProposta.status = "PRONTA";
@@ -1871,7 +1895,12 @@ function sincronizarPME(callback, proposta, beneficiarios) {
 
     console.log(json);
 
-    callTokenProd(function (dataToken) {
+    callTokenVendas(function (dataToken) {
+
+        if (dataToken.status != undefined) {
+
+            callback(dataToken);
+        }
 
         $.ajax({
             url: URLBase + "/corretorservicos/1.0/vendapme",

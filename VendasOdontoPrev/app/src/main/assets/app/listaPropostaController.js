@@ -6,6 +6,7 @@ $(document).ready(function () {
 
     if (!navigator.onLine) {
         carregarListaOffline();
+        localStorage.removeItem("resumoStatusPropostaPf");
         return;
     }
 
@@ -95,7 +96,7 @@ function carregarListaOffline() {
             link = 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
             acaoseta = "";
         } else if (item.status == "PRONTA") {
-            status = "Aguardando sincronismo";
+            status = "Aguardando envio";
             css = "colorCirc4";
             acao = "sincronizar";
             link = "logado.html";
@@ -151,7 +152,7 @@ function carregarListaOffline() {
             link = "venda_pme_editar.html?cnpj=" + item.cnpj;
             acaoseta = "";
         } else if (item.status == "PRONTA") {
-            status = "Aguardando sincronismo";
+            status = "Aguardando envio";
             css = "colorCirc4";
             acao = "sincronizar";
             link = "logado.html";
@@ -381,11 +382,11 @@ function carregarListaOnlineAtualizarProposta() {
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
 
-                status = "Aguardando sincronismo";
+                status = "Aguardando envio";
                 css = "colorCirc4";
-                acao = "Sincronizar";
+                acao = "Enviar";
                 link = "";
-                onClick = "onclick='" + "sincronizarProposta" + '("' + item.cpf + '")' + "'"
+                onClick = "onclick='" + "sincronizarPropostaPF" + '("' + item.cpf + '")' + "'"
                 acaoseta = "";
 
 
@@ -445,10 +446,11 @@ function carregarListaOnlineAtualizarProposta() {
                 link = 'href="venda_pme_editar.html?cnpj=' + item.cnpj + '"';
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
-                status = "Aguardando sincronismo";
+                status = "Aguardando envio";
                 css = "colorCirc4";
-                acao = "sincronizar";
-                link = "logado.html";
+                acao = "Enviar";
+                link = "";
+                onClick = "onclick='" + "sincronizarPropostaPME" + '("' + item.cnpj + '")' + "'"
                 acaoseta = "";
             } else if (item.status == "CRITICADA") {
                 status = "Criticada";
@@ -582,7 +584,106 @@ function buscarDetalheProposta(callback, token, cdVenda) {
         
 }
 
-function sincronizarProposta(cpfProposta) {
+function sincronizarPropostaPME(cnpjProposta) {
+
+    let propostasASincronizarPme = get("empresas");
+    let beneficiariosASincronizar = get("beneficiarios");
+
+    let propostaPmeSelecionada = propostasASincronizarPme.filter(function (x) { return x.cnpj == cnpjProposta });
+    let beneficiariosDaProposta = beneficiariosASincronizar.filter(function (x) { return x.cnpj == cnpjProposta });
+
+    if (!navigator.onLine) {
+        swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
+        return;
+    }
+
+    if (propostaPmeSelecionada != null && beneficiariosDaProposta != null) {
+
+        if (propostaPmeSelecionada[0].status == "PRONTA") {
+
+            let propostasDiferentesPme = propostasASincronizarPme.filter(function (x) { return x.cnpj != propostaPmeSelecionada[0].cnpj });
+            let beneficiariosDiferentesPme = beneficiariosASincronizar.filter(function (x) { return x.cnpj != propostaPmeSelecionada[0].cnpj });
+
+            propostasASincronizarPme = [];
+
+            $.each(propostasDiferentesPme, function (i, item) {
+                propostasASincronizarPme.push(item);
+            });
+
+            propostaPmeSelecionada[0].status = "SYNC";
+            propostaPmeSelecionada[0].horaSync = new Date();
+            propostasASincronizarPme.push(propostaPmeSelecionada[0]);
+
+            put("empresas", JSON.stringify(propostasASincronizarPme));
+
+            swal({
+                title: "Aguarde",
+                text: 'Estamos enviando a sua proposta',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+
+            var parametroEmpresa = [];
+            parametroEmpresa.push(propostaPmeSelecionada[0]);
+
+            sincronizarPME(function (dataVendaPme) {
+
+                if (dataVendaPme.id != undefined) {
+
+                    if (dataVendaPme.id == 0) {
+                        propostaPmeSelecionada[0].status = "CRITICADA";
+                        atualizarEmpresas(propostaPmeSelecionada[0]);
+                    }
+                    else {
+
+                        var empresas = get("empresas");
+                        var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != propostaPmeSelecionada[0].cnpj });
+
+                        propostaPmeSelecionada[0].status = "ENVIADA";
+
+                        todosExcetoExclusao.push(propostaPmeSelecionada[0]);
+
+                        put("empresas", JSON.stringify(todosExcetoExclusao));
+
+                        atualizarDashBoard();
+
+                        swal({
+                            title: "Proposta enviada com sucesso!",
+                            text: "Vamos atualizar a sua lista de propostas",
+                            type: "success",
+                            closeOnConfirm: true
+                        }, function () {
+                            // Redirect the user
+                            window.location.href = "lista_proposta.html";
+                        });
+
+                    }
+
+                } else {
+
+                    propostaPmeSelecionada[0].status = "PRONTA";
+                    atualizarEmpresas(propostaPmeSelecionada[0]);
+                    swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error");
+                }
+
+            }, parametroEmpresa, beneficiariosDaProposta);
+
+
+        }
+
+
+    }
+
+}
+
+function sincronizarPropostaPF(cpfProposta) {
 
     let propostasASincronizar = get("pessoas");
     let enviarProposta = propostasASincronizar.filter(function (x) { return x.cpf == cpfProposta });
@@ -626,7 +727,7 @@ function sincronizarProposta(cpfProposta) {
 
             sincronizarPf(function (dataProposta) {
 
-                if (dataProposta.status == 200) {
+                if (dataProposta.id != undefined) {
 
                     if (dataProposta.id == 0) {
 
@@ -642,6 +743,16 @@ function sincronizarProposta(cpfProposta) {
 
                         console.log(todosExcetoExclusao);
                         put("pessoas", JSON.stringify(todosExcetoExclusao));
+
+                        swal({
+                            title: "Proposta enviada com sucesso!",
+                            text: "Vamos atualizar a sua lista de propostas",
+                            type: "success",
+                            closeOnConfirm: true
+                        }, function () {
+                            // Redirect the user
+                            window.location.href = "lista_proposta.html";
+                        });
 
                         
                     }
