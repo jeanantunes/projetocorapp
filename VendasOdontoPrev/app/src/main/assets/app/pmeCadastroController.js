@@ -17,8 +17,6 @@ function addBenef() {
     window.location = "venda_pme_beneficiarios_lista.html";
 }
 
-
-
 function buscarPlanosSelecionados() {
     $("#planos").html("");
     var proposta = get("proposta");
@@ -547,7 +545,7 @@ function salvarRascunho() {
 
     salvarRascunhoMemoria();
 
-    swal("Feito","Proposta salva com sucesso", "success")
+    //swal("Feito","Proposta salva com sucesso", "success")
 }
 
 function salvarEContinuar() {
