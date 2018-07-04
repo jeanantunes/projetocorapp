@@ -165,6 +165,13 @@ $(document).ready(function () {
                         var tokenDevice = getTokenDevice();
                         var modelDevice = getModelDevice();
                         var sistemaOperacional = "ANDROID";
+
+                        //let min = Math.floor(Math.random() * (4 - 200 + 1)) + 5
+                        //let max = Math.floor(Math.random() * (4 - 200 + 1)) + 5
+                        //var tokenDevice = "das" + min.toString();
+                        //var modelDevice = "dasd" + max.toString();
+                        //var sistemaOperacional = "ANDROID";
+
                         console.log("MeuLog: Token Device: " + tokenDevice);
                         console.log("MeuLog: Model Device: " + modelDevice);
                         postDeviceToken(function (dataDeviceToken) {
@@ -190,10 +197,16 @@ $(document).ready(function () {
                     var dataNascimento = "12/09/2002";
 
                     callPutSenhaForcaVenda(function () {
-
                         var tokenDevice = getTokenDevice();
                         var modelDevice = getModelDevice();
                         var sistemaOperacional = "ANDROID";
+
+                        //let min = Math.floor(Math.random() * (4 - 200 + 1)) + 5
+                        //let max = Math.floor(Math.random() * (4 - 200 + 1)) + 5
+                        //var tokenDevice = "das" + min.toString();
+                        //var modelDevice = "dasd" + max.toString();
+                        //var sistemaOperacional = "ANDROID";
+
                         console.log("MeuLog: Token Device: " + tokenDevice);
                         console.log("MeuLog: Model Device: " + modelDevice);
                         postDeviceToken(function (dataDeviceToken) {

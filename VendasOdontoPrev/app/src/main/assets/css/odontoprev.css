@@ -341,6 +341,22 @@
 
 /****************************** End Materiais de Divulgação *********************************/
 
+/************************************* INICIO RESUMO PROPOSTA PF **********************************/
+
+.modalContainerResumoStatusPf {
+    top: -2.5%;
+    margin-left: 15px;
+    margin-right: 15px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    display: table;
+    max-width: 90%;
+}
+
+
+/************************************* END RESUMO PROPOSTA PF **********************************/
 
 /******************************* Inicio resumo status proposta PF ****************************/
 

@@ -12,9 +12,11 @@ $(document).ready(function () {
 
     carregarListaOnlineAtualizarProposta();
     localStorage.removeItem("resumoStatusPropostaPf");
+
 });
 
 function callDashBoardPF(callback, Token) {
+
     var statusTodasPropostas = 0;
     var dadosForca = get("dadosUsuario");
 
@@ -58,6 +60,7 @@ function callDashBoardPME(callback, Token) {
     });
 }
 
+
 function carregarListaOffline() {
 
     var pessoas = get("pessoas");
@@ -88,6 +91,7 @@ function carregarListaOffline() {
         var link = "";
         var acaoseta = "";
         var onClick = "";
+
 
         if (item.status == "DIGITANDO") {
             status = "Proposta incompleta";
@@ -293,6 +297,7 @@ function carregarListaOnlineAtualizarProposta() {
                 var acaoseta = "";
                 var cdVenda = "";
                 var onClick = "";
+                var statusVenda = "";
 
                 if (item.statusVenda == "Aprovado" && item.criticas == null) {
 
@@ -301,7 +306,8 @@ function carregarListaOnlineAtualizarProposta() {
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
-                    onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '))"';
+                    onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '), $(this).attr(' + "'data-status'" + '))"';
+                    statusVenda = item.statusVenda;
                 } else { // if (item.statusVenda == "Criticado" || (item.statusVenda == "Aprovado" && item.criticas != null))
 
                     status = "Criticada";
@@ -309,15 +315,9 @@ function carregarListaOnlineAtualizarProposta() {
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
+                    statusVenda = item.statusVenda;
                     onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '))"';
                 }
-                //} else if (item.statusVenda == "Criticada Envio") {
-                //
-                //    status = "Criticado";
-                //    css = "colorCirc3";
-                //    acaoseta = "hide";
-                //
-                //}
 
                 if (item.nome == "") {
                     itemLista = itemLista.replace("{NOME}", 'a');
@@ -333,7 +333,8 @@ function carregarListaOnlineAtualizarProposta() {
                 itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
                 itemLista = itemLista.replace("{CDVENDA}", cdVenda);
                 itemLista = itemLista.replace("{ONCLICK}", onClick);
-                
+                itemLista = itemLista.replace("{STATUSVENDA}", statusVenda);
+
                 $("#listaPessoas").append(itemLista);
 
                 $("#totalClientes").html(qtdPessoas);
@@ -351,14 +352,6 @@ function carregarListaOnlineAtualizarProposta() {
     var qtdPessoas = 0;
     var qtdEmpresas = 0;
 
-    //if (pessoas != null) {
-    //    qtdPessoas = pessoas.length;
-    //}
-    //
-    //if (empresas != null) {
-    //    qtdEmpresas = empresas.length;
-    //}
-
     $.each(pessoas, function (i, item) {
 
         if (item.status != "ENVIADA" && item.status != "Aprovado") {
@@ -373,6 +366,7 @@ function carregarListaOnlineAtualizarProposta() {
             var link = "";
             var acaoseta = "";
             var onClick = "";
+
 
             if (item.status == "DIGITANDO") {
                 status = "Proposta incompleta";
@@ -515,26 +509,6 @@ function carregarListaOnlineAtualizarProposta() {
                     acaoseta = "hide";
                 }
 
-                //if (item.statusVenda == "PROPOSTA IMPLANTADA") {
-                //
-                //    status = "PROPOSTA IMPLANTADA";
-                //    css = "colorCirc1";
-                //    acaoseta = "hide";
-                //
-                //} else if (item.statusVenda == "VIDAS COM CRITICAS") {
-                //    status = "VIDAS COM CRITICAS";
-                //    css = "colorCirc3";
-                //    acaoseta = "hide";
-                //} else if (item.statusVenda == "AGUARDANDO EMPRESA") {
-                //    status = "AGUARDANDO EMPRESA";
-                //    css = "colorCirc1";
-                //    acaoseta = "hide";
-                //} else if (item.statusVenda == "VIDAS OK") {
-                //    status = "VIDAS OK";
-                //    css = "colorCirc2";
-                //    acaoseta = "hide";
-                //}
-
                 itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
                 itemLista = itemLista.replace("{STATUS}", status);
                 itemLista = itemLista.replace("{CSS}", css);
@@ -558,7 +532,6 @@ function carregarListaOnlineAtualizarProposta() {
     $("#total").html(qtdEmpresas + qtdPessoas);
 
 }
-
 
 function buscarDetalheProposta(callback, token, cdVenda) {
 
@@ -672,15 +645,9 @@ function sincronizarPropostaPME(cnpjProposta) {
                     atualizarEmpresas(propostaPmeSelecionada[0]);
                     swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error");
                 }
-
             }, parametroEmpresa, beneficiariosDaProposta);
-
-
         }
-
-
     }
-
 }
 
 function sincronizarPropostaPF(cpfProposta) {
@@ -771,7 +738,9 @@ function sincronizarPropostaPF(cpfProposta) {
     }
 }
 
-function verDetalheProposta(dataId) {
+function verDetalheProposta(dataId, dataStatus) {
+
+    console.log(dataStatus);
 
     swal({
         title: "Aguarde",
@@ -865,6 +834,13 @@ function verDetalheProposta(dataId) {
 
             retorno.dependentes = dependentes;
             retorno.criticas = dataPropostaCriticada.venda.criticas;
+            retorno.status = dataStatus;
+
+            if (dataPropostaCriticada.venda.criticas.length == 0 && dataPropostaCriticada.venda.propostaDcms != undefined) {
+
+                retorno.propostaDcms = dataPropostaCriticada.venda.propostaDcms;
+
+            }
 
             localStorage.removeItem("resumoStatusPropostaPf");
             put("resumoStatusPropostaPf", JSON.stringify(retorno));
@@ -873,9 +849,4 @@ function verDetalheProposta(dataId) {
 
         }, dataToken.access_token, dataId);
     });
-
-
 }
-
-
-

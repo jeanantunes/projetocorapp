@@ -1889,13 +1889,27 @@ function validateEmail(email) {
 
 function sincronizarPME(callback, proposta, beneficiarios) {
 
-    var dadosUsuario = get("dadosUsuario");
-    var pdata = [];
-    var json = "{ \"cdForcaVenda\":" + dadosUsuario.codigo + ", \"empresas\": " + JSON.stringify(proposta) + ", \"titulares\":" + JSON.stringify(beneficiarios) + "}";
 
-    console.log(json);
 
-    callTokenVendas(function (dataToken) {
+        //if (!proposta.sincronizadaSerasa) {
+        //
+        //    postSerasa(function (dataConsultaSerasa) {
+        //
+        //                        
+        //
+        //
+        //    }, dataToken.access_token, proposta.cnpj);
+        //
+        //
+        //}
+   
+        var dadosUsuario = get("dadosUsuario");
+        var pdata = [];
+        var json = "{ \"cdForcaVenda\":" + dadosUsuario.codigo + ", \"empresas\": " + JSON.stringify(proposta) + ", \"titulares\":" + JSON.stringify(beneficiarios) + "}";
+
+        console.log(json);
+
+        callTokenVendas(function (dataToken) {
 
         if (dataToken.status != undefined) {
 
@@ -1922,4 +1936,82 @@ function sincronizarPME(callback, proposta, beneficiarios) {
             }
         });
     });
+}
+
+function postSerasa(callback, tokenSerasa, cnpj) {
+
+    $.ajax({
+        async: true,
+        url: URLBase + "/serasa/consulta/1.0/",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/xml",
+            "Authorization": "Bearer " + tokenSerasa,
+            "Cache-Control": "no-cache"
+        },
+        data: "<soapenv:Envelope\r\n                xmlns:dat=\"http://services.experian.com.br/DataLicensing/DataLicensingService/\"\r\n                xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n                <soapenv:Header>\r\n               <wsse:Security\r\n                               xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\"\r\n                               xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\r\n               <wsse:UsernameToken wsu:Id=\"UsernameToken-E26E52D53AB0F9B54115201256503949\">\r\n              <wsse:Username>51990098</wsse:Username>\r\n              <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Prj@2018</wsse:Password>\r\n              <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">3UoD2HzDrcGo5qh9W16B6A==</wsse:Nonce>\r\n              <wsu:Created>2018-03-04T01:07:30.394Z</wsu:Created>\r\n               </wsse:UsernameToken>\r\n               </wsse:Security>\r\n                </soapenv:Header>\r\n                <soapenv:Body>\r\n               <dat:ConsultarPJ>\r\n         <parameters>\r\n            <cnpj>" + cnpj + "</cnpj>\r\n            <RetornoPJ>\r\n               <razaoSocial>true</razaoSocial>\r\n               <nomeFantasia>true</nomeFantasia>\r\n               <dataAbertura>true</dataAbertura>\r\n               <naturezaJuridica>true</naturezaJuridica>\r\n <cnae>true</cnae>\r\n               <endereco>true</endereco>\r\n               <telefone>true</telefone>\r\n               <situacaoCadastral>HISTORICO</situacaoCadastral>\r\n               <representanteLegal>true</representanteLegal>\r\n               <simplesNacional>true</simplesNacional>\r\n               <Pacote>PJ1</Pacote>\r\n            </RetornoPJ>\r\n         </parameters>\r\n      </dat:ConsultarPJ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (resp) {
+            callback(resp);
+        }
+    });
+}
+
+
+function consultarSerasa() {
+
+    callTokenVendas(function (dataToken) {
+
+        postSerasa(function (dataConsultaSerasa) {
+
+            console.log(dataConsultaSerasa);
+
+            //var nome = dataConsultaSerasa.getElementsByTagName("Nome")[0].textContent.trim();
+
+            $(dataConsultaSerasa).find('result').each(function () {// your outer tag of xml
+                console.log($(this).find("razaoSocial").text());
+
+
+
+
+                //console.log($(this).find("naturezaJuridica").find("codigo").text());//
+                //console.log($(this).find("tnsCnae").find("codigo").text());
+
+                $($(this).find("enderecos")).find('endereco').each(function () {
+
+                    console.log($(this).find('bairro').text());
+
+                    return false;
+                });
+
+                $($(this).find("cnae")).find('tnsCnae').each(function () {
+
+                    console.log($(this).find('codigo').text());
+
+                    return false;
+                });
+
+                $(this).find("naturezaJuridica").find("codigo").text();
+            });
+
+
+            //try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent.trim()); } catch (Exception) { $("#razao-social").prop('disabled', false); }
+            //try { $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent.trim()); } catch (Exception) { $("#ramo-atividade").prop('disabled', false); }
+            //try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent.trim()); } catch (Exception) { $("#representante-legal").prop('disabled', false); }
+            //try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent.trim()); } catch (Exception) { $("#cpf-representante").prop('disabled', false); }
+            //try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent.trim()); } catch (Exception) { $("#nome-fantasia").prop('disabled', false); }
+            //try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim()); } catch (Exception) { }
+            //try { $("#cep").val(dataConsulta.getElementsByTagName("cep")[0].textContent.trim()); } catch (Exception) { }
+            //try { $("#uf").val(dataConsulta.getElementsByTagName("uf")[0].textContent.trim()); } catch (Exception) { }
+            //try { $("#cidade").val(dataConsulta.getElementsByTagName("cidade")[0].textContent.trim()); } catch (Exception) { }
+            //try { $("#bairro").val(dataConsulta.getElementsByTagName("bairro")[0].textContent.trim()); } catch (Exception) { }
+            //try { $("#numeroEndereco").val(dataConsulta.getElementsByTagName("Numero")[0].textContent.trim()); } catch (Exception) { }
+            //try { $("#complemento").val(dataConsulta.getElementsByTagName("Complemento")[0].textContent.trim()); } catch (Exception) { }
+
+        }, dataToken.access_token, "68.971.092/0001-90");
+    });
+
+
 }
