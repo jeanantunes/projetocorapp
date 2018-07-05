@@ -1,7 +1,8 @@
 ﻿$(document).ready(function () {
 
     $("#btnModalBoleto").click(function () {
-
+        //let min = Math.floor(Math.random() * (4 - 200 + 1)) + 5;
+        //ob.compartilharPdf(base64, "dsadsadsad" + min.toString());
         if (possuiBoletos) {
             $("#modalBoleto").modal("show");
         } else swal("", "Este cliente não possui boletos em aberto", "success");
@@ -12,8 +13,6 @@
 
     carregarFichaFinanceira();
     $(".clickDependente").click(function () {
-
-
 
         $("#nomeDependente").html($(this).data("nome"));
         $("#emailDependente").html($(this).data("email"));
@@ -302,6 +301,13 @@ function efetuarDownload(numeroParcela, dataVencimentoOriginal) {
 
         gerarDownloadBoleto(function (dataBoleto) {
 
+            var base64str = dataBoleto;
+
+            // decode base64 string, remove space for IE compatibility
+            var binary = btoa(dataBoleto);
+
+            ob.compartilharPdf(binary, resumoProposta.propostaDcms + numeroParcela);
+
             swal.close();
 
         }, dataToken.access_token, request);
@@ -317,7 +323,7 @@ function gerarDownloadBoleto(callback, token, request) {
         async: true,
         //url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
         //url: "http://172.16.244.160:8080/propostaCritica/buscarPropostaCritica/" + cdVenda,
-        url: "http://172.18.203.21:8090/est-corretorboletoebs-api-rs-1.0/financeiro/gerarboleto",
+        url: "http://172.18.203.21:8090/est-corretorboletoebs-api-rs-1.0/financeiro/gerarboletofile",
         //url: URLBase + "/corretorservicos/1.0/proposta/dados/critica/venda/" + cdVenda,
         method: "POST",
 

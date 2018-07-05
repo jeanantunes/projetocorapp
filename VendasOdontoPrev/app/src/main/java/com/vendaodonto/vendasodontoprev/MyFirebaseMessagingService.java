@@ -19,6 +19,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.io.File;
 import java.util.Date;
 
 
@@ -42,7 +43,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void sendMyNotification(String title,String message) {
+    public void sendMyNotification(String title,String message) {
 
         int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
 
@@ -76,7 +77,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                     .setAutoCancel(true)
                     .setLargeIcon(BitmapFactory.decodeResource
-                            (getResources(), R.drawable.ic_push))
+                            (getResources(), R.drawable.icon_status_bar))
                     .setBadgeIconType(R.drawable.ic_push)
                     .setContentIntent(pendingIntent)
                     .setSound(RingtoneManager.getDefaultUri
@@ -113,7 +114,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     /* Escolhe o icone de acordo com versao do android */
     private int getNotificationIcon() {
 
-        boolean useWhiteIcon = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+        boolean useWhiteIcon = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
         return useWhiteIcon ? R.drawable.ic_push : R.drawable.icon_status_bar;
     }
 
@@ -130,4 +131,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
 }
