@@ -40,25 +40,25 @@ var possuiBoletos = false;
 
 function carregarFichaFinanceira() {
 
-    swal({
-        title: "Aguarde",
-        text: 'Estamos buscando sua proposta',
-        content: "input",
-        showCancelButton: false,
-        showConfirmButton: false,
-        imageUrl: "img/load.gif",
-        icon: "info",
-        button: {
-            text: "...",
-            closeModal: false,
-        },
-    });
-
     let resumoProposta = get("resumoStatusPropostaPf");
 
-    if (resumoProposta.status.toUpperCase() == "APROVADO" && resumoProposta.propostaDcms != undefined) {
+    if (resumoProposta.status.toUpperCase() == "PROPOSTA CONCLUÍDA COM SUCESSO" && resumoProposta.propostaDcms != undefined && resumoProposta.dadosBancarios.agencia == "" && resumoProposta.dadosBancarios.conta == "") {
 
         callTokenVendas(function (dataToken) {
+
+            swal({
+                title: "Aguarde",
+                text: 'Estamos buscando sua proposta',
+                content: "input",
+                showCancelButton: false,
+                showConfirmButton: false,
+                imageUrl: "img/load.gif",
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
 
             buscarFichaFinanceira(function (dataFichaFinanceira) {
 
@@ -151,7 +151,7 @@ function popularCamposProposta() {
 
     let resumoProposta = get("resumoStatusPropostaPf");
 
-    if (resumoProposta.status.toUpperCase() == "APROVADO") $(".btnPadBtmTop").removeClass("hide");
+
     //retorno.cdVenda;
     $("#nomeTitular").html(resumoProposta.nome);
     $("#emailTitular").html(resumoProposta.email);
@@ -232,6 +232,7 @@ function popularCamposProposta() {
     if (resumoProposta.dadosBancarios.agencia == "" && resumoProposta.dadosBancarios.conta == "") {
 
         $("#formaPagamento").html("Boleto");
+        if (resumoProposta.status.toUpperCase() == "PROPOSTA CONCLUÍDA COM SUCESSO") $(".btnPadBtmTop").removeClass("hide");
     } else {
         $("#formaPagamento").html("Débito em Conta");
     }

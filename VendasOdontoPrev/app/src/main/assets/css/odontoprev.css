@@ -848,6 +848,11 @@
     color: #1974CE;
 }
 
+.colorSlick7 {
+    color: #2699FB;
+}
+
+
 /*********************************** End Cor Planos ****************************************/
 
 /**
@@ -2389,6 +2394,15 @@ input[type=checkbox] {
 .colorCirc5 {
     background-color: #ACAAA5;
 }
+
+.colorCirc7 {
+    background-color: #2699FB;
+}
+
+.colorCirc8 {
+    background-color: #DC6DAB;
+}
+
 
 .listBarra {
     border-left: 1px solid silver;

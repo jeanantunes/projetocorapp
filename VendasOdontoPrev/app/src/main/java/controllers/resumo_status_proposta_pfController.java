@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
 
 import com.vendaodonto.vendasodontoprev.MainActivity;
 import com.vendaodonto.vendasodontoprev.MyFirebaseMessagingService;
@@ -145,40 +147,61 @@ public class resumo_status_proposta_pfController {
     @JavascriptInterface
     public void compartilharPdf(String pdfBase64, String nomeArquivo) throws IOException {
 
+        if(!appInstalledOrNot("com.whatsapp")){
+            Toast.makeText(context, "Ops! Você não possui o WhastApp instalado", Toast.LENGTH_SHORT).show();
+        }else{
+            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File file = new File(path, nomeArquivo + ".pdf");
 
-        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(path, nomeArquivo + ".pdf");
+            byte[] pdfAsBytes = Base64.decode(pdfBase64, 0);
 
-        byte[] pdfAsBytes = Base64.decode(pdfBase64, 0);
+            try {
+                FileOutputStream stream = new FileOutputStream(file, true);
 
-        try {
-            FileOutputStream stream = new FileOutputStream(file, true);
-
-            stream.write(pdfAsBytes);
-            stream.flush();
-            stream.close();
-            Log.i("saveData", "Data Saved");
-            sendMyNotification("Download concluído: " + nomeArquivo, "Acesse a pasta downloads");
+                stream.write(pdfAsBytes);
+                stream.flush();
+                stream.close();
+                Log.i("saveData", "Data Saved");
+                sendMyNotification("Download concluído: " + nomeArquivo, "Acesse a pasta downloads");
 
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+            File fileWithinMyDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "//" + nomeArquivo + ".pdf");
+
+            if(fileWithinMyDir.exists()) {
+                intentShareFile.setType("application/pdf");
+                intentShareFile.putExtra(Intent.EXTRA_STREAM, Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "//" + nomeArquivo + ".pdf"));
+
+                intentShareFile.putExtra(Intent.EXTRA_SUBJECT,
+                        "Sharing File...");
+                intentShareFile.putExtra(Intent.EXTRA_TEXT, "Sharing File...");
+
+                context.startActivity(Intent.createChooser(intentShareFile, "Share File"));
+            }
         }
 
-        String sharePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
 
-        Uri uri = Uri.parse(sharePath + "/" + nomeArquivo + ".pdf");
-        Intent share = new Intent(Intent.ACTION_SEND);
 
-        share.putExtra(Intent.EXTRA_STREAM, uri);
-        share.putExtra(Intent.EXTRA_TITLE, nomeArquivo);
-        share.putExtra(Intent.EXTRA_SUBJECT, nomeArquivo);
-        share.setType("application/*");
-        share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(Intent.createChooser(share, nomeArquivo));
+    }
 
+    private boolean appInstalledOrNot(String uri) {
+
+        PackageManager pm = context.getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
     }
 
 }
