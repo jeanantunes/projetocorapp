@@ -1911,30 +1911,30 @@ function sincronizarPME(callback, proposta, beneficiarios) {
 
         callTokenVendas(function (dataToken) {
 
-        if (dataToken.status != undefined) {
+            if (dataToken.status != undefined) {
 
-            callback(dataToken);
-        }
-
-        $.ajax({
-            url: URLBase + "/corretorservicos/1.0/vendapme",
-            //url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
-            type: "POST",
-            data: json,
-            dataType: "json",
-            headers: {
-                "Content-Type": "application/json",
-                "Cache-Control": "no-cache",
-                "Authorization": "Bearer " + dataToken.access_token
-            },
-            success: function (result) {
-                callback(result)
-            },
-            error: function (xhr) {
-                callback(xhr)
-                //swal.close();
+                callback(dataToken);
             }
-        });
+
+            $.ajax({
+                url: URLBase + "/corretorservicos/1.0/vendapme",
+                //url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
+                type: "POST",
+                data: json,
+                dataType: "json",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Cache-Control": "no-cache",
+                    "Authorization": "Bearer " + dataToken.access_token
+                },
+                success: function (result) {
+                    callback(result)
+                },
+                error: function (xhr) {
+                    callback(xhr)
+                    //swal.close();
+                }
+            });
     });
 }
 
@@ -1959,59 +1959,136 @@ function postSerasa(callback, tokenSerasa, cnpj) {
     });
 }
 
+function consultarSerasa(propostaPme) {
 
-function consultarSerasa() {
-
+    
     callTokenVendas(function (dataToken) {
 
         postSerasa(function (dataConsultaSerasa) {
 
+            try {
+                try {
+                    var situacaoEmpresa = dataConsultaSerasa.getElementsByTagName("situacao")[0].textContent;
+                    var situacao = situacaoEmpresa.indexOf("ATIVA");
+                } catch (Exception) { }
+
+                try {
+                    var naturezaJuridica = dataConsultaSerasa.getElementsByTagName("codigo")[0].textContent;
+                    var dataAbertura = dataConsultaSerasa.getElementsByTagName("dataAbertura")[0].textContent;
+
+                    if (naturezaJuridica == "2135") {
+                        var date = toDateSplitHifenSerasa(dataAbertura);
+
+                        if (!validateDataMei(date)) {
+
+                            swal("Ops", "Venda não autorizada para Empresa MEI com menos de 6 meses", "info");
+                            return; // Não chamar servico de venda e retornar erro para o usuario
+                        }
+                    }
+
+                } catch (Exception) { }
+
+                if (situacao == undefined) {
+
+
+                    // enviar proposta com dados preenchidos pelo força
+                    return;
+                }
+
+                if (!situacao == 0) {
+
+                    swal("Ops", "Não é possível seguir com a contratação para esta empresa. Consulte o CNPJ e tente novamente.", "info");
+                    return;
+                }
+            } catch (Exception) { }
+
             console.log(dataConsultaSerasa);
 
-            //var nome = dataConsultaSerasa.getElementsByTagName("Nome")[0].textContent.trim();
+            try {
 
-            $(dataConsultaSerasa).find('result').each(function () {// your outer tag of xml
-                console.log($(this).find("razaoSocial").text());
+                propostaPme.razaoSocial = dataConsulta.getElementsByTagName("razaoSocial")[0].textContent.trim(); // RAZAO SOCIAL
 
+            } catch (Exception) {
+               
+            }
 
+            try {
 
+                propostaPme.ramoAtividade = dataConsulta.getElementsByTagName("descricao")[0].textContent.trim(); // RAMO DE ATIVIDADE
 
-                //console.log($(this).find("naturezaJuridica").find("codigo").text());//
-                //console.log($(this).find("tnsCnae").find("codigo").text());
+            } catch (Exception) {
+                
+            }
 
-                $($(this).find("enderecos")).find('endereco').each(function () {
+            try {
 
-                    console.log($(this).find('bairro').text());
+                propostaPme.representanteLegal = dataConsulta.getElementsByTagName("nome")[0].textContent.trim(); // NOME REPRESENTANTE LEGAL
 
-                    return false;
-                });
+            } catch (Exception) {
+           
+            }
 
-                $($(this).find("cnae")).find('tnsCnae').each(function () {
+            try {
 
-                    console.log($(this).find('codigo').text());
+                propostaPme.cpfRepresentante = dataConsulta.getElementsByTagName("documento")[0].textContent.trim(); // CPF REPRESENTANTE LEGAL
 
-                    return false;
-                });
+            } catch (Exception) {
+         
+            }
 
-                $(this).find("naturezaJuridica").find("codigo").text();
-            });
+            try {
 
+                propostaPme.nomeFantasia = dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent.trim(); // NOME FANTASIA
 
-            //try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent.trim()); } catch (Exception) { $("#razao-social").prop('disabled', false); }
-            //try { $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent.trim()); } catch (Exception) { $("#ramo-atividade").prop('disabled', false); }
-            //try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent.trim()); } catch (Exception) { $("#representante-legal").prop('disabled', false); }
-            //try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent.trim()); } catch (Exception) { $("#cpf-representante").prop('disabled', false); }
-            //try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent.trim()); } catch (Exception) { $("#nome-fantasia").prop('disabled', false); }
-            //try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim()); } catch (Exception) { }
-            //try { $("#cep").val(dataConsulta.getElementsByTagName("cep")[0].textContent.trim()); } catch (Exception) { }
-            //try { $("#uf").val(dataConsulta.getElementsByTagName("uf")[0].textContent.trim()); } catch (Exception) { }
-            //try { $("#cidade").val(dataConsulta.getElementsByTagName("cidade")[0].textContent.trim()); } catch (Exception) { }
-            //try { $("#bairro").val(dataConsulta.getElementsByTagName("bairro")[0].textContent.trim()); } catch (Exception) { }
-            //try { $("#numeroEndereco").val(dataConsulta.getElementsByTagName("Numero")[0].textContent.trim()); } catch (Exception) { }
-            //try { $("#complemento").val(dataConsulta.getElementsByTagName("Complemento")[0].textContent.trim()); } catch (Exception) { }
+            } catch (Exception) {
+        
+            }
+
+            try {
+                propostaPme.cnae = dataConsulta.getElementsByTagName("codigo")[1].textContent.trim(); // CNAE
+
+            } catch (Exception) { }
+
+            try {
+                propostaPme.enderecoEmpresa.cep = dataConsulta.getElementsByTagName("cep")[0].textContent.trim(); // CEP
+            } catch (Exception) { }
+
+            try {
+                propostaPme.enderecoEmpresa.logradouro = dataConsulta.getElementsByTagName("Nome")[0].textContent.trim(); // CEP
+            } catch (Exception) { }
+
+            try {
+                propostaPme.enderecoEmpresa.estado = dataConsulta.getElementsByTagName("uf")[0].textContent.trim(); // ESTADO
+            } catch (Exception) { }
+
+            try {
+                propostaPme.enderecoEmpresa.cidade = dataConsulta.getElementsByTagName("cidade")[0].textContent.trim(); // CIDADE
+            } catch (Exception) { }
+
+            try {
+                propostaPme.enderecoEmpresa.bairro = dataConsulta.getElementsByTagName("bairro")[0].textContent.trim(); // BAIRRO
+            } catch (Exception) { }
+
+            try {
+                propostaPme.enderecoEmpresa.numero = dataConsulta.getElementsByTagName("Numero")[0].textContent.trim(); // NUMERO
+            } catch (Exception) { }
+
+            try {
+                propostaPme.enderecoEmpresa.complemento = dataConsulta.getElementsByTagName("Complemento")[0].textContent.trim(); // COMPLEMENTO
+            } catch (Exception) { }
 
         }, dataToken.access_token, "68.971.092/0001-90");
     });
+}
 
+function validateDataMei(date) {
 
+    var eightYearsAgo = moment().subtract(6, "months");
+    var birthday = moment(date);
+
+    if (!birthday.isValid()) {
+        // INVALID DATE
+    } else if (eightYearsAgo.isAfter(birthday)) return true;
+
+    return false;
 }

@@ -336,17 +336,7 @@ function verificarSePropostaExiste() {
     }
 }
 
-function validateDataMei(date) {
 
-    var eightYearsAgo = moment().subtract(6, "months");
-    var birthday = moment(date);
-
-    if (!birthday.isValid()) {
-        // INVALID DATE
-    } else if (eightYearsAgo.isAfter(birthday)) return true;
-
-    return false;
-}
 
 function buscarEmpresa() {
     
@@ -434,7 +424,7 @@ function buscarEmpresa() {
 
                 try {
                     //put('cpnjValido', dataConsulta.getElementsByTagName("situacao")[0].textContent);
-                    console.log(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim());
+                    //console.log(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim());
                     //console.log(empresaAtiva);
                     try { $("#rua").val(dataConsulta.getElementsByTagName("Nome")[0].textContent.trim()); } catch (Exception) { }
                     try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent.trim()); } catch (Exception) { $("#razao-social").prop('disabled', false); }
