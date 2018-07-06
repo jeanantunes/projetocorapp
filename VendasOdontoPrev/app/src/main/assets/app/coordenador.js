@@ -1960,7 +1960,6 @@ function postSerasa(callback, tokenSerasa, cnpj) {
 }
 
 function consultarSerasa(propostaPme) {
-
     
     callTokenVendas(function (dataToken) {
 

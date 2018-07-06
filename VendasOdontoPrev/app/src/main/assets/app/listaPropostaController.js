@@ -22,8 +22,8 @@ function callDashBoardPF(callback, Token) {
 
     $.ajax({
         async: true,
-        url: "http://172.16.244.160:8090/dashboardPropostaPF/" + statusTodasPropostas + "/"  + dadosForca.cpf,
-        //url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        //url: "http://172.16.244.160:8090/dashboardPropostaPF/" + statusTodasPropostas + "/"  + dadosForca.cpf,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -45,8 +45,8 @@ function callDashBoardPME(callback, Token) {
 
     $.ajax({
         async: true,
-        //url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
-        url: "http://172.16.244.160:8090/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        //url: "http://172.16.244.160:8090/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -217,77 +217,8 @@ function carregarListaOnlineAtualizarProposta() {
 
         callDashBoardPF(function (dataDashPf) {
 
-            //var attCdVendaPropostas = get("pessoas");
-
-            //if (attCdVendaPropostas != undefined) {
-            //
-            //    $.each(attCdVendaPropostas, function (indiceProposta, iProposta) {
-            //
-            //        var cdVenda = iProposta.cdVenda;
-            //
-            //        if (cdVenda == undefined) {
-            //
-            //            var propostaSemCdVenda = dataDashPf.dashboardPropostasPF.filter(function (x) { return x.cpf == iProposta.cpf.replace(/\D/g, '') });
-            //
-            //            if (propostaSemCdVenda.length == 1) {
-            //
-            //                iProposta.cdVenda = propostaSemCdVenda[0].cdVenda;
-            //                iProposta.numeroDaProposta = propostaSemCdVenda[0].propostaDcms;
-            //
-            //                var salvarPropostas = [];
-            //
-            //                var propostaSemCdVenda = attCdVendaPropostas.filter(function (x) { return x.cpf != iProposta.cpf });
-            //
-            //                $.each(propostaSemCdVenda, function (indiceSavePropostas, itemSavePropostas) {
-            //                    salvarPropostas.push(itemSavePropostas);
-            //                });
-            //
-            //
-            //                salvarPropostas.push(iProposta);
-            //
-            //                put("pessoas", JSON.stringify(salvarPropostas));
-            //
-            //            }
-            //
-            //        }
-            //
-            //    });
-            //}
-
-            //var propostasNaoRepetidas = [];
-
             $.each(dataDashPf.dashboardPropostasPF, function (i, item) {
 
-                //var checkCodVenda = propostasNaoRepetidas.filter(function (x) { return x.cdVenda == item.cdVenda });
-
-                //if (checkCodVenda.length == 1 ) return; // TO DO Filtrar 1 propostas por titular
-
-                //propostasNaoRepetidas.push(item);
-             
-                //var atualizarPropostaPf = get("pessoas");
-
-                //if (atualizarPropostaPf != undefined) {
-                //    var proposta = atualizarPropostaPf.filter(function (x) { return x.cdVenda == item.cdVenda }); // Buscando proposta local com o mesmo cdVenda
-                //    var propostas = atualizarPropostaPf.filter(function (x) { return x.cdVenda != item.cdVenda });
-                //    var putPropostas = [];
-                //
-                //
-                //    if (proposta.length == 1) {
-                //
-                //        $.each(propostas, function (i, item) {
-                //
-                //            putPropostas.push(item);
-                //
-                //        });
-                //
-                //        proposta[0].status = item.statusVenda;
-                //        putPropostas.push(proposta[0]);
-                //
-                //        put("pessoas", JSON.stringify(putPropostas));
-                //
-                //    }
-                //}
-                
                 qtdPessoas++;
 
                 var itemLista = getComponent("itemLista");
@@ -402,14 +333,7 @@ function carregarListaOnlineAtualizarProposta() {
                 acaoseta = "";
 
 
-            } /* else if (item.status == "CRITICADA" || item.status == "Criticado") {
-                status = "Criticada";
-                css = "colorCirc3";
-                acao = "ver detalhes";
-                onClick = "";
-                link = 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
-                acaoseta = "";
-            } */ else if (item.status == "SYNC") {
+            } else if (item.status == "SYNC") {
                 status = "sincronizando";
                 css = "colorCirc5";
                 acaoseta = "hide";
@@ -467,17 +391,7 @@ function carregarListaOnlineAtualizarProposta() {
                 link = "";
                 onClick = "onclick='" + "sincronizarPropostaPME" + '("' + item.cnpj + '")' + "'"
                 acaoseta = "";
-            } /*else if (item.status == "CRITICADA") {
-                status = "Criticada";
-                css = "colorCirc3";
-                acao = "ver detalhes";
-                link = 'href="venda_pme_editar.html?cnpj=' + item.cnpj + '"';
-                acaoseta = "";
-            } else if (item.status == "ENVIADA") {
-                status = "Enviada";
-                css = "colorCirc2";
-                acaoseta = "hide";
-            }*/ else if (item.status == "SYNC") {
+            } else if (item.status == "SYNC") {
                 status = "Sincronizando";
                 css = "colorCirc5";
                 acaoseta = "hide";
@@ -516,8 +430,6 @@ function carregarListaOnlineAtualizarProposta() {
                 var css = "";
                 var acao = "";
                 var link = "";
-
-                //if (i < 10) item.statusVenda = "Proposta Concluída com Sucesso";
 
                 if (item.statusVenda == "Proposta enviada para a OdontoPrev") {
 

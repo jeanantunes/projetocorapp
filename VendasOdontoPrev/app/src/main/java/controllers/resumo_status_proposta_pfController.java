@@ -56,7 +56,7 @@ public class resumo_status_proposta_pfController {
             stream.flush();
             stream.close();
             Log.i("saveData", "Data Saved");
-            sendMyNotification("Download concluído: " + nomeArquivo, "Acesse a pasta downloads");
+            sendMyNotification("Download do boleto concluído: " + nomeArquivo + ".pdf", "Acesse a pasta downloads para obter o boleto.");
 
 
         } catch (FileNotFoundException e) {
@@ -185,9 +185,6 @@ public class resumo_status_proposta_pfController {
                 context.startActivity(Intent.createChooser(intentShareFile, "Share File"));
             }
         }
-
-
-
     }
 
     private boolean appInstalledOrNot(String uri) {

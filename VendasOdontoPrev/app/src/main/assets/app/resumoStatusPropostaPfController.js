@@ -76,23 +76,29 @@ function carregarFichaFinanceira() {
 
                     item.statusPagamento = "EM ABERTO";
 
-                    if (item.statusPagamento == "RENEGOCIADO" || item.statusPagamento == "EM ABERTO") {
+                    if (item.statusPagamento == "RENEGOCIADO" || item.statusPagamento == "EM ABERTO" || item.statusPagamento == "INCLUSAO DE TITULO") {
 
-                        let competencia = item.competencia.split("/"); 
-                        let meses = getRepository("meses");
-                        let mesSelecionado = meses[competencia[0]];
 
-                        let componenteRadioButton = getComponent("radioButtonBoleto");
-                        componenteRadioButton = componenteRadioButton.replace("{CHECKED}", i == 0 ? "checked" : "");
-                        componenteRadioButton = componenteRadioButton.replace("{ID}", "radio-" + i);
-                        componenteRadioButton = componenteRadioButton.replace("{VENCIMENTOORIGINAL}", item.vencimentoOriginal);
-                        componenteRadioButton = componenteRadioButton.replace("{PARCELA}", + item.parcela);
-                        componenteRadioButton = componenteRadioButton.replace("{COMPETENCIALABEL}", mesSelecionado + " de " + competencia[1]);
-                        componenteRadioButton = componenteRadioButton.replace("{ID2}", "radio-" + i);
-                        
-                        $(".radio").append(componenteRadioButton);
+                        let dataDeRenegociacao = moment(item.dataRenegociacao);
+                        let currentDate = moment();
 
-                    }    
+                        if (dataDeRenegociacao.isSameOrAfter(currentDate)){
+                            let competencia = item.competencia.split("/");
+                            let meses = getRepository("meses");
+                            let mesSelecionado = meses[competencia[0]];
+
+                            let componenteRadioButton = getComponent("radioButtonBoleto");
+                            componenteRadioButton = componenteRadioButton.replace("{CHECKED}", i == 0 ? "checked" : "");
+                            componenteRadioButton = componenteRadioButton.replace("{ID}", "radio-" + i);
+                            componenteRadioButton = componenteRadioButton.replace("{VENCIMENTOORIGINAL}", item.vencimentoOriginal);
+                            componenteRadioButton = componenteRadioButton.replace("{PARCELA}", + item.parcela);
+                            componenteRadioButton = componenteRadioButton.replace("{COMPETENCIALABEL}", mesSelecionado + " de " + competencia[1]);
+                            componenteRadioButton = componenteRadioButton.replace("{ID2}", "radio-" + i);
+
+                            $(".radio").append(componenteRadioButton);
+
+                        }
+                    }
 
                 });
 
@@ -307,7 +313,7 @@ function efetuarDownload(numeroParcela, dataVencimentoOriginal) {
             // decode base64 string, remove space for IE compatibility
             var binary = btoa(dataBoleto);
 
-            ob.compartilharPdf(binary, resumoProposta.propostaDcms + numeroParcela);
+            ob.gerarArquivo(binary, resumoProposta.propostaDcms + numeroParcela);
 
             swal.close();
 
@@ -341,7 +347,5 @@ function gerarDownloadBoleto(callback, token, request) {
             callback(xhr);
         }
     });
-
-
 
 }
