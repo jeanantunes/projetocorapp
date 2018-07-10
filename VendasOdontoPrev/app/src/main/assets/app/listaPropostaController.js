@@ -6,19 +6,23 @@ $(document).ready(function () {
 
     if (!navigator.onLine) {
         carregarListaOffline();
+        localStorage.removeItem("resumoStatusPropostaPf");
         return;
     }
 
     carregarListaOnlineAtualizarProposta();
     localStorage.removeItem("resumoStatusPropostaPf");
+
 });
 
 function callDashBoardPF(callback, Token) {
+
     var statusTodasPropostas = 0;
     var dadosForca = get("dadosUsuario");
 
     $.ajax({
         async: true,
+        //url: "http://172.16.244.160:8090/dashboardPropostaPF/" + statusTodasPropostas + "/"  + dadosForca.cpf,
         url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
         method: "GET",
         headers: {
@@ -42,6 +46,7 @@ function callDashBoardPME(callback, Token) {
     $.ajax({
         async: true,
         url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        //url: "http://172.16.244.160:8090/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -56,6 +61,7 @@ function callDashBoardPME(callback, Token) {
         }
     });
 }
+
 
 function carregarListaOffline() {
 
@@ -88,6 +94,7 @@ function carregarListaOffline() {
         var acaoseta = "";
         var onClick = "";
 
+
         if (item.status == "DIGITANDO") {
             status = "Proposta incompleta";
             css = "colorCirc1";
@@ -95,12 +102,12 @@ function carregarListaOffline() {
             link = 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
             acaoseta = "";
         } else if (item.status == "PRONTA") {
-            status = "Aguardando sincronismo";
+            status = "Aguardando envio";
             css = "colorCirc4";
             acao = "sincronizar";
             link = "logado.html";
             acaoseta = "";
-        } else if (item.status == "CRITICADA" || item.status == "Criticado") {
+        } /*else if (item.status == "CRITICADA" || item.status == "Criticado") {
             status = "Criticada";
             css = "colorCirc3";
             acao = "ver detalhes";
@@ -114,7 +121,7 @@ function carregarListaOffline() {
             status = "Sincronizando";
             css = "colorCirc5";
             acaoseta = "hide";
-        }
+        }*/
 
         if (item.nome == "") {
             itemLista = itemLista.replace("{NOME}", 'a');
@@ -151,7 +158,7 @@ function carregarListaOffline() {
             link = "venda_pme_editar.html?cnpj=" + item.cnpj;
             acaoseta = "";
         } else if (item.status == "PRONTA") {
-            status = "Aguardando sincronismo";
+            status = "Aguardando envio";
             css = "colorCirc4";
             acao = "sincronizar";
             link = "logado.html";
@@ -210,77 +217,8 @@ function carregarListaOnlineAtualizarProposta() {
 
         callDashBoardPF(function (dataDashPf) {
 
-            var attCdVendaPropostas = get("pessoas");
-
-            if (attCdVendaPropostas != undefined) {
-
-                $.each(attCdVendaPropostas, function (indiceProposta, iProposta) {
-
-                    var cdVenda = iProposta.cdVenda;
-
-                    if (cdVenda == undefined) {
-
-                        var propostaSemCdVenda = dataDashPf.dashboardPropostasPF.filter(function (x) { return x.cpf == iProposta.cpf.replace(/\D/g, '') });
-
-                        if (propostaSemCdVenda.length == 1) {
-
-                            iProposta.cdVenda = propostaSemCdVenda[0].cdVenda;
-                            iProposta.numeroDaProposta = propostaSemCdVenda[0].propostaDcms;
-
-                            var salvarPropostas = [];
-
-                            var propostaSemCdVenda = attCdVendaPropostas.filter(function (x) { return x.cpf != iProposta.cpf });
-
-                            $.each(propostaSemCdVenda, function (indiceSavePropostas, itemSavePropostas) {
-                                salvarPropostas.push(itemSavePropostas);
-                            });
-
-
-                            salvarPropostas.push(iProposta);
-
-                            put("pessoas", JSON.stringify(salvarPropostas));
-
-                        }
-
-                    }
-
-                });
-            }
-
-            var propostasNaoRepetidas = [];
-
             $.each(dataDashPf.dashboardPropostasPF, function (i, item) {
 
-                var checkCodVenda = propostasNaoRepetidas.filter(function (x) { return x.cdVenda == item.cdVenda });
-
-                //if (checkCodVenda.length == 1 ) return; // TO DO Filtrar 1 propostas por titular
-
-                propostasNaoRepetidas.push(item);
-             
-                var atualizarPropostaPf = get("pessoas");
-
-                if (atualizarPropostaPf != undefined) {
-                    var proposta = atualizarPropostaPf.filter(function (x) { return x.cdVenda == item.cdVenda }); // Buscando proposta local com o mesmo cdVenda
-                    var propostas = atualizarPropostaPf.filter(function (x) { return x.cdVenda != item.cdVenda });
-                    var putPropostas = [];
-
-
-                    if (proposta.length == 1) {
-
-                        $.each(propostas, function (i, item) {
-
-                            putPropostas.push(item);
-
-                        });
-
-                        proposta[0].status = item.statusVenda;
-                        putPropostas.push(proposta[0]);
-
-                        put("pessoas", JSON.stringify(putPropostas));
-
-                    }
-                }
-                
                 qtdPessoas++;
 
                 var itemLista = getComponent("itemLista");
@@ -292,39 +230,53 @@ function carregarListaOnlineAtualizarProposta() {
                 var acaoseta = "";
                 var cdVenda = "";
                 var onClick = "";
+                var statusVenda = "";
 
-                if (item.statusVenda == "Aprovado" && item.criticas == null) {
+                if (item.statusVenda == "Proposta enviada para a OdontoPrev" && item.criticas == null) {
 
-                    status = "Processada";
-                    css = "colorCirc2";
+                    status = "Proposta enviada para a OdontoPrev";
+                    css = "colorCirc7";
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
-                    onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '))"';
-                } else { // if (item.statusVenda == "Criticado" || (item.statusVenda == "Aprovado" && item.criticas != null))
+                    onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '), $(this).attr(' + "'data-status'" + '))"';
+                    statusVenda = item.statusVenda;
 
-                    status = "Criticada";
+                } else if (item.statusVenda == "Proposta Criticada") {
+
+                    status = item.statusVenda;
                     css = "colorCirc3";
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
-                    onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '))"';
+                    statusVenda = item.statusVenda;
+                    onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '), $(this).attr(' + "'data-status'" + '))"';
+
+                } else if (item.statusVenda == "Proposta Concluída com Sucesso") {
+
+                    status = item.statusVenda;
+                    css = "colorCirc2";
+                    acaoseta = "";
+                    acao = "ver detalhes";
+                    cdVenda = item.cdVenda;
+                    statusVenda = item.statusVenda;
+                    onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '), $(this).attr(' + "'data-status'" + '))"';
+
                 }
-                //} else if (item.statusVenda == "Criticada Envio") {
-                //
-                //    status = "Criticado";
-                //    css = "colorCirc3";
-                //    acaoseta = "hide";
-                //
-                //}
+
 
                 if (item.nome == "") {
+
                     itemLista = itemLista.replace("{NOME}", 'a');
                     itemLista = itemLista.replace("{STYLE}", 'style = "color: #fff"');
+
                 } else {
+
                     itemLista = itemLista.replace("{NOME}", item.nome);
                     itemLista = itemLista.replace("{STYLE}", "");
+
                 }
+
                 itemLista = itemLista.replace("{STATUS}", status);
                 itemLista = itemLista.replace("{CSS}", css);
                 itemLista = itemLista.replace("{ACAO}", acao);
@@ -332,11 +284,10 @@ function carregarListaOnlineAtualizarProposta() {
                 itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
                 itemLista = itemLista.replace("{CDVENDA}", cdVenda);
                 itemLista = itemLista.replace("{ONCLICK}", onClick);
-                
+                itemLista = itemLista.replace("{STATUSVENDA}", statusVenda);
+
                 $("#listaPessoas").append(itemLista);
-
                 $("#totalClientes").html(qtdPessoas);
-
                 $("#totalEmpresas").html(qtdEmpresas);
                 $("#total").html(qtdEmpresas + qtdPessoas);
 
@@ -350,17 +301,9 @@ function carregarListaOnlineAtualizarProposta() {
     var qtdPessoas = 0;
     var qtdEmpresas = 0;
 
-    //if (pessoas != null) {
-    //    qtdPessoas = pessoas.length;
-    //}
-    //
-    //if (empresas != null) {
-    //    qtdEmpresas = empresas.length;
-    //}
-
     $.each(pessoas, function (i, item) {
 
-        if (item.status != "ENVIADA" && item.status != "Aprovado") {
+        if (item.status != "ENVIADA" && item.status != "Aprovado" && item.status == "Proposta enviada para a OdontoPrev" && item.status != "CRITICADA" && item.status != "Criticado") {
 
             qtdPessoas++;
 
@@ -373,6 +316,7 @@ function carregarListaOnlineAtualizarProposta() {
             var acaoseta = "";
             var onClick = "";
 
+
             if (item.status == "DIGITANDO") {
                 status = "Proposta incompleta";
                 css = "colorCirc1";
@@ -381,34 +325,32 @@ function carregarListaOnlineAtualizarProposta() {
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
 
-                status = "Aguardando sincronismo";
-                css = "colorCirc4";
-                acao = "Sincronizar";
+                status = "Proposta com envio pendente";
+                css = "colorCirc8";
+                acao = "enviar proposta";
                 link = "";
-                onClick = "onclick='" + "sincronizarProposta" + '("' + item.cpf + '")' + "'"
+                onClick = "onclick='" + "sincronizarPropostaPF" + '("' + item.cpf + '")' + "'"
                 acaoseta = "";
 
 
-            } else if (item.status == "CRITICADA" || item.status == "Criticado") {
-                status = "Criticada";
-                css = "colorCirc3";
-                acao = "ver detalhes";
-                onClick = "";
-                link = 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
-                acaoseta = "";
             } else if (item.status == "SYNC") {
-                status = "Sincronizando";
+                status = "sincronizando";
                 css = "colorCirc5";
                 acaoseta = "hide";
             }
 
             if (item.nome == "") {
+
                 itemLista = itemLista.replace("{NOME}", 'a');
                 itemLista = itemLista.replace("{STYLE}", 'style = "color: #fff"');
+
             } else {
+
                 itemLista = itemLista.replace("{NOME}", item.nome);
                 itemLista = itemLista.replace("{STYLE}", "");
+
             }
+
             itemLista = itemLista.replace("{STATUS}", status);
             itemLista = itemLista.replace("{CSS}", css);
             itemLista = itemLista.replace("{ACAO}", acao);
@@ -420,8 +362,6 @@ function carregarListaOnlineAtualizarProposta() {
         }
     });
 
-
-
     $("#totalClientes").html(qtdPessoas);
 
     $.each(empresas, function (i, item) {
@@ -431,6 +371,7 @@ function carregarListaOnlineAtualizarProposta() {
         var acao = "";
         var link = "";
         var onClick = "";
+        var acaoseta = "";
 
         if (item.status != "ENVIADA") {
 
@@ -445,21 +386,12 @@ function carregarListaOnlineAtualizarProposta() {
                 link = 'href="venda_pme_editar.html?cnpj=' + item.cnpj + '"';
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
-                status = "Aguardando sincronismo";
-                css = "colorCirc4";
-                acao = "sincronizar";
-                link = "logado.html";
+                status = "Proposta com envio pendente";
+                css = "colorCirc8";
+                acao = "enviar proposta";
+                link = "";
+                onClick = "onclick='" + "sincronizarPropostaPME" + '("' + item.cnpj + '")' + "'"
                 acaoseta = "";
-            } else if (item.status == "CRITICADA") {
-                status = "Criticada";
-                css = "colorCirc3";
-                acao = "ver detalhes";
-                link = 'href="venda_pme_editar.html?cnpj=' + item.cnpj + '"';
-                acaoseta = "";
-            } else if (item.status == "ENVIADA") {
-                status = "Enviada";
-                css = "colorCirc2";
-                acaoseta = "hide";
             } else if (item.status == "SYNC") {
                 status = "Sincronizando";
                 css = "colorCirc5";
@@ -476,7 +408,6 @@ function carregarListaOnlineAtualizarProposta() {
             itemLista = itemLista.replace("{ONCLICK}", onClick);
 
             $("#listaEmpresas").append(itemLista);
-
             $("#totalEmpresas").html(qtdEmpresas);
             $("#total").html(qtdEmpresas + qtdPessoas);
         }
@@ -500,38 +431,26 @@ function carregarListaOnlineAtualizarProposta() {
                 var css = "";
                 var acao = "";
                 var link = "";
+                var acaoseta = "";
 
-                if (item.statusVenda == "Aprovado") {
+                if (item.statusVenda == "Proposta enviada para a OdontoPrev") {
 
-                    status = "Aprovada";
-                    css = "colorCirc2";
+                    status = "Proposta enviada para a OdontoPrev";
+                    css = "colorCirc7";
                     acaoseta = "hide";
-                } else if (item.statusVenda == "Criticado") {
 
-                    status = "Criticada";
+                } else if (item.statusVenda == "Proposta Criticada") {
+
+                    status = "Proposta Criticada";
                     css = "colorCirc3";
                     acaoseta = "hide";
-                }
 
-                //if (item.statusVenda == "PROPOSTA IMPLANTADA") {
-                //
-                //    status = "PROPOSTA IMPLANTADA";
-                //    css = "colorCirc1";
-                //    acaoseta = "hide";
-                //
-                //} else if (item.statusVenda == "VIDAS COM CRITICAS") {
-                //    status = "VIDAS COM CRITICAS";
-                //    css = "colorCirc3";
-                //    acaoseta = "hide";
-                //} else if (item.statusVenda == "AGUARDANDO EMPRESA") {
-                //    status = "AGUARDANDO EMPRESA";
-                //    css = "colorCirc1";
-                //    acaoseta = "hide";
-                //} else if (item.statusVenda == "VIDAS OK") {
-                //    status = "VIDAS OK";
-                //    css = "colorCirc2";
-                //    acaoseta = "hide";
-                //}
+                } else if (item.statusVenda == "Proposta Concluída com Sucesso") {
+
+                    status = item.statusVenda;
+                    css = "colorCirc2";
+                    acaoseta = "hide";
+                }
 
                 itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
                 itemLista = itemLista.replace("{STATUS}", status);
@@ -541,7 +460,6 @@ function carregarListaOnlineAtualizarProposta() {
                 itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
 
                 $("#listaEmpresas").append(itemLista);
-
                 $("#totalEmpresas").html(qtdEmpresas);
                 $("#total").html(qtdEmpresas + qtdPessoas);
 
@@ -556,7 +474,6 @@ function carregarListaOnlineAtualizarProposta() {
     $("#total").html(qtdEmpresas + qtdPessoas);
 
 }
-
 
 function buscarDetalheProposta(callback, token, cdVenda) {
 
@@ -582,7 +499,120 @@ function buscarDetalheProposta(callback, token, cdVenda) {
         
 }
 
-function sincronizarProposta(cpfProposta) {
+function sincronizarPropostaPME(cnpjProposta) {
+
+    let propostasASincronizarPme = get("empresas");
+    let beneficiariosASincronizar = get("beneficiarios");
+
+    let propostaPmeSelecionada = propostasASincronizarPme.filter(function (x) { return x.cnpj == cnpjProposta });
+    let beneficiariosDaProposta = beneficiariosASincronizar.filter(function (x) { return x.cnpj == cnpjProposta });
+
+    if (!navigator.onLine) {
+        swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
+        return;
+    }
+
+    if (propostaPmeSelecionada != null && beneficiariosDaProposta != null) {
+
+        if (propostaPmeSelecionada[0].status == "PRONTA") {
+
+            let propostasDiferentesPme = propostasASincronizarPme.filter(function (x) { return x.cnpj != propostaPmeSelecionada[0].cnpj });
+            let beneficiariosDiferentesPme = beneficiariosASincronizar.filter(function (x) { return x.cnpj != propostaPmeSelecionada[0].cnpj });
+
+            propostasASincronizarPme = [];
+
+            $.each(propostasDiferentesPme, function (i, item) {
+                propostasASincronizarPme.push(item);
+            });
+
+            propostaPmeSelecionada[0].status = "SYNC";
+            propostaPmeSelecionada[0].horaSync = new Date();
+            propostasASincronizarPme.push(propostaPmeSelecionada[0]);
+
+            put("empresas", JSON.stringify(propostasASincronizarPme));
+
+            swal({
+                title: "Aguarde",
+                text: 'Estamos enviando a sua proposta',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+
+            var parametroEmpresa = [];
+            parametroEmpresa.push(propostaPmeSelecionada[0]);
+
+
+            consultarSerasa(function (dataProposta) {
+
+
+
+                if (dataProposta == "error") {
+
+                    propostaPmeSelecionada[0].status = "PRONTA";
+                    atualizarEmpresas(propostaPmeSelecionada[0]);
+
+                    return;
+                };
+
+                propostaPmeSelecionada[0] = dataProposta;
+
+                var parametroEmpresa = [];
+                parametroEmpresa.push(propostaPmeSelecionada[0]);
+
+            sincronizarPME(function (dataVendaPme) {
+
+                if (dataVendaPme.id != undefined) {
+
+                    if (dataVendaPme.id == 0) {
+                        propostaPmeSelecionada[0].status = "CRITICADA";
+                        atualizarEmpresas(propostaPmeSelecionada[0]);
+                    }
+                    else {
+
+                        var empresas = get("empresas");
+                        var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != propostaPmeSelecionada[0].cnpj });
+
+                        propostaPmeSelecionada[0].status = "ENVIADA";
+
+                        todosExcetoExclusao.push(propostaPmeSelecionada[0]);
+
+                        put("empresas", JSON.stringify(todosExcetoExclusao));
+
+                        atualizarDashBoard();
+
+                        swal({
+                            title: "Proposta enviada com sucesso!",
+                            text: "Vamos atualizar a sua lista de propostas",
+                            type: "success",
+                            closeOnConfirm: true
+                        }, function () {
+                            // Redirect the user
+                            window.location.href = "lista_proposta.html";
+                        });
+
+                    }
+
+                } else {
+
+                    propostaPmeSelecionada[0].status = "PRONTA";
+                    atualizarEmpresas(propostaPmeSelecionada[0]);
+                    swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error");
+                }
+                }, parametroEmpresa, beneficiariosDaProposta);
+
+            }, propostaPmeSelecionada[0]);
+        }
+    }
+}
+
+function sincronizarPropostaPF(cpfProposta) {
 
     let propostasASincronizar = get("pessoas");
     let enviarProposta = propostasASincronizar.filter(function (x) { return x.cpf == cpfProposta });
@@ -626,7 +656,7 @@ function sincronizarProposta(cpfProposta) {
 
             sincronizarPf(function (dataProposta) {
 
-                if (dataProposta.status == 200) {
+                if (dataProposta.id != undefined) {
 
                     if (dataProposta.id == 0) {
 
@@ -642,6 +672,16 @@ function sincronizarProposta(cpfProposta) {
 
                         console.log(todosExcetoExclusao);
                         put("pessoas", JSON.stringify(todosExcetoExclusao));
+
+                        swal({
+                            title: "Proposta enviada com sucesso!",
+                            text: "Vamos atualizar a sua lista de propostas",
+                            type: "success",
+                            closeOnConfirm: true
+                        }, function () {
+                            // Redirect the user
+                            window.location.href = "lista_proposta.html";
+                        });
 
                         
                     }
@@ -660,7 +700,9 @@ function sincronizarProposta(cpfProposta) {
     }
 }
 
-function verDetalheProposta(dataId) {
+function verDetalheProposta(dataId, dataStatus) {
+
+    console.log(dataStatus);
 
     swal({
         title: "Aguarde",
@@ -754,6 +796,13 @@ function verDetalheProposta(dataId) {
 
             retorno.dependentes = dependentes;
             retorno.criticas = dataPropostaCriticada.venda.criticas;
+            retorno.status = dataStatus;
+
+            if (dataPropostaCriticada.venda.criticas.length == 0 && dataPropostaCriticada.venda.propostaDcms != undefined) {
+
+                retorno.propostaDcms = dataPropostaCriticada.venda.propostaDcms;
+
+            }
 
             localStorage.removeItem("resumoStatusPropostaPf");
             put("resumoStatusPropostaPf", JSON.stringify(retorno));
@@ -762,9 +811,4 @@ function verDetalheProposta(dataId) {
 
         }, dataToken.access_token, dataId);
     });
-
-
 }
-
-
-

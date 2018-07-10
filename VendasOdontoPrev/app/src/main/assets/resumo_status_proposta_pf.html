@@ -13,6 +13,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet">
 </head>
 
 <body>
@@ -175,6 +176,10 @@
                 <div>
                     <label class="labelDadosResumoStatus" id="formaPagamento"></label>
                 </div>
+
+                <div class="btnPadBtmTop hide">
+                    <a class="btn btn-lg btn-block btnOdont" id="btnModalBoleto" role="button">CONSULTAR BOLETOS EM ABERTO</a>
+                </div>
             </div>
             <!-- END BOX FORMA DE PAGAMENTO -->
 
@@ -240,11 +245,45 @@
     </div>
     <!-- End Modal -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="modalBoleto" role="dialog" style="padding-top:50px;">
+        <div class="modal-dialog modalContainerResumoStatusPf">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="img/btn-excluir.png" class="closeModalMateriais btnExcluir" data-dismiss="modal" alt="" />
+
+                    <div>
+                        <label class="labelBlueTitle">BOLETOS EM ABERTO</label>
+                    </div>
+
+                    <label class="labelBlurResumoStatus" style="margin-bottom:20px;">Selecione o boleto que gostaria de emitir a segunda via.</label>
+
+                    <div id="radio-buttons" style="display: block;">
+
+                        <div class="radio">
+                           
+                        </div>
+
+
+                    </div>
+
+                    <div class="btnPadBtmTop">
+                        <a class="btn btn-lg btn-block btnOdont" id="baixarBoleto" data-competencia="" data-parcela="" role="button">BAIXAR BOLETO</a>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    <!-- End Modal -->
+
     <script src="js/jquery-2.2.0.min.js"></script>
     <script src="slick/slick.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="app/coordenador.js"></script>
     <script src="app/resumoStatusPropostaPfController.js"></script>
     <script src="js/odontoprev.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/sweetalert.min.js"></script>
 </body>
 </html>

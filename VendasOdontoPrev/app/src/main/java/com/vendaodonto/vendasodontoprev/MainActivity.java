@@ -77,6 +77,19 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null)
+            {
+                //Cry about not being clicked on
+            }
+            else if (extras.getBoolean("NotiClick"))
+            {
+                openFolder();
+            }
+
+        }
+
         ctx = this;
 
         MyFirebaseInstanceIDService oToken = new MyFirebaseInstanceIDService();
@@ -255,6 +268,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void openFolder()
+    {
+        //Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        //Uri uri = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+        //intent.setDataAndType(uri, "text/*");
+        //context.startActivity(Intent.createChooser(intent, "Open folder"));
+
+        // location = "/sdcard/my_folder";
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Uri mydir = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+        intent.setDataAndType(mydir,"application/*");    // or use */*
+        startActivity(intent);
     }
 
 }
