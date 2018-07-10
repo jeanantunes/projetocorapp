@@ -1959,8 +1959,13 @@ function postSerasa(callback, tokenSerasa, cnpj) {
     });
 }
 
-function consultarSerasa(propostaPme) {
-    
+function consultarSerasa(callback, propostaPme) {
+
+    if (propostaPme.consultadaSerasa) {
+        callback(propostaPme);
+        return;
+    }
+
     callTokenVendas(function (dataToken) {
 
         postSerasa(function (dataConsultaSerasa) {
@@ -1981,7 +1986,8 @@ function consultarSerasa(propostaPme) {
                         if (!validateDataMei(date)) {
 
                             swal("Ops", "Venda não autorizada para Empresa MEI com menos de 6 meses", "info");
-                            return; // Não chamar servico de venda e retornar erro para o usuario
+                            callback("error");
+                            return;
                         }
                     }
 
@@ -1990,13 +1996,14 @@ function consultarSerasa(propostaPme) {
                 if (situacao == undefined) {
 
 
-                    // enviar proposta com dados preenchidos pelo força
+                    callback(propostaPme);// enviar proposta com dados preenchidos pelo força
                     return;
                 }
 
                 if (!situacao == 0) {
 
                     swal("Ops", "Não é possível seguir com a contratação para esta empresa. Consulte o CNPJ e tente novamente.", "info");
+                    callback("error");
                     return;
                 }
             } catch (Exception) { }
@@ -2004,16 +2011,16 @@ function consultarSerasa(propostaPme) {
             console.log(dataConsultaSerasa);
 
             try {
-
-                propostaPme.razaoSocial = dataConsulta.getElementsByTagName("razaoSocial")[0].textContent.trim(); // RAZAO SOCIAL
+                console.log(dataConsultaSerasa.getElementsByTagName("razaoSocial")[0].textContent.trim())
+                propostaPme.razaoSocial = dataConsultaSerasa.getElementsByTagName("razaoSocial")[0].textContent.trim(); // RAZAO SOCIAL
 
             } catch (Exception) {
                
             }
 
             try {
-
-                propostaPme.ramoAtividade = dataConsulta.getElementsByTagName("descricao")[0].textContent.trim(); // RAMO DE ATIVIDADE
+                console.log(dataConsultaSerasa.getElementsByTagName("descricao")[0].textContent.trim())
+                propostaPme.ramoAtividade = dataConsultaSerasa.getElementsByTagName("descricao")[0].textContent.trim(); // RAMO DE ATIVIDADE
 
             } catch (Exception) {
                 
@@ -2021,7 +2028,7 @@ function consultarSerasa(propostaPme) {
 
             try {
 
-                propostaPme.representanteLegal = dataConsulta.getElementsByTagName("nome")[0].textContent.trim(); // NOME REPRESENTANTE LEGAL
+                propostaPme.representanteLegal = dataConsultaSerasa.getElementsByTagName("nome")[0].textContent.trim(); // NOME REPRESENTANTE LEGAL
 
             } catch (Exception) {
            
@@ -2029,7 +2036,7 @@ function consultarSerasa(propostaPme) {
 
             try {
 
-                propostaPme.cpfRepresentante = dataConsulta.getElementsByTagName("documento")[0].textContent.trim(); // CPF REPRESENTANTE LEGAL
+                propostaPme.cpfRepresentante = dataConsultaSerasa.getElementsByTagName("documento")[0].textContent.trim(); // CPF REPRESENTANTE LEGAL
 
             } catch (Exception) {
          
@@ -2037,46 +2044,48 @@ function consultarSerasa(propostaPme) {
 
             try {
 
-                propostaPme.nomeFantasia = dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent.trim(); // NOME FANTASIA
+                propostaPme.nomeFantasia = dataConsultaSerasa.getElementsByTagName("nomeFantasia")[0].textContent.trim(); // NOME FANTASIA
 
             } catch (Exception) {
         
             }
 
             try {
-                propostaPme.cnae = dataConsulta.getElementsByTagName("codigo")[1].textContent.trim(); // CNAE
+                propostaPme.cnae = dataConsultaSerasa.getElementsByTagName("codigo")[1].textContent.trim(); // CNAE
 
             } catch (Exception) { }
 
             try {
-                propostaPme.enderecoEmpresa.cep = dataConsulta.getElementsByTagName("cep")[0].textContent.trim(); // CEP
+                propostaPme.enderecoEmpresa.cep = dataConsultaSerasa.getElementsByTagName("cep")[0].textContent.trim(); // CEP
             } catch (Exception) { }
 
             try {
-                propostaPme.enderecoEmpresa.logradouro = dataConsulta.getElementsByTagName("Nome")[0].textContent.trim(); // CEP
+                propostaPme.enderecoEmpresa.logradouro = dataConsultaSerasa.getElementsByTagName("Nome")[0].textContent.trim(); // CEP
             } catch (Exception) { }
 
             try {
-                propostaPme.enderecoEmpresa.estado = dataConsulta.getElementsByTagName("uf")[0].textContent.trim(); // ESTADO
+                propostaPme.enderecoEmpresa.estado = dataConsultaSerasa.getElementsByTagName("uf")[0].textContent.trim(); // ESTADO
             } catch (Exception) { }
 
             try {
-                propostaPme.enderecoEmpresa.cidade = dataConsulta.getElementsByTagName("cidade")[0].textContent.trim(); // CIDADE
+                propostaPme.enderecoEmpresa.cidade = dataConsultaSerasa.getElementsByTagName("cidade")[0].textContent.trim(); // CIDADE
             } catch (Exception) { }
 
             try {
-                propostaPme.enderecoEmpresa.bairro = dataConsulta.getElementsByTagName("bairro")[0].textContent.trim(); // BAIRRO
+                propostaPme.enderecoEmpresa.bairro = dataConsultaSerasa.getElementsByTagName("bairro")[0].textContent.trim(); // BAIRRO
             } catch (Exception) { }
 
             try {
-                propostaPme.enderecoEmpresa.numero = dataConsulta.getElementsByTagName("Numero")[0].textContent.trim(); // NUMERO
+                propostaPme.enderecoEmpresa.numero = dataConsultaSerasa.getElementsByTagName("Numero")[0].textContent.trim(); // NUMERO
             } catch (Exception) { }
 
             try {
-                propostaPme.enderecoEmpresa.complemento = dataConsulta.getElementsByTagName("Complemento")[0].textContent.trim(); // COMPLEMENTO
+                propostaPme.enderecoEmpresa.complemento = dataConsultaSerasa.getElementsByTagName("Complemento")[0].textContent.trim(); // COMPLEMENTO
             } catch (Exception) { }
 
-        }, dataToken.access_token, "68.971.092/0001-90");
+            callback(propostaPme);
+
+        }, dataToken.access_token, propostaPme.cnpj);
     });
 }
 

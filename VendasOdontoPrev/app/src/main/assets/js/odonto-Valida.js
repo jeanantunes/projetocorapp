@@ -248,6 +248,7 @@ $(document).ready(function () {
     $('.telefone').mask('(00) 0000-0000');
     $('.celular').mask('(00) 00000-0000');
     $('.cpf').mask('000.000.000-00');
+    $('.cnae').mask('0000000');
     $('.cpf-representante-legal').mask('000.000.000-00');
     $('.celular-representante-legal').mask('(00) 00000-0000');
     $('.cnpj').mask('00.000.000/0000-00');
@@ -362,6 +363,32 @@ $(document).ready(function () {
             $(this).css({ "border-color": "#3A94FB" });
             $(".cnpj").css("color", "#3A94FB");
             $(".label-cnpj").css("color", "#3A94FB");
+        }
+    });
+
+    // CNAE
+
+    $(".cnae").focus(function () {
+        if ($(this).val() == "") {
+            $(this).css({ "border-color": "blue" });
+            $(".cnae").css("color", "#1974CE");
+            $(".label-cnae").css("color", "#1974CE");
+        }
+    });
+
+    $(".cnae").blur(function () {
+        if ($(this).val().length < 7) {
+            $(this).css({ "border-color": "#F00" });
+            $(".label-cnae").css("color", "red");
+            $(".cnae").css("color", "red");
+        }
+    });
+
+    $(".cnae").keyup(function () {
+        if ($(this).val() != "") {
+            $(this).css({ "border-color": "#3A94FB" });
+            $(".cnae").css("color", "#3A94FB");
+            $(".label-cnae").css("color", "#3A94FB");
         }
     });
 

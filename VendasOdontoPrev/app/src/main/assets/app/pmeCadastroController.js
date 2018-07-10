@@ -1,9 +1,23 @@
 ﻿var preenchidos = false;
-var cnae;
 
 $(document).ready(function () {
     buscarPlanosSelecionados();
     carregarProposta();
+
+    $('#cnpjEmpresa').blur(function () {
+        verificarSePropostaExiste();
+        //buscarEmpresa();
+    });
+
+    $("#squaredOne").change(function () {
+
+        $("#divSegundoContato").addClass('hide');
+        if (!$(this).is(':checked')) {
+
+            $("#divSegundoContato").removeClass('hide');
+
+        }
+    });
 });
 
 function addBenef() {
@@ -243,20 +257,7 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
     });
 }
 
-$('#cnpjEmpresa').blur(function () {
-        verificarSePropostaExiste();
-        //buscarEmpresa();
-});
 
-$("#squaredOne").change(function () {
-
-    $("#divSegundoContato").addClass('hide');
-    if (!$(this).is(':checked')) {
-
-        $("#divSegundoContato").removeClass('hide');
-
-    }
-});
 
 
 
@@ -432,15 +433,18 @@ function buscarEmpresa() {
                     try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent.trim()); } catch (Exception) { $("#representante-legal").prop('disabled', false); }
                     try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent.trim()); } catch (Exception) { $("#cpf-representante").prop('disabled', false); }
                     try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent.trim()); } catch (Exception) { $("#nome-fantasia").prop('disabled', false); }
-                    try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim()); } catch (Exception) { }
+                    try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim()); } catch (Exception) { $("#cnae").prop('disabled', false);  }
                     try { $("#cep").val(dataConsulta.getElementsByTagName("cep")[0].textContent.trim()); } catch (Exception) { }
                     try { $("#uf").val(dataConsulta.getElementsByTagName("uf")[0].textContent.trim()); } catch (Exception) { }
                     try { $("#cidade").val(dataConsulta.getElementsByTagName("cidade")[0].textContent.trim()); } catch (Exception) { }
                     try { $("#bairro").val(dataConsulta.getElementsByTagName("bairro")[0].textContent.trim()); } catch (Exception) { }
                     try { $("#numeroEndereco").val(dataConsulta.getElementsByTagName("Numero")[0].textContent.trim()); } catch (Exception) { }
                     try { $("#complemento").val(dataConsulta.getElementsByTagName("Complemento")[0].textContent.trim()); } catch (Exception) { }
-
                     //29294771000110
+
+                    let adicionarValidacaoSerasa = get("proposta");
+                    adicionarValidacaoSerasa.consultadaSerasa = true;
+                    put("proposta", JSON.stringify(adicionarValidacaoSerasa));
 
                     swal.close();
 
@@ -457,7 +461,7 @@ function bloquearCampos() {
     $("#representante-legal").prop('disabled', true);
     $("#cpf-representante").prop('disabled', true);
     $("#nome-fantasia").prop('disabled', true);
-
+    $("#cnae").prop('disabled', true);
 }
 
 function desbloqCampos() {
@@ -467,13 +471,18 @@ function desbloqCampos() {
     $("#representante-legal").prop('disabled', false);
     $("#cpf-representante").prop('disabled', false);
     $("#nome-fantasia").prop('disabled', false);
-
+    $("#cnae").prop('disabled', false);
 }
 
 function salvarRascunho() {
 
     if ($("#cnpjEmpresa").val() == "") {
         swal("Ops!", "Preencha o CNPJ", "error");
+        return;
+    }
+
+    if ($("#cnae").val().length < 7) {
+        swal("Ops!", "O CNAE deve conter 7 dígitos", "error");
         return;
     }
     
@@ -628,6 +637,9 @@ function carregarProposta() {
 
     if (proposta.representanteLegal == "" && $("#cnpjEmpresa").val() != "") $("#representante-legal").prop('disabled', false);
     $("#representante-legal").val(proposta.representanteLegal.trim());
+
+    if (proposta.cnae == "" && $("#cnpjEmpresa").val() != "") $("#cnae").prop('disabled', false);
+    $("#cnae").val(proposta.cnae.trim());
 
     if (proposta.contatoEmpresa) {
         $("#squaredOne").attr("checked", true);

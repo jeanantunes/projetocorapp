@@ -702,10 +702,10 @@
     }
 
 .userLog {
-    padding-top: 25px;
+    padding-top: 15px;
     background-color: #F1F9FF;
-    padding-bottom: 20px;
-    height: 120px;
+    padding-bottom: 15px;
+    width: 250px;
 }
 
 .btnMenu {

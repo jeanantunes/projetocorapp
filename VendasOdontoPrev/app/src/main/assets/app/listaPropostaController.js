@@ -371,6 +371,7 @@ function carregarListaOnlineAtualizarProposta() {
         var acao = "";
         var link = "";
         var onClick = "";
+        var acaoseta = "";
 
         if (item.status != "ENVIADA") {
 
@@ -430,6 +431,7 @@ function carregarListaOnlineAtualizarProposta() {
                 var css = "";
                 var acao = "";
                 var link = "";
+                var acaoseta = "";
 
                 if (item.statusVenda == "Proposta enviada para a OdontoPrev") {
 
@@ -546,6 +548,24 @@ function sincronizarPropostaPME(cnpjProposta) {
             var parametroEmpresa = [];
             parametroEmpresa.push(propostaPmeSelecionada[0]);
 
+
+            consultarSerasa(function (dataProposta) {
+
+
+
+                if (dataProposta == "error") {
+
+                    propostaPmeSelecionada[0].status = "PRONTA";
+                    atualizarEmpresas(propostaPmeSelecionada[0]);
+
+                    return;
+                };
+
+                propostaPmeSelecionada[0] = dataProposta;
+
+                var parametroEmpresa = [];
+                parametroEmpresa.push(propostaPmeSelecionada[0]);
+
             sincronizarPME(function (dataVendaPme) {
 
                 if (dataVendaPme.id != undefined) {
@@ -585,7 +605,9 @@ function sincronizarPropostaPME(cnpjProposta) {
                     atualizarEmpresas(propostaPmeSelecionada[0]);
                     swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error");
                 }
-            }, parametroEmpresa, beneficiariosDaProposta);
+                }, parametroEmpresa, beneficiariosDaProposta);
+
+            }, propostaPmeSelecionada[0]);
         }
     }
 }

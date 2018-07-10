@@ -2,13 +2,12 @@ $(document).ready(function () {
 
     carregarDadosProposta();
     buscarPlanosSelecionados();
-    carregarLista();   
+    carregarLista();
     setTotalProposta();
     isEffectiveDate();
 });
 
-function carregarDadosProposta()
-{
+function carregarDadosProposta() {
     var proposta = get("proposta");
     $("#cnpjResumo").val(proposta.cnpj);
     $("#razaoSocialResumo").val(proposta.razaoSocial);
@@ -168,16 +167,15 @@ function buscarPlanosSelecionados() {
         if (quantidadeBeneficiarios > 1 || quantidadeBeneficiarios == 0) {
             plano = plano.replace("{QUANTBENEF}", quantidadeBeneficiarios + " Beneficiários");
         } else plano = plano.replace("{QUANTBENEF}", quantidadeBeneficiarios + " Beneficiário");
-        
+
 
         $("#planos").append(plano);
 
         $(".btnExcluirPlano").addClass('hide');
-    });   
+    });
 }
 
-function setTotalProposta()
-{
+function setTotalProposta() {
     var planos = get("planos");
     var proposta = get("proposta");
     var beneficiarios = get("beneficiarios");
@@ -208,10 +206,10 @@ function setTotalProposta()
         var valorString = valorTotal.toString();
         var position = valorString.indexOf(".");
         var tamanhoString = valorTotal.toString().length;
-        
+
         var valorReal = valorString.substring(0, position);
         var valorCent = valorString.substring(position + 1, position + 3);
-        
+
         if (valorCent.toString().length == 1) valorCent = parseFloat(valorCent.toString() + "0");
     }
 
@@ -337,42 +335,64 @@ function enviarPropostaPme() {
 
     put("empresas", JSON.stringify(todosExcetoExclusao));
 
-    var parametroEmpresa = [];
-    parametroEmpresa.push(proposta);
 
-    sincronizarPME(function (dataVendaPme) {
 
-        if (dataVendaPme.id != undefined) {
+    consultarSerasa(function (dataProposta) {
 
-            if (dataVendaPme.id == 0) {
-                proposta.status = "CRITICADA";
-                atualizarEmpresas(proposta);
+
+
+        if (dataProposta == "error") {
+
+            proposta.status = "PRONTA";
+            atualizarEmpresas(proposta);
+            put("proposta", JSON.stringify(proposta));
+
+            return;
+        };
+
+        proposta = dataProposta;
+
+        var parametroEmpresa = [];
+        parametroEmpresa.push(proposta);
+
+        sincronizarPME(function (dataVendaPme) {
+
+            if (dataVendaPme.id != undefined) {
+
+                if (dataVendaPme.id == 0) {
+
+                    proposta.status = "CRITICADA";
+                    atualizarEmpresas(proposta);
+
+                }
+                else {
+
+                    var empresas = get("empresas");
+                    var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != proposta.cnpj });
+
+                    proposta.status = "ENVIADA";
+
+                    todosExcetoExclusao.push(proposta);
+
+                    put("empresas", JSON.stringify(todosExcetoExclusao));
+
+                    atualizarDashBoard();
+                    swal.close();
+
+                    window.location.href = "proposta_pme_enviada.html";
+
+                }
+
+            } else {
+
+                let atualizarProposta = get("proposta");
+                atualizarProposta.status = "PRONTA";
+                put("proposta", JSON.stringify(atualizarProposta));
+                atualizarEmpresas(atualizarProposta);
+                swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error");
             }
-            else {
-                var empresas = get("empresas");
-                var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != proposta.cnpj });
 
-                proposta.status = "ENVIADA";
+        }, parametroEmpresa, beneficiarios);
 
-                todosExcetoExclusao.push(proposta);
-
-                put("empresas", JSON.stringify(todosExcetoExclusao));
-
-                atualizarDashBoard();
-                swal.close();
-
-                window.location.href = "proposta_pme_enviada.html";
-
-            }
-
-        } else {
-
-            let atualizarProposta = get("proposta");
-            atualizarProposta.status = "PRONTA";
-            put("proposta", JSON.stringify(atualizarProposta));
-            atualizarEmpresas(atualizarProposta);
-            swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error");
-        }
-
-    }, parametroEmpresa, beneficiarios);
+    }, proposta);
 }
