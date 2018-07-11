@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
 
-    atualizarPropostaMundial();
+    //atualizarPropostaMundial();
     buscarPlanosSelecionados();
     carregarProposta();
     localStorage.removeItem("dependentePfEmEdicao");
@@ -37,35 +37,6 @@ $(document).ready(function () {
 
     });        
 });
-
-function atualizarPropostaMundial() {
-
-    let planoProposta = get("propostaPf");
-
-
-
-    if (planoProposta.planos[0].cdPlano == 66 || planoProposta.planos[0].cdPlano == 68) {
-
-        planoProposta.planos[0].cdPlano = 85;
-
-        put("propostaPf", JSON.stringify(planoProposta));
-
-
-    } else if (planoProposta.planos[0].cdPlano == 67) {
-
-        planoProposta.planos[0].cdPlano = 84;
-
-        put("propostaPf", JSON.stringify(planoProposta));
-
-    }
-
-    let planoDaProposta = planoProposta.planos[0].cdPlano;
-
-    if (planoDaProposta == 84 || planoDaProposta == 85) {
-        $("#boxMundial").html('<div class="infoCopa"><p class="textCopa">#VAI<strong> TER</strong> JOGO</p><small>Durante o mundial venda planos BEM-ESTAR com condições especiais!</small></div>');
-
-    }
-}
 
 function abrirPropostaComErros() {
 

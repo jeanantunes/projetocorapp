@@ -574,36 +574,9 @@ function setPlanosProd() {
 
     planos.push(plano);
 
-
-    // Inicio planos bem estar COPA
-
-    plano = getRepository("plano");
-    plano.cdPlano = 84;
-    plano.nome = "DENTAL BEM-ESTAR";
-    plano.valor = "45";
-    plano.centavo = "60";
-    plano.valorFloat = 45.60;
-    plano.desc = "Mensal";
-    plano.css = "colorSlickCopa";
-
-    planos.push(plano);
-
-    plano = getRepository("plano");
-    plano.cdPlano = 85;
-    plano.nome = "DENTAL BEM-ESTAR";
-    plano.valor = "456";
-    plano.centavo = "00";
-    plano.valorFloat = 456.00;
-    plano.desc = "Anual";
-    plano.css = "colorSlickCopa";
-
-    planos.push(plano);
-
-    // Fim planos bem estar COPA
-
     plano = getRepository("plano");
     plano.cdPlano = 67;
-    plano.nome = "DENTAL BEM-ESTAR Principal";
+    plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "45";
     plano.centavo = "60";
     plano.valorFloat = 45.60;
@@ -614,7 +587,7 @@ function setPlanosProd() {
 
     plano = getRepository("plano");
     plano.cdPlano = 66;
-    plano.nome = "DENTAL BEM-ESTAR Principal";
+    plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "456";
     plano.centavo = "00";
     plano.valorFloat = 456.00;
@@ -625,7 +598,7 @@ function setPlanosProd() {
 
     plano = getRepository("plano");
     plano.cdPlano = 68;
-    plano.nome = "DENTAL BEM-ESTAR Principal";
+    plano.nome = "DENTAL BEM-ESTAR";
     plano.valor = "547";
     plano.centavo = "20";
     plano.valorFloat = 547.20;
@@ -807,17 +780,17 @@ function setPlanosProdCod() {
 
     var plano = new Object();
     plano.cdPlano = 67;
-    plano.nome = "DENTAL BEM-ESTAR MENSAL Principal";
+    plano.nome = "DENTAL BEM-ESTAR MENSAL";
     planos.push(plano);
 
     var plano = new Object();
     plano.cdPlano = 66;
-    plano.nome = "DENTAL BEM-ESTAR ANUAL Principal";
+    plano.nome = "DENTAL BEM-ESTAR ANUAL";
     planos.push(plano);
 
     var plano = new Object();
     plano.cdPlano = 68;
-    plano.nome = "DENTAL BEM-ESTAR ANUAL S/CARENCIA Principal";
+    plano.nome = "DENTAL BEM-ESTAR ANUAL S/CARENCIA";
     planos.push(plano);
 
     // PLANOS BEM ESTAR COPA
