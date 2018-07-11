@@ -130,8 +130,8 @@ function buscarFichaFinanceira(callback, token, codigoProposta) {
 
     $.ajax({
         async: true,
-        //url: "http://172.18.203.21:8090/est-corretorboletoebs-api-rs-1.0/financeiro/obterfichafinanceira/numeroproposta",
-        url: URLBase + "/corretor/boleto/1.0/financeiro/obterfichafinanceira/numeroproposta",
+        url: "http://172.18.203.21:8090/est-corretorboletoebs-api-rs-1.0/financeiro/obterfichafinanceira/numeroproposta",
+        //url: URLBase + "/corretor/boleto/1.0/financeiro/obterfichafinanceira/numeroproposta",
         method: "POST",
 
         headers: {
@@ -326,9 +326,9 @@ function gerarDownloadBoleto(callback, token, request) {
 
     $.ajax({
         async: true,
-        //url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
+        url: "http://172.18.203.21:8090/est-corretorboletoebs-api-rs-1.0/financeiro/gerarboletofile",
         //url: "http://172.16.244.160:8080/propostaCritica/buscarPropostaCritica/" + cdVenda,
-        url: URLBase + "/corretor/boleto/1.0/financeiro/gerarboletofile",
+        //url: URLBase + "/corretor/boleto/1.0/financeiro/gerarboletofile",
         //url: URLBase + "/corretorservicos/1.0/proposta/dados/critica/venda/" + cdVenda,
         method: "POST",
 

@@ -1,7 +1,5 @@
 ﻿$(document).ready(function () {
     setIdPlano();
-    console.log(screen.height);
-    console.log($("#divImg").height());
 });
 
 function setIdPlano() {

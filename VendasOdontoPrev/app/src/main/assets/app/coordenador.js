@@ -346,6 +346,10 @@ function callTokenVendas(callback) {
     });
 };
 
+String.prototype.replaceAll = String.prototype.replaceAll || function (needle, replacement) {
+    return this.split(needle).join(replacement);
+};
+
 function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelular, sistemaOperacional) {
 
     var request = {

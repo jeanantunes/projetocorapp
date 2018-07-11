@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
 
-    setarItensSlick();
+    //setarItensSlick();
+
+    preencherMateriaisDivulgacao();
 
     $('.carousel').slick({
         dots: true,
@@ -38,11 +40,6 @@
         }
         ]
     });
-
-
-
-
-
 
     $("img").click(function () {
 
@@ -93,6 +90,69 @@ function setarItensSlick() {
 
     $("#slickPme").append(itens);
     $("#slickPf").append(itens);
+}
+
+function buscarMateriaisDivulgacao(callback, token) {
+
+    $.ajax({
+        async: true,
+        //url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        url: "https://f9260c80-30d2-4306-b5c0-02e4cc6a4758.mock.pstmn.io/materiaisdivulgacao",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            //"Authorization": "Bearer " + Token,
+            "Postman-Token": "5299ba38-9752-4f3f-93de-5a6adecf1726"
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+            callback(xhr);
+        }
+    });
+}
+
+function preencherMateriaisDivulgacao() {
+
+    buscarMateriaisDivulgacao(function (dataMateriai) { //TO DO: adicionar o nome do retorno correto
+
+        console.log(dataMateriai);
+        let dataMateriais = JSON.parse(dataMateriai);
+
+        $.each(dataMateriais.categorias, function (iCategoria, itemCategoria) {
+
+            let componentTitle = getComponent("titleMateriais");
+            componentTitle = componentTitle.replace("{LABEL}", itemCategoria.nome);
+            $("#conteudoPage").append(componentTitle);
+
+            $.each(itemCategoria.subcategorias, function (iSubcategoria, itemSubcategoria) {
+
+                let subCategoriaMateriais = getComponent("subCategoriaMateriais");
+                subCategoriaMateriais = subCategoriaMateriais.replace("{LABEL}", itemSubcategoria.nome);
+                $("#conteudoPage").append(subCategoriaMateriais);
+                $("#conteudoPage").append('<div style: "white-space: nowrap;" id="' + itemSubcategoria.nome.replaceAll(" ", "-") + '"></div>');
+                
+                let idCarousel = itemSubcategoria.nome.replaceAll(" ", "-");
+
+               // if (itemSubcategoria.materiaisDivulgacao.length > 0) $("#conteudoPage").append('<div class="carousel" id="' + idCarousel + '"></div>');
+
+                $.each(itemSubcategoria.materiaisDivulgacao, function (iMateriais, itemMateriais) {
+
+                    let boxThumbNail = getComponent("boxMateriaisPlanos");
+                    boxThumbNail = boxThumbNail.replace("{IMAGEM}", "data:image/png;base64, " + itemMateriais.thumbnail);
+                    $('#' + idCarousel).append(boxThumbNail);
+
+                });
+
+
+
+            });
+
+        });
+
+    }, "saasdasdasdd");
+
 }
 
 

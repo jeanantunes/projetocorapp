@@ -236,29 +236,28 @@
     text-align: left;
 }
 
-.lblDesc {
+.lblDescricaoCategoria {
     color: #acaaa5;
     font-family: Roboto-Light;
     font-size: 15px;
     text-align: left;
 }
 
-.titleBoxPlanos {
+.titleCategoriasMateriais {
     font-family: Roboto-Bold;
     font-size: 20px;
     color: #1974ce;
-    margin-top: 70px;
+    margin-top: 20px;
     margin-bottom: 10px;
 }
 
-.titlePessoaFisica {
+.titleSubCategoria {
 
     font-family: Roboto-Bold;
     font-size: 18px;
     color: #8e8e8e;
     margin-bottom: 11px;
     margin-top: 20px;
-
 }
 
 @media screen and (min-width: 800px) {
