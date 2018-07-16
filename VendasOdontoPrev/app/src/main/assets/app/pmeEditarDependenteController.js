@@ -24,130 +24,151 @@ function SalvarDependentes() {
     var stop = false;
 
 
-        if ($(".nome-dependente").val() == "") {
-            swal("Ops!", "Preencha o Nome do " + $(".depends").html(), "error");
-            stop = true;
-            return;
-        }
+    if ($(".nome-dependente").val() == "") {
+        swal("Ops!", "Preencha o Nome do " + $(".depends").html(), "error");
+        stop = true;
+        return;
+    }
 
-        if (!ValidaNome($(".nome-dependente").val())) {
-            swal("Ops!", $(".depends").html() + ": nome inválido", "error");
-            stop = true;
-            return false;
-        }
+    if (!ValidaNome($(".nome-dependente").val())) {
+        swal("Ops!", $(".depends").html() + ": nome inválido", "error");
+        stop = true;
+        return false;
+    }
 
-        if ($(".sexo").val() == "") {
-            swal("Ops!", "Selecione o Sexo do " + $(".depends").html(), "error");
-            stop = true;
-            return;
-        }
+    if ($(".sexo").val() == "") {
+        swal("Ops!", "Selecione o Sexo do " + $(".depends").html(), "error");
+        stop = true;
+        return;
+    }
 
-        if ($(".nascimento").val() == "") {
-            swal("Ops!", "Preencha a data de nascimento do " + $(".depends").html(), "error");
-            stop = true;
-            return;
-        }
+    if ($(".nascimento").val() == "") {
+        swal("Ops!", "Preencha a data de nascimento do " + $(".depends").html(), "error");
+        stop = true;
+        return;
+    }
 
-        if ($(".cpf").val() != "" && getInputsByValue($(".cpf").val()).length > 1) {
-            swal("Ops!", "Existem dependentes com o mesmo CPF, por favor verifique.", "error");
-            stop = true;
-            return;
-        }
+    if ($(".cpf").val() != "" && getInputsByValue($(".cpf").val()).length > 1) {
+        swal("Ops!", "Existem dependentes com o mesmo CPF, por favor verifique.", "error");
+        stop = true;
+        return;
+    }
 
-        if (!validarData($(".nascimento").val())) {
-            swal("Ops!", "Preencha uma data de nascimento correta do " + $(".depends").html(), "error");
-            stop = true;
-            return;
-        }
+    if (!validarData($(".nascimento").val())) {
+        swal("Ops!", "Preencha uma data de nascimento correta do " + $(".depends").html(), "error");
+        stop = true;
+        return;
+    }
 
-        var currentYear = (new Date).getFullYear();
-        var idade = $(".nascimento").val().split("/");
-        var menor = currentYear - idade[2];
+    var currentYear = (new Date).getFullYear();
+    var idade = $(".nascimento").val().split("/");
+    var menor = currentYear - idade[2];
 
-        if (menor >= 18) {
-            if ($(".cpf").val() == "") {
-                console.log("Validando cpf");
-                swal("Ops!", "CPF está inválido", "error");
-                stop = true;
-                return;
-            }
-        }
-
-        if ($(".cpf").val() != "" && !TestaCPF($(".cpf").val().replace(/\D/g, ''))) {
+    if (menor >= 18) {
+        if ($(".cpf").val() == "") {
+            console.log("Validando cpf");
             swal("Ops!", "CPF está inválido", "error");
             stop = true;
             return;
         }
+    }
 
-        var benef = get("beneficiario");
-        if ($(".cpf").val() != "" && benef.cpf == $(".cpf").val()) {
-            swal("Conflito!", "Você informou o mesmo CPF do titular para este dependente, por favor verifique.", "error");
+    if ($(".cpf").val() != "" && !TestaCPF($(".cpf").val().replace(/\D/g, ''))) {
+        swal("Ops!", "CPF está inválido", "error");
+        stop = true;
+        return;
+    }
+
+
+    let cpfsProposta = listCpfPropostaPme();
+
+    if (cpfsProposta.length > 0) {
+
+        let cpfPesquisa = get("beneficiarioEmEdicao").cpf;
+
+        let removeCpfEdicao = cpfsProposta.filter(function (x) { return x != cpfPesquisa });
+        let checkCpf = removeCpfEdicao.filter(function (x) { return x == $(".cpf").val() });
+
+        if (checkCpf.length > 0) {
+
+            swal("Ops!", "CPF já informado anteriormente.", "error");
             stop = true;
             return;
         }
 
+    }
+
+
+
+    var benef = get("beneficiario");
+    if ($(".cpf").val() != "" && benef.cpf == $(".cpf").val()) {
+        swal("Conflito!", "Você informou o mesmo CPF do titular para este dependente, por favor verifique.", "error");
+        stop = true;
+        return;
+    }
+
+    var cpfAtual = $(".cpf").val();
+    var checkSeDependenteExiste = benef.dependentes.filter(function (x) { return x.cpf == cpfAtual });
+    var beneficiarioEmEdicao = get("beneficiarioEmEdicao");
+
+    if (checkSeDependenteExiste.length > 0 && cpfAtual != beneficiarioEmEdicao.cpf) {
+
+        swal("Conflito!", "Você informou o mesmo CPF de outro dependente para este dependente, por favor verifique.", "error");
+        stop = true;
+        return;
+    }
+
+
+    if (benefs != null) {
+        var benefs = get("beneficiarios");
         var cpfAtual = $(".cpf").val();
-        var checkSeDependenteExiste = benef.dependentes.filter(function (x) { return x.cpf == cpfAtual });
-        var beneficiarioEmEdicao = get("beneficiarioEmEdicao");
+        benefs = benefs.filter(function (x) { return x.cnpj == benef.cnpj });
+        var oe = benefs.filter(function (x) { return x.cpf == cpfAtual });
+        var dependsCpf = false;
 
-        if (checkSeDependenteExiste.length > 0 && cpfAtual != beneficiarioEmEdicao.cpf) {
-
-            swal("Conflito!", "Você informou o mesmo CPF de outro dependente para este dependente, por favor verifique.", "error");
+        if (oe.length >= 1 && cpfAtual != "") {
+            swal("Conflito!", "Você informou o mesmo CPF de outro titular para este dependente, por favor verifique.", "error");
             stop = true;
             return;
         }
 
-        
-        if (benefs != null) {
-            var benefs = get("beneficiarios");
-            var cpfAtual = $(".cpf").val();
-            benefs = benefs.filter(function (x) { return x.cnpj == benef.cnpj });
-            var oe = benefs.filter(function (x) { return x.cpf == cpfAtual });
-            var dependsCpf = false;
+        $.each(benefs, function (i, item) {
 
-            if (oe.length >= 1 && cpfAtual != "") {
-                swal("Conflito!", "Você informou o mesmo CPF de outro titular para este dependente, por favor verifique.", "error");
-                stop = true;
+
+            var dependentesIguais = item.dependentes.filter(function (x) {
+
+                if (x.cpf == cpfAtual && cpfAtual != "" && x.cpf != "") return x.cpf;
+
                 return;
-            }
-
-            $.each(benefs, function (i, item) {
-
-
-                    var dependentesIguais = item.dependentes.filter(function (x) {
-
-                        if (x.cpf == cpfAtual && cpfAtual != "" && x.cpf != "") return x.cpf;
-
-                        return;
-                    });
-
-                    //console.log(param);
-                    if (dependentesIguais.length > 0) {
-                        
-                        dependsCpf = true;
-                    }
-
-
             });
 
-            if (dependsCpf) {
-                swal("Conflito!", "Você informou o mesmo CPF de outro Dependente para este dependente, por favor verifique.", "error");
-                stop = true;
-                return;
-            }
-        }
+            //console.log(param);
+            if (dependentesIguais.length > 0) {
 
-        if ($(".nome-mae").val() == "") {
-            swal("Ops!", "Preencha o Nome da Mãe do " + $(".depends").html(), "error");
+                dependsCpf = true;
+            }
+
+
+        });
+
+        if (dependsCpf) {
+            swal("Conflito!", "Você informou o mesmo CPF de outro Dependente para este dependente, por favor verifique.", "error");
             stop = true;
             return;
         }
+    }
 
-        if (!ValidaNome($(".nome-mae").val())) {
-            swal("Ops!", $(".depends").html() + ": nome da mãe inválido", "error");
-            stop = true;
-            return false;
-        }
+    if ($(".nome-mae").val() == "") {
+        swal("Ops!", "Preencha o Nome da Mãe do " + $(".depends").html(), "error");
+        stop = true;
+        return;
+    }
+
+    if (!ValidaNome($(".nome-mae").val())) {
+        swal("Ops!", $(".depends").html() + ": nome da mãe inválido", "error");
+        stop = true;
+        return false;
+    }
 
 
     if (stop)
@@ -169,9 +190,8 @@ function SalvarDependentes() {
 
         var dependentesExcetoEditado = benef.dependentes.filter(function (x) {
 
-            if (dependenteEmEdicao.cpf == "")
-            {
-                return x.nome != dependenteEmEdicao.nome && x.dataNascimento != dependenteEmEdicao.dataNascimento;               
+            if (dependenteEmEdicao.cpf == "") {
+                return x.nome != dependenteEmEdicao.nome && x.dataNascimento != dependenteEmEdicao.dataNascimento;
             }
 
             return x.cpf != dependenteEmEdicao.cpf
@@ -180,7 +200,7 @@ function SalvarDependentes() {
         benef.dependentes = [];
 
         if (dependentesExcetoEditado.length > 0) benef.dependentes.push(dependentesExcetoEditado[0]);
-        
+
         benef.dependentes.push(dependente);
 
         put("beneficiario", JSON.stringify(benef));

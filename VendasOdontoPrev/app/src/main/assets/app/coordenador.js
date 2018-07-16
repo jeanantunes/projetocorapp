@@ -1426,6 +1426,35 @@ function sincronizar() {
     }
 }
 
+function listCpfPropostaPme() {
+
+    let cnpjDaProposta = get("proposta");
+    let beneficiarios = get("beneficiarios");
+
+    let beneficiariosDaProposta = beneficiarios.filter(function (x) { return x.cnpj == cnpjDaProposta.cnpj });
+
+    let cpfs = [];
+
+    $.each(beneficiariosDaProposta, function (indiceBeneficiario, itemBeneficiario) {
+
+        cpfs.push(itemBeneficiario.cpf);
+
+        $.each(itemBeneficiario.dependentes, function (indiceDependentes, itemDependente) {
+
+            if (itemDependente.cpf != "") {
+
+                cpfs.push(itemDependente.cpf);
+
+            }
+
+        });
+
+    });
+
+    return cpfs;
+
+}
+
 function enviarPropostaPf() {
 
     if (!navigator.onLine) {

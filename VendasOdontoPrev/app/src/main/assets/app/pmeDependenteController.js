@@ -56,6 +56,26 @@ function carregarForm() {
             }
         }
     });
+
+    $(function () {
+        var regex = new RegExp('[^A-Za-z \]', 'g');
+
+
+        // repare a flag "g" de global, para substituir todas as ocorrências
+        $('.nomeRegex').bind('input', function () {
+
+            $(this).val(removerAcentos($(this).val()).toUpperCase());
+            $(this).val($(this).val().replace(regex, ''));
+
+            var capturandoEspaco = $(this).val().substring($(this).val().length - 2, $(this).val().length);
+
+            if (capturandoEspaco == "  ") {
+
+                $(this).val($(this).val().substring(0, $(this).val().length - 1))
+
+            }
+        });
+    });
 }
 
 function SalvarDependentes() {
@@ -125,6 +145,23 @@ function SalvarDependentes() {
             swal("Conflito!", "Você informou o mesmo CPF do titular para este dependente, por favor verifique.", "error");
             stop = true;
             return;
+        }
+
+        let cpfsProposta = listCpfPropostaPme();
+
+        if (cpfsProposta.length > 0) {
+
+            let cpfPesquisa = $(this).find(".cpf").val();
+
+            let checkCpf = cpfsProposta.filter(function (x) { return x == cpfPesquisa });
+
+            if (checkCpf.length > 0) {
+
+                swal("Ops!", "CPF do "+ $(this).find(".depends").html().toLowerCase() +"já informado anteriormente.", "error");
+                stop = true;
+                return;
+            }
+
         }
 
         var benefs = get("beneficiarios");
