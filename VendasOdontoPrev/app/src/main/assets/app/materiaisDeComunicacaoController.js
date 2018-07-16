@@ -137,14 +137,35 @@ function preencherMateriaisDivulgacao() {
 
         $(".img-materiais").click(function () {
 
+            swal({
+                title: "Aguarde",
+                text: 'Estamos carregando a imagem',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+
             getImagemFull(function (dataImage) {
 
                 var dataImage = JSON.parse(dataImage);
 
-                $("#imagem").html('<img class="img-responsive center-block" src="' + 'data:' + dataImage.tipoConteudo + ';base64, ' + dataImage.arquivo + '" />' +
+                let extensao = dataImage.tipoConteudo.split("/")[1];
+                let nomeArquivo = dataImage.nome.replace("." + extensao, "").trim();
 
-                    '<div><label class="descricaoSlick">' + dataImage.descricao + '</label><div><a class="downloadSlick">Download</a></div></div>');
+                console.log(extensao);
+                console.log(nomeArquivo);
+                $("#imagem").html('<img class="img-responsive center-block imagemDownload" src="' + 'data:' + dataImage.tipoConteudo + ';base64, ' + dataImage.arquivo + '" data-extensao = "' + extensao + '" data-nome = "' +
+                    nomeArquivo  + '" />' +
 
+                    '<div><label class="descricaoSlick">' + dataImage.descricao + '</label><div><a class="downloadSlick" onclick="downloadImage()">Download</a></div></div>');
+
+                swal.close();
                 $('#myModal').modal('show');
             
             }, "dadada", $(this).data("codigo"))
@@ -163,7 +184,7 @@ function downloadSlick() {
 
         swal({
             title: "Aguarde",
-            text: 'Estamos carregando a imagem',
+            text: 'Estamos baixando a imagem',
             content: "input",
             imageUrl: "img/load.gif",
             showCancelButton: false,
@@ -179,11 +200,19 @@ function downloadSlick() {
 
             var dataImage = JSON.parse(dataImage);
 
+            ob.gerarArquivo(dataImage.arquivo.trim(), dataImage.nome, dataImage.tipoConteudo.split("/")[1]);
             swal.close();
 
         }, "dadada", $(this).data("codigo"))
 
     });
+}
+
+function downloadImage() {
+
+    console.log($('.imagemDownload').prop('src'));
+
+    ob.gerarArquivo($('.imagemDownload').prop('src').split(",")[1].trim(), $('.imagemDownload').data('nome'), $('.imagemDownload').data('extensao'));
 }
 
 function getImagemFull(callback, token, codigoDaImagem) {
