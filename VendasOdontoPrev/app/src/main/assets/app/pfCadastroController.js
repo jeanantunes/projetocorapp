@@ -2,7 +2,6 @@
 
 $(document).ready(function () {
 
-    //atualizarPropostaMundial();
     buscarPlanosSelecionados();
     carregarProposta();
     localStorage.removeItem("dependentePfEmEdicao");

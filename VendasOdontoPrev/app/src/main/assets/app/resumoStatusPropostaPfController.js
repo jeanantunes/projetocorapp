@@ -44,6 +44,7 @@ function carregarFichaFinanceira() {
 
     if (resumoProposta.status.toUpperCase() == "PROPOSTA CONCLUÍDA COM SUCESSO" && resumoProposta.propostaDcms != undefined && resumoProposta.dadosBancarios.agencia == "" && resumoProposta.dadosBancarios.conta == "") {
 
+
         callTokenVendas(function (dataToken) {
 
             swal({
@@ -73,8 +74,6 @@ function carregarFichaFinanceira() {
                 $.each(dataFichaFinanceira.fichaFinanciera, function (i, item) {
 
                     possuiBoletos = true;
-
-                    item.statusPagamento = "EM ABERTO";
 
                     if (item.statusPagamento == "RENEGOCIADO" || item.statusPagamento == "EM ABERTO" || item.statusPagamento == "INCLUSAO DE TITULO") {
 
@@ -173,39 +172,27 @@ function popularCamposProposta() {
     $("#cidadeTitular").html(resumoProposta.endereco.cidade);
     $("#estadoTitular").html(resumoProposta.endereco.estado);
 
-    let componenteBoxPlano = getComponent("planoResumoStatusProposta");
-    let planos = get("planos");
 
-    let planoSelecionado = planos.filter(function (x) { return x.cdPlano == resumoProposta.planos[0].cdPlano });
-    let valorDoPlano = planoSelecionado[0].valorFloat;
+        let componenteBoxPlano = getComponent("planoResumoStatusProposta");
+        let planos = get("planos");
 
-    if (planoSelecionado[0].desc == "Mensal") {
-        var valorTotalProposta = (valorDoPlano * (resumoProposta.dependentes.length + 1));
-    } else var valorTotalProposta = valorDoPlano * (resumoProposta.dependentes.length + 1);
-    valorTotalProposta = valorTotalProposta.toFixed(2);
+        let planoSelecionado = planos.filter(function (x) { return x.cdPlano == resumoProposta.planos[0].cdPlano });
+        let valorDoPlano = planoSelecionado[0].valorFloat;
 
-    //if ((valorTotalProposta % 2) == 0 || (valorTotalProposta % 2) == 1) {
-    //    var valorReal = valorTotalProposta;
-    //    var valorCent = "00";
-    //} else {
-    //    
-    //    var valorString = valorTotalProposta.toString();
-    //    console.log(valorTotalProposta.indexOf("."));
-    //    var position = valorTotalProposta.indexOf(".");
-    //    var tamanhoString = valorTotalProposta.toString().length;
-    //
-    //    var valorReal = valorTotalProposta.substring(0, position);
-    //    var valorCent = valorTotalProposta.substring(position + 1, position + 3);
-    //
-    //    if (valorCent.toString().length == 1) valorCent = parseFloat(valorCent.toString() + "0");
-    //}
+        if (planoSelecionado[0].desc == "Mensal") {
+            var valorTotalProposta = (valorDoPlano * (resumoProposta.dependentes.length + 1));
+        } else var valorTotalProposta = valorDoPlano * (resumoProposta.dependentes.length + 1);
+        valorTotalProposta = valorTotalProposta.toFixed(2);
+
+
 
     componenteBoxPlano = componenteBoxPlano.replace("{VALOR}", planoSelecionado[0].valor);
     componenteBoxPlano = componenteBoxPlano.replace("{CENTAVO}", planoSelecionado[0].centavo);
-    componenteBoxPlano = componenteBoxPlano.replace("{NOME}", planoSelecionado[0].nome);
+    componenteBoxPlano = componenteBoxPlano.replace("{NOME}", planoSelecionado[0].nome.replace("Principal", ""));
     componenteBoxPlano = componenteBoxPlano.replace("{DESC}", planoSelecionado[0].desc);
     componenteBoxPlano = componenteBoxPlano.replace("{CSS}", planoSelecionado[0].css);
     componenteBoxPlano = componenteBoxPlano.replace("{CSSVALOR}", planoSelecionado[0].css);
+    componenteBoxPlano = componenteBoxPlano.replace("div-excluir", "");
     componenteBoxPlano = componenteBoxPlano.replace("{QUANTBENEF}", "Total da proposta: R$ " + valorTotalProposta.replace(".", ","));
 
     $("#BoxPlanos").html(componenteBoxPlano);
@@ -304,16 +291,24 @@ function efetuarDownload(numeroParcela, dataVencimentoOriginal) {
             },
         });
 
+
+
         gerarDownloadBoleto(function (dataBoleto) {
 
-            var base64str = dataBoleto;
+            if (dataBoleto.status == undefined) {
 
-            // decode base64 string, remove space for IE compatibility
-            var binary = btoa(dataBoleto);
+                var base64str = dataBoleto;
 
-            ob.gerarArquivo(binary, resumoProposta.propostaDcms + numeroParcela);
+                // decode base64 string, remove space for IE compatibility
+                var binary = btoa(dataBoleto);
 
-            swal.close();
+                ob.gerarArquivo(binary, resumoProposta.propostaDcms + numeroParcela);
+
+                swal.close();
+
+            }
+
+
 
         }, dataToken.access_token, request);
 

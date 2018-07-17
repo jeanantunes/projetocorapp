@@ -107,21 +107,7 @@ function carregarListaOffline() {
             acao = "sincronizar";
             link = "logado.html";
             acaoseta = "";
-        } /*else if (item.status == "CRITICADA" || item.status == "Criticado") {
-            status = "Criticada";
-            css = "colorCirc3";
-            acao = "ver detalhes";
-            link = 'href="venda_pf_editar.html?cpf=' + item.cpf+'"';
-            acaoseta = "";
-        } else if (item.status == "ENVIADA" || item.status == "Aprovado") {
-            status = "Processada";
-            css = "colorCirc2";
-            acaoseta = "hide";
-        } else if (item.status == "SYNC") {
-            status = "Sincronizando";
-            css = "colorCirc5";
-            acaoseta = "hide";
-        }*/
+        }
 
         if (item.nome == "") {
             itemLista = itemLista.replace("{NOME}", 'a');
