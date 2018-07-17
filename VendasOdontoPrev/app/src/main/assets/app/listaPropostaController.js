@@ -289,7 +289,7 @@ function carregarListaOnlineAtualizarProposta() {
 
     $.each(pessoas, function (i, item) {
 
-        if (item.status != "ENVIADA" && item.status != "Aprovado" && item.status == "Proposta enviada para a OdontoPrev" && item.status != "CRITICADA" && item.status != "Criticado") {
+        if (item.status != "ENVIADA" && item.status != "Aprovado" && item.status != "Proposta enviada para a OdontoPrev" && item.status != "CRITICADA" && item.status != "Criticado") {
 
             qtdPessoas++;
 
