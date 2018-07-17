@@ -129,8 +129,7 @@ function buscarFichaFinanceira(callback, token, codigoProposta) {
 
     $.ajax({
         async: true,
-        url: "http://172.18.203.21:8090/est-corretorboletoebs-api-rs-1.0/financeiro/obterfichafinanceira/numeroproposta",
-        //url: URLBase + "/corretor/boleto/1.0/financeiro/obterfichafinanceira/numeroproposta",
+        url: URLBase + "/corretor/boleto/1.0/financeiro/obterfichafinanceira/numeroproposta",
         method: "POST",
 
         headers: {
@@ -154,8 +153,6 @@ function popularCamposProposta() {
 
     let resumoProposta = get("resumoStatusPropostaPf");
 
-
-    //retorno.cdVenda;
     $("#nomeTitular").html(resumoProposta.nome);
     $("#emailTitular").html(resumoProposta.email);
     $("#celularTitular").html(resumoProposta.celular);
@@ -173,18 +170,16 @@ function popularCamposProposta() {
     $("#estadoTitular").html(resumoProposta.endereco.estado);
 
 
-        let componenteBoxPlano = getComponent("planoResumoStatusProposta");
-        let planos = get("planos");
+    let componenteBoxPlano = getComponent("planoResumoStatusProposta");
+    let planos = get("planos");
 
-        let planoSelecionado = planos.filter(function (x) { return x.cdPlano == resumoProposta.planos[0].cdPlano });
-        let valorDoPlano = planoSelecionado[0].valorFloat;
+    let planoSelecionado = planos.filter(function (x) { return x.cdPlano == resumoProposta.planos[0].cdPlano });
+    let valorDoPlano = planoSelecionado[0].valorFloat;
 
-        if (planoSelecionado[0].desc == "Mensal") {
-            var valorTotalProposta = (valorDoPlano * (resumoProposta.dependentes.length + 1));
-        } else var valorTotalProposta = valorDoPlano * (resumoProposta.dependentes.length + 1);
-        valorTotalProposta = valorTotalProposta.toFixed(2);
-
-
+    if (planoSelecionado[0].desc == "Mensal") {
+        var valorTotalProposta = (valorDoPlano * (resumoProposta.dependentes.length + 1));
+    } else var valorTotalProposta = valorDoPlano * (resumoProposta.dependentes.length + 1);
+    valorTotalProposta = valorTotalProposta.toFixed(2);
 
     componenteBoxPlano = componenteBoxPlano.replace("{VALOR}", planoSelecionado[0].valor);
     componenteBoxPlano = componenteBoxPlano.replace("{CENTAVO}", planoSelecionado[0].centavo);
@@ -258,18 +253,12 @@ function popularCamposProposta() {
 
 function efetuarDownload(numeroParcela, dataVencimentoOriginal) {
 
-    let dataVencimento = moment();
-    dataVencimento.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
-    dataVencimento.toISOString();
-    dataVencimento.add(5, 'days');
-
     let resumoProposta = get("resumoStatusPropostaPf");
 
     var request = {
         "codigoDoAssociado": resumoProposta.propostaDcms,
         "dataVencimentoOriginal": dataVencimentoOriginal,
         "numeroParcela": numeroParcela,
-        "dataVencimento": dataVencimento.format().toString(),
         "tipoBoleto": "PDF",
         "codigoSistema": "0",
         "realizarRenegociacao": "N"
@@ -291,27 +280,16 @@ function efetuarDownload(numeroParcela, dataVencimentoOriginal) {
             },
         });
 
-
-
         gerarDownloadBoleto(function (dataBoleto) {
 
             if (dataBoleto.status == undefined) {
 
                 var base64str = dataBoleto;
-
-                // decode base64 string, remove space for IE compatibility
                 var binary = btoa(dataBoleto);
-
                 ob.gerarArquivo(binary, resumoProposta.propostaDcms + numeroParcela);
-
                 swal.close();
-
             }
-
-
-
         }, dataToken.access_token, request);
-
 
     });
 
@@ -321,12 +299,8 @@ function gerarDownloadBoleto(callback, token, request) {
 
     $.ajax({
         async: true,
-        url: "http://172.18.203.21:8090/est-corretorboletoebs-api-rs-1.0/financeiro/gerarboletofile",
-        //url: "http://172.16.244.160:8080/propostaCritica/buscarPropostaCritica/" + cdVenda,
-        //url: URLBase + "/corretor/boleto/1.0/financeiro/gerarboletofile",
-        //url: URLBase + "/corretorservicos/1.0/proposta/dados/critica/venda/" + cdVenda,
+        url: URLBase + "/corretor/boleto/1.0/financeiro/gerarboletofile",
         method: "POST",
-
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + token,
