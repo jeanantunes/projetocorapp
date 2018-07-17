@@ -74,8 +74,6 @@ function carregarFichaFinanceira() {
 
                     possuiBoletos = true;
 
-                    item.statusPagamento = "EM ABERTO";
-
                     if (item.statusPagamento == "RENEGOCIADO" || item.statusPagamento == "EM ABERTO" || item.statusPagamento == "INCLUSAO DE TITULO") {
 
 
@@ -173,16 +171,20 @@ function popularCamposProposta() {
     $("#cidadeTitular").html(resumoProposta.endereco.cidade);
     $("#estadoTitular").html(resumoProposta.endereco.estado);
 
-    let componenteBoxPlano = getComponent("planoResumoStatusProposta");
-    let planos = get("planos");
+    try {
+        let componenteBoxPlano = getComponent("planoResumoStatusProposta");
+        let planos = get("planos");
 
-    let planoSelecionado = planos.filter(function (x) { return x.cdPlano == resumoProposta.planos[0].cdPlano });
-    let valorDoPlano = planoSelecionado[0].valorFloat;
+        let planoSelecionado = planos.filter(function (x) { return x.cdPlano == resumoProposta.planos[0].cdPlano });
+        let valorDoPlano = planoSelecionado[0].valorFloat;
 
-    if (planoSelecionado[0].desc == "Mensal") {
-        var valorTotalProposta = (valorDoPlano * (resumoProposta.dependentes.length + 1));
-    } else var valorTotalProposta = valorDoPlano * (resumoProposta.dependentes.length + 1);
-    valorTotalProposta = valorTotalProposta.toFixed(2);
+        if (planoSelecionado[0].desc == "Mensal") {
+            var valorTotalProposta = (valorDoPlano * (resumoProposta.dependentes.length + 1));
+        } else var valorTotalProposta = valorDoPlano * (resumoProposta.dependentes.length + 1);
+        valorTotalProposta = valorTotalProposta.toFixed(2);
+    } catch (error) {
+
+    }
 
     //if ((valorTotalProposta % 2) == 0 || (valorTotalProposta % 2) == 1) {
     //    var valorReal = valorTotalProposta;

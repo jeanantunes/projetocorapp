@@ -49,11 +49,11 @@ function setIdPlano() {
 
     /////////////////////// DENTE DE LEITE //////////////////
 
-    var plano = planos.filter(function (x) { if (x.nome == "DENTE DE LEITE MENSAL") { return x.nome; } });
-    $("#denteDeLeiteMensal").attr("data-id", plano[0].cdPlano);
-
-    var plano = planos.filter(function (x) { if (x.nome == "DENTE DE LEITE ANUAL") { return x.nome; } });
-    $("#denteDeLeiteAnual").attr("data-id", plano[0].cdPlano);
+    //var plano = planos.filter(function (x) { if (x.nome == "DENTE DE LEITE MENSAL") { return x.nome; } });
+    //$("#denteDeLeiteMensal").attr("data-id", plano[0].cdPlano);
+    //
+    //var plano = planos.filter(function (x) { if (x.nome == "DENTE DE LEITE ANUAL") { return x.nome; } });
+    //$("#denteDeLeiteAnual").attr("data-id", plano[0].cdPlano);
 
     ///////////////////////// DENTAL ORTO ////////////////////////
 
@@ -73,8 +73,8 @@ function setIdPlano() {
         var plano = planos.filter(function (x) { if (x.nome == "DENTAL VIP ANUAL S/CARENCIA") { return x.nome; } });
         $("#vipAnualSCarencia").attr("data-id", plano[0].cdPlano);
     
-        //var plano = planos.filter(function (x) { if (x.nome == "DENTAL BEM-ESTAR ANUAL S/CARENCIA") { return x.nome; } }); TODO: Remover comentario fim do mundial
-        //$("#bemEstarAnualSCarencia").attr("data-id", plano[0].cdPlano);
+        var plano = planos.filter(function (x) { if (x.nome == "DENTAL BEM-ESTAR ANUAL S/CARENCIA") { return x.nome; } });
+        $("#bemEstarAnualSCarencia").attr("data-id", plano[0].cdPlano);
     
 
     return;
