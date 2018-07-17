@@ -157,7 +157,7 @@ function SalvarDependentes() {
 
             if (checkCpf.length > 0) {
 
-                swal("Ops!", "CPF do "+ $(this).find(".depends").html().toLowerCase() +"já informado anteriormente.", "error");
+                swal("Ops!", "CPF do "+ $(this).find(".depends").html().toLowerCase() +" já informado anteriormente.", "error");
                 stop = true;
                 return;
             }
