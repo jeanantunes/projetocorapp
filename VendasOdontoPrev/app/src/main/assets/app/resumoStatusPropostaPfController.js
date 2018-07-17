@@ -187,7 +187,7 @@ function popularCamposProposta() {
 
     componenteBoxPlano = componenteBoxPlano.replace("{VALOR}", planoSelecionado[0].valor);
     componenteBoxPlano = componenteBoxPlano.replace("{CENTAVO}", planoSelecionado[0].centavo);
-    componenteBoxPlano = componenteBoxPlano.replace("{NOME}", planoSelecionado[0].nome);
+    componenteBoxPlano = componenteBoxPlano.replace("{NOME}", planoSelecionado[0].nome.replace("Principal", ""));
     componenteBoxPlano = componenteBoxPlano.replace("{DESC}", planoSelecionado[0].desc);
     componenteBoxPlano = componenteBoxPlano.replace("{CSS}", planoSelecionado[0].css);
     componenteBoxPlano = componenteBoxPlano.replace("{CSSVALOR}", planoSelecionado[0].css);
