@@ -24,10 +24,10 @@ function setIdPlano() {
 
     ///////////////////////DENTAL BEM ESTAR ////////
 
-    var plano = planos.filter(function (x) {if (x.nome == "DENTAL BEM-ESTAR MENSAL"){return x.nome;}});
+    var plano = planos.filter(function (x) {if (x.nome == "DENTAL BEM-ESTAR MENSAL Principal"){return x.nome;}});
     $("#bemEstarMensal").attr("data-id", plano[0].cdPlano);
 
-    var plano = planos.filter(function (x) { if (x.nome == "DENTAL BEM-ESTAR ANUAL") { return x.nome; } });
+    var plano = planos.filter(function (x) { if (x.nome == "DENTAL BEM-ESTAR ANUAL Principal") { return x.nome; } });
     $("#bemEstarAnual").attr("data-id", plano[0].cdPlano);
 
     /////////////////////// DENTAL VIP ///////////////////
@@ -73,7 +73,7 @@ function setIdPlano() {
         var plano = planos.filter(function (x) { if (x.nome == "DENTAL VIP ANUAL S/CARENCIA") { return x.nome; } });
         $("#vipAnualSCarencia").attr("data-id", plano[0].cdPlano);
     
-        var plano = planos.filter(function (x) { if (x.nome == "DENTAL BEM-ESTAR ANUAL S/CARENCIA") { return x.nome; } });
+    var plano = planos.filter(function (x) { if (x.nome == "DENTAL BEM-ESTAR ANUAL S/CARENCIA Principal") { return x.nome; } });
         $("#bemEstarAnualSCarencia").attr("data-id", plano[0].cdPlano);
     
 

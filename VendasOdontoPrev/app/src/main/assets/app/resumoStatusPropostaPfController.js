@@ -171,7 +171,7 @@ function popularCamposProposta() {
     $("#cidadeTitular").html(resumoProposta.endereco.cidade);
     $("#estadoTitular").html(resumoProposta.endereco.estado);
 
-    try {
+
         let componenteBoxPlano = getComponent("planoResumoStatusProposta");
         let planos = get("planos");
 
@@ -182,25 +182,8 @@ function popularCamposProposta() {
             var valorTotalProposta = (valorDoPlano * (resumoProposta.dependentes.length + 1));
         } else var valorTotalProposta = valorDoPlano * (resumoProposta.dependentes.length + 1);
         valorTotalProposta = valorTotalProposta.toFixed(2);
-    } catch (error) {
 
-    }
 
-    //if ((valorTotalProposta % 2) == 0 || (valorTotalProposta % 2) == 1) {
-    //    var valorReal = valorTotalProposta;
-    //    var valorCent = "00";
-    //} else {
-    //    
-    //    var valorString = valorTotalProposta.toString();
-    //    console.log(valorTotalProposta.indexOf("."));
-    //    var position = valorTotalProposta.indexOf(".");
-    //    var tamanhoString = valorTotalProposta.toString().length;
-    //
-    //    var valorReal = valorTotalProposta.substring(0, position);
-    //    var valorCent = valorTotalProposta.substring(position + 1, position + 3);
-    //
-    //    if (valorCent.toString().length == 1) valorCent = parseFloat(valorCent.toString() + "0");
-    //}
 
     componenteBoxPlano = componenteBoxPlano.replace("{VALOR}", planoSelecionado[0].valor);
     componenteBoxPlano = componenteBoxPlano.replace("{CENTAVO}", planoSelecionado[0].centavo);
