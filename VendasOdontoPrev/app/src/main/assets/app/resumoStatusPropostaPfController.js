@@ -44,6 +44,7 @@ function carregarFichaFinanceira() {
 
     if (resumoProposta.status.toUpperCase() == "PROPOSTA CONCLUÍDA COM SUCESSO" && resumoProposta.propostaDcms != undefined && resumoProposta.dadosBancarios.agencia == "" && resumoProposta.dadosBancarios.conta == "") {
 
+
         callTokenVendas(function (dataToken) {
 
             swal({
@@ -191,6 +192,7 @@ function popularCamposProposta() {
     componenteBoxPlano = componenteBoxPlano.replace("{DESC}", planoSelecionado[0].desc);
     componenteBoxPlano = componenteBoxPlano.replace("{CSS}", planoSelecionado[0].css);
     componenteBoxPlano = componenteBoxPlano.replace("{CSSVALOR}", planoSelecionado[0].css);
+    componenteBoxPlano = componenteBoxPlano.replace("div-excluir", "");
     componenteBoxPlano = componenteBoxPlano.replace("{QUANTBENEF}", "Total da proposta: R$ " + valorTotalProposta.replace(".", ","));
 
     $("#BoxPlanos").html(componenteBoxPlano);
@@ -289,16 +291,24 @@ function efetuarDownload(numeroParcela, dataVencimentoOriginal) {
             },
         });
 
+
+
         gerarDownloadBoleto(function (dataBoleto) {
 
-            var base64str = dataBoleto;
+            if (dataBoleto.status == undefined) {
 
-            // decode base64 string, remove space for IE compatibility
-            var binary = btoa(dataBoleto);
+                var base64str = dataBoleto;
 
-            ob.gerarArquivo(binary, resumoProposta.propostaDcms + numeroParcela);
+                // decode base64 string, remove space for IE compatibility
+                var binary = btoa(dataBoleto);
 
-            swal.close();
+                ob.gerarArquivo(binary, resumoProposta.propostaDcms + numeroParcela);
+
+                swal.close();
+
+            }
+
+
 
         }, dataToken.access_token, request);
 

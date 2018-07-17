@@ -368,6 +368,7 @@ function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelul
             callback(resp);
         },
         error: function (xhr) {
+            callback(xhr);
         }
     });
 }
