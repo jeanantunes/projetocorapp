@@ -21,8 +21,12 @@ $(document).ready(function () {
 
         adicionarBenefMemoria();
 
-        if (problema)
+        if (problema) {
+
+            $(".dependentes").val(0);
             return;
+
+        }
 
         var proposta = get("proposta");
         var benef = get("beneficiario");
