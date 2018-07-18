@@ -44,6 +44,7 @@ function carregarFichaFinanceira() {
 
     if (resumoProposta.status.toUpperCase() == "PROPOSTA CONCLUÍDA COM SUCESSO" && resumoProposta.propostaDcms != undefined && resumoProposta.dadosBancarios.agencia == "" && resumoProposta.dadosBancarios.conta == "") {
 
+
         callTokenVendas(function (dataToken) {
 
             swal({
@@ -73,8 +74,6 @@ function carregarFichaFinanceira() {
                 $.each(dataFichaFinanceira.fichaFinanciera, function (i, item) {
 
                     possuiBoletos = true;
-
-                    item.statusPagamento = "EM ABERTO";
 
                     if (item.statusPagamento == "RENEGOCIADO" || item.statusPagamento == "EM ABERTO" || item.statusPagamento == "INCLUSAO DE TITULO") {
 
@@ -130,10 +129,7 @@ function buscarFichaFinanceira(callback, token, codigoProposta) {
 
     $.ajax({
         async: true,
-        //url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
-        //url: "http://172.16.244.160:8080/propostaCritica/buscarPropostaCritica/" + cdVenda,
-        url: "http://172.18.203.21:8090/est-corretorboletoebs-api-rs-1.0/financeiro/obterfichafinanceira/numeroproposta",
-        //url: URLBase + "/corretorservicos/1.0/proposta/dados/critica/venda/" + cdVenda,
+        url: URLBase + "/corretor/boleto/1.0/financeiro/obterfichafinanceira/numeroproposta",
         method: "POST",
 
         headers: {
@@ -157,8 +153,6 @@ function popularCamposProposta() {
 
     let resumoProposta = get("resumoStatusPropostaPf");
 
-
-    //retorno.cdVenda;
     $("#nomeTitular").html(resumoProposta.nome);
     $("#emailTitular").html(resumoProposta.email);
     $("#celularTitular").html(resumoProposta.celular);
@@ -175,6 +169,7 @@ function popularCamposProposta() {
     $("#cidadeTitular").html(resumoProposta.endereco.cidade);
     $("#estadoTitular").html(resumoProposta.endereco.estado);
 
+
     let componenteBoxPlano = getComponent("planoResumoStatusProposta");
     let planos = get("planos");
 
@@ -186,28 +181,13 @@ function popularCamposProposta() {
     } else var valorTotalProposta = valorDoPlano * (resumoProposta.dependentes.length + 1);
     valorTotalProposta = valorTotalProposta.toFixed(2);
 
-    //if ((valorTotalProposta % 2) == 0 || (valorTotalProposta % 2) == 1) {
-    //    var valorReal = valorTotalProposta;
-    //    var valorCent = "00";
-    //} else {
-    //    
-    //    var valorString = valorTotalProposta.toString();
-    //    console.log(valorTotalProposta.indexOf("."));
-    //    var position = valorTotalProposta.indexOf(".");
-    //    var tamanhoString = valorTotalProposta.toString().length;
-    //
-    //    var valorReal = valorTotalProposta.substring(0, position);
-    //    var valorCent = valorTotalProposta.substring(position + 1, position + 3);
-    //
-    //    if (valorCent.toString().length == 1) valorCent = parseFloat(valorCent.toString() + "0");
-    //}
-
     componenteBoxPlano = componenteBoxPlano.replace("{VALOR}", planoSelecionado[0].valor);
     componenteBoxPlano = componenteBoxPlano.replace("{CENTAVO}", planoSelecionado[0].centavo);
-    componenteBoxPlano = componenteBoxPlano.replace("{NOME}", planoSelecionado[0].nome);
+    componenteBoxPlano = componenteBoxPlano.replace("{NOME}", planoSelecionado[0].nome.replace("Principal", ""));
     componenteBoxPlano = componenteBoxPlano.replace("{DESC}", planoSelecionado[0].desc);
     componenteBoxPlano = componenteBoxPlano.replace("{CSS}", planoSelecionado[0].css);
     componenteBoxPlano = componenteBoxPlano.replace("{CSSVALOR}", planoSelecionado[0].css);
+    componenteBoxPlano = componenteBoxPlano.replace("div-excluir", "");
     componenteBoxPlano = componenteBoxPlano.replace("{QUANTBENEF}", "Total da proposta: R$ " + valorTotalProposta.replace(".", ","));
 
     $("#BoxPlanos").html(componenteBoxPlano);
@@ -273,18 +253,12 @@ function popularCamposProposta() {
 
 function efetuarDownload(numeroParcela, dataVencimentoOriginal) {
 
-    let dataVencimento = moment();
-    dataVencimento.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
-    dataVencimento.toISOString();
-    dataVencimento.add(5, 'days');
-
     let resumoProposta = get("resumoStatusPropostaPf");
 
     var request = {
         "codigoDoAssociado": resumoProposta.propostaDcms,
         "dataVencimentoOriginal": dataVencimentoOriginal,
         "numeroParcela": numeroParcela,
-        "dataVencimento": dataVencimento.format().toString(),
         "tipoBoleto": "PDF",
         "codigoSistema": "0",
         "realizarRenegociacao": "N"
@@ -308,17 +282,14 @@ function efetuarDownload(numeroParcela, dataVencimentoOriginal) {
 
         gerarDownloadBoleto(function (dataBoleto) {
 
-            var base64str = dataBoleto;
+            if (dataBoleto.status == undefined) {
 
-            // decode base64 string, remove space for IE compatibility
-            var binary = btoa(dataBoleto);
-
-            ob.gerarArquivo(binary, resumoProposta.propostaDcms + numeroParcela);
-
-            swal.close();
-
+                var base64str = dataBoleto;
+                var binary = btoa(dataBoleto);
+                ob.gerarArquivo(binary, resumoProposta.propostaDcms + numeroParcela);
+                swal.close();
+            }
         }, dataToken.access_token, request);
-
 
     });
 
@@ -328,12 +299,8 @@ function gerarDownloadBoleto(callback, token, request) {
 
     $.ajax({
         async: true,
-        //url: "http://172.16.20.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/propostaCritica/buscarPropostaCritica/" + cdVenda,
-        //url: "http://172.16.244.160:8080/propostaCritica/buscarPropostaCritica/" + cdVenda,
-        url: "http://172.18.203.21:8090/est-corretorboletoebs-api-rs-1.0/financeiro/gerarboletofile",
-        //url: URLBase + "/corretorservicos/1.0/proposta/dados/critica/venda/" + cdVenda,
+        url: URLBase + "/corretor/boleto/1.0/financeiro/gerarboletofile",
         method: "POST",
-
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + token,

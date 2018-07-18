@@ -368,6 +368,7 @@ function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelul
             callback(resp);
         },
         error: function (xhr) {
+            callback(xhr);
         }
     });
 }
@@ -575,32 +576,6 @@ function setPlanosProd() {
     planos.push(plano);
 
 
-    // Inicio planos bem estar COPA
-
-    plano = getRepository("plano");
-    plano.cdPlano = 84;
-    plano.nome = "DENTAL BEM-ESTAR";
-    plano.valor = "45";
-    plano.centavo = "60";
-    plano.valorFloat = 45.60;
-    plano.desc = "Mensal";
-    plano.css = "colorSlickCopa";
-
-    planos.push(plano);
-
-    plano = getRepository("plano");
-    plano.cdPlano = 85;
-    plano.nome = "DENTAL BEM-ESTAR";
-    plano.valor = "456";
-    plano.centavo = "00";
-    plano.valorFloat = 456.00;
-    plano.desc = "Anual";
-    plano.css = "colorSlickCopa";
-
-    planos.push(plano);
-
-    // Fim planos bem estar COPA
-
     plano = getRepository("plano");
     plano.cdPlano = 67;
     plano.nome = "DENTAL BEM-ESTAR Principal";
@@ -631,6 +606,30 @@ function setPlanosProd() {
     plano.valorFloat = 547.20;
     plano.desc = "Anual";
     plano.css = "colorSlick1";
+
+    planos.push(plano);
+
+    // Planos COPA
+
+    plano = getRepository("plano");
+    plano.cdPlano = 84;
+    plano.nome = "DENTAL BEM-ESTAR";
+    plano.valor = "45";
+    plano.centavo = "60";
+    plano.valorFloat = 45.60;
+    plano.desc = "Mensal";
+    plano.css = "colorSlickCopa";
+
+    planos.push(plano);
+
+    plano = getRepository("plano");
+    plano.cdPlano = 85;
+    plano.nome = "DENTAL BEM-ESTAR";
+    plano.valor = "456";
+    plano.centavo = "00";
+    plano.valorFloat = 456.00;
+    plano.desc = "Anual";
+    plano.css = "colorSlickCopa";
 
     planos.push(plano);
 
@@ -791,18 +790,6 @@ function setPlanosProdCod() {
     plano.nome = "MASTER LE";
     planos.push(plano);
 
-    ////// CODIGO PLANOS DENTE DE LEITE ////////
-
-    var plano = new Object();
-    plano.cdPlano = 11;
-    plano.nome = "DENTE DE LEITE MENSAL";
-    planos.push(plano);
-
-    var plano = new Object();
-    plano.cdPlano = 12;
-    plano.nome = "DENTE DE LEITE ANUAL";
-    planos.push(plano);
-
     ////// CODIGO PLANOS DENTAL BEM - ESTAR PRINCIPAL ////////
 
     var plano = new Object();
@@ -819,6 +806,7 @@ function setPlanosProdCod() {
     plano.cdPlano = 68;
     plano.nome = "DENTAL BEM-ESTAR ANUAL S/CARENCIA Principal";
     planos.push(plano);
+
 
     // PLANOS BEM ESTAR COPA
 

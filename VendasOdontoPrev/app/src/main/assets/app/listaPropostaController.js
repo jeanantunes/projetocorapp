@@ -107,21 +107,7 @@ function carregarListaOffline() {
             acao = "sincronizar";
             link = "logado.html";
             acaoseta = "";
-        } /*else if (item.status == "CRITICADA" || item.status == "Criticado") {
-            status = "Criticada";
-            css = "colorCirc3";
-            acao = "ver detalhes";
-            link = 'href="venda_pf_editar.html?cpf=' + item.cpf+'"';
-            acaoseta = "";
-        } else if (item.status == "ENVIADA" || item.status == "Aprovado") {
-            status = "Processada";
-            css = "colorCirc2";
-            acaoseta = "hide";
-        } else if (item.status == "SYNC") {
-            status = "Sincronizando";
-            css = "colorCirc5";
-            acaoseta = "hide";
-        }*/
+        }
 
         if (item.nome == "") {
             itemLista = itemLista.replace("{NOME}", 'a');
@@ -242,24 +228,24 @@ function carregarListaOnlineAtualizarProposta() {
                     onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '), $(this).attr(' + "'data-status'" + '))"';
                     statusVenda = item.statusVenda;
 
-                } else if (item.statusVenda == "Proposta Criticada") {
+                } else if (item.statusVenda == "Proposta criticada") {
 
                     status = item.statusVenda;
                     css = "colorCirc3";
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
-                    statusVenda = item.statusVenda;
+                    statusVenda = "Proposta Criticada";
                     onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '), $(this).attr(' + "'data-status'" + '))"';
 
-                } else if (item.statusVenda == "Proposta Concluída com Sucesso") {
+                } else if (item.statusVenda == "Proposta concluida com sucesso") {
 
                     status = item.statusVenda;
                     css = "colorCirc2";
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
-                    statusVenda = item.statusVenda;
+                    statusVenda = "Proposta Concluída com Sucesso";
                     onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '), $(this).attr(' + "'data-status'" + '))"';
 
                 }
@@ -303,7 +289,7 @@ function carregarListaOnlineAtualizarProposta() {
 
     $.each(pessoas, function (i, item) {
 
-        if (item.status != "ENVIADA" && item.status != "Aprovado" && item.status == "Proposta enviada para a OdontoPrev" && item.status != "CRITICADA" && item.status != "Criticado") {
+        if (item.status != "ENVIADA" && item.status != "Aprovado" && item.status != "Proposta enviada para a OdontoPrev" && item.status != "CRITICADA" && item.status != "Criticado") {
 
             qtdPessoas++;
 
@@ -439,15 +425,15 @@ function carregarListaOnlineAtualizarProposta() {
                     css = "colorCirc7";
                     acaoseta = "hide";
 
-                } else if (item.statusVenda == "Proposta Criticada") {
+                } else if (item.statusVenda == "Proposta criticada") {
 
                     status = "Proposta Criticada";
                     css = "colorCirc3";
                     acaoseta = "hide";
 
-                } else if (item.statusVenda == "Proposta Concluída com Sucesso") {
+                } else if (item.statusVenda == "Proposta concluida com sucesso") {
 
-                    status = item.statusVenda;
+                    status = "Proposta Concluída com Sucesso";
                     css = "colorCirc2";
                     acaoseta = "hide";
                 }
