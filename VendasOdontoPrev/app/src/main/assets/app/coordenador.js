@@ -346,6 +346,10 @@ function callTokenVendas(callback) {
     });
 };
 
+String.prototype.replaceAll = String.prototype.replaceAll || function (needle, replacement) {
+    return this.split(needle).join(replacement);
+};
+
 function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelular, sistemaOperacional) {
 
     var request = {
@@ -633,6 +637,7 @@ function setPlanosProd() {
 
     planos.push(plano);
 
+
     plano = getRepository("plano");
     plano.cdPlano = 11;
     plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
@@ -807,6 +812,15 @@ function setPlanosProdCod() {
     plano.nome = "DENTAL BEM-ESTAR ANUAL S/CARENCIA Principal";
     planos.push(plano);
 
+    var plano = new Object();
+    plano.cdPlano = 11;
+    plano.nome = "DENTE DE LEITE MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 12;
+    plano.nome = "DENTE DE LEITE ANUAL";
+    planos.push(plano);
 
     // PLANOS BEM ESTAR COPA
 
@@ -1435,6 +1449,35 @@ function sincronizar() {
     else {
         swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
     }
+}
+
+function listCpfPropostaPme() {
+
+    let cnpjDaProposta = get("proposta");
+    let beneficiarios = get("beneficiarios");
+
+    let beneficiariosDaProposta = beneficiarios.filter(function (x) { return x.cnpj == cnpjDaProposta.cnpj });
+
+    let cpfs = [];
+
+    $.each(beneficiariosDaProposta, function (indiceBeneficiario, itemBeneficiario) {
+
+        cpfs.push(itemBeneficiario.cpf);
+
+        $.each(itemBeneficiario.dependentes, function (indiceDependentes, itemDependente) {
+
+            if (itemDependente.cpf != "") {
+
+                cpfs.push(itemDependente.cpf);
+
+            }
+
+        });
+
+    });
+
+    return cpfs;
+
 }
 
 function enviarPropostaPf() {

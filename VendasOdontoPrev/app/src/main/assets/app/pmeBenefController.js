@@ -21,8 +21,12 @@ $(document).ready(function () {
 
         adicionarBenefMemoria();
 
-        if (problema)
+        if (problema) {
+
+            $(".dependentes").val(0);
             return;
+
+        }
 
         var proposta = get("proposta");
         var benef = get("beneficiario");
@@ -310,6 +314,7 @@ function listarDependentes() {
 }
 */
 
+
 function adicionarBenefMemoria() {
     var proposta = get("proposta");
     var currentYear = (new Date).getFullYear();
@@ -383,7 +388,32 @@ function adicionarBenefMemoria() {
         return;
     }
 
+    let cpfsProposta = listCpfPropostaPme();
 
+    let cpfEmEdicao = get("cpfEmEdicaoPME");
+
+    if (cpfEmEdicao == null && cpfsProposta.length > 0) {
+
+        let checkCpf = cpfsProposta.filter(function (x) { return x == $("#cpf").val() });
+
+        if (checkCpf.length > 0) {
+
+            swal("Ops!", "CPF já informado anteriormente.", "error");
+            return;
+        }
+
+    } else if (cpfEmEdicao != null && cpfsProposta.length > 0) {
+
+        let removeCpfEdicao = cpfsProposta.filter(function (x) { return x != cpfEmEdicao });
+        let checkCpf = removeCpfEdicao.filter(function (x) { return x == $("#cpf").val() });
+
+        if (checkCpf.length > 0) {
+
+            swal("Ops!", "CPF já informado anteriormente.", "error");
+            return;
+        }
+
+    }
 
     //if (menor < 18) {
     //    swal("Ops!", "O Titular não pode ser menor de idade", "error");
