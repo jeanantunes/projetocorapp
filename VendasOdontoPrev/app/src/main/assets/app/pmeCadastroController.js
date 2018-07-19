@@ -403,7 +403,7 @@ function buscarEmpresa() {
                         $("#representante-legal").prop('disabled', false);
                         $("#cpf-representante").prop('disabled', false);
                         $("#nome-fantasia").prop('disabled', false);
-
+                        $("#cnae").prop('disabled', false);
                         swal.close();
                         return;
                     }
@@ -418,6 +418,7 @@ function buscarEmpresa() {
                         $("#representante-legal").val("");
                         $("#cpf-representante").val("");
                         $("#nome-fantasia").val("");
+                        $("#cnae").val("");
                         //$("#razao-social").removeProp("disabled", true);
                         return;
                     }
@@ -842,7 +843,7 @@ function limparCampos() {
     $("#bairro").val("");
     $("#cidade").val("");
     $("#uf").val("");
-
+    $("#cnae").val("");
 }
 
 
