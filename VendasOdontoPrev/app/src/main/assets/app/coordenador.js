@@ -64,6 +64,7 @@ function sincronizarPf(callback, pessoa) {
         var json = {
             "cdForcaVenda": forcaVenda.codigo,
             "cdPlano": cdPlano,
+            "plataforma": "APP ANDROID",
             "titulares": [
                 {
                     "nome": removerAcentosMinusculo(pessoa.nome),
@@ -117,6 +118,7 @@ function sincronizarPf(callback, pessoa) {
         var json = {
             "cdForcaVenda": forcaVenda.codigo,
             "cdPlano": cdPlano,
+            "plataforma": "APP ANDROID",
             "titulares": [
                 {
                     "nome": removerAcentosMinusculo(pessoa.nome),
@@ -1538,7 +1540,7 @@ function enviarPropostaPf() {
                         var pessoas = get("pessoas");
                         var todosExcetoExclusao = pessoas.filter(function (x) { return x.cpf != proposta.cpf });
                         //todosExcetoExclusao.push(proposta);
-                        
+
                         console.log(todosExcetoExclusao);
                         put("pessoas", JSON.stringify(todosExcetoExclusao));
 
@@ -1555,7 +1557,7 @@ function enviarPropostaPf() {
                     atualizarProposta.status = "PRONTA";
                     put("propostaPf", JSON.stringify(atualizarProposta));
                     atualizarPessoas(atualizarProposta);
-                    swal("Ops!","Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error")
+                    swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error")
                 }
 
                 atualizarDashBoard();
@@ -1627,6 +1629,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
         var json = {
             "cdForcaVenda": forcaVenda.codigo,
             "cdPlano": cdPlano,
+            "plataforma": "APP ANDROID",
             "titulares": [
                 {
                     "nome": removerAcentosMinusculo(pessoa[0].nome),
@@ -1680,6 +1683,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
         var json = {
             "cdForcaVenda": forcaVenda.codigo,
             "cdPlano": cdPlano,
+            "plataforma": "APP ANDROID",
             "titulares": [
                 {
                     "nome": removerAcentosMinusculo(pessoa[0].nome),
@@ -1809,7 +1813,7 @@ function sincronizarEmpresa(callback, proposta, beneficiarios, reSync) {
 
     var dadosUsuario = get("dadosUsuario");
     var pdata = [];
-    var json = "{ \"cdForcaVenda\":" + dadosUsuario.codigo + ", \"empresas\": " + JSON.stringify(proposta) + ", \"titulares\":" + JSON.stringify(beneficiarios) + "}";
+    var json = "{ \"cdForcaVenda\":" + dadosUsuario.codigo + ", \"plataforma\": \"APP ANDROID\", \"empresas\": " + JSON.stringify(proposta) + ", \"titulares\":" + JSON.stringify(beneficiarios) + "}";
 
     console.log(json);
 
@@ -1922,50 +1926,50 @@ function sincronizarPME(callback, proposta, beneficiarios) {
 
 
 
-        //if (!proposta.sincronizadaSerasa) {
-        //
-        //    postSerasa(function (dataConsultaSerasa) {
-        //
-        //                        
-        //
-        //
-        //    }, dataToken.access_token, proposta.cnpj);
-        //
-        //
-        //}
-   
-        var dadosUsuario = get("dadosUsuario");
-        var pdata = [];
-        var json = "{ \"cdForcaVenda\":" + dadosUsuario.codigo + ", \"empresas\": " + JSON.stringify(proposta) + ", \"titulares\":" + JSON.stringify(beneficiarios) + "}";
+    //if (!proposta.sincronizadaSerasa) {
+    //
+    //    postSerasa(function (dataConsultaSerasa) {
+    //
+    //                        
+    //
+    //
+    //    }, dataToken.access_token, proposta.cnpj);
+    //
+    //
+    //}
 
-        console.log(json);
+    var dadosUsuario = get("dadosUsuario");
+    var pdata = [];
+    var json = "{ \"cdForcaVenda\":" + dadosUsuario.codigo + ", \"plataforma\": \"APP ANDROID\", \"empresas\": " + JSON.stringify(proposta) + ", \"titulares\":" + JSON.stringify(beneficiarios) + "}";
 
-        callTokenVendas(function (dataToken) {
+    console.log(json);
 
-            if (dataToken.status != undefined) {
+    callTokenVendas(function (dataToken) {
 
-                callback(dataToken);
+        if (dataToken.status != undefined) {
+
+            callback(dataToken);
+        }
+
+        $.ajax({
+            url: URLBase + "/corretorservicos/1.0/vendapme",
+            //url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
+            type: "POST",
+            data: json,
+            dataType: "json",
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache",
+                "Authorization": "Bearer " + dataToken.access_token
+            },
+            success: function (result) {
+                callback(result)
+            },
+            error: function (xhr) {
+                callback(xhr)
+                //swal.close();
             }
-
-            $.ajax({
-                url: URLBase + "/corretorservicos/1.0/vendapme",
-                //url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
-                type: "POST",
-                data: json,
-                dataType: "json",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Cache-Control": "no-cache",
-                    "Authorization": "Bearer " + dataToken.access_token
-                },
-                success: function (result) {
-                    callback(result)
-                },
-                error: function (xhr) {
-                    callback(xhr)
-                    //swal.close();
-                }
-            });
+        });
     });
 }
 
@@ -2046,7 +2050,7 @@ function consultarSerasa(callback, propostaPme) {
                 propostaPme.razaoSocial = dataConsultaSerasa.getElementsByTagName("razaoSocial")[0].textContent.trim(); // RAZAO SOCIAL
 
             } catch (Exception) {
-               
+
             }
 
             try {
@@ -2054,7 +2058,7 @@ function consultarSerasa(callback, propostaPme) {
                 propostaPme.ramoAtividade = dataConsultaSerasa.getElementsByTagName("descricao")[0].textContent.trim(); // RAMO DE ATIVIDADE
 
             } catch (Exception) {
-                
+
             }
 
             try {
@@ -2062,7 +2066,7 @@ function consultarSerasa(callback, propostaPme) {
                 propostaPme.representanteLegal = dataConsultaSerasa.getElementsByTagName("nome")[0].textContent.trim(); // NOME REPRESENTANTE LEGAL
 
             } catch (Exception) {
-           
+
             }
 
             try {
@@ -2070,7 +2074,7 @@ function consultarSerasa(callback, propostaPme) {
                 propostaPme.cpfRepresentante = dataConsultaSerasa.getElementsByTagName("documento")[0].textContent.trim(); // CPF REPRESENTANTE LEGAL
 
             } catch (Exception) {
-         
+
             }
 
             try {
@@ -2078,7 +2082,7 @@ function consultarSerasa(callback, propostaPme) {
                 propostaPme.nomeFantasia = dataConsultaSerasa.getElementsByTagName("nomeFantasia")[0].textContent.trim(); // NOME FANTASIA
 
             } catch (Exception) {
-        
+
             }
 
             try {
