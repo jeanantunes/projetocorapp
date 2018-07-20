@@ -1,12 +1,6 @@
 ﻿$(document).ready(function () {
 
-    //setarItensSlick();
-
-    preencherMateriaisDivulgacao();
-
-    $("#myModal").on("hidden.bs.modal", function () {
-        $('body').removeClass('stop-scrolling');
-    });
+    preencherMateriaisDivulgacao();   
     
 });
 
@@ -48,7 +42,40 @@ function preencherMateriaisDivulgacao() {
 
     callTokenVendas(function (dataToken) {
 
+        if (dataToken.status != undefined) {
+
+            swal({
+                title: "Ops",
+                text: "Erro no carregamento da página, tente novamente.",
+                type: "error",
+                closeOnConfirm: false
+            }, function () {
+
+                window.location = "logado.html";
+
+                });
+
+            return;
+
+        }
+
         buscarMateriaisDivulgacao(function (dataMateriais) {
+
+            if (dataMateriais.status != undefined) {
+
+                swal({
+                    title: "Ops",
+                    text: "Erro no carregamento da página, tente novamente.",
+                    type: "error",
+                    closeOnConfirm: false
+                }, function () {
+
+                    window.location = "logado.html";
+
+                });
+
+                return;
+            }
 
             $.each(dataMateriais.categoriasMaterialDivulgacao, function (iCategoria, itemCategoria) {
 
@@ -160,18 +187,14 @@ function preencherMateriaisDivulgacao() {
                                 let extensao = dataImage.tipoConteudo.split("/")[1];
                                 let nomeArquivo = dataImage.nome.replace("." + extensao, "").trim();
 
-                                console.log(extensao);
-                                console.log(nomeArquivo);
                                 $("#imagem").html('<img class="img-responsive center-block imagemDownload" src="' + 'data:' + dataImage.tipoConteudo + ';base64, ' + dataImage.arquivo + '" data-extensao = "' + extensao + '" data-nome = "' +
                                     nomeArquivo + '" />' +
 
                                     '<div><label class="descricaoSlick">' + dataImage.descricao + '</label><div><a class="downloadSlick" onclick="downloadImage()">Download</a></div></div>');
 
                                 swal.close();
-                                $('body').addClass('stop-scrolling');
                                 $('#myModal').modal('show');
-
-
+                                
                             } else {
 
                                 swal("Ops!", "Erro no carregamento da imagem", "error");
@@ -191,7 +214,6 @@ function preencherMateriaisDivulgacao() {
                 });
 
             });
-
 
             downloadSlick();
             swal.close();
@@ -255,15 +277,11 @@ function downloadSlick() {
 
 function downloadImage() {
 
-    console.log($('.imagemDownload').prop('src'));
-
     ob.gerarArquivo($('.imagemDownload').prop('src').split(",")[1].trim(), $('.imagemDownload').data('nome'), $('.imagemDownload').data('extensao'));
+
 }
 
 function getImagemFull(callback, token, codigoDaImagem) {
-
-    console.log(token);
-    console.log(codigoDaImagem);
 
     $.ajax({
         async: true,
