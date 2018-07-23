@@ -224,7 +224,8 @@
     margin: auto;
     display: table;
     max-width: 95%;
-    margin-top: 20%;
+    margin-top: 5%;
+
 }
 
 .titleLblDesc {
@@ -270,6 +271,8 @@
     width: auto;
     border: 1px solid #fff;
     margin-bottom: 19px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .descricaoSlick {
