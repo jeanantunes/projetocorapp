@@ -21,6 +21,20 @@
     font-size: 80%;
 }
 
+.word-wrap-normal {
+
+    word-wrap: normal;
+    word-break: break-all;
+}
+
+.margin-left10 {
+    margin-left: 10px;
+}
+
+.margin-right10 {
+    margin-right: 10px;
+}
+
 .infoCopa {
 
     font-family: Roboto-Medium;
@@ -395,9 +409,27 @@
     font-size: 20px;
 }
 
+.labelDadosDataOperacionais {
+    font-family: Roboto-Bold;
+    color: #ACAAA5;
+    font-size: 16px;
+}
+
+.labelBoxDadosBeneficiario {
+    font-family: Roboto-Bold;
+    color: #ACAAA5;
+    font-size: 16px;
+}
 
 .labelBlueTitle {
     font-family: Roboto-Light;
+    font-size: 16pt;
+    color: #1974CE;
+    margin-bottom: 10pt;
+}
+
+.labelBlueTitleBold {
+    font-family: Roboto-Bold;
     font-size: 16pt;
     color: #1974CE;
     margin-bottom: 10pt;
@@ -490,6 +522,21 @@
     margin-top: 5%;
     padding-left: 12%;
     margin-bottom: 5%;
+}
+
+.imgPesquisa {
+    height: 20px;
+    width: 20px;
+}
+
+.circlePesquisaBeneficiario {
+    color: #fff;
+    padding-top: 7px;
+    border-radius: 25px;
+    text-align: center;
+    display: inline-block;
+    width: 35px;
+    height: 35px;
 }
 
 .boxDependente {
@@ -605,6 +652,8 @@
 /*********************************** Radio Button ****************************************/
 
 
+
+
 .checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
     margin-left: 24px;
     width: 22px;
@@ -707,6 +756,19 @@
     background-color: #F1F9FF;
     padding-bottom: 15px;
     width: 250px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.img-pesquisar-beneficiario {
+    color: #D9487F;
+    font-family: Roboto-Bold;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .btnMenu {
@@ -1043,8 +1105,7 @@ h1, .titleListBox {
 .imgBtnEditar {
     text-align: right;
     position: relative;
-    left: 10px;
-    top: 20px;
+    top: 25px;
     z-index: 1;
 }
 
@@ -1358,6 +1419,18 @@ h5, .subListBox {
 .boxBeneficiario {
     position: absolute;
     top: 40px;
+}
+
+.boxBeneficiariosPme {
+    margin-top: 20px;
+}
+
+.margin-bottom10 {
+    margin-bottom: 10px;
+}
+
+.margin-bottom20 {
+    margin-bottom: 20px;
 }
 
 .pVPlanoVenda {
@@ -2060,6 +2133,15 @@ h5, .subListBox {
     border: 1px solid #EDEDED;
     border-radius: 18px;
     box-shadow: 2px 5px 15px 0px #EDEDED;
+}
+
+.boxDadosPropostaPme {
+    height:auto;
+    border: 1px solid #EDEDED;
+    border-radius: 18px;
+    box-shadow: 2px 5px 15px 0px #EDEDED;
+    margin-right: 15px;
+    margin-bottom: 10px;
 }
 
 #map {
