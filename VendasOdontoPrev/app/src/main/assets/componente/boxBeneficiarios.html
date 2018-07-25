@@ -1,6 +1,8 @@
 ﻿<div>
     <div class="imgBtnEditar">
-        <img src="img/search-13-256.png" class="btnExcluir" alt="" onclick="">
+        <div id="compartilharCard" class="circlePesquisaBeneficiario" style="background-color: #1974CE;">
+            <img class="imgPesquisa" src="img/search-13-256.png" onclick="getBeneficiario()" />
+        </div>
     </div>
     <div class="col-md-12 boxDadosPropostaPme">
         <div class="boxBeneficiariosPme">
@@ -10,9 +12,9 @@
             </div>
             <div>
                 <label class="labelBoxDadosBeneficiario">Plano:</label>
-                <label class="labelLight">{PLANOS}</label>
+                <label class="labelLight">{PLANO}</label>
             </div>
-            <div class="margin-bottom20">
+            <div class="margin-bottom10">
                 <label class="labelBoxDadosBeneficiario">Número de dependentes:</label>
                 <label class="labelLight">{NUMERO}</label>
             </div>
