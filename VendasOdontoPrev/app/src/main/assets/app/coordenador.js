@@ -211,9 +211,11 @@ function setColorMenu() {
 
     var url = window.location.href;
 
-    if (url.indexOf("pme") !== -1)
+    if (url.indexOf("resumo_status_proposta_pme") !== -1 || url.indexOf("detalheBeneficiarioPme") !== -1 || url.indexOf("resumo_status_proposta_pf") !== -1)
+        $("a[href='lista_proposta.html']").addClass('colorActive');
+    else if (url.indexOf("pme") !== -1)
         $("a[href='venda_index_pme.html']").addClass('colorActive');
-    if (url.indexOf("pf") !== -1)
+    else if (url.indexOf("pf") !== -1)
         $("a[href='venda_index_pf.html']").addClass('colorActive');
     else if (url.indexOf("logado") !== -1)
         $("a[href='logado.html']").addClass('colorActive');

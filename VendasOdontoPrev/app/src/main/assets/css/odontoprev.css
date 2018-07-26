@@ -762,7 +762,7 @@
     text-align: center;
 }
 
-.img-pesquisar-beneficiario {
+.btn-pesquisar-beneficiario {
     color: #D9487F;
     font-family: Roboto-Bold;
     text-align: center;
@@ -1103,6 +1103,13 @@ h1, .titleListBox {
 }
 
 .imgBtnEditar {
+    text-align: right;
+    position: relative;
+    top: 25px;
+    z-index: 1;
+}
+
+.imgBtnPesquisar {
     text-align: right;
     position: relative;
     top: 25px;

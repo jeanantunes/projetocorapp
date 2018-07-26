@@ -1,7 +1,7 @@
 ﻿<div>
-    <div class="imgBtnEditar">
-        <div id="compartilharCard" class="circlePesquisaBeneficiario" style="background-color: #1974CE;">
-            <img class="imgPesquisa" src="img/search-13-256.png" onclick="getBeneficiario()" />
+    <div class="imgBtnPesquisar">
+        <div id="compartilharCard" class="circlePesquisaBeneficiario" style="background-color: #1974CE;" onclick="getBeneficiario($(this).attr('data-json-beneficiario'))" data-json-beneficiario='{JSONBENEF}'>
+            <img class="imgPesquisa" src="img/search-13-256.png"/>
         </div>
     </div>
     <div class="col-md-12 boxDadosPropostaPme">
