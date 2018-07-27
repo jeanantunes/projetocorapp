@@ -12,8 +12,7 @@ function buscarMateriaisDivulgacao(callback, token) {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
-            "Postman-Token": "5299ba38-9752-4f3f-93de-5a6adecf1726"
+            "Authorization": "Bearer " + token
         },
         success: function (resp) {
             callback(resp);
