@@ -423,7 +423,9 @@ function carregarListaOnlineAtualizarProposta() {
 
                     status = "Proposta enviada para a OdontoPrev";
                     css = "colorCirc7";
-                    acaoseta = "hide";
+                    acaoseta = "";
+                    acao = "ver detalhes";
+                    link = 'href="resumo_status_proposta_pme.html?cdEmpresa=' + item.cdEmpresa + '"';
 
                 } else if (item.statusVenda == "Proposta criticada") {
 
@@ -435,7 +437,9 @@ function carregarListaOnlineAtualizarProposta() {
 
                     status = "Proposta Concluída com Sucesso";
                     css = "colorCirc2";
-                    acaoseta = "hide";
+                    acaoseta = "";
+                    acao = "ver detalhes";
+                    link = 'href="resumo_status_proposta_pme.html?cdEmpresa=' + item.cdEmpresa + '"';
                 }
 
                 itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));

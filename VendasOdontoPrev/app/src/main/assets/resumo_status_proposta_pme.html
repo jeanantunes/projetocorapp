@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Odontoprev</title>
+
+    <link rel="stylesheet" type="text/css" href="slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Menu -->
+    <div id="componenteMenu"></div>
+    <!-- End Menu -->
+
+    <div class="container-fluid">
+
+        <!-- Botao menu e imagem title -->
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-left imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+                <span class="btnMenu" onclick="openNav()">&#9776;</span>
+            </div>
+        </div>
+        <!-- End Botao menu e imagem title -->
+        <!-- Inicio Title e descricao da pagina -->
+        <div class="col-md-12">
+            <div class="row">
+                <div class="text-center">
+                    <div>
+                        <h1 class="titleOdontResumo text-center">
+                            RESUMO DA PROPOSTA
+                        </h1>
+                        <h2 class="subTitleOdont text-center">
+                            Confira as informações da proposta
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Title e descricao da pagina -->
+        <!-- Inicio box dados da empresa -->
+        <div class="boxResumoStatus">
+            <div>
+                <label class="labelBlueTitleBold">DADOS DA EMPRESA</label>
+            </div>
+            <div class="margin-right10">
+                <div>
+                    <label class="label-cnpj labelBlurResumoStatus">CNPJ</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="cnpjEmpresa"></label>
+                </div>
+                <div>
+                    <label class="label-razao-social labelBlurResumoStatus">Razão social</label>
+                </div>
+                <div>
+                    <!--   white-space: nowrap; text-overflow: ellipsis; overflow: hidden;-->
+                    <label class="labelDadosResumoStatus word-wrap-normal" id="razaoSocialEmpresa"></label>
+                </div>
+                <div>
+                    <label class="label-nome-fantasia labelBlurResumoStatus">Nome fantasia</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus word-wrap-normal" id="nomeFantasiaEmpresa"></label>
+                </div>
+                <div>
+                    <label class="label-ramos-atividade labelBlurResumoStatus">Ramos de atividade</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus word-wrap-normal" id="ramosAtividadeEmpresa"></label>
+                </div>
+                <div>
+                    <label class="label-representante-legal labelBlurResumoStatus">Representante legal</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus word-wrap-normal" id="representanteLegalEmpresa"></label>
+                </div>
+                <div>
+                    <label class="label-telefone labelBlurResumoStatus">Telefone</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="telefoneEmpresa"></label>
+                </div>
+                <div>
+                    <label class="label-celular labelBlurResumoStatus">Celular</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus" id="celularEmpresa"></label>
+                </div>
+                <div>
+                    <label class="label-email labelBlurResumoStatus">E-mail</label>
+                </div>
+                <div>
+                    <label class="labelDadosResumoStatus word-wrap-normal" id="emailEmpresa"></label>
+                </div>
+            </div>
+        </div>
+        <!-- End box dados da empresa -->
+        <!-- Inicio box contato da empresa -->
+        <div class="boxResumoStatus hide" id="divSegundoContatoEmpresa">
+            <div>
+                <label class="labelBlueTitleBold">CONTATO DA EMPRESA</label>
+            </div>
+            <div>
+                <label class="label-nome-contato labelBlurResumoStatus">Nome</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="nomeContatoEmpresa"></label>
+            </div>
+            <div>
+                <label class="label-telefone-contato labelBlurResumoStatus">Telefone</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="telefoneContatoEmpresa"></label>
+            </div>
+            <div>
+                <label class="label-celular-contato labelBlurResumoStatus">Celular</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="celularContatoEmpresa"></label>
+            </div>
+            <div>
+                <label class="label-ramos-atividade labelBlurResumoStatus">E-mail</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="emailContatoEmpresa"></label>
+            </div>
+        </div>
+        <!-- End box contato da empresa -->
+        <!-- Inicio box contato da empresa -->
+        <div class="boxResumoStatus">
+            <div>
+                <label class="labelBlueTitleBold">ENDEREÇO DA EMPRESA</label>
+            </div>
+            <div>
+                <label class="label-cep labelBlurResumoStatus">CEP</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="cepEmpresa"></label>
+            </div>
+            <div>
+                <label class="label-endereco labelBlurResumoStatus">Endereço</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="enderecoEmpresa"></label>
+            </div>
+            <div>
+                <label class="label-complemento labelBlurResumoStatus">Complemento</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="complementoEmpresa"></label>
+            </div>
+            <div>
+                <label class="label-celular-contato labelBlurResumoStatus">Número</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="numeroEmpresa"></label>
+            </div>
+            <div>
+                <label class="label-bairro labelBlurResumoStatus">Bairro</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="bairroEmpresa"></label>
+            </div>
+            <div>
+                <label class="label-cidade labelBlurResumoStatus">Cidade</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="cidadeEmpresa"></label>
+            </div>
+            <div>
+                <label class="label-estado labelBlurResumoStatus">Estado</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="estadoEmpresa"></label>
+            </div>
+        </div>
+        <!-- End box contato da empresa -->
+        <!-- Inicio box data operacionais -->
+        <div class="boxResumoStatus">
+            <div>
+                <label class="labelBlueTitleBold">DATAS OPERACIONAIS</label>
+            </div>
+            <div>
+                <label class="label-vencimento labelBlurResumoStatus">Dia do vencimento da fatura: </label>
+                <label class="labelDadosDataOperacionais" id="vencimentoEmpresa">15</label>
+            </div>
+            <div>
+                <label class="label-movimentacao labelBlurResumoStatus">Data de corte da 1ª movimentação: </label>
+                <label class="labelDadosDataOperacionais" id="dataMovimentacaoEmpresa">17/10/2018</label>
+            </div>
+            <div>
+                <label class="label-vigencia labelBlurResumoStatus">Data da vigência: </label>
+                <label class="labelDadosDataOperacionais" id="dataVigenciaEmpresa">17/10/2018</label>
+            </div>
+        </div>
+        <!-- End box data operacionais -->
+        <!-- Inicio beneficiarios -->
+            <div>
+                <label class="labelBlueTitleBold" style="margin-left: 10px; margin-bottom: 0px !important;">BENEFICIÁRIOS</label>
+            </div>
+
+            <div id="boxBeneficiarios">
+            </div>
+
+            <div class="text-center">
+                <label id="mostrarMais" class="btn-pesquisar-beneficiario" data-contador="" data-ultima-pagina="">Mostrar mais beneficiários</label>
+            </div>
+            <div id="fimDaPagina" style="margin-bottom: 15px;"></div>
+        <!-- Fim beneficiarios -->
+
+    </div>
+
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="slick/slick.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="app/coordenador.js"></script>
+    <script src="app/resumoStatusPropostaPmeController.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+
+</body>
+</html>

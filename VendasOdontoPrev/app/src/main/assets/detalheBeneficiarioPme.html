@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Odontoprev</title>
+
+    <link rel="stylesheet" type="text/css" href="slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Menu -->
+    <div id="componenteMenu"></div>
+    <!-- End Menu -->
+
+    <div class="container-fluid">
+
+        <!-- Botao menu e imagem title -->
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-left imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+                <span class="btnMenu" onclick="openNav()">&#9776;</span>
+            </div>
+        </div>
+        <!-- End Botao menu e imagem title -->
+        <!-- Inicio Title e descricao da pagina -->
+        <div class="col-md-12" style="margin-bottom: 20px">
+            <div class="row">
+                <div class="text-center">
+                    <div>
+                        <h1 class="titleOdontResumo text-center">
+                            RESUMO DA PROPOSTA
+                        </h1>
+                        <h2 class="subTitleOdont text-center">
+                            Confira as informações da proposta
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- INICIO BOX TITULAR DA PROPOSTA -->
+        <div class="boxResumoStatus">
+            <div>
+                <label class="labelBlueTitle">DADOS DO BENEFICIÁRIO</label>
+            </div>
+            <div>
+                <label class="label-nome labelBlurResumoStatus">Nome</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="nomeTitular"></label>
+            </div>
+            <div>
+                <label class="label-sexo labelBlurResumoStatus">Sexo</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="sexoTitular"></label>
+            </div>
+            <div>
+                <label class="label-data-nacimento-titular labelBlurResumoStatus">Data de nascimento</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="dataNascimentoTitular"></label>
+            </div>
+            <div>
+                <label class="label-cpf labelBlurResumoStatus">CPF</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="cpfTitular"></label>
+            </div>
+            <div>
+                <label class="label-nome-mae labelBlurResumoStatus">Nome da mãe</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="nomeMaeTitular"></label>
+            </div>
+            <div>
+                <label class="label-cep labelBlurResumoStatus">CEP</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="cepTitular"></label>
+            </div>
+            <div>
+                <label class="label-celular labelBlurResumoStatus">Plano</label>
+            </div>
+            <div>
+                <label class="labelDadosResumoStatus" id="planoTitular"></label>
+            </div>
+        </div>
+        <!-- END BOX TITULAR DA PROPOSTA -->
+        <!-- INICIO BOX DEPENDENTES DA PROPOSTA -->
+        <div class="boxResumoStatus">
+            <div style="margin-top:5px;">
+                <label class="labelBlueTitle">DEPENDENTES</label>
+            </div>
+            <div id="dependentes">
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalDependente" role="dialog" style="padding-top:40px;">
+        <div class="modal-dialog modalContainerMateriais">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="img/btn-excluir.png" class="closeModalMateriais" data-dismiss="modal" alt="" />
+                    <div>
+                        <label class="labelBlueTitle" style="font-size:16px; margin-right:50px;">DADOS DO DEPENDENTE</label>
+                    </div>
+                    <div>
+                        <label class="label-cnpj labelBlurResumoStatusDependente">Nome</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="nomeDependente"></label>
+                    </div>
+                    <!--<div>
+                        <label class="label-email labelBlurResumoStatusDependente">E-mail</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="emailDependente"></label>
+                    </div>-->
+                    <!--<div>
+                        <label class="label-celular labelBlurResumoStatusDependente">Celular</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="celularDependente"></label>
+                    </div>-->
+                    <div>
+                        <label class="label-cpf labelBlurResumoStatusDependente">CPF</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="cpfDependente"></label>
+                    </div>
+                    <div>
+                        <label class="label-data-nacimento-titular labelBlurResumoStatusDependente">Data de nascimento</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="dataNascimentoDependente"></label>
+                    </div>
+                    <div>
+                        <label class="label-sexo labelBlurResumoStatusDependente">Sexo</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="sexoDependente"></label>
+                    </div>
+                    <div>
+                        <label class="label-telefone labelBlurResumoStatusDependente">Nome da mãe</label>
+                    </div>
+                    <div>
+                        <label class="labelBlurResumoStatusDependente" id="nomeMaeDependente"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="slick/slick.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="app/coordenador.js"></script>
+    <script src="app/detalheBeneficiarioPme.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+
+</body>
+</html>
