@@ -252,8 +252,8 @@ function callBeneficiariosList(callback, token, cdEmpresa, numeroDaPagina, taman
 
     $.ajax({
         async: true,
-        //url: "https://8c85a4e9-ad01-4ff8-ab22-6a250b741bfe.mock.pstmn.io/beneficiarios" + "/empresa/" + cdEmpresa + "?numPag=" + numeroDaPagina + "&tamPag=" + tamanhoDaPagina,
-        url: "https://api-it3.odontoprev.com.br:8243/corretorservicos/1.0/beneficiarios/empresa/" + cdEmpresa + "?tamPag=" + tamanhoDaPagina + "&numPag=" + numeroDaPagina,
+        url: URLBase + "/corretorservicos/1.0/beneficiarios/empresa/" + cdEmpresa + "?tamPag=" + tamanhoDaPagina + "&numPag=" + numeroDaPagina,
+        //url: "http://localhost:8090/beneficiarios/empresa/" + cdEmpresa + "?tamPag=" + tamanhoDaPagina + "&numPag=" + numeroDaPagina,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
