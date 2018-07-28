@@ -1460,9 +1460,11 @@ function listCpfPropostaPme() {
     let cnpjDaProposta = get("proposta");
     let beneficiarios = get("beneficiarios");
 
-    let beneficiariosDaProposta = beneficiarios.filter(function (x) { return x.cnpj == cnpjDaProposta.cnpj });
-
     let cpfs = [];
+
+    if (beneficiarios == undefined) return cpfs;
+
+    let beneficiariosDaProposta = beneficiarios.filter(function (x) { return x.cnpj == cnpjDaProposta.cnpj });
 
     $.each(beneficiariosDaProposta, function (indiceBeneficiario, itemBeneficiario) {
 
