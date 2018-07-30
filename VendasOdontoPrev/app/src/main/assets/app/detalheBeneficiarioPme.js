@@ -32,7 +32,7 @@
                 $("#nomeMaeDependente").html(dataDetalheBeneficiario.nomeMae);
 
 
-            }, dataToken.access_token, 5605); //TO DO: retirar cd vida fixo 5609
+            }, dataToken.access_token, cdVida); //TO DO: retirar cd vida fixo 5609 5605
 
 
 
@@ -58,7 +58,7 @@ function popularCamposProposta() {
     $("#cepTitular").html(detalheBeneficiario.endereco.cep);
     $("#planoTitular").html(detalheBeneficiario.nomeMae);
 
-    if (detalheBeneficiario.dependentes.length == 0) {
+    if (detalheBeneficiario.qtdDependentes == 0) {
 
         $("#dependentes").html('<label class="labelDadosResumoStatus">Não há dependentes</label>');
     }
@@ -80,6 +80,7 @@ function callDetalheBeneficiario(callback, token, cdVida) {
     $.ajax({
         async: true,
         url: "https://api-it3.odontoprev.com.br:8243/corretorservicos/1.0/beneficiario/" + cdVida,
+        //url: "http://localhost:8090/beneficiario/" + cdVida,
         method: "GET",
         headers: {
             "Content-Type": "application/json",

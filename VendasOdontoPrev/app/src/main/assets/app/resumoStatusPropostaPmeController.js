@@ -55,7 +55,7 @@
 
                     var componentBoxBeneficiarios = getComponent("boxBeneficiarios");
                     var componentBoxBeneficiarios = componentBoxBeneficiarios.replace("{NOME-TITULAR}", item.nome);
-                    var componentBoxBeneficiarios = componentBoxBeneficiarios.replace("{NUMERO}", item.qtdeDep);
+                    var componentBoxBeneficiarios = componentBoxBeneficiarios.replace("{NUMERO}", item.qtdDependentes);
                     var componentBoxBeneficiarios = componentBoxBeneficiarios.replace("{PLANO}", item.descPlano);
                     var componentBoxBeneficiarios = componentBoxBeneficiarios.replace("{JSONBENEF}", JSON.stringify(item));
                     
@@ -193,7 +193,7 @@ function popularCamposProposta() {
 
                     var componentBoxBeneficiarios = getComponent("boxBeneficiarios");
                     var componentBoxBeneficiarios = componentBoxBeneficiarios.replace("{NOME-TITULAR}", item.nome);
-                    var componentBoxBeneficiarios = componentBoxBeneficiarios.replace("{NUMERO}", item.qtdeDep);
+                    var componentBoxBeneficiarios = componentBoxBeneficiarios.replace("{NUMERO}", item.qtdDependentes);
                     var componentBoxBeneficiarios = componentBoxBeneficiarios.replace("{PLANO}", item.descPlano);
                     var componentBoxBeneficiarios = componentBoxBeneficiarios.replace("{JSONBENEF}", JSON.stringify(item));
 
@@ -253,7 +253,7 @@ function callBeneficiariosList(callback, token, cdEmpresa, numeroDaPagina, taman
     $.ajax({
         async: true,
         url: URLBase + "/corretorservicos/1.0/beneficiarios/empresa/" + cdEmpresa + "?tamPag=" + tamanhoDaPagina + "&numPag=" + numeroDaPagina,
-        //url: "http://localhost:8090/beneficiarios/empresa/" + cdEmpresa + "?tamPag=" + tamanhoDaPagina + "&numPag=" + numeroDaPagina,
+        //url: "http://localhost:8090/beneficiarios/empresa/" + cdEmpresa + "?tampag=" + tamanhoDaPagina + "&numpag=" + numeroDaPagina,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
