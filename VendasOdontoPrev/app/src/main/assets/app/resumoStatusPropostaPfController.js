@@ -42,6 +42,11 @@ function carregarFichaFinanceira() {
 
     let resumoProposta = get("resumoStatusPropostaPf");
 
+    if (resumoProposta.propostaDcms != undefined && resumoProposta.propostaDcms != "") {
+
+        $("#propostaDcms").html(resumoProposta.propostaDcms);
+    } else $("#divNumeroProposta").addClass('hide');
+
     if (resumoProposta.status.toUpperCase() == "PROPOSTA CONCLUÍDA COM SUCESSO" && resumoProposta.propostaDcms != undefined && resumoProposta.dadosBancarios.agencia == "" && resumoProposta.dadosBancarios.conta == "") {
 
 

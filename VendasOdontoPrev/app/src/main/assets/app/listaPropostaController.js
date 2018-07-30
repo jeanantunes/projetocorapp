@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     carregarListaOnlineAtualizarProposta();
     localStorage.removeItem("resumoStatusPropostaPf");
-
+    localStorage.removeItem('detalheBeneficiario');
 });
 
 function callDashBoardPF(callback, Token) {
@@ -45,9 +45,9 @@ function callDashBoardPME(callback, Token) {
 
     $.ajax({
         async: true,
-        //url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         //url: "http://172.16.244.160:8090/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
-        url: "http://localhost:8090" + "/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        //url: "http://localhost:8090" + "/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
