@@ -9,7 +9,7 @@ $(document).ready(function () {
 $("#contaDebito").keyup(function () {
 
     $("#continuarPfDebito").addClass('disabled');
-    console.log("Validacao conta");
+
     if ($(this).val() == "" || $("#agenciaDebito").val() == "") {
         return;
     }
@@ -53,7 +53,7 @@ function cadastrarConta() {
     }
 
     if ($(".agencia").val() == "") {
-        swal("Ops!", "Preencha a agencia", "error");
+        swal("Ops!", "Preencha a agência", "error");
         return;
     }
 
@@ -63,8 +63,41 @@ function cadastrarConta() {
     }
 
     var proposta = get("propostaPf");
-    proposta.dadosBancarios.codigoBanco = $(".bancos").val();
-    proposta.dadosBancarios.agencia = $("#agenciaDebito").val();
+    var cdBanco = $(".bancos").val(); 
+    var agencia = $("#agenciaDebito").val();
+
+    while (agencia.length < 4) {
+        agencia = "0" + agencia;
+    }
+
+    if (cdBanco == "237") {
+    
+        var multiplicador = 2;
+        var total = 0;
+
+        for (var i = 4; i > 0; i--) {
+
+            total += (multiplicador * agencia.charAt(i - 1));
+            multiplicador++;
+
+        }
+
+        var resto = total % 11;
+        var resultado = 11 - resto;
+
+        if (resultado >= 10) {
+
+            agencia += "P";
+
+        } else {
+
+            agencia += resultado;
+
+        }
+    }
+
+    proposta.dadosBancarios.codigoBanco = cdBanco;
+    proposta.dadosBancarios.agencia = agencia;
     proposta.dadosBancarios.conta = $("#contaDebito").val();
     proposta.dadosBancarios.tipoConta = "CC";
     proposta.status = "PRONTA";

@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     carregarListaOnlineAtualizarProposta();
     localStorage.removeItem("resumoStatusPropostaPf");
-
+    localStorage.removeItem('detalheBeneficiario');
 });
 
 function callDashBoardPF(callback, Token) {
@@ -47,6 +47,7 @@ function callDashBoardPME(callback, Token) {
         async: true,
         url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         //url: "http://172.16.244.160:8090/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        //url: "http://localhost:8090" + "/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -116,7 +117,8 @@ function carregarListaOffline() {
             itemLista = itemLista.replace("{NOME}", item.nome);
             itemLista = itemLista.replace("{STYLE}", "");
         }
-        
+
+        itemLista = itemLista.replace("{HIDENOMEFANTASIA}", "hide");
         itemLista = itemLista.replace("{STATUS}", status);
         itemLista = itemLista.replace("{CSS}", css);
         itemLista = itemLista.replace("{ACAO}", acao);
@@ -166,7 +168,23 @@ function carregarListaOffline() {
             acaoseta = "hide";
         }
 
-        itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
+        if (item.razaoSocial != undefined && item.razaoSocial != "") {
+
+            itemLista = itemLista.replace("{NOME}", item.razaoSocial);
+
+            if (item.nomeFantasia != undefined && item.nomeFantasia != "") {
+
+                itemLista = itemLista.replace("{NOMEFANTASIA}", item.nomeFantasia);
+                itemLista = itemLista.replace("{HIDENOMEFANTASIA}", "");
+
+            } else itemLista = itemLista.replace("{HIDENOMEFANTASIA}", "hide");
+
+        } else {
+
+            itemLista = itemLista.replace("{NOME}", item.cnpj);
+            itemLista = itemLista.replace("{HIDENOMEFANTASIA}", "hide");
+        }
+
         itemLista = itemLista.replace("{STATUS}", status);
         itemLista = itemLista.replace("{CSS}", css);
         itemLista = itemLista.replace("{ACAO}", acao);
@@ -271,6 +289,7 @@ function carregarListaOnlineAtualizarProposta() {
                 itemLista = itemLista.replace("{CDVENDA}", cdVenda);
                 itemLista = itemLista.replace("{ONCLICK}", onClick);
                 itemLista = itemLista.replace("{STATUSVENDA}", statusVenda);
+                itemLista = itemLista.replace("{HIDENOMEFANTASIA}", "hide");
 
                 $("#listaPessoas").append(itemLista);
                 $("#totalClientes").html(qtdPessoas);
@@ -343,6 +362,7 @@ function carregarListaOnlineAtualizarProposta() {
             itemLista = itemLista.replace("{LINK}", link);
             itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
             itemLista = itemLista.replace("{ONCLICK}", onClick);
+            itemLista = itemLista.replace("{HIDENOMEFANTASIA}", "hide");
 
             $("#listaPessoas").append(itemLista);
         }
@@ -385,13 +405,31 @@ function carregarListaOnlineAtualizarProposta() {
 
             }
 
-            itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
+            if (item.razaoSocial != undefined && item.razaoSocial != "") {
+
+                itemLista = itemLista.replace("{NOME}", item.razaoSocial);
+
+                if (item.nomeFantasia != undefined && item.nomeFantasia != "") {
+
+                    itemLista = itemLista.replace("{NOMEFANTASIA}", item.nomeFantasia);
+                    itemLista = itemLista.replace("{HIDENOMEFANTASIA}", "");
+
+                } else itemLista = itemLista.replace("{HIDENOMEFANTASIA}", "hide");
+
+            } else {
+
+                itemLista = itemLista.replace("{NOME}", item.cnpj);
+                itemLista = itemLista.replace("{HIDENOMEFANTASIA}", "hide");
+            }
+
+            //itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
             itemLista = itemLista.replace("{STATUS}", status);
             itemLista = itemLista.replace("{CSS}", css);
             itemLista = itemLista.replace("{ACAO}", acao);
             itemLista = itemLista.replace("{LINK}", link);
             itemLista = itemLista.replace("{ACAOSETA}", acaoseta);
             itemLista = itemLista.replace("{ONCLICK}", onClick);
+
 
             $("#listaEmpresas").append(itemLista);
             $("#totalEmpresas").html(qtdEmpresas);
@@ -442,7 +480,8 @@ function carregarListaOnlineAtualizarProposta() {
                     link = 'href="resumo_status_proposta_pme.html?cdEmpresa=' + item.cdEmpresa + '"';
                 }
 
-                itemLista = itemLista.replace("{NOME}", (item.razaoSocial == undefined || item.razaoSocial == "" ? item.cnpj : item.razaoSocial));
+                itemLista = itemLista.replace("{NOME}", item.nome);
+                itemLista = itemLista.replace("{NOMEFANTASIA}", item.nomeFantasia);
                 itemLista = itemLista.replace("{STATUS}", status);
                 itemLista = itemLista.replace("{CSS}", css);
                 itemLista = itemLista.replace("{ACAO}", acao);
