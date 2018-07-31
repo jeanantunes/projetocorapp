@@ -58,25 +58,6 @@ function SalvarDependente() {
         return;
     }
 
-    if ($(".cpf").val() == "" && menor > 18) {
-        swal("Ops!", "Preencha o CPF", "error");
-        return;
-    }
-
-    if (menor >= 18) {
-        if ($(".cpf").val() == "") {
-            console.log("Validando cpf");
-            swal("Ops!", "CPF está inválido", "error");
-            return;
-        }
-    }
-
-    //if ($("#cpf").val() == "" || !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
-    //    console.log("Validando cpf");
-    //    swal("Ops!", "CPF está inválido", "error");
-    //    return;
-    //}      
-
     var benef = get("propostaPf");
     if (benef.cpf == $(".cpf").val() && $(".cpf").val() != "") {
         swal("Conflito!", "Você informou o mesmo CPF do titular para este dependente, por favor verifique.", "error");
@@ -99,6 +80,11 @@ function SalvarDependente() {
     }
 
     var date = toDate($(".nascimento").val());
+
+    if ($(".cpf").val() == "" && isMaiorDeIdade(date)) {
+        swal("Ops!", "Preencha o CPF", "error");
+        return;
+    }
 
     var proposta = get("propostaPf");
     var planos = get("CodPlanos");
@@ -131,8 +117,38 @@ function SalvarDependente() {
         return;
     }
 
-    problema = false;
+    var listBeneficiarios = listCpfPropostaPf();
+    var responsavelContratual = listBeneficiarios.filter(function (x) { return x.tipo == "responsavelContratual" });
+    var dependentes = listBeneficiarios.filter(function (x) { return x.tipo == "dependente" });
+    var checkDependentes = dependentes.filter(function (x) { return x.cpf == $(".cpf").val() && x.cpf != "" && dependenteEmEdicao.cpf != $(".cpf").val()});
 
+    if (checkDependentes.length > 0) {
+
+        swal("Ops!", "Ops! Não será possível adicionar um dependente com dados duplicados em uma venda", "error")
+        return false;
+
+    }
+
+    if (responsavelContratual.length > 0) {
+
+        if (responsavelContratual[0].cpf == $(".cpf").val()) {
+
+            if ($(".nome").val().trim() != responsavelContratual[0].nome) {
+
+                swal("Ops!", "O nome digitado é difirente do nome do responsável contratual", "error")
+                return false;
+
+            }
+
+            if ($(".nascimento").val() != responsavelContratual[0].dataNascimento) {
+
+                swal("Ops!", "A data de nascimento digitada é difirente do data de nascimento do responsável contratual", "error")
+                return false;
+            }
+        }
+    }
+
+    problema = false;
 
     var dependente = getRepository("dependente");
     dependente.nome = $(".nome").val();
@@ -141,36 +157,60 @@ function SalvarDependente() {
     dependente.email = $(".email").val();
     dependente.nomeMae = $(".nome-mae").val()
     dependente.dataNascimento = $(".nascimento").val();
-    dependente.sexo = $(".sexo").val();
 
+    if ($("#radio-1").is(":checked") == true) {
+        dependente.sexo = $("#radio-1").val();
+    }
+    else {
+        dependente.sexo = $("#radio-2").val();
+    }
+
+    dependente.celular = $("#celularDependenteEdicao").val();
+    
     if (proposta.dependentes.length == 0) {
         proposta.dependentes = [];
     }
 
+    var dependentesSemCpf = proposta.dependentes.filter(function (x) {
+        return x.cpf == "";
+    });
 
+    var dependentesComCpf= proposta.dependentes.filter(function (x) {
+        return x.cpf != dependenteEmEdicao.cpf;
+    });
 
-    ////////////
+    var dependentesExcetoEditadoSemCpf = dependentesSemCpf.filter(function (x) {
+        return x.nome != dependenteEmEdicao.nome && x.dataNascimento != dependenteEmEdicao.dataNascimento;
+    });
 
-    var dependentesExcetoEditado = proposta.dependentes.filter(function (x) {
+    var dependentesExcetoEditado = [];
 
-        if (dependenteEmEdicao.cpf == "") {
-            return x.nome != dependenteEmEdicao.nome && x.dataNascimento != dependenteEmEdicao.dataNascimento;
-        }
+    $.each(dependentesExcetoEditadoSemCpf, function (i, item) {
 
-        return x.cpf != dependenteEmEdicao.cpf
+        dependentesExcetoEditado.push(item);
+
+    });
+
+    $.each(dependentesComCpf, function (i, item) {
+
+        dependentesExcetoEditado.push(item);
+
     });
 
     proposta.dependentes = [];
 
-    if (dependentesExcetoEditado.length > 0) proposta.dependentes.push(dependentesExcetoEditado[0]);
+    if (dependentesExcetoEditado.length > 0) {
+
+        $.each(dependentesExcetoEditado, function (i, item) {
+
+            proposta.dependentes.push(item);
+
+        });
+        
+    }
 
     proposta.dependentes.push(dependente);
 
-    //put("beneficiario", JSON.stringify(benef));
-
-    /////////////
-
-    //proposta.dependentes.push(dependente);
     put("propostaPf", JSON.stringify(proposta));
 
     atualizarPessoas(proposta);
