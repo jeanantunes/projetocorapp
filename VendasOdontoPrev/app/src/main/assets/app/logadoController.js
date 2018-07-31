@@ -71,7 +71,6 @@ function atualizarPropostaComApiDash() {
         var qtdCriticadasPf = 0;
         var qtdCriticadasPME = 0;
 
-
         callDashBoardPFReprovado(function (dashPf) {
 
             qtdCriticadasPf = dashPf.dashboardPropostasPF.length;
@@ -92,13 +91,7 @@ function atualizarPropostaComApiDash() {
 
         }, dataToken.access_token);
 
-
-
-
     });
-
-
-
 }
 
 function validarStatusUsuario() {

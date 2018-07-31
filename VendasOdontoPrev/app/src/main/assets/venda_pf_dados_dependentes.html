@@ -50,7 +50,7 @@
                         <label class="label-nome labelOdontBlur">Nome</label>
                     </div>
                     <div>
-                        <input type="text" class=" nome inputLabelBlur nomeRegex" id="nomeDependente" style="text-transform: uppercase;">
+                        <input type="text" class="nome inputLabelBlur nomeRegex" id="nomeDependente" style="text-transform: uppercase;">
                     </div>
                     <div>
                         <label class="label-email labelOdontBlur">E-mail</label>
@@ -62,7 +62,7 @@
                         <label class="label-celular labelOdontBlur">Celular</label>
                     </div>
                     <div>
-                        <input type="tel" class="celular inputLabelBlur">
+                        <input type="tel" id="celularDependente" class="celular inputLabelBlur">
                     </div>
                     <div>
                         <label class="label-nascimento labelOdontBlur">Data de nascimento</label>
@@ -91,10 +91,10 @@
                         </div>
                     </div>
                     <div>
-                        <label class="label-nome labelOdontBlur">Nome da mãe</label>
+                        <label class="label-nome-mae labelOdontBlur">Nome da mãe</label>
                     </div>
                     <div>
-                        <input type="text" class="nome-mae nome inputLabelBlur nomeRegex" id="nomeMae" style="text-transform: uppercase;">
+                        <input type="text" class="nome-mae inputLabelBlur nomeRegex" id="nomeMae" style="text-transform: uppercase;">
                     </div>
 
                     <!-- <input type="checkbox" value="" class="exemplo2 checkbox inputLabelFocus">
@@ -115,15 +115,9 @@
             <div class="row">
                 <div class="col-md-12 btnPadBtm">
                     <div class="btn btn-lg btn-block btnOdont" id="" onclick="salvarEContinuar()" role="button">ADICIONAR OUTRO DEPENDENTE</div>
-                    <!-- <div class="row">
-                    <div class="text-center">
-                        <a href=""><label for="senha" class="linkOdontSalvar">SALVAR E FINALIZAR PROPOSTA DEPOIS</label></a>
-                    </div>
-                </div> -->
                 </div>
                 <div class="col-md-12 btnPadBtm">
                     <div class="btn btn-lg btn-block btnOdont" id="" role="button" onclick="salvarEVoltar()">SALVAR</div>
-
                     <a href="venda_pf_dados_proposta.html" class="btn btn-lg btn-block btnOdont" style="background:#a0a0a0" id="" role="button">CANCELAR</a>
                 </div>
             </div>

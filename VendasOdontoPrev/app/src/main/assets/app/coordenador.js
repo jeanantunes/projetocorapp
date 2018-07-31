@@ -1486,6 +1486,39 @@ function listCpfPropostaPme() {
 
 }
 
+function listCpfPropostaPf() {
+
+    let propostaPf = get("propostaPf");
+
+    let cpfs = [];
+
+    cpfs.push({ "cpf": propostaPf.cpf, "nome": propostaPf.nome, "dataNascimento": propostaPf.dataNascimento, "tipo" : "titular" });
+
+    if (propostaPf.responsavelContratual.cpf != "") {
+        cpfs.push(
+            {
+                "cpf": propostaPf.responsavelContratual.cpf,
+                "nome": propostaPf.responsavelContratual.nome,
+                "dataNascimento": propostaPf.responsavelContratual.dataNascimento,
+                "tipo": "responsavelContratual"
+            });
+    }
+
+    $.each(propostaPf.dependentes, function (indiceDependente, itemDependente) {
+
+        cpfs.push({
+            "cpf": itemDependente.cpf,
+            "nome": itemDependente.nome,
+            "dataNascimento": itemDependente.dataNascimento,
+            "tipo": "dependente"
+        });
+
+    });
+
+    return cpfs;
+
+}
+
 function enviarPropostaPf() {
 
     if (!navigator.onLine) {
