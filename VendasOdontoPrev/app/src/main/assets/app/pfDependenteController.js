@@ -98,8 +98,16 @@ function SalvarDependente() {
     var responsavelContratual = listBeneficiarios.filter(function (x) { return x.tipo == "responsavelContratual" });
     var dependentes = listBeneficiarios.filter(function (x) { return x.tipo == "dependente" });
     var checkDependentes = dependentes.filter(function (x) { return x.cpf == $(".cpf").val() && x.cpf != "" });
+    var checkDependentesSemCpf = dependentes.filter(function (x) { return x.cpf == "" && x.nome == $(".nome").val() && x.dataNascimento == $(".nascimento").val() });
 
     if (checkDependentes.length > 0) {
+
+        swal("Ops!", "Ops! Não será possível adicionar um dependente com dados duplicados em uma venda", "error")
+        return;
+
+    }
+
+    if (checkDependentesSemCpf.length > 0) {
 
         swal("Ops!", "Ops! Não será possível adicionar um dependente com dados duplicados em uma venda", "error")
         return;
@@ -125,10 +133,7 @@ function SalvarDependente() {
         }
     }
 
-
-
     problema = false;
-
 
     var dependente = getRepository("dependente");
     dependente.nome = $(".nome").val();
@@ -137,12 +142,14 @@ function SalvarDependente() {
     dependente.email = $(".email").val();
     dependente.nomeMae = $(".nome-mae").val()
     dependente.dataNascimento = $(".nascimento").val();
+
     if ($("#radio-1").is(":checked") == true) {
         dependente.sexo = $("#radio-1").val();
     }
     else {
         dependente.sexo = $("#radio-2").val();
     }
+
     dependente.celular = $("#celularDependente").val();
 
     if (proposta.dependentes.length == 0) {
