@@ -695,6 +695,9 @@ function listarDependentes() {
         dep = dep.replace("{CPF-DESC}", item.cpf);
         dep = dep.replace("{NOME}", item.nome);
         dep = dep.replace("{NOME-DEP}", item.nome);
+        dep = dep.replace("{NASCIMENTO-EDITAR}", item.dataNascimento);
+        dep = dep.replace("{NASCIMENTO-EXCLUIR}", item.dataNascimento); 
+        dep = dep.replace("{NASCIMENTOBOX}", item.dataNascimento);
         $("#listaDep").append(dep);
     });
 
@@ -703,12 +706,12 @@ function listarDependentes() {
 
 function editarDependente(obj) {
 
-    var container = $(".div-excluir[data-id='" + $(obj).attr("data-id") + "']");
+    var container = $(".div-excluir[data-id='" + $(obj).attr("data-id") + "'][data-nascimento='" + $(obj).attr("data-nascimento") + "']");
     var beneficiario = get("propostaPf");
 
     var beneficiarioEmEdicao = beneficiario.dependentes.filter(function (x) {
 
-        if (container.attr("data-id") == container.attr("data-nome")) return x.nome == container.attr("data-nome")
+        if (container.attr("data-id") == container.attr("data-nome")) return x.nome == container.attr("data-nome") && x.dataNascimento == container.attr("data-nascimento")
 
         return x.cpf == container.attr("data-id")
     });
@@ -721,17 +724,16 @@ function editarDependente(obj) {
 
 function excluirDep(obj) {
 
-    var container = $(".div-excluir[data-id='" + $(obj).attr("data-id") + "']");
+    var container = $(".div-excluir[data-id='" + $(obj).attr("data-id") + "'][data-nascimento='" + $(obj).attr("data-nascimento") + "']");
 
-    //if (container.length == 0) {
-    //
-    //    var container = $(".div-excluir[data-id='" + $(obj).attr("data-nome") + "']");
-    //}
+    var nome = $(obj).attr("data-id");
+    var dataNascimento = $(obj).attr("data-nascimento");
+
     var proposta = get("propostaPf");
 
     var propostaExcetoExcluido = proposta.dependentes.filter(function (x) {
 
-        if (container.attr("data-id") == container.attr("data-nome")) return x.nome != container.attr("data-nome")
+        if (container.attr("data-id") == container.attr("data-nome")) return x.nome != container.attr("data-nome") || x.dataNascimento != container.attr("data-nascimento")
 
         return x.cpf != container.attr("data-id")
     });

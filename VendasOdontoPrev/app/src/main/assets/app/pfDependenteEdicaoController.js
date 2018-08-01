@@ -120,12 +120,23 @@ function SalvarDependente() {
     var listBeneficiarios = listCpfPropostaPf();
     var responsavelContratual = listBeneficiarios.filter(function (x) { return x.tipo == "responsavelContratual" });
     var dependentes = listBeneficiarios.filter(function (x) { return x.tipo == "dependente" });
-    var checkDependentes = dependentes.filter(function (x) { return x.cpf == $(".cpf").val() && x.cpf != "" && dependenteEmEdicao.cpf != $(".cpf").val()});
+    var checkDependentes = dependentes.filter(function (x) { return x.cpf == $(".cpf").val() && x.cpf != "" && dependenteEmEdicao.cpf != $(".cpf").val() });
+
+    var checkDependentesSemCpf = dependentes.filter(function (x) {
+        return x.cpf == "" && x.nome == $(".nome").val() && x.dataNascimento == $(".nascimento").val() && dependenteEmEdicao.nome != $(".nome").val() && dependenteEmEdicao.dataNascimento != $(".nascimento").val()
+    });
 
     if (checkDependentes.length > 0) {
 
         swal("Ops!", "Ops! Não será possível adicionar um dependente com dados duplicados em uma venda", "error")
         return false;
+
+    }
+
+    if (checkDependentesSemCpf.length > 0) {
+
+        swal("Ops!", "Ops! Não será possível adicionar um dependente com dados duplicados em uma venda", "error")
+        return;
 
     }
 
@@ -152,10 +163,12 @@ function SalvarDependente() {
 
     var dependente = getRepository("dependente");
     dependente.nome = $(".nome").val();
+    dependente.nome = dependente.nome.toUpperCase();
     dependente.dataNascimento = $(".nascimento").val();
     dependente.cpf = $(".cpf").val();
     dependente.email = $(".email").val();
-    dependente.nomeMae = $(".nome-mae").val()
+    dependente.nomeMae = $(".nome-mae").val();
+    dependente.nomeMae = dependente.nomeMae.toUpperCase();
     dependente.dataNascimento = $(".nascimento").val();
 
     if ($("#radio-1").is(":checked") == true) {
@@ -176,7 +189,7 @@ function SalvarDependente() {
     });
 
     var dependentesComCpf= proposta.dependentes.filter(function (x) {
-        return x.cpf != dependenteEmEdicao.cpf;
+        return x.cpf != dependenteEmEdicao.cpf && x.cpf != "";
     });
 
     var dependentesExcetoEditadoSemCpf = dependentesSemCpf.filter(function (x) {
