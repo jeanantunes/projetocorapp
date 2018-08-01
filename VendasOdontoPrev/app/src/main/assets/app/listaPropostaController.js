@@ -776,7 +776,7 @@ function verDetalheProposta(dataId, dataStatus) {
 
             $.each(dataPropostaCriticada.venda.titulares, function (i, item) {
 
-                if (item.cdTitular == 0) {
+                if (item.cdTitular == 0 || item.cdTitular == undefined) {
 
                     retorno.cdVenda = dataPropostaCriticada.venda.cdVenda;
                     retorno.cpf = item.cpf;
