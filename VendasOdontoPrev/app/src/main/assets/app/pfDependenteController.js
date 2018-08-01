@@ -137,10 +137,12 @@ function SalvarDependente() {
 
     var dependente = getRepository("dependente");
     dependente.nome = $(".nome").val();
+    dependente.nome = dependente.nome.toUpperCase();
     dependente.dataNascimento = $(".nascimento").val();
     dependente.cpf = $(".cpf").val();
     dependente.email = $(".email").val();
-    dependente.nomeMae = $(".nome-mae").val()
+    dependente.nomeMae = $(".nome-mae").val();
+    dependente.nomeMae = dependente.nomeMae.toUpperCase();
     dependente.dataNascimento = $(".nascimento").val();
 
     if ($("#radio-1").is(":checked") == true) {
