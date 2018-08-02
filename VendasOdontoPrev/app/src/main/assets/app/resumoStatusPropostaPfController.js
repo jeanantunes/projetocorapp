@@ -228,7 +228,7 @@ function popularCamposProposta() {
         $("#formaPagamento").html("Débito em Conta");
     }
 
-    if (resumoProposta.criticas.length > 0) {
+    if (resumoProposta.criticas.length > 0 && resumoProposta.cdVenda != 3) {
 
         $("#divErros").removeClass('hide');
 
