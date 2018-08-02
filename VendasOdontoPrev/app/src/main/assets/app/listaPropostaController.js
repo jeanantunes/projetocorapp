@@ -826,6 +826,7 @@ function verDetalheProposta(dataId, dataStatus) {
             retorno.dependentes = dependentes;
             retorno.criticas = dataPropostaCriticada.venda.criticas;
             retorno.status = dataStatus;
+            retorno.cdStatusVenda = dataPropostaCriticada.venda.cdStatusVenda
 
             if (dataPropostaCriticada.venda.criticas.length == 0 && dataPropostaCriticada.venda.propostaDcms != undefined) {
 
