@@ -22,8 +22,8 @@ function callDashBoardPF(callback, Token) {
 
     $.ajax({
         async: true,
-        //url: "http://172.16.244.160:8090/dashboardPropostaPF/" + statusTodasPropostas + "/"  + dadosForca.cpf,
-        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        url: "http://localhost:8090/dashboardPropostaPF/" + statusTodasPropostas + "/"  + dadosForca.cpf,
+       // url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -45,9 +45,9 @@ function callDashBoardPME(callback, Token) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        //url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         //url: "http://172.16.244.160:8090/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
-        //url: "http://localhost:8090" + "/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        url: "http://localhost:8090" + "/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -223,6 +223,8 @@ function carregarListaOnlineAtualizarProposta() {
 
             $.each(dataDashPf.dashboardPropostasPF, function (i, item) {
 
+                var statusVendaBundle = getRepository('statusVenda');
+
                 qtdPessoas++;
 
                 var itemLista = getComponent("itemLista");
@@ -236,34 +238,34 @@ function carregarListaOnlineAtualizarProposta() {
                 var onClick = "";
                 var statusVenda = "";
 
-                if (item.statusVenda == "Proposta enviada para a OdontoPrev" && item.criticas == null) {
+                if (item.cdStatusVenda == 1 || item.cdStatusVenda == 4) {
 
-                    status = "Proposta enviada para a OdontoPrev";
+                    status = statusVendaBundle[item.cdStatusVenda];
                     css = "colorCirc7";
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
                     onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '), $(this).attr(' + "'data-status'" + '))"';
-                    statusVenda = item.statusVenda;
+                    statusVenda = statusVendaBundle[item.cdStatusVenda];//item.statusVenda;
 
-                } else if (item.statusVenda == "Proposta criticada") {
+                } else if (item.cdStatusVenda == 2) {
 
-                    status = item.statusVenda;
+                    status = statusVendaBundle[item.cdStatusVenda];
                     css = "colorCirc3";
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
-                    statusVenda = "Proposta Criticada";
+                    statusVenda = statusVendaBundle[item.cdStatusVenda];//statusVenda = "Proposta Criticada";
                     onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '), $(this).attr(' + "'data-status'" + '))"';
 
-                } else if (item.statusVenda == "Proposta concluida com sucesso") {
+                } else if (item.cdStatusVenda == 3) {
 
-                    status = item.statusVenda;
+                    status = statusVendaBundle[item.cdStatusVenda];
                     css = "colorCirc2";
                     acaoseta = "";
                     acao = "ver detalhes";
                     cdVenda = item.cdVenda;
-                    statusVenda = "Proposta Concluída com Sucesso";
+                    statusVenda = statusVendaBundle[item.cdStatusVenda];//statusVenda = "Proposta Concluída com Sucesso";
                     onClick = 'onclick="verDetalheProposta($(this).attr(' + "'data-id'" + '), $(this).attr(' + "'data-status'" + '))"';
 
                 }
@@ -448,6 +450,7 @@ function carregarListaOnlineAtualizarProposta() {
             $.each(dataDashPme.dashboardPropostasPME, function (i, item) {
 
                 qtdEmpresas++;
+                var statusVendaBundle = getRepository('statusVenda');
 
                 var itemLista = getComponent("itemLista");
 
@@ -457,23 +460,23 @@ function carregarListaOnlineAtualizarProposta() {
                 var link = "";
                 var acaoseta = "";
 
-                if (item.statusVenda == "Proposta enviada para a OdontoPrev") {
+                if (item.cdStatusVenda == 1 || item.cdStatusVenda == 4) {
 
-                    status = "Proposta enviada para a OdontoPrev";
+                    status = statusVendaBundle[item.cdStatusVenda];
                     css = "colorCirc7";
                     acaoseta = "";
                     acao = "ver detalhes";
                     link = 'href="resumo_status_proposta_pme.html?cdEmpresa=' + item.cdEmpresa + '"';
 
-                } else if (item.statusVenda == "Proposta criticada") {
+                } else if (item.cdStatusVenda == 2) {
 
-                    status = "Proposta Criticada";
+                    status = statusVendaBundle[item.cdStatusVenda];
                     css = "colorCirc3";
                     acaoseta = "hide";
 
-                } else if (item.statusVenda == "Proposta concluida com sucesso") {
+                } else if (item.cdStatusVenda == 3) {
 
-                    status = "Proposta Concluída com Sucesso";
+                    status = statusVendaBundle[item.cdStatusVenda];
                     css = "colorCirc2";
                     acaoseta = "";
                     acao = "ver detalhes";
