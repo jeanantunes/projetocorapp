@@ -70,32 +70,6 @@ function cadastrarConta() {
         agencia = "0" + agencia;
     }
 
-    if (cdBanco == "237") {
-    
-        var multiplicador = 2;
-        var total = 0;
-
-        for (var i = 4; i > 0; i--) {
-
-            total += (multiplicador * agencia.charAt(i - 1));
-            multiplicador++;
-
-        }
-
-        var resto = total % 11;
-        var resultado = 11 - resto;
-
-        if (resultado >= 10) {
-
-            agencia += "P";
-
-        } else {
-
-            agencia += resultado;
-
-        }
-    }
-
     proposta.dadosBancarios.codigoBanco = cdBanco;
     proposta.dadosBancarios.agencia = agencia;
     proposta.dadosBancarios.conta = $("#contaDebito").val();
