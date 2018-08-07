@@ -79,7 +79,7 @@ function callDetalheBeneficiario(callback, token, cdVida) {
 
     $.ajax({
         async: true,
-        url: "https://api-it3.odontoprev.com.br:8243/corretorservicos/1.0/beneficiario/" + cdVida,
+        url: URLBase + "/corretorservicos/1.0/beneficiario/" + cdVida,
         //url: "http://localhost:8090/beneficiario/" + cdVida,
         method: "GET",
         headers: {

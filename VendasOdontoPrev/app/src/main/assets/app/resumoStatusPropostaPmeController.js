@@ -92,6 +92,20 @@ function popularCamposProposta() {
 
     let cdEmpresa = getUrlParameter("cdEmpresa");
 
+    swal({
+        title: "Aguarde",
+        text: 'Estamos carregando a proposta',
+        content: "input",
+        imageUrl: "img/load.gif",
+        showCancelButton: false,
+        showConfirmButton: false,
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false,
+        },
+    });
+
     callTokenVendas(function (dataToken) {
 
         if (dataToken.status != undefined) {
@@ -252,7 +266,7 @@ function callBeneficiariosList(callback, token, cdEmpresa, numeroDaPagina, taman
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/beneficiarios/empresa/" + cdEmpresa + "?tamPag=" + tamanhoDaPagina + "&numPag=" + numeroDaPagina,
+        url: URLBase + "/corretorservicos/1.0/beneficiarios/empresa/" + cdEmpresa + "?tampag=" + tamanhoDaPagina + "&numpag=" + numeroDaPagina,
         //url: "http://localhost:8090/beneficiarios/empresa/" + cdEmpresa + "?tampag=" + tamanhoDaPagina + "&numpag=" + numeroDaPagina,
         method: "GET",
         headers: {
