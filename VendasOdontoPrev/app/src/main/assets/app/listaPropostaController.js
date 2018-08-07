@@ -481,6 +481,14 @@ function carregarListaOnlineAtualizarProposta() {
                     acaoseta = "";
                     acao = "ver detalhes";
                     link = 'href="resumo_status_proposta_pme.html?cdEmpresa=' + item.cdEmpresa + '"';
+
+                } else if (item.cdStatusVenda == 5) {
+
+                    status = statusVendaBundle[item.cdStatusVenda];
+                    css = "colorCirc9";
+                    acaoseta = "";
+                    acao = "ver detalhes";
+                    link = 'href="resumo_status_proposta_pme.html?cdEmpresa=' + item.cdEmpresa + '"';
                 }
 
                 itemLista = itemLista.replace("{NOME}", item.nome);
