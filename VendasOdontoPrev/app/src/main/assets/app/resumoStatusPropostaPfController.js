@@ -47,8 +47,7 @@ function carregarFichaFinanceira() {
         $("#propostaDcms").html(resumoProposta.propostaDcms);
     } else $("#divNumeroProposta").addClass('hide');
 
-    if (resumoProposta.status.toUpperCase() == "PROPOSTA CONCLUÍDA COM SUCESSO" && resumoProposta.propostaDcms != undefined && resumoProposta.dadosBancarios.agencia == "" && resumoProposta.dadosBancarios.conta == "") {
-
+    if (resumoProposta.cdStatusVenda == 3 && resumoProposta.propostaDcms != undefined && resumoProposta.dadosBancarios.agencia == "" && resumoProposta.dadosBancarios.conta == "") {
 
         callTokenVendas(function (dataToken) {
 
@@ -228,7 +227,7 @@ function popularCamposProposta() {
         $("#formaPagamento").html("Débito em Conta");
     }
 
-    if (resumoProposta.criticas.length > 0 && resumoProposta.cdVenda != 3) {
+    if (resumoProposta.criticas.length > 0 && resumoProposta.cdStatusVenda == 2) {
 
         $("#divErros").removeClass('hide');
 
