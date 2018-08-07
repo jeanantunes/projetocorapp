@@ -222,7 +222,7 @@ function popularCamposProposta() {
     if (resumoProposta.dadosBancarios.agencia == "" && resumoProposta.dadosBancarios.conta == "") {
 
         $("#formaPagamento").html("Boleto");
-        if (resumoProposta.cdStatusVenda == 3 $(".btnPadBtmTop").removeClass("hide");
+        if (resumoProposta.cdStatusVenda == 3) $(".btnPadBtmTop").removeClass("hide");
     } else {
         $("#formaPagamento").html("Débito em Conta");
     }

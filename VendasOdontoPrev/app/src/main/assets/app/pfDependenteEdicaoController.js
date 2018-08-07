@@ -86,6 +86,11 @@ function SalvarDependente() {
         return;
     }
 
+    if (!TestaCPF($(".cpf").val())) {
+        swal("Ops!", "CPF Inválido", "error");
+        return;
+    }
+
     var proposta = get("propostaPf");
     var planos = get("CodPlanos");
     var plano = planos.filter(function (x) { return x.cdPlano == proposta.planos[0].cdPlano });
@@ -146,14 +151,14 @@ function SalvarDependente() {
 
             if ($(".nome").val().trim() != responsavelContratual[0].nome) {
 
-                swal("Ops!", "O nome digitado é difirente do nome do responsável contratual", "error")
+                swal("Ops!", "O nome digitado é diferente do nome do responsável contratual", "error")
                 return false;
 
             }
 
             if ($(".nascimento").val() != responsavelContratual[0].dataNascimento) {
 
-                swal("Ops!", "A data de nascimento digitada é difirente do data de nascimento do responsável contratual", "error")
+                swal("Ops!", "A data de nascimento digitada é diferente do data de nascimento do responsável contratual", "error")
                 return false;
             }
         }
