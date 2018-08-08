@@ -164,6 +164,10 @@ function popularCamposProposta() {
 
             if (!dataEmpresa.contatoEmpresa) {
 
+                $("#nomeContatoEmpresa").html(dataEmpresa.contactEmpresa.nome);
+                $("#telefoneContatoEmpresa").html(dataEmpresa.contactEmpresa.telefone);
+                $("#celularContatoEmpresa").html(dataEmpresa.contactEmpresa.celular);
+                $("#emailContatoEmpresa").html(dataEmpresa.contactEmpresa.email);
                 $("#divSegundoContatoEmpresa").removeClass('hide');
 
             }
@@ -246,6 +250,7 @@ function callDadosEmpresa(callback, token, cdEmpresa) {
         async: true,
         //url: "https://6a428f33-b87b-43d0-92ef-7fdc244530ea.mock.pstmn.io" + "/empresa/" + cdEmpresa,
         url: URLBase + "/corretorservicos/1.0/empresa/" + cdEmpresa,
+        //url: "http://localhost:8090/empresa/" + cdEmpresa,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
