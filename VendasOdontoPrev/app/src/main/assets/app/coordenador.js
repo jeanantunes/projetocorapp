@@ -18,7 +18,10 @@ $(document).ready(function () {
     setColorMenu();
 
     $("#logout").click(function () {
-        logout.removerRegistroLogin();
+
+
+        deslogarDoAplicativo();
+        
     });
 
     defineConexao();
@@ -33,6 +36,92 @@ $(document).ready(function () {
 
 });
 
+
+function deslogarDoAplicativo() {
+
+    var dadosUsuario = get("dadosUsuario");
+
+    if (!navigator.onLine) {
+        closeNav();
+        setTimeout(function () { swal("Ops!", "Não é possível sair do aplicativo sem conexão.", "error"); }, 500);
+        return false;
+    }
+
+    closeNav();
+    setTimeout(
+        function () {
+
+            swal({
+                title: "Aguarde",
+                text: 'Estamos deslogando do APP',
+                content: "input",
+                imageUrl: "img/load.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+
+            callTokenVendas(function (dataToken) {
+
+                if (dataToken.status != undefined) {
+
+                    swal("Ops!", "Erro no logout do APP", "error");
+                    return;
+                }
+
+                deleteTokenLogout(function (dataDeleteToken) {
+
+                    console.log(JSON.stringify(dataDeleteToken));
+
+                    if (dataDeleteToken.status != undefined) {
+
+                        swal("Ops!", "Erro no logout do APP", "error");
+                        return;
+                    }
+
+                    logout.removerRegistroLogin();
+                    window.location.href = "index.html";
+
+                }, dataToken.access_token, getTokenDevice(), dadosUsuario.codigo);
+
+            });
+
+        }
+        , 500);
+
+    //href = "index.html"
+    //logout.removerRegistroLogin();
+}
+
+function deleteTokenLogout(callback, token, tokenDeviceFirebase, cdForcaVenda) {
+
+    var jsonRequest = {
+        "token": tokenDeviceFirebase
+    }
+
+    $.ajax({
+        async: true,
+        //url: URLBase + "/devicetoken/forcavenda/" + cdForcaVenda,
+        url: "http://localhost:8090/devicetoken/forcavenda/" + cdForcaVenda,
+        method: "DELETE",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache"
+        },
+        data: JSON.stringify(jsonRequest),
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+            callback(xhr);
+        }
+    });
+}
 
 function getTokenDevice() {
 
@@ -364,7 +453,8 @@ function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelul
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda,
+        //url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda,
+        url: "http://172.16.244.162:8090/devicetoken/forcavenda/" + cdForcaVenda,
         method: "POST",
         headers: {
             "Content-Type": "application/json",
