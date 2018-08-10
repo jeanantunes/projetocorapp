@@ -224,7 +224,7 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
     //swal("Aguarde!", "Estamos buscando seus dados.");
     swal({
         title: "Aguarde",
-        text: 'Estamos procurando seus dados',
+        text: 'Estamos buscando os dados',
         content: "input",
         imageUrl: "img/load.gif",
         showCancelButton: false,

@@ -22,7 +22,7 @@ function validarVersaoApp()
 
             var versao = dataVersao.versao;
 
-            if (versao != '6') {
+            if (versao != '7') {
                 swal({
                     title: "Ops",
                     text: "Sua versão do aplicativo está desatualizada, atualize na Play Store",
@@ -49,13 +49,20 @@ function atualizarTokenDevice() {
     var modelDevice = getModelDevice();
 
     console.log("Executando device Token");
+    console.log(tokenDevice);
+    console.log(modelDevice);
 
     callTokenProdSemMsgErro(function (dataToken) {
 
         postDeviceToken(function (dataDeviceToken) {
 
+            if (dataDeviceToken.status != undefined) {
+                swal("Erro", JSON.stringify(dataDeviceToken));
+                console.log("Erro postDeviceToken");
+            }
+
             console.log("Executou postDeviceToken");
-            console.log(dataDeviceToken);
+  //          swal("Erro", dataDeviceToken);
 
         }, dataToken.access_token, dadosUsuario.codigo, tokenDevice, modelDevice, sistemaOperacional);
 

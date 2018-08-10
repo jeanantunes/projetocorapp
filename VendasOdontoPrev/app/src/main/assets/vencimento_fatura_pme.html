@@ -79,26 +79,35 @@
             <div class="modal-content">
                 <div class="modal-body" style="padding: 20px;">
                     <img src="img/btn-excluir.png" class="closeModalMateriais btnExcluir" data-dismiss="modal" alt="" />
-                    <div id="">
-                        <h1 class="titleOdont titleVencimento text-center">
+                    <div style="text-align: center;">
+                        <h1 class="titleOdont text-center">
                             ATENÇÃO
                         </h1>
-                        <label class="labelBlurResumoStatus text-center" style="color: #1974CE; font-size:14pt;">
-                            Para o dia de vencimento da fatura escolhido: <label class="labelOdontBlur" style="color: red; font-size:14pt;" id="dataSelecionada"></label>
+                        <label class="labelBlurResumoStatus text-center" style="color: #1974CE; font-size:15px; text-align: center !important;">
+                            Dia de vencimento escolhido:
                         </label>
-                        <label class="labelBlurResumoStatus text-center" style="color: #1974CE; font-size:14pt;">A data de vigência deste contrato será</label>
-                        <h1 class="titleOdontVigencia titleVencimentoData text-center" id="dataVigencia" font-size="font-size: 18pt !important;"></h1>
+                        <label class="labelOdontBlur" style="color: #D9487F; font-size:15px;" id="dataSelecionada"></label>
+                        <label class="labelBlurResumoStatus text-center" style="color: #1974CE; font-size:15px;">Data de vigência prevista</label>
+                        <h1 class="titleOdontVigencia text-center" id="dataVigenciaPrevista" style="font-size: 18pt !important; font-family: Roboto-Bold;"></h1>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="btn btn-lg btn-block btnOdont" href="" id="bntVenc" onclick="atualizarFatura()" role="button" style="background:#1974CE; margin-top: 5px;">CONTINUAR</div>
+                                <div class="btn btn-lg btn-block btnOdont" href="" id="bntVenc" onclick="atualizarFatura()" role="button" style="background:#1974CE; margin-top: 5px;">CONFIRMAR</div>
                             </div>
                         </div>
 
-                        <div class="text-center" style="margin-top:5px;">
-                            <div class="linkOdont" id="escolherOutraData">Escolher outra data</div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn btn-lg btn-block btnOdont" href="" id="escolherOutraData" role="button" style="background:#D9487F; margin-top: 5px;">ESCOLHER OUTRA DATA</div>
+                            </div>
                         </div>
 
+                        <div>
+                            <p style="font-family:Roboto-Light; text-align: left; color:white; background-color: #F9B40A; padding-left: 10px; padding-right: 10px; padding-bottom: 20px; padding-top: 20px; margin-top: 20px;">
+                                <span style="font-family: Roboto-Medium !important;">ATENÇÃO</span><br />
+                                Para manter a vigência prevista o cliente precisa aceitar o contrato até o dia <span id="dataVigencia" style="font-family: Roboto-Bold;"></span>, caso contrário o mês da vigência será postergado.
+                            </p>
+                        </div>
 
                     </div>
                 </div>

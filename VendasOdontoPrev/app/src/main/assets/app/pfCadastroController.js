@@ -7,6 +7,12 @@ $(document).ready(function () {
     localStorage.removeItem("dependentePfEmEdicao");
     abrirPropostaComErros();
 
+    $("#cpf").bind('blur', function () {
+
+        verificarSePropostaPfExiste();
+
+    });
+
     $(".nome").blur(function () {
 
         $(".nome").val($(".nome").val().trim());
@@ -36,6 +42,85 @@ $(document).ready(function () {
 
     });        
 });
+
+
+function verificarSePropostaPfExiste() {
+
+    var propostasPf = get("pessoas");
+
+    if (propostasPf == null) {
+        return;
+    }
+
+    var propostaExistente = propostasPf.filter(function (x) { return x.cpf == $('#cpf').val() });
+
+    if (propostaExistente.length == 0) {
+        return;
+    }
+
+    if (propostaExistente.length == 1 && propostaExistente[0].status == "SYNC") {
+        swal("Ops!", "Você possui uma proposta com esse CPF em sincronismo", "error");
+        return;
+    }
+
+    var propostaPfEmEdicao = get("propostaPf");
+
+    if (propostaPfEmEdicao.cpf == propostaExistente[0].cpf) {
+        return;
+    }
+
+    if (propostaExistente.length == 1 && propostaExistente[0].status != "ENVIADA") {
+
+        swal({
+            title: "Ops!",
+            text: "Você já tem uma proposta com esse CPF, selecione uma opção:",
+            type: "warning",
+            confirmButtonClass: "btn-danger",
+            confirmButtonColor: "#1974CE",
+            confirmButtonText: "Editar proposta existente",
+            cancelButtonText: "Excluir proposta",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+
+                    put("propostaPf", JSON.stringify(propostaExistente[0]));
+                    window.location.href = "venda_pf_dados_proposta.html";
+
+                } else {
+
+                    swal({
+                        title: "Ops!",
+                        text: "Tem certeza que deseja excluir a proposta?",
+                        type: "warning",
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonColor: "#1974CE",
+                        confirmButtonText: "Sim",
+                        cancelButtonText: "Não",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                var propostasPfExcetoExcluidas = propostasPf.filter(function (x) { return x.cpf != $('#cpf').val() });
+
+                                put("pessoas", JSON.stringify(propostasPfExcetoExcluidas));
+                                window.location.href = "venda_pf_dados_proposta.html";
+                                //buscarEmpresa();
+                            } else {
+                                verificarSePropostaPfExiste();
+                            }
+                        });
+                }
+            });
+
+    }
+
+
+}
 
 function abrirPropostaComErros() {
 
