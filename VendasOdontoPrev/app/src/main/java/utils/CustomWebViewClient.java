@@ -69,56 +69,60 @@ public class CustomWebViewClient extends WebViewClient {
     private boolean handleUri(WebView view, String uri) throws ClassNotFoundException
     {
 
-
-        loginController login = new loginController(context);
-
-        view.addJavascriptInterface(login, "login");
-
-        SairDaConta logout = new SairDaConta(context);
-
-        view.addJavascriptInterface(logout, "logout");
-
-        MyFirebaseInstanceIDService fireBase = new MyFirebaseInstanceIDService();
-
-        view.addJavascriptInterface(fireBase, "fireBase");
-
-        Log.d("MeuLog", "scheme =" + uri);
-        String arquivo = uri.replace("file:///android_asset/", "");
-        arquivo = arquivo.replace(".html", "");
-
-        Object classeInstanciada = null;
-
-        //Constructor c = Class.forName("Foo").getConstructor(String.class, Integer.TYPE);
-        //Foo foo = (Foo) c.newInstance("example", 34);
-
-        //Class classe = Class.forName("controllers." + arquivo + "CTRL");
-
         try {
 
-            Constructor c = Class.forName("controllers." + arquivo + "Controller").getConstructor(Context.class);
-            classeInstanciada = c.newInstance(context);
+            loginController login = new loginController(context);
 
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            Log.i("MeuLog", "NoSuchMethodException arq= " + arquivo + " erro: " + e.toString() );
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            Log.i("MeuLog", "IllegalAccessException arq= " + arquivo + " erro: " + e.toString() );
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-            Log.i("MeuLog", "InstantiationException arq= " + arquivo + " erro: " + e.toString() );
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-            Log.i("MeuLog", "InvocationTargetException arq= " + arquivo + " erro: " + e.toString() );
+            view.addJavascriptInterface(login, "login");
+
+            SairDaConta logout = new SairDaConta(context);
+
+            view.addJavascriptInterface(logout, "logout");
+
+            MyFirebaseInstanceIDService fireBase = new MyFirebaseInstanceIDService();
+
+            view.addJavascriptInterface(fireBase, "fireBase");
+
+            Log.d("MeuLog", "scheme =" + uri);
+            String arquivo = uri.replace("file:///android_asset/", "");
+            arquivo = arquivo.replace(".html", "");
+
+            Object classeInstanciada = null;
+
+            //Constructor c = Class.forName("Foo").getConstructor(String.class, Integer.TYPE);
+            //Foo foo = (Foo) c.newInstance("example", 34);
+
+            //Class classe = Class.forName("controllers." + arquivo + "CTRL");
+
+            try {
+
+                Constructor c = Class.forName("controllers." + arquivo + "Controller").getConstructor(Context.class);
+                classeInstanciada = c.newInstance(context);
+
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+                Log.i("MeuLog", "NoSuchMethodException arq= " + arquivo + " erro: " + e.toString());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+                Log.i("MeuLog", "IllegalAccessException arq= " + arquivo + " erro: " + e.toString());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+                Log.i("MeuLog", "InstantiationException arq= " + arquivo + " erro: " + e.toString());
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+                Log.i("MeuLog", "InvocationTargetException arq= " + arquivo + " erro: " + e.toString());
+            }
+
+
+            Log.d("MeuLog", "Arquivo: " + arquivo);
+
+            view.addJavascriptInterface(classeInstanciada, "ob");
+
+            Log.d("MeuLog", "Classe instanciada");
+
+        } catch (Exception e){
+
         }
-
-
-
-        Log.d("MeuLog", "Arquivo: " + arquivo);
-
-        view.addJavascriptInterface(classeInstanciada, "ob");
-
-        Log.d("MeuLog", "Classe instanciada");
 
         view.loadUrl(uri);
         return true;

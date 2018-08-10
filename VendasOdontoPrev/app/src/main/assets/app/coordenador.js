@@ -39,59 +39,68 @@ $(document).ready(function () {
 
 function deslogarDoAplicativo() {
 
-    var dadosUsuario = get("dadosUsuario");
+    try {
+        var dadosUsuario = get("dadosUsuario");
+        var tokenDevice = getTokenDevice();
 
-    if (!navigator.onLine) {
+        if (!navigator.onLine) {
+            closeNav();
+            setTimeout(function () { swal("Ops!", "Não é possível sair do aplicativo sem conexão.", "error"); }, 500);
+            return false;
+        }
+
         closeNav();
-        setTimeout(function () { swal("Ops!", "Não é possível sair do aplicativo sem conexão.", "error"); }, 500);
-        return false;
-    }
+        setTimeout(
+            function () {
 
-    closeNav();
-    setTimeout(
-        function () {
+                swal({
+                    title: "Aguarde",
+                    text: 'Estamos deslogando do APP',
+                    content: "input",
+                    imageUrl: "img/load.gif",
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    icon: "info",
+                    button: {
+                        text: "...",
+                        closeModal: false,
+                    },
+                });
 
-            swal({
-                title: "Aguarde",
-                text: 'Estamos deslogando do APP',
-                content: "input",
-                imageUrl: "img/load.gif",
-                showCancelButton: false,
-                showConfirmButton: false,
-                icon: "info",
-                button: {
-                    text: "...",
-                    closeModal: false,
-                },
-            });
+                callTokenVendas(function (dataToken) {
 
-            callTokenVendas(function (dataToken) {
-
-                if (dataToken.status != undefined) {
-
-                    swal("Ops!", "Erro no logout do APP", "error");
-                    return;
-                }
-
-                deleteTokenLogout(function (dataDeleteToken) {
-
-                    console.log(JSON.stringify(dataDeleteToken));
-
-                    if (dataDeleteToken.status != undefined) {
+                    if (dataToken.status != undefined) {
 
                         swal("Ops!", "Erro no logout do APP", "error");
                         return;
                     }
 
-                    logout.removerRegistroLogin();
-                    window.location.href = "index.html";
+                    deleteTokenLogout(function (dataDeleteToken) {
 
-                }, dataToken.access_token, getTokenDevice(), dadosUsuario.codigo);
+                        console.log(JSON.stringify(dataDeleteToken));
 
-            });
+                        if (dataDeleteToken.status != undefined) {
 
-        }
-        , 500);
+                            swal("Ops!", "Erro no logout do APP", "error");
+                            return;
+                        }
+
+                        logout.removerRegistroLogin();
+                        window.location.href = "index.html";                      
+                        
+                    }, dataToken.access_token, tokenDevice, dadosUsuario.codigo);
+
+                });
+
+            }, 500);
+
+    } catch (Error) {
+
+        swal.close();
+        closeNav();
+        console.log(Error);
+
+    }
 
     //href = "index.html"
     //logout.removerRegistroLogin();
@@ -103,10 +112,12 @@ function deleteTokenLogout(callback, token, tokenDeviceFirebase, cdForcaVenda) {
         "token": tokenDeviceFirebase
     }
 
+    console.log(JSON.stringify(jsonRequest));
+
     $.ajax({
         async: true,
         //url: URLBase + "/devicetoken/forcavenda/" + cdForcaVenda,
-        url: "http://localhost:8090/devicetoken/forcavenda/" + cdForcaVenda,
+        url: "http://172.16.244.162:8090/devicetoken/forcavenda/" + cdForcaVenda,
         method: "DELETE",
         headers: {
             "Authorization": "Bearer " + token,
