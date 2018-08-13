@@ -111,8 +111,8 @@ function carregarListaOffline() {
         }
 
         if (item.nome == "") {
-            itemLista = itemLista.replace("{NOME}", 'a');
-            itemLista = itemLista.replace("{STYLE}", 'style = "color: #fff"');
+            itemLista = itemLista.replace("{NOME}", item.cpf);
+            itemLista = itemLista.replace("{STYLE}", "");
         } else {
             itemLista = itemLista.replace("{NOME}", item.nome);
             itemLista = itemLista.replace("{STYLE}", "");
@@ -348,8 +348,8 @@ function carregarListaOnlineAtualizarProposta() {
 
             if (item.nome == "") {
 
-                itemLista = itemLista.replace("{NOME}", 'a');
-                itemLista = itemLista.replace("{STYLE}", 'style = "color: #fff"');
+                itemLista = itemLista.replace("{NOME}", item.cpf);
+                itemLista = itemLista.replace("{STYLE}", "");
 
             } else {
 
