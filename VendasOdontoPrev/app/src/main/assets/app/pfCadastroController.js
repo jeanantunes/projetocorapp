@@ -5,7 +5,6 @@ $(document).ready(function () {
     buscarPlanosSelecionados();
     carregarProposta();
     localStorage.removeItem("dependentePfEmEdicao");
-    abrirPropostaComErros();
 
     //Aqui comeca os steps de salvamento de cada campo
     $("#cpf").blur(function () {
@@ -398,7 +397,7 @@ $(document).ready(function () {
 
                             swal.close();
 
-                        }, dataToken.access_token, cep)
+                        }, dataToken.access_token, cep);
 
                     });
 
