@@ -7,6 +7,7 @@ $(document).ready(function () {
     if (!navigator.onLine) {
         carregarListaOffline();
         localStorage.removeItem("resumoStatusPropostaPf");
+        localStorage.removeItem('detalheBeneficiario');
         return;
     }
 
@@ -111,8 +112,8 @@ function carregarListaOffline() {
         }
 
         if (item.nome == "") {
-            itemLista = itemLista.replace("{NOME}", 'a');
-            itemLista = itemLista.replace("{STYLE}", 'style = "color: #fff"');
+            itemLista = itemLista.replace("{NOME}", item.cpf);
+            itemLista = itemLista.replace("{STYLE}", "");
         } else {
             itemLista = itemLista.replace("{NOME}", item.nome);
             itemLista = itemLista.replace("{STYLE}", "");
@@ -310,7 +311,12 @@ function carregarListaOnlineAtualizarProposta() {
 
     $.each(pessoas, function (i, item) {
 
-        if (item.status != "ENVIADA" && item.status != "Aprovado" && item.status != "Proposta enviada para a OdontoPrev" && item.status != "CRITICADA" && item.status != "Criticado") {
+        if (item.status != "ENVIADA"
+            && item.status != "Aprovado"
+            && item.status != "Proposta enviada para a OdontoPrev"
+            && item.status != "CRITICADA"
+            && item.status != "Criticado"
+            && item.status != "Proposta criticada") {
 
             qtdPessoas++;
 
@@ -348,8 +354,8 @@ function carregarListaOnlineAtualizarProposta() {
 
             if (item.nome == "") {
 
-                itemLista = itemLista.replace("{NOME}", 'a');
-                itemLista = itemLista.replace("{STYLE}", 'style = "color: #fff"');
+                itemLista = itemLista.replace("{NOME}", item.cpf);
+                itemLista = itemLista.replace("{STYLE}", "");
 
             } else {
 

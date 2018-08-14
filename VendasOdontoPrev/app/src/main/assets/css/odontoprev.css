@@ -1875,6 +1875,18 @@ h5, .subListBox {
     padding-top: 2%;
 }
 
+.labelOdontBlurEdicao {
+    font-family: Roboto-Medium;
+    color: #ACAAA5;
+    font-size: 14pt;
+    padding-top: 20px;
+    margin-top: 0px !important;
+}
+
+.margin-top-0-important {
+    margin-top: 0px !important;
+}
+
 
 .labelOdontFocus {
     font-family: Roboto-Medium;
@@ -1964,6 +1976,19 @@ h5, .subListBox {
     box-shadow: 0 0 0 0;
     border-radius: 0;
     border-bottom: 1px solid #ACAAA5;
+}
+
+.inputLabelBlurEdicao {
+    font-family: Roboto-Medium;
+    color: #ACAAA5;
+    border: 0;
+    outline: 0;
+    width: 100%;
+    font-size: 20pt;
+    background: transparent;
+    box-shadow: 0 0 0 0;
+    border-radius: 0;
+    border-bottom: 2px solid #ACAAA5;
 }
 
 

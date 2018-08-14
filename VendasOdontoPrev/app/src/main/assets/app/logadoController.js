@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
 
+    carregarDadosUsuario();
     validarStatusUsuario();
 
     validarVersaoApp();
@@ -13,6 +14,18 @@ $(document).ready(function () {
     atualizarPropostaComApiDash();
     atualizarTokenDevice();
 });
+
+function carregarDadosUsuario() {
+
+    var carregarDados = get("dadosUsuario");
+
+    if (carregarDados == null)
+        return;
+
+    $("#nomeCorretor").html(carregarDados.nome);
+    $("#nomeCorretora").html(carregarDados.nomeEmpresa);
+
+}
 
 function validarVersaoApp()
 {

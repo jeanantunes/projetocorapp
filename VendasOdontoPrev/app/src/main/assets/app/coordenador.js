@@ -11,14 +11,11 @@ $(document).ready(function () {
     var menu = getComponent("menu"); // busca componente do menu   
     $("#componenteMenu").append(menu); // seta o menu na pagina
 
-    $("a[href='meus_dados.html']").hide();
-
-    carregarDadosUsuario();
+    carregarDadosUsuarioMenu();
 
     setColorMenu();
 
     $("#logout").click(function () {
-
 
         deslogarDoAplicativo();
         
@@ -40,12 +37,15 @@ $(document).ready(function () {
 function deslogarDoAplicativo() {
 
     try {
+
         var dadosUsuario = get("dadosUsuario");
         var tokenDevice = getTokenDevice();
 
         if (!navigator.onLine) {
             closeNav();
-            setTimeout(function () { swal("Ops!", "Não é possível sair do aplicativo sem conexão.", "error"); }, 500);
+            setTimeout(function () {
+                swal("Ops!", "Não é possível sair do aplicativo sem conexão.", "error");
+            }, 500);
             return false;
         }
 
@@ -116,8 +116,8 @@ function deleteTokenLogout(callback, token, tokenDeviceFirebase, cdForcaVenda) {
 
     $.ajax({
         async: true,
-        //url: URLBase + "/devicetoken/forcavenda/" + cdForcaVenda,
-        url: "http://172.16.244.162:8090/devicetoken/forcavenda/" + cdForcaVenda,
+        url: URLBase + "/devicetoken/forcavenda/" + cdForcaVenda,
+        //url: "http://172.16.244.162:8090/devicetoken/forcavenda/" + cdForcaVenda,
         method: "DELETE",
         headers: {
             "Authorization": "Bearer " + token,
@@ -327,6 +327,8 @@ function setColorMenu() {
         $("a[href='fale_conosco.html']").addClass('colorActive');
     else if (url.indexOf("materiais_de_comunicacao") !== -1)
         $("a[href='materiais_de_comunicacao.html']").addClass('colorActive');
+    else if (url.indexOf("meus_dados") !== -1)
+        $("a[href='meus_dados.html']").addClass('colorActive');
 
 }
 
@@ -1324,7 +1326,7 @@ function get(localName, obj) {
     return JSON.parse(o);
 }
 
-function carregarDadosUsuario() {
+function carregarDadosUsuarioMenu() {
     var carregarDados = get("dadosUsuario");
 
     if (carregarDados == null)
@@ -1332,10 +1334,6 @@ function carregarDadosUsuario() {
 
     $("#nomeCorretorMenu").html(carregarDados.nome == null ? "" : carregarDados.nome.split(' ')[0]);
     $("#nomeCorretoraMenu").html(carregarDados.nomeEmpresa == null ? "" : carregarDados.nomeEmpresa.split(' ')[0]);
-    $("#nomeCorretor").html(carregarDados.nome);
-    $("#nomeCorretora").html(carregarDados.nomeEmpresa);
-    $("#emailCorretor").val(carregarDados.email);
-    $("#numeroCorretor").val(carregarDados.telefone);
 }
 
 function toDate(dateStr) {
@@ -1388,8 +1386,17 @@ function getUrlParameter(sParam) {
 };
 
 function atualizarPessoas(proposta) {
-    var pessoas = get("pessoas");
-    var propostas = pessoas.filter(function (x) { return x.cpf != proposta.cpf });
+
+    var pessoas = get("pessoas"); // lista de propostas pf
+
+    var propostas = [];
+
+    if (pessoas != undefined) {
+
+        propostas = pessoas.filter(function (x) { return x.cpf != proposta.cpf });
+    
+    }
+
     pessoas = []; //limpar
 
     $.each(propostas, function (i, item) {

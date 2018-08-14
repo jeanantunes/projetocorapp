@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Odontoprev</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet">
+    <link href="css/meus_dados.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Menu -->
+    <div id="componenteMenu"></div>
+    <!-- End Menu -->
+    <!-- Bloco 1 -->
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12 boxHeader">
+                <div class="col-md-12 text-left imgLogoODPVHeader">
+                    <img src="img/logoODPV-header.png" class="" alt="Logo ODPV Header">
+                </div>
+                <span class="btnMenu" onclick="openNav()">&#9776;</span>
+                <!-- <a class="btn btn-sm btnOdontSell" href="vender.html" role="button">Vender</a> -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 odontBoxCenter">
+                <div class="perfil margin-top-0-important">
+                    <img src="img/avatar.png" class="imgPerfil" alt="" id="imagePerfil">
+                </div>
+
+                <!--Aqui comeca o bloco de edicao de dados -->
+                <div id="divDeEdicaoDados">
+                    <div>
+                        <label class="label-nome labelOdontBlurEdicao">Nome</label>
+                    </div>
+                    <div>
+                        <input type="text" class="nome-edicao inputLabelBlurEdicao nomeRegex" id="nomeCorretorEdicao" maxlength="255">
+                    </div>
+                    <div>
+                        <label class="label-email labelOdontBlurEdicao">E-mail</label>
+                    </div>
+                    <div>
+                        <input type="text" class="email-edicao inputLabelBlurEdicao" id="emailCorretorEdicao" maxlength="80">
+                    </div>
+                    <div>
+                        <label class="label-telefone labelOdontBlurEdicao">Telefone</label>
+                    </div>
+                    <div>
+                        <input type="text" class="telefone-edicao inputLabelBlurEdicao" id="telefoneCorretorEdicao">
+                    </div>
+
+                    <div class="col-md-12 row" style="margin-top: 20px;">
+                        <div class="btnPadBtm">
+                            <a class="btn btn-lg btn-block btnOdont" id="salvarDados" role="button" style="font-family:Roboto-Light; font-weight: 700;">SALVAR</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Bloco 1 -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/odontoprev.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
+    <script src="js/odonto-Valida.js"></script>
+    <script src="app/coordenador.js"></script>
+    <script src="app/meusDadosEdicaoController.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+
+    <script type="text/javascript">
+        function abrirgaleria() {
+            ob.abrirgaleria();
+
+            var base64 = ob.retornoB64();
+
+            $("#imagePerfil").attr('src', 'data:image/jpg;base64,' + base64);
+            $("#imageePerfil").attr('src', 'data:image/jpg;base64,' + base64);
+        }
+    </script>
+
+</body>
+</html>
