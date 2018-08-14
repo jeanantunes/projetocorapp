@@ -7,6 +7,7 @@ $(document).ready(function () {
     if (!navigator.onLine) {
         carregarListaOffline();
         localStorage.removeItem("resumoStatusPropostaPf");
+        localStorage.removeItem('detalheBeneficiario');
         return;
     }
 
@@ -310,7 +311,12 @@ function carregarListaOnlineAtualizarProposta() {
 
     $.each(pessoas, function (i, item) {
 
-        if (item.status != "ENVIADA" && item.status != "Aprovado" && item.status != "Proposta enviada para a OdontoPrev" && item.status != "CRITICADA" && item.status != "Criticado") {
+        if (item.status != "ENVIADA"
+            && item.status != "Aprovado"
+            && item.status != "Proposta enviada para a OdontoPrev"
+            && item.status != "CRITICADA"
+            && item.status != "Criticado"
+            && item.status != "Proposta criticada") {
 
             qtdPessoas++;
 

@@ -11,13 +11,15 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/odontoprev.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet">
+    <link href="css/meus_dados.css" rel="stylesheet">
 </head>
 <body>
     <!-- Menu -->
     <div id="componenteMenu"></div>
     <!-- End Menu -->
     <!-- Bloco 1 -->
-    <div class="container-fluid" id="">
+    <div class="container-fluid">
 
         <div class="row">
             <div class="col-md-12 boxHeader">
@@ -31,97 +33,78 @@
 
         <div class="row">
             <div class="col-md-12 odontBoxCenter">
-                <div class="perfil" data-toggle="modal" data-target="#myModal">
-                    <img src="img/icone_325x325.png" class="imgPerfil" alt="" id="imagePerfil">
+                <div class="perfil margin-top-0-important">
+                    <img src="img/avatar.png" class="imgPerfil" alt="" id="imagePerfil">
                 </div>
 
-                <div class="text-center">
-                    <div>
-                        <label class="labelOdont" id="nomeCorretor"></label>
-                    </div>
-                    <div>
-                        <label class="subLabelOdont" id="nomeCorretora"></label>
-                    </div>
-                </div>
+                <!--Aqui comeca o bloco de apresentacao de dados -->
+                <div class="" id="divDeApresentacaoDeDados">
 
-                <div class="boxDados">
-
-                    <div>
+                    <div class="text-center">
                         <div>
-                            <img src="img/email.png" id="imgLabEmail" align="center">
-                            <input type="text" class="email inputLabelBlur editDados" value="" id="emailCorretor">
-                            <!--<img src="img/btn-editar.png" id="editMeusDados1" width="20px" height="20px" class="" alt="Editar"></input>-->
+                            <label class="labelOdont" id="nomeCorretor"></label>
                         </div>
-
-                        <!--<div id="divEditarEmail" class="hide">
-                            <img src="img/email.png" id="imgEmail" align="center">
-                            <input type="text" class="email inputLabelBlur editDados" value="" id="emailCorretorEditar">
-                            </input>
-                        </div>-->
-                    </div>
-
-                    <div>
                         <div>
-                            <img src="img/celular.png" id="imgLabCel" align="center">
-                            <input type="tel" class="celular inputLabelBlur editDados" value="" id="numeroCorretor">
-                            <!--<img src="img/btn-editar.png" id="editMeusDados2" width="20px" height="20px" class="" alt="Editar"></input>-->
+                            <label class="subtitulo-nome-corretora" id="nomeCorretora"></label>
                         </div>
-
-                        <!--<div id="divEditarNumero" class="hide">
-                            <img src="img/celular.png" id="imgCel" align="center">
-                            <input type="tel" class="celular inputLabelBlur editDados" value="" id="numeroCorretorEditar">
-                        </div>-->
                     </div>
 
+                    <div class="boxDados">
+
+                        <div>
+                            <div>
+                                <label type="text" class="label-dados word-wrap-normal" id="emailCorretor"><img src="img/email.png" id="imgLabEmail"></label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div>
+                                <label type="tel" class="label-dados word-wrap-normal" id="numeroCorretor"><img src="img/celular.png" id="imgLabCel"></label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12 row">
+                        <div class="btnPadBtm">
+                            <a class="btn btn-lg btn-block btnOdont" id="editarDados" role="button" style="font-family:Roboto-Light; font-weight: 700;">EDITAR MEUS DADOS</a>
+                        </div>
+                    </div>
+
+                </div>
+                <!--Aqui termina o bloco de apresentacao de dados -->
+                <!--Aqui comeca o bloco de edicao de dados -->
+                <div id="divDeEdicaoDados" style="display: none;">
                     <div>
-                        <div class="">
-                            <img src="img/senha.png" align="center">
-                            <input type="password" class="password inputLabelBlur editDados" value="" id="">
-                            <!--<img src="img/btn-editar.png" id="editMeusDados2" width="20px" height="20px" class="" alt="Editar"></input>-->
-                        </div>
-
-
+                        <label class="label-nome labelOdontBlurEdicao">Nome</label>
+                    </div>
+                    <div>
+                        <input type="text" class="nome-edicao inputLabelBlurEdicao nomeRegex" id="nomeCorretorEdicao">
+                    </div>
+                    <div>
+                        <label class="label-email labelOdontBlurEdicao">E-mail</label>
+                    </div>
+                    <div>
+                        <input type="text" class="email-edicao inputLabelBlurEdicao" id="emailCorretorEdicao">
+                    </div>
+                    <div>
+                        <label class="label-telefone labelOdontBlurEdicao">Telefone</label>
+                    </div>
+                    <div>
+                        <input type="text" class="telefone-edicao inputLabelBlurEdicao" id="telefoneCorretorEdicao">
                     </div>
 
-                    <!-- <div>
-                        <label class="subLabelOdont"><img src="img/senha.png" align="center">••••••</label>
-                    </div> -->
-                </div>
-            </div>
-        </div>
+                    <div class="col-md-12 row" style="margin-top: 20px;">
+                        <div class="btnPadBtm">
+                            <a class="btn btn-lg btn-block btnOdont" id="salvarDados" role="button" style="font-family:Roboto-Light; font-weight: 700;">SALVAR</a>
+                        </div>
+                    </div>
 
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="btnPadBtm">
-                    <a class="btn btn-lg btn-block btnPinkOdont" id="EditDados" role="button">EDITAR</a>
-                    <a class="btn btn-lg btn-block btnOdont hide disabled" id="salvarEditDados" role="button">SALVAR</a>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Foto Perfil</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Escolha uma opção.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="abrirgaleria()">Galeria</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Remover</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Modal -->
-    </div>
     <!-- End Bloco 1 -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -131,6 +114,7 @@
     <script src="js/odonto-Valida.js"></script>
     <script src="app/coordenador.js"></script>
     <script src="app/meusDadosController.js"></script>
+    <script src="js/sweetalert.min.js"></script>
 
     <script type="text/javascript">
         function abrirgaleria() {
