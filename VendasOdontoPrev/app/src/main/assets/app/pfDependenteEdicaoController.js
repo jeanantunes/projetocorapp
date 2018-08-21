@@ -79,16 +79,26 @@ function SalvarDependente() {
         return;
     }
 
-    var date = toDate($(".nascimento").val());
+    var dateNascimento = toDate($(".nascimento").val());
 
-    if ($(".cpf").val() == "" && isMaiorDeIdade(date)) {
-        swal("Ops!", "Preencha o CPF", "error");
-        return;
-    }
+    if (isMaiorDeIdade(dateNascimento)) {
 
-    if (!TestaCPF($(".cpf").val())) {
-        swal("Ops!", "CPF Inválido", "error");
-        return;
+        if ($("#cpf").val() == "") {
+
+            swal("Ops!", "CPF Obrigatório para maiores de idade", "error");
+            $("#cpf").focus();
+            return;
+
+        }
+
+        if (!TestaCPF($("#cpf").val())) {
+
+            swal("Ops!", "CPF inválido", "error");
+            $("#cpf").focus();
+            return;
+
+        }
+
     }
 
     var proposta = get("propostaPf");
