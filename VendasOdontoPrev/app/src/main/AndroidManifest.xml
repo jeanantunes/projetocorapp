@@ -73,14 +73,6 @@
         </service>
         <!-- [END firebase_iid_service] -->
 
-        <receiver android:name=".YourReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_INSTALL" />
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package"/>
-            </intent-filter>
-        </receiver>
-
 
     </application>
 

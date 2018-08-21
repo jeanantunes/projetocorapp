@@ -108,15 +108,11 @@ function deslogarDoAplicativo() {
 
 function deleteTokenLogout(callback, token, tokenDeviceFirebase, cdForcaVenda) {
 
-    var jsonRequest = {
-        "token": tokenDeviceFirebase
-    }
-
-    console.log(JSON.stringify(jsonRequest));
+    console.log(URLBase + "/corretorservicos/1.0/devicetoken/" + tokenDeviceFirebase + "forcavenda/" + cdForcaVenda);
 
     $.ajax({
         async: true,
-        url: URLBase + "/devicetoken/forcavenda/" + cdForcaVenda,
+        url: URLBase + "/corretorservicos/1.0/devicetoken/" + tokenDeviceFirebase + "forcavenda/" + cdForcaVenda,
         //url: "http://172.16.244.162:8090/devicetoken/forcavenda/" + cdForcaVenda,
         method: "DELETE",
         headers: {
@@ -124,7 +120,6 @@ function deleteTokenLogout(callback, token, tokenDeviceFirebase, cdForcaVenda) {
             "Content-Type": "application/json",
             "Cache-Control": "no-cache"
         },
-        data: JSON.stringify(jsonRequest),
         success: function (resp) {
             callback(resp);
         },
@@ -466,8 +461,8 @@ function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelul
 
     $.ajax({
         async: true,
-        //url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda,
-        url: "http://172.16.244.162:8090/devicetoken/forcavenda/" + cdForcaVenda,
+        url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda,
+        //url: "http://172.16.244.162:8090/devicetoken/forcavenda/" + cdForcaVenda,
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -1981,9 +1976,9 @@ function sincronizarEmpresa(callback, proposta, beneficiarios, reSync) {
         }
 
         $.ajax({
-            //url: URLBase + "/corretorservicos/1.0/vendapme",
+            url: URLBase + "/corretorservicos/1.0/vendapme",
             //url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
-            url: "http://172.16.21.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
+            //url: "http://172.16.21.30:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
             type: "POST",
             data: json,
             dataType: "json",
