@@ -642,11 +642,19 @@ function carregarProposta() {
     if (proposta.cnae == "" && $("#cnpjEmpresa").val() != "") $("#cnae").prop('disabled', false);
     $("#cnae").val(proposta.cnae.trim());
 
-    if (proposta.contatoEmpresa || proposta.contatoEmpresa == "") {
+    if (proposta.contatoEmpresa == "") {
+
         $("#squaredOne").attr("checked", true);
         $("#divSegundoContato").addClass('hide');
+
+    } else if (proposta.contatoEmpresa) {
+
+        $("#squaredOne").attr("checked", true);
+        $("#divSegundoContato").addClass('hide');
+
     }
-    else if (!proposta.contatoEmpresa){
+    else if (!proposta.contatoEmpresa) {
+
         $("#squaredOne").attr("checked", false);
         $("#divSegundoContato").removeClass('hide');
         $("#nomeSegundoContato").val(proposta.contactEmpresa.nome);

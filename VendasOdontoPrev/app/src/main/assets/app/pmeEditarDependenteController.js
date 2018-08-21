@@ -64,13 +64,16 @@ function SalvarDependentes() {
     var idade = $(".nascimento").val().split("/");
     var menor = currentYear - idade[2];
 
-    if (menor >= 18) {
+    var dateNascimento = toDate($(".nascimento").val());
+
+    if (isMaiorDeIdade(dateNascimento)) {
+
         if ($(".cpf").val() == "") {
-            console.log("Validando cpf");
             swal("Ops!", "CPF está inválido", "error");
             stop = true;
             return;
         }
+
     }
 
     if ($(".cpf").val() != "" && !TestaCPF($(".cpf").val().replace(/\D/g, ''))) {
