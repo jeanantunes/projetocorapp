@@ -1773,6 +1773,7 @@ h5, .subListBox {
     background-color: #1974CE;
     color: #fff !important;
     padding: 16px;
+    outline: none;
 }
 
     .btnOdont:hover {
