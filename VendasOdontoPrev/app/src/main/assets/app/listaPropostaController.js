@@ -597,15 +597,13 @@ function sincronizarPropostaPME(cnpjProposta) {
 
             consultarSerasa(function (dataProposta) {
 
-
-
                 if (dataProposta == "error") {
 
                     propostaPmeSelecionada[0].status = "PRONTA";
                     atualizarEmpresas(propostaPmeSelecionada[0]);
                     swal("Ops!", "Erro na consulta do CNPJ, mas sua proposta está salva.\n\nTente envia-la mais tarde.", "error");
                     return;
-                };
+                }
 
                 propostaPmeSelecionada[0] = dataProposta;
 

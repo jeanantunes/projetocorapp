@@ -369,7 +369,7 @@ function buscarEmpresa() {
 
         callSerasaPme(function (dataConsulta) {
 
-            if (dataConsulta.status != undefined) { // TODO: Implementar mensagem de erro
+            if (dataConsulta.status != undefined) {
                 desbloqCampos();
                 swal("Ops!", "Não conseguimos trazer os dados desta empresa, mas você pode continuar preenchendo manualmente", "error");
                 return;
