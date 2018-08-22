@@ -21,8 +21,7 @@ $(document).ready(function () {
 });
 
 function addBenef() {
-    if ($(".cnpj").val() == "")
-    {
+    if ($(".cnpj").val() == "") {
         swal("Ops!", "Preencha o cnpj", "error");
 
         return;
@@ -52,7 +51,7 @@ function buscarPlanosSelecionados() {
         $("#planos").append(plano);
 
         if (proposta.planos.length == 1) {
-            
+
             $("#btnExcluirPlano").addClass('hide');
         }
 
@@ -204,7 +203,7 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
 
     if ($("#cnpjEmpresa").val() != "") {
         var empresas = get("empresas");
-        
+
         if (empresas != null) {
             var existe = empresas.filter(function (x) { return x.cnpj == $("#cnpjEmpresa").val() });
             var proposta = get("proposta");
@@ -272,14 +271,12 @@ function verificarSePropostaExiste() {
 
     var editado = empresas.filter(function (x) { return x.cnpj == $('#cnpjEmpresa').val() });
 
-    if (editado.length == 0)
-    {
+    if (editado.length == 0) {
         buscarEmpresa();
         return;
     }
 
-    if (editado.length == 1 && editado[0].status == "SYNC")
-    {
+    if (editado.length == 1 && editado[0].status == "SYNC") {
         swal("Ops!", "Você possui uma proposta com esse CNPJ em sincronismo", "error");
         return;
     }
@@ -340,7 +337,7 @@ function verificarSePropostaExiste() {
 
 
 function buscarEmpresa() {
-    
+
     var cnpjValidado = $('#cnpjEmpresa').val().replace(/\D/g, '');
     var cnpj = get("dadosUsuario");
     var cnpjDaProposta = get("proposta");
@@ -351,8 +348,7 @@ function buscarEmpresa() {
 
     }
 
-    if (cnpj.cnpjCorretora == cnpjValidado)
-    {
+    if (cnpj.cnpjCorretora == cnpjValidado) {
         swal("Ops", "Esse é o CNPJ da sua corretora, digite o CNPJ do seu cliente", "info");
         $("#cnpjEmpresa").val("");
         return;
@@ -370,86 +366,84 @@ function buscarEmpresa() {
 
     //put('cpnjValido', "");
     callTokenProd(function (dataToken) {
-        
+
         callSerasaPme(function (dataConsulta) {
 
+            try {
                 try {
-                    try {
-                        var situacaoEmpresa = dataConsulta.getElementsByTagName("situacao")[0].textContent;
-                        var situacao = situacaoEmpresa.indexOf("ATIVA");
-                    } catch (Exception) { }
-
-                    try {
-                        var naturezaJuridica = dataConsulta.getElementsByTagName("codigo")[0].textContent;
-                        var dataAbertura = dataConsulta.getElementsByTagName("dataAbertura")[0].textContent;
-
-                        if (naturezaJuridica == "2135")
-                        {
-                            var date = toDateSplitHifenSerasa(dataAbertura);
-
-                            if (!validateDataMei(date)) {
-
-                                swal("Ops", "Venda não autorizada para Empresa MEI com menos de 6 meses", "info");
-                                return;
-                            }
-                        }
-
-                    } catch (Exception) { }
-
-                    if (situacao == undefined)
-                    {
-                        $("#razao-social").prop('disabled', false);
-                        $("#ramo-atividade").prop('disabled', false);
-                        $("#representante-legal").prop('disabled', false);
-                        $("#cpf-representante").prop('disabled', false);
-                        $("#nome-fantasia").prop('disabled', false);
-                        $("#cnae").prop('disabled', false);
-                        swal.close();
-                        return;
-                    }
-
-                    if (!situacao == 0) {
-
-                        swal("Ops", "Não é possível seguir com a contratação para esta empresa. Consulte o CNPJ e tente novamente.", "info");
-
-                        $("#cnpjEmpresa").val("");
-                        $("#razao-social").val("");
-                        $("#ramo-atividade").val("");
-                        $("#representante-legal").val("");
-                        $("#cpf-representante").val("");
-                        $("#nome-fantasia").val("");
-                        $("#cnae").val("");
-                        //$("#razao-social").removeProp("disabled", true);
-                        return;
-                    }
+                    var situacaoEmpresa = dataConsulta.getElementsByTagName("situacao")[0].textContent;
+                    var situacao = situacaoEmpresa.indexOf("ATIVA");
                 } catch (Exception) { }
 
                 try {
-                    //put('cpnjValido', dataConsulta.getElementsByTagName("situacao")[0].textContent);
-                    //console.log(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim());
-                    //console.log(empresaAtiva);
-                    try { $("#rua").val(dataConsulta.getElementsByTagName("Nome")[0].textContent.trim()); } catch (Exception) { }
-                    try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent.trim()); } catch (Exception) { $("#razao-social").prop('disabled', false); }
-                    try { $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent.trim()); } catch (Exception) { $("#ramo-atividade").prop('disabled', false); }
-                    try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent.trim()); } catch (Exception) { $("#representante-legal").prop('disabled', false); }
-                    try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent.trim()); } catch (Exception) { $("#cpf-representante").prop('disabled', false); }
-                    try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent.trim()); } catch (Exception) { $("#nome-fantasia").prop('disabled', false); }
-                    try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim()); } catch (Exception) { $("#cnae").prop('disabled', false);  }
-                    try { $("#cep").val(dataConsulta.getElementsByTagName("cep")[0].textContent.trim()); } catch (Exception) { }
-                    try { $("#uf").val(dataConsulta.getElementsByTagName("uf")[0].textContent.trim()); } catch (Exception) { }
-                    try { $("#cidade").val(dataConsulta.getElementsByTagName("cidade")[0].textContent.trim()); } catch (Exception) { }
-                    try { $("#bairro").val(dataConsulta.getElementsByTagName("bairro")[0].textContent.trim()); } catch (Exception) { }
-                    try { $("#numeroEndereco").val(dataConsulta.getElementsByTagName("Numero")[0].textContent.trim()); } catch (Exception) { }
-                    try { $("#complemento").val(dataConsulta.getElementsByTagName("Complemento")[0].textContent.trim()); } catch (Exception) { }
-                    //29294771000110
+                    var naturezaJuridica = dataConsulta.getElementsByTagName("codigo")[0].textContent;
+                    var dataAbertura = dataConsulta.getElementsByTagName("dataAbertura")[0].textContent;
 
-                    let adicionarValidacaoSerasa = get("proposta");
-                    adicionarValidacaoSerasa.consultadaSerasa = true;
-                    put("proposta", JSON.stringify(adicionarValidacaoSerasa));
+                    if (naturezaJuridica == "2135") {
+                        var date = toDateSplitHifenSerasa(dataAbertura);
 
+                        if (!validateDataMei(date)) {
+
+                            swal("Ops", "Venda não autorizada para Empresa MEI com menos de 6 meses", "info");
+                            return;
+                        }
+                    }
+
+                } catch (Exception) { }
+
+                if (situacao == undefined) {
+                    $("#razao-social").prop('disabled', false);
+                    $("#ramo-atividade").prop('disabled', false);
+                    $("#representante-legal").prop('disabled', false);
+                    $("#cpf-representante").prop('disabled', false);
+                    $("#nome-fantasia").prop('disabled', false);
+                    $("#cnae").prop('disabled', false);
                     swal.close();
+                    return;
+                }
 
-                } catch (Exception) { swal.close();}
+                if (!situacao == 0) {
+
+                    swal("Ops", "Não é possível seguir com a contratação para esta empresa. Consulte o CNPJ e tente novamente.", "info");
+
+                    $("#cnpjEmpresa").val("");
+                    $("#razao-social").val("");
+                    $("#ramo-atividade").val("");
+                    $("#representante-legal").val("");
+                    $("#cpf-representante").val("");
+                    $("#nome-fantasia").val("");
+                    $("#cnae").val("");
+                    //$("#razao-social").removeProp("disabled", true);
+                    return;
+                }
+            } catch (Exception) { }
+
+            try {
+                //put('cpnjValido', dataConsulta.getElementsByTagName("situacao")[0].textContent);
+                //console.log(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim());
+                //console.log(empresaAtiva);
+                try { $("#rua").val(dataConsulta.getElementsByTagName("Nome")[0].textContent.trim()); } catch (Exception) { }
+                try { $("#razao-social").val(dataConsulta.getElementsByTagName("razaoSocial")[0].textContent.trim()); } catch (Exception) { $("#razao-social").prop('disabled', false); }
+                try { $("#ramo-atividade").val(dataConsulta.getElementsByTagName("descricao")[0].textContent.trim()); } catch (Exception) { $("#ramo-atividade").prop('disabled', false); }
+                try { $("#representante-legal").val(dataConsulta.getElementsByTagName("nome")[0].textContent.trim()); } catch (Exception) { $("#representante-legal").prop('disabled', false); }
+                try { $("#cpf-representante").val(dataConsulta.getElementsByTagName("documento")[0].textContent.trim()); } catch (Exception) { $("#cpf-representante").prop('disabled', false); }
+                try { $("#nome-fantasia").val(dataConsulta.getElementsByTagName("nomeFantasia")[0].textContent.trim()); } catch (Exception) { $("#nome-fantasia").prop('disabled', false); }
+                try { $("#cnae").val(dataConsulta.getElementsByTagName("codigo")[1].textContent.trim()); } catch (Exception) { $("#cnae").prop('disabled', false); }
+                try { $("#cep").val(dataConsulta.getElementsByTagName("cep")[0].textContent.trim()); } catch (Exception) { }
+                try { $("#uf").val(dataConsulta.getElementsByTagName("uf")[0].textContent.trim()); } catch (Exception) { }
+                try { $("#cidade").val(dataConsulta.getElementsByTagName("cidade")[0].textContent.trim()); } catch (Exception) { }
+                try { $("#bairro").val(dataConsulta.getElementsByTagName("bairro")[0].textContent.trim()); } catch (Exception) { }
+                try { $("#numeroEndereco").val(dataConsulta.getElementsByTagName("Numero")[0].textContent.trim()); } catch (Exception) { }
+                try { $("#complemento").val(dataConsulta.getElementsByTagName("Complemento")[0].textContent.trim()); } catch (Exception) { }
+                //29294771000110
+
+                let adicionarValidacaoSerasa = get("proposta");
+                adicionarValidacaoSerasa.consultadaSerasa = true;
+                put("proposta", JSON.stringify(adicionarValidacaoSerasa));
+
+                swal.close();
+
+            } catch (Exception) { swal.close(); }
 
         }, dataToken.access_token, cnpjValidado);
     });
@@ -486,7 +480,7 @@ function salvarRascunho() {
         swal("Ops!", "O CNAE deve conter 7 dígitos", "error");
         return;
     }
-    
+
     if ($("#telefone").val() == "") {
         swal("Ops!", "Preencha o telefone", "error");
         return;
@@ -613,8 +607,7 @@ function salvarRascunhoMemoria() {
     put("proposta", JSON.stringify(proposta));
 }
 
-function cnpjValido()
-{
+function cnpjValido() {
 
 
 }
@@ -646,7 +639,6 @@ function carregarProposta() {
     $("#cpfRepresentante").val(proposta.cpfRepresentante.trim());
 
     if (proposta.contatoEmpresa == "") {
-
         $("#squaredOne").attr("checked", true);
         $("#divSegundoContato").addClass('hide');
 
@@ -744,7 +736,7 @@ function validarProposta() {
     }
 
     if (!TestaCPF($("#cpf-representante").val().replace(/\D/g, ''))) {
-       
+
         swal("Ops!", "CPF do representante legal inválido", "error");
         return;
     }
@@ -861,6 +853,3 @@ function limparCampos() {
     $("#uf").val("");
     $("#cnae").val("");
 }
-
-
-
