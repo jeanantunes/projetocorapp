@@ -603,7 +603,7 @@ function sincronizarPropostaPME(cnpjProposta) {
 
                     propostaPmeSelecionada[0].status = "PRONTA";
                     atualizarEmpresas(propostaPmeSelecionada[0]);
-
+                    swal("Ops!", "Erro na consulta do CNPJ, mas sua proposta está salva.\n\nTente envia-la mais tarde.", "error");
                     return;
                 };
 

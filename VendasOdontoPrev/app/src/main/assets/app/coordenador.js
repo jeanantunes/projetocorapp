@@ -2145,6 +2145,13 @@ function consultarSerasa(callback, propostaPme) {
 
         postSerasa(function (dataConsultaSerasa) {
 
+            if (dataConsultaSerasa.status != undefined) {
+
+                callback("error");
+                return;
+
+            }
+
             try {
                 try {
                     var situacaoEmpresa = dataConsultaSerasa.getElementsByTagName("situacao")[0].textContent;
@@ -2169,7 +2176,6 @@ function consultarSerasa(callback, propostaPme) {
                 } catch (Exception) { }
 
                 if (situacao == undefined) {
-
 
                     callback(propostaPme);// enviar proposta com dados preenchidos pelo força
                     return;
