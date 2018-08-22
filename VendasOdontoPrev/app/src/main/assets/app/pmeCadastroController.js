@@ -635,8 +635,8 @@ function carregarProposta() {
     if (proposta.cnae == "" && $("#cnpjEmpresa").val() != "") $("#cnae").prop('disabled', false);
     $("#cnae").val(proposta.cnae.trim());
 
-    if (proposta.cpfRepresentante == "" && $("#cnpjEmpresa").val() != "") $("#cpfRepresentantecpfRepresentante").prop('disabled', false);
-    $("#cpfRepresentante").val(proposta.cpfRepresentante.trim());
+    if (proposta.cpfRepresentante == "" && $("#cnpjEmpresa").val() != "") $("#cpf-representante").prop('disabled', false);
+    $("#cpf-representante").val(proposta.cpfRepresentante.trim());
 
     if (proposta.contatoEmpresa == "") {
 
