@@ -645,6 +645,7 @@ function carregarProposta() {
     $("#cpf-representante").val(proposta.cpfRepresentante.trim());
 
     if (proposta.contatoEmpresa == "") {
+
         $("#squaredOne").attr("checked", true);
         $("#divSegundoContato").addClass('hide');
 
