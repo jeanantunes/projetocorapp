@@ -378,7 +378,7 @@ function enviarPropostaPme() {
                     atualizarDashBoard();
                     swal.close();
 
-                    window.location.href = "proposta_pme_enviada.html";
+                    window.location.href = "proposta_pme_enviada.html?cdEmpresa=" + dataVendaPme.cdEmpresa;
 
                 }
 
