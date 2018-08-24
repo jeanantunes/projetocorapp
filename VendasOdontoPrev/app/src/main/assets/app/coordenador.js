@@ -108,11 +108,11 @@ function deslogarDoAplicativo() {
 
 function deleteTokenLogout(callback, token, tokenDeviceFirebase, cdForcaVenda) {
 
-    console.log(URLBase + "/corretorservicos/1.0/devicetoken/" + tokenDeviceFirebase + "/forcavenda/" + cdForcaVenda);
+    console.log(URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase);
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/devicetoken/" + tokenDeviceFirebase + "/forcavenda/" + cdForcaVenda,
+        url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase,
         //url: "http://172.16.244.162:8090/devicetoken/forcavenda/" + cdForcaVenda,
         method: "DELETE",
         headers: {
