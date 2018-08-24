@@ -553,6 +553,7 @@ $(function () {
 });
 
 function validarData(data) {
+
     var bits = data.split('/');
 
     var y = bits[2],
@@ -571,10 +572,10 @@ function validarData(data) {
     if ((!(y % 4) && y % 100) || !(y % 400)) {
         daysInMonth[1] = 29;
     }
+
     return !(/\D/.test(String(d))) && d > 0 && d <= daysInMonth[--m];
+
 }
-
-
 
 $("input").blur(function () {
 
