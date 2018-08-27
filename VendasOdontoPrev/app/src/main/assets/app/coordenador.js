@@ -108,12 +108,11 @@ function deslogarDoAplicativo() {
 
 function deleteTokenLogout(callback, token, tokenDeviceFirebase, cdForcaVenda) {
 
-    console.log(URLBase + "/corretorservicos/1.0/devicetoken/" + tokenDeviceFirebase + "/forcavenda/" + cdForcaVenda);
+    console.log(URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase);
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/devicetoken/" + tokenDeviceFirebase + "/forcavenda/" + cdForcaVenda, 
-        //url: "http://172.16.244.162:8090/devicetoken/forcavenda/" + cdForcaVenda,
+        url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase,
         method: "DELETE",
         headers: {
             "Authorization": "Bearer " + token,
@@ -553,6 +552,7 @@ $(function () {
 });
 
 function validarData(data) {
+
     var bits = data.split('/');
 
     var y = bits[2],
@@ -571,10 +571,10 @@ function validarData(data) {
     if ((!(y % 4) && y % 100) || !(y % 400)) {
         daysInMonth[1] = 29;
     }
+
     return !(/\D/.test(String(d))) && d > 0 && d <= daysInMonth[--m];
+
 }
-
-
 
 $("input").blur(function () {
 
@@ -2089,9 +2089,11 @@ function sincronizarPME(callback, proposta, beneficiarios) {
         if (dataToken.status != undefined) {
 
             callback(dataToken);
+            return;
         }
 
         $.ajax({
+            //url: "http://localhost:8090/vendapme",
             url: URLBase + "/corretorservicos/1.0/vendapme",
             //url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
             type: "POST",
@@ -2145,6 +2147,13 @@ function consultarSerasa(callback, propostaPme) {
 
         postSerasa(function (dataConsultaSerasa) {
 
+            if (dataConsultaSerasa.status != undefined) {
+
+                callback("error");
+                return;
+
+            }
+
             try {
                 try {
                     var situacaoEmpresa = dataConsultaSerasa.getElementsByTagName("situacao")[0].textContent;
@@ -2169,7 +2178,6 @@ function consultarSerasa(callback, propostaPme) {
                 } catch (Exception) { }
 
                 if (situacao == undefined) {
-
 
                     callback(propostaPme);// enviar proposta com dados preenchidos pelo força
                     return;

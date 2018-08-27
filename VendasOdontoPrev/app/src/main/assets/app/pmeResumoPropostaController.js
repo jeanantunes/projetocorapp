@@ -340,13 +340,12 @@ function enviarPropostaPme() {
     consultarSerasa(function (dataProposta) {
 
 
-
         if (dataProposta == "error") {
 
             proposta.status = "PRONTA";
             atualizarEmpresas(proposta);
+            swal("Ops!", "Erro na consulta do CNPJ, mas sua proposta está salva.\n\nTente envia-la mais tarde.", "error"); 
             put("proposta", JSON.stringify(proposta));
-
             return;
         };
 
@@ -379,7 +378,7 @@ function enviarPropostaPme() {
                     atualizarDashBoard();
                     swal.close();
 
-                    window.location.href = "proposta_pme_enviada.html";
+                    window.location.href = "proposta_pme_enviada.html?cdEmpresa=" + dataVendaPme.cdEmpresa;
 
                 }
 

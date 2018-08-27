@@ -5,6 +5,33 @@
     popularCamposProposta();
     localStorage.removeItem('detalheBeneficiario');
 
+    $("#baixarContrato").click(function () {
+
+        var cdEmpresa = getUrlParameter("cdEmpresa");
+
+        downloadContratoPdf(function (dataArquivo) {
+
+            if (dataArquivo == undefined) {
+
+                swal("Ops!", "erro", "error");
+                return;
+
+            }
+
+            if (dataArquivo.status != undefined) {
+
+                swal("Ops!", "erro", "error");
+                return;
+
+            }
+
+            var resultado = ob.salvarArquivoEGerarPush(dataArquivo.arquivoBase64, dataArquivo.nomeArquivo, dataArquivo.tipoConteudo.split("/")[1]);
+            console.log(dataArquivo);
+
+        }, "dasdsad", cdEmpresa);
+
+    });
+
     $('#mostrarMais').bind('click', function () {
 
         callTokenVendas(function (dataToken) {
@@ -260,8 +287,8 @@ function callDadosEmpresa(callback, token, cdEmpresa) {
     $.ajax({
         async: true,
         //url: "https://6a428f33-b87b-43d0-92ef-7fdc244530ea.mock.pstmn.io" + "/empresa/" + cdEmpresa,
-        //url: URLBase + "/corretorservicos/1.0/empresa/" + cdEmpresa,
-        url: "http://localhost:8090/empresa/" + cdEmpresa,
+        url: URLBase + "/corretorservicos/1.0/empresa/" + cdEmpresa,
+        //url: "http://localhost:8090/empresa/" + cdEmpresa,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -304,5 +331,27 @@ function getBeneficiario(jsonBeneficiario) {
 
     put('detalheBeneficiario', jsonBeneficiario);
     window.location.href = "detalheBeneficiarioPme.html";
+
+}
+
+function downloadContratoPdf(callback, token, cdEmpresa) {
+
+    $.ajax({
+        async: true,
+        url: "http://localhost:8090/arquivocontratacao/empresa/" + cdEmpresa + "/json",
+        //url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase,
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache"
+        },
+        success: function (resp) {
+            callback(resp);
+        },
+        error: function (xhr) {
+            callback(xhr);
+        }
+    });
 
 }
