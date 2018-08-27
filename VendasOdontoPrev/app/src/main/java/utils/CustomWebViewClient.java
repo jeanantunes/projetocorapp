@@ -85,8 +85,7 @@ public class CustomWebViewClient extends WebViewClient {
 
             Log.d("MeuLog", "scheme =" + uri);
             String arquivo = uri.replace("file:///android_asset/", "");
-            arquivo = arquivo.replace(".html", "");
-
+            arquivo = arquivo.split(".html")[0];
             Object classeInstanciada = null;
 
             //Constructor c = Class.forName("Foo").getConstructor(String.class, Integer.TYPE);
