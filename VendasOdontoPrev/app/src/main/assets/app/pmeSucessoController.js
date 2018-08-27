@@ -18,6 +18,14 @@ $(document).ready(function () {
 
             downloadContratoPdf(function (dataArquivo) {
 
+                if (dataArquivo != undefined) {
+
+                    swal("Ops!", "erro", "error");
+                    return;
+
+                }
+
+                var resultado = ob.salvarArquivoEGerarPush(dataImage.arquivoBase64, dataImage.nomeArquivo, dataImage.tipoConteudo.split("/")[1]);
                 console.log(dataArquivo);
 
             }, "dasdsad", cdEmpresa);
