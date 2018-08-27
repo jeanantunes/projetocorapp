@@ -2093,8 +2093,8 @@ function sincronizarPME(callback, proposta, beneficiarios) {
         }
 
         $.ajax({
-            url: "http://localhost:8090/vendapme",
-            //url: URLBase + "/corretorservicos/1.0/vendapme",
+            //url: "http://localhost:8090/vendapme",
+            url: URLBase + "/corretorservicos/1.0/vendapme",
             //url: "http://www.corretorvendaodonto.com.br:7001/portal-corretor-servico-0.0.1-SNAPSHOT/vendapme",
             type: "POST",
             data: json,

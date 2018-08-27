@@ -18,6 +18,13 @@ $(document).ready(function () {
 
             downloadContratoPdf(function (dataArquivo) {
 
+                if (dataArquivo == undefined) {
+
+                    swal("Ops!", "erro", "error");
+                    return;
+
+                }
+
                 if (dataArquivo != undefined) {
 
                     swal("Ops!", "erro", "error");
@@ -25,7 +32,7 @@ $(document).ready(function () {
 
                 }
 
-                var resultado = ob.salvarArquivoEGerarPush(dataImage.arquivoBase64, dataImage.nomeArquivo, dataImage.tipoConteudo.split("/")[1]);
+                var resultado = ob.salvarArquivoEGerarPush(dataArquivo.arquivoBase64, dataArquivo.nomeArquivo, dataArquivo.tipoConteudo.split("/")[1]);
                 console.log(dataArquivo);
 
             }, "dasdsad", cdEmpresa);
@@ -40,7 +47,7 @@ function downloadContratoPdf(callback, token, cdEmpresa) {
 
     $.ajax({
         async: true,
-        url: "http://localhost:8090/arquivocontratacao/empresa/" + cdEmpresa + "/json",
+        url: "http://172.16.244.137:8090/arquivocontratacao/empresa/" + cdEmpresa + "/json",
         //url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase,
         method: "GET",
         headers: {
