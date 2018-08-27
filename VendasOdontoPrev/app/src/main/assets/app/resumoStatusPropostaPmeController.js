@@ -26,7 +26,7 @@
         callTokenVendas(function (dataToken) {
 
             if (dataToken.status != undefined) {
-                swal.close("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
+                swal("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
                 return;
             }
 
@@ -34,14 +34,14 @@
 
                 if (dataArquivo == undefined) {
 
-                    swal.close("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
+                    swal("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
                     return;
 
                 }
 
                 if (dataArquivo.status != undefined) {
 
-                    swal.close("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
+                    swal("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
                     return;
 
                 }
