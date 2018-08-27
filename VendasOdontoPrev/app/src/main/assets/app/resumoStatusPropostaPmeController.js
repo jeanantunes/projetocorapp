@@ -9,26 +9,48 @@
 
         var cdEmpresa = getUrlParameter("cdEmpresa");
 
-        downloadContratoPdf(function (dataArquivo) {
+        swal({
+            title: "Aguarde",
+            text: 'Estamos baixando o contrato',
+            content: "input",
+            imageUrl: "img/load.gif",
+            showCancelButton: false,
+            showConfirmButton: false,
+            icon: "info",
+            button: {
+                text: "...",
+                closeModal: false,
+            },
+        });
 
-            if (dataArquivo == undefined) {
+        callTokenVendas(function (dataToken) {
 
-                swal("Ops!", "erro", "error");
+            if (dataToken.status != undefined) {
+                swal.close("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
                 return;
-
             }
 
-            if (dataArquivo.status != undefined) {
+            downloadContratoPdf(function (dataArquivo) {
 
-                swal("Ops!", "erro", "error");
-                return;
+                if (dataArquivo == undefined) {
 
-            }
+                    swal.close("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
+                    return;
 
-            var resultado = ob.salvarArquivoEGerarPush(dataArquivo.arquivoBase64, dataArquivo.nomeArquivo, dataArquivo.tipoConteudo.split("/")[1]);
-            console.log(dataArquivo);
+                }
 
-        }, "dasdsad", cdEmpresa);
+                if (dataArquivo.status != undefined) {
+
+                    swal.close("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
+                    return;
+
+                }
+
+                var resultado = ob.salvarArquivoEGerarPush(dataArquivo.arquivoBase64, dataArquivo.nomeArquivo, dataArquivo.tipoConteudo.split("/")[1]);
+                swal.close();
+
+            }, dataToken.access_token, cdEmpresa);
+        });
 
     });
 
@@ -338,8 +360,8 @@ function downloadContratoPdf(callback, token, cdEmpresa) {
 
     $.ajax({
         async: true,
-        url: "http://localhost:8090/arquivocontratacao/empresa/" + cdEmpresa + "/json",
-        //url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase,
+        //url: "http://172.16.244.137:8090/arquivocontratacao/empresa/" + cdEmpresa + "/json",
+        url: URLBase + "/corretorservicos/1.0/arquivocontratacao/empresa/" + cdEmpresa + "/json",
         method: "GET",
         headers: {
             "Authorization": "Bearer " + token,
