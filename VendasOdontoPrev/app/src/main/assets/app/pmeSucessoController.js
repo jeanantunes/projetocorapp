@@ -6,38 +6,51 @@ $(document).ready(function () {
 
     $("#baixarContrato").click(function () {
 
-        //callTokenVendas(function (dataToken) {
+        swal({
+            title: "Aguarde",
+            text: 'Estamos baixando o contrato',
+            content: "input",
+            imageUrl: "img/load.gif",
+            showCancelButton: false,
+            showConfirmButton: false,
+            icon: "info",
+            button: {
+                text: "...",
+                closeModal: false,
+            },
+        });
 
-            //if (dataToken.status != undefined) {
-            //    swal.close("Ops!", "Tivemos um problema no download do contrato. Tente novamente mais tarde.", "error");
-            //    return;
-            //}
+        callTokenVendas(function (dataToken) {
+
+            if (dataToken.status != undefined) {
+                swal("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
+                return;
+            }
 
             let cdEmpresa = getUrlParameter("cdEmpresa");
-            console.log(cdEmpresa);
 
             downloadContratoPdf(function (dataArquivo) {
 
                 if (dataArquivo == undefined) {
 
-                    swal("Ops!", "erro", "error");
+                    swal("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
                     return;
 
                 }
 
-                if (dataArquivo != undefined) {
+                if (dataArquivo.status != undefined) {
 
-                    swal("Ops!", "erro", "error");
+                    swal("Ops!", "Algo deu errado no download, por favor tente novamente.", "error");
                     return;
 
                 }
-
+                
                 var resultado = ob.salvarArquivoEGerarPush(dataArquivo.arquivoBase64, dataArquivo.nomeArquivo, dataArquivo.tipoConteudo.split("/")[1]);
-                console.log(dataArquivo);
+                swal.close();
 
-            }, "dasdsad", cdEmpresa);
+            }, dataToken.access_token, cdEmpresa);
 
-        //});
+        });
 
     });
 
@@ -47,8 +60,8 @@ function downloadContratoPdf(callback, token, cdEmpresa) {
 
     $.ajax({
         async: true,
-        url: "http://172.16.244.137:8090/arquivocontratacao/empresa/" + cdEmpresa + "/json",
-        //url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase,
+        //url: "http://172.16.244.137:8090/arquivocontratacao/empresa/" + cdEmpresa + "/json",
+        url: URLBase + "/corretorservicos/1.0/arquivocontratacao/empresa/" + cdEmpresa + "/json",
         method: "GET",
         headers: {
             "Authorization": "Bearer " + token,

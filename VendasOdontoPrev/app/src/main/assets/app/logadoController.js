@@ -70,8 +70,7 @@ function atualizarTokenDevice() {
         postDeviceToken(function (dataDeviceToken) {
 
             if (dataDeviceToken.status != undefined) {
-                swal("Erro", JSON.stringify(dataDeviceToken));
-                console.log("Erro postDeviceToken");
+                   console.log("Erro postDeviceToken");
             }
 
             console.log("Executou postDeviceToken");

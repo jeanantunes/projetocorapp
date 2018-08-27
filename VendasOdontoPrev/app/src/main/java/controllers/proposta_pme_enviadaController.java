@@ -10,7 +10,7 @@ public class proposta_pme_enviadaController {
 
     private Context context;
 
-    private proposta_pme_enviadaController(Context context){
+    public proposta_pme_enviadaController(Context context){
         this.context = context;
     }
 
