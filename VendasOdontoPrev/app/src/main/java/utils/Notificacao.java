@@ -30,7 +30,7 @@ public class Notificacao {
     public void gerarNotificacao(String titulo, String mensagem){
 
         int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
-
+ 
         if (notifManager == null) {
             notifManager = (NotificationManager) context.getSystemService
                     (Context.NOTIFICATION_SERVICE);
