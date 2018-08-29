@@ -60,7 +60,6 @@ function downloadContratoPdf(callback, token, cdEmpresa) {
 
     $.ajax({
         async: true,
-        //url: "http://172.16.244.137:8090/arquivocontratacao/empresa/" + cdEmpresa + "/json",
         url: URLBase + "/corretorservicos/1.0/arquivocontratacao/empresa/" + cdEmpresa + "/json",
         method: "GET",
         headers: {
