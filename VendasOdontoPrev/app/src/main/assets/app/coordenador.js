@@ -418,6 +418,8 @@ function callTokenProd(callback) {
             callback(resp);
         },
         error: function (xhr) {
+            var stringErro = "[Status: " + xhr.status + " - Erro ao obter access_token]";
+            gerarLog(stringErro);
             swal("Ops!", "Erro na conexão, tente mais tarde", "error");
         }
     });
@@ -441,6 +443,8 @@ function callTokenVendas(callback) {
             callback(resp);
         },
         error: function (xhr) {
+            var stringErro = "Erro ao gerar access token";
+            crashlyticsLogs.logException(stringErro, xhr.status);
             callback(xhr);
         }
     });
@@ -482,10 +486,13 @@ function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelul
 
 function callTokenProdSemMsgErro(callback) {
 
+    var metodoUrl = "/tokAen";
+    var metodoRest = "POST";
+
     $.ajax({
         async: true,
-        url: URLBase + "/token",
-        method: "POST",
+        url: URLBase + metodoUrl,
+        method: metodoRest,
         headers: {
             "Authorization": "Basic " + Token,
             "Cache-Control": "no-cache",
@@ -498,7 +505,8 @@ function callTokenProdSemMsgErro(callback) {
             callback(resp);
         },
         error: function (xhr) {
-
+            var stringErro = "[" + metodoRest + "  " + URLBase + metodoUrl + " - Status: " + xhr.status + "]";
+            gerarLog(stringErro);
         }
     });
 };
@@ -506,6 +514,22 @@ function callTokenProdSemMsgErro(callback) {
 String.prototype.capitalize = function (lower) {
     return (lower ? this.toLowerCase() : this).replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
 };
+
+function gerarLog(stringErro) {
+
+    var dadosUsuarios = get("dadosUsuario");
+
+    if (dadosUsuarios != undefined) {
+
+        crashlyticsLogs.logException(stringErro, dadosUsuarios.nome, dadosUsuarios.email, dadosUsuarios.codigo.toString());
+
+    } else {
+
+        crashlyticsLogs.logException(stringErro);
+
+    }
+    
+}
 
 //$(function () {
 //    var regex = new RegExp('[^ a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ\b]', 'g');

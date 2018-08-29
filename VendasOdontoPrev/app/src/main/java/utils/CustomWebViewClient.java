@@ -83,6 +83,10 @@ public class CustomWebViewClient extends WebViewClient {
 
             view.addJavascriptInterface(fireBase, "fireBase");
 
+            CrashlyticsLogs crashlyticsLogs = new CrashlyticsLogs(context);
+
+            view.addJavascriptInterface(crashlyticsLogs, "crashlyticsLogs");
+
             Log.d("MeuLog", "scheme =" + uri);
             String arquivo = uri.replace("file:///android_asset/", "");
             arquivo = arquivo.split(".html")[0];
