@@ -225,7 +225,7 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
         title: "Aguarde",
         text: 'Estamos buscando os dados',
         content: "input",
-        imageUrl: "img/load.gif",
+        imageUrl: "img/icon-aguarde.gif",
         showCancelButton: false,
         showConfirmButton: false,
         icon: "info",
@@ -235,10 +235,13 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
         },
     });
 
+    var metodoRest = "POST";
+    var metodoUrl = "/serasa/consulta/1.0/";
+
     $.ajax({
         async: true,
-        url: URLBase + "/serasa/consulta/1.0/",
-        method: "POST",
+        url: URLBase + metodoUrl,
+        method: metodoRest,
         headers: {
             "Content-Type": "application/xml",
             "Authorization": "Bearer " + tokenSerasa,
@@ -249,6 +252,10 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
             callback(resp);
         },
         error: function (resp) {
+            try {
+                var stringErro = "[" + metodoRest + "  " + URLBase + metodoUrl + " - Status: " + resp.status + "] [ CNPJ buscado: " + cnpj + "]";
+                gerarLog(stringErro);
+            } catch (Error) { }
             callback(resp);
         }
     });

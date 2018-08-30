@@ -59,7 +59,7 @@ $(document).ready(function () {
                     title: "Aguarde",
                     text: 'Estamos procurando seus dados',
                     content: "input",
-                    imageUrl: "img/load.gif",
+                    imageUrl: "img/icon-aguarde.gif",
                     showCancelButton: false,
                     showConfirmButton: false,
                     icon: "info",

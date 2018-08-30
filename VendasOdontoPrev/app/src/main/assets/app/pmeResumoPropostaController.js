@@ -307,7 +307,7 @@ function enviarPropostaPme() {
         title: "Aguarde",
         text: 'Estamos enviando a sua proposta',
         content: "input",
-        imageUrl: "img/load.gif",
+        imageUrl: "img/icon-aguarde.gif",
         showCancelButton: false,
         showConfirmButton: false,
         icon: "info",

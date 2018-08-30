@@ -352,7 +352,7 @@ $(document).ready(function () {
                     title: "Aguarde",
                     text: 'Estamos procurando o endereço',
                     content: "input",
-                    imageUrl: "img/load.gif",
+                    imageUrl: "img/icon-aguarde.gif",
                     showCancelButton: false,
                     showConfirmButton: false,
                     icon: "info",

@@ -57,7 +57,7 @@ function deslogarDoAplicativo() {
                     title: "Aguarde",
                     text: 'Estamos deslogando do APP',
                     content: "input",
-                    imageUrl: "img/load.gif",
+                    imageUrl: "img/icon-aguarde.gif",
                     showCancelButton: false,
                     showConfirmButton: false,
                     icon: "info",
@@ -153,6 +153,9 @@ function sincronizarPf(callback, pessoa) {
     //var json = "{ \"cdForcaVenda\": \"" + forcaVenda.codigo + "\", \"cdPlano\": \"" + cdPlano + "\", \"titulares\": " + JSON.stringify(pessoa) + "}";
 
     var date = toDate(pessoa.dataNascimento);
+
+
+
 
     if (!isMaiorDeIdade(date)) {
         var json = {
@@ -274,19 +277,19 @@ function sincronizarPf(callback, pessoa) {
             callback(dataToken);
         }
 
+        var metodoRest = "POST";
+        var metodoUrl = "/corretorservicos/1.0/vendapf";
+
         $.ajax({
             async: true,
-            //url: "http://172.16.244.160:9090/vendapf",
-            url: URLBase + "/corretorservicos/1.0/vendapf",
-            method: "POST",
+            url: URLBase + metodoUrl,
+            method: metodoRest,
             data: json,
             headers: {
                 "Content-Type": "application/json",
                 "Cache-Control": "no-cache",
                 "Authorization": "Bearer " + dataToken.access_token
             },
-            //data: "{ \r\n   \"cdForcaVenda\":\"" + forcaVenda.codigo + "\",\r\n   \"cdPlano\":\"" + 4 + "\",\r\n   \"titulares\":[ \r\n      { \r\n         \"celular\":\"" + pessoa.celular + "\",\r\n         \"contatoEmpresa\":" + pessoa.contatoEmpresa + ",\r\n         \"cpf\":\"" + pessoa.cpf + "\",\r\n         \"dadosBancarios\":{ \r\n            \"agencia\":\"" + pessoa.dadosBancarios.agencia + "\",\r\n            \"codigoBanco\":\"" + pessoa.dadosBancarios.codigoBanco + "\",\r\n            \"conta\":\"" + pessoa.dadosBancarios.conta + "\",\r\n            \"tipoConta\":\"" + pessoa.dadosBancarios.tipoConta + "\"\r\n         },\r\n         \"dependentes\":[ \r\n \r\n         ],\r\n         \"email\":\"" + pessoa.email + "\",\r\n         \"endereco\":{ \r\n            \"bairro\":\"" + pessoa.endereco.bairro + "\",\r\n            \"cep\":\"" + pessoa.endereco.cep + "\",\r\n            \"cidade\":\"" + pessoa.endereco.cidade + "\",\r\n            \"complemento\":\"" + pessoa.endereco.complemento + "\",\r\n            \"logradouro\":\"" + pessoa.endereco.logradouro + "\",\r\n            \"estado\":\"" + pessoa.endereco.estado + "\",\r\n            \"numero\":\"" + pessoa.endereco.numero + "\"\r\n         },\r\n         \"dataNascimento\":\"" + pessoa.dataNascimento + "\",\r\n         \"nomeMae\":\"" + pessoa.nomeMae + "\",\r\n         \"nome\":\"" + pessoa.nome + "\",\r\n         \"sexo\":\"" + pessoa.sexo +"\",\r\n         \"status\":\"PRONTA\",\r\n         \"titular\":true\r\n      }\r\n   ]\r\n}\r\n",
-
             processData: false,
             success: function (result) {
                 console.log(result);
@@ -294,7 +297,13 @@ function sincronizarPf(callback, pessoa) {
 
             },
             error: function (resp) {
-                console.log(resp);
+
+                console.log(JSON.stringify(resp));
+                try {
+                    var stringErro = "[" + metodoRest + "  " + URLBase + metodoUrl + " - Status: " + resp.status + "]";
+                    gerarLogVenda(stringErro, json);
+                } catch (Error) { }
+
                 callback(resp);
             }
         });
@@ -402,9 +411,12 @@ function callDashBoardPME(callback, Token) {
 
 function callTokenProd(callback) {
 
+    var metodoRest = "POST";
+    var metodoUrl = "/token";
+
     $.ajax({
         async: true,
-        url: URLBase + "/token",
+        url: URLBase + metodoUrl,
         method: "POST",
         headers: {
             "Authorization": "Basic " + Token,
@@ -418,6 +430,10 @@ function callTokenProd(callback) {
             callback(resp);
         },
         error: function (xhr) {
+            try {
+                var stringErro = "[" + metodoRest + "  " + URLBase + metodoUrl + " - Status: " + xhr.status + "]";
+                gerarLog(stringErro);
+            } catch (Error) { }
             swal("Ops!", "Erro na conexão, tente mais tarde", "error");
         }
     });
@@ -425,10 +441,13 @@ function callTokenProd(callback) {
 
 function callTokenVendas(callback) {
 
+    var metodoRest = "POST"; token
+    var metodoUrl = "/token";
+
     $.ajax({
         async: true,
-        url: URLBase + "/token",
-        method: "POST",
+        url: URLBase + metodoUrl,
+        method: metodoRest,
         headers: {
             "Authorization": "Basic " + Token,
             "Cache-Control": "no-cache",
@@ -441,6 +460,10 @@ function callTokenVendas(callback) {
             callback(resp);
         },
         error: function (xhr) {
+            try {
+                var stringErro = "[" + metodoRest + "  " + URLBase + metodoUrl + " - Status: " + xhr.status + "]";
+                gerarLog(stringErro);
+            } catch (Error) { }
             callback(xhr);
         }
     });
@@ -482,10 +505,13 @@ function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelul
 
 function callTokenProdSemMsgErro(callback) {
 
+    var metodoUrl = "/token";
+    var metodoRest = "POST";
+
     $.ajax({
         async: true,
-        url: URLBase + "/token",
-        method: "POST",
+        url: URLBase + metodoUrl,
+        method: metodoRest,
         headers: {
             "Authorization": "Basic " + Token,
             "Cache-Control": "no-cache",
@@ -498,7 +524,10 @@ function callTokenProdSemMsgErro(callback) {
             callback(resp);
         },
         error: function (xhr) {
-
+            try {
+                var stringErro = "[" + metodoRest + "  " + URLBase + metodoUrl + " - Status: " + xhr.status + "]";
+                gerarLog(stringErro);
+            } catch (Error) { }
         }
     });
 };
@@ -506,6 +535,30 @@ function callTokenProdSemMsgErro(callback) {
 String.prototype.capitalize = function (lower) {
     return (lower ? this.toLowerCase() : this).replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
 };
+
+function gerarLog(stringErro) {
+
+    var dadosUsuarios = get("dadosUsuario");
+
+    if (dadosUsuarios != undefined) {
+
+        crashlyticsLogs.logException(stringErro, dadosUsuarios.nome, dadosUsuarios.email, dadosUsuarios.codigo.toString());
+
+    } else {
+
+        crashlyticsLogs.logException(stringErro);
+
+    }
+    
+}
+
+function gerarLogVenda(stringErro, jsonVenda) {
+
+    var dadosUsuarios = get("dadosUsuario");
+
+    crashlyticsLogs.logException(stringErro, dadosUsuarios.nome, dadosUsuarios.email, dadosUsuarios.codigo.toString(), jsonVenda);
+
+}
 
 //$(function () {
 //    var regex = new RegExp('[^ a-zA-ZÁÉÍÓÚÀÈÌÒÙàèìòùáéíóúâêîôûãõ\b]', 'g');
@@ -1470,7 +1523,7 @@ function sincronizar() {
                 title: "Aguarde",
                 text: 'Estamos enviando as suas propostas (PME)',
                 content: "input",
-                imageUrl: "img/load.gif",
+                imageUrl: "img/icon-aguarde.gif",
                 showCancelButton: false,
                 showConfirmButton: false,
                 icon: "info",
@@ -1512,7 +1565,7 @@ function sincronizar() {
                 title: "Aguarde",
                 text: 'Estamos enviando as suas propostas (PF)',
                 content: "input",
-                imageUrl: "img/load.gif",
+                imageUrl: "img/icon-aguarde.gif",
                 showCancelButton: false,
                 showConfirmButton: false,
                 icon: "info",
@@ -1638,7 +1691,7 @@ function enviarPropostaPf() {
             title: "Aguarde",
             text: 'Estamos enviando a sua proposta',
             content: "input",
-            imageUrl: "img/load.gif",
+            imageUrl: "img/icon-aguarde.gif",
             showCancelButton: false,
             showConfirmButton: false,
             icon: "info",
@@ -1886,7 +1939,7 @@ function sincronizarPessoa(callback, pessoa, reSync) { // caso a proposta esteja
                 title: "Aguarde",
                 text: 'Estamos enviando a sua proposta',
                 content: "input",
-                imageUrl: "img/load.gif",
+                imageUrl: "img/icon-aguarde.gif",
                 showCancelButton: false,
                 showConfirmButton: false,
                 icon: "info",
@@ -1964,7 +2017,7 @@ function sincronizarEmpresa(callback, proposta, beneficiarios, reSync) {
                 title: "Aguarde",
                 text: 'Estamos enviando a sua proposta',
                 content: "input",
-                imageUrl: "img/load.gif",
+                imageUrl: "img/icon-aguarde.gif",
                 showCancelButton: false,
                 showConfirmButton: false,
                 icon: "info",
@@ -2078,10 +2131,12 @@ function sincronizarPME(callback, proposta, beneficiarios) {
             return;
         }
 
+        var metodoUrl = "/corretorservicos/1.0/vendapme";
+        var metodoRest = "POST";
+
         $.ajax({
-            //url: "http://localhost:8090/vendapme",
-            url: URLBase + "/corretorservicos/1.0/vendapme",
-            type: "POST",
+            url: URLBase + metodoUrl,
+            type: metodoRest,
             data: json,
             dataType: "json",
             headers: {
@@ -2093,6 +2148,12 @@ function sincronizarPME(callback, proposta, beneficiarios) {
                 callback(result)
             },
             error: function (xhr) {
+
+                try {
+                    var stringErro = "[" + metodoRest + "  " + URLBase + metodoUrl + " - Status: " + resp.status + "]";
+                    gerarLogVenda(stringErro, json);
+                } catch (Error) { }
+
                 callback(xhr)
             }
         });
@@ -2101,10 +2162,13 @@ function sincronizarPME(callback, proposta, beneficiarios) {
 
 function postSerasa(callback, tokenSerasa, cnpj) {
 
+    var metodoRest = "POST";
+    var metodoUrl = "/serasa/consulta/1.0/";
+
     $.ajax({
         async: true,
-        url: URLBase + "/serasa/consulta/1.0/",
-        method: "POST",
+        url: URLBase + metodoUrl,
+        method: metodoRest,
         headers: {
             "Content-Type": "application/xml",
             "Authorization": "Bearer " + tokenSerasa,
@@ -2115,6 +2179,12 @@ function postSerasa(callback, tokenSerasa, cnpj) {
             callback(resp);
         },
         error: function (resp) {
+
+            try {
+                var stringErro = "[" + metodoRest + "  " + URLBase + metodoUrl + " - Status: " + resp.status + "] [ CNPJ buscado: " + cnpj + "]";
+                gerarLog(stringErro)
+            } catch (Error) { }
+
             callback(resp);
         }
     });

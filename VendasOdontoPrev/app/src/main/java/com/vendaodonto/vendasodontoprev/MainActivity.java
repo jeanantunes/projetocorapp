@@ -1,54 +1,27 @@
 package com.vendaodonto.vendasodontoprev;
 
-import android.*;
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.CookieManager;
-import android.webkit.DownloadListener;
-import android.webkit.URLUtil;
-import android.widget.Button;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
+
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import controllers.cadastro_planoController;
-import models.Cliente;
 import models.DataBase;
 import models.ForcaVenda;
-import models.Notificacao;
-import models.Plano;
-import models.TableNotificacao;
-import models.tableCorretora;
-import models.tableEndereco;
-import models.tableForcaVendas;
 import models.tableLogin;
-import models.tablePlanos;
-import models.tableStatusForcaVendas;
 import utils.CustomWebView;
 import utils.CustomWebViewClient;
 
@@ -61,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private final int PERMISSAO_REQUEST = 2;
 
     DataBase db;
-
 
     public static Context ctx;
 
@@ -76,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();

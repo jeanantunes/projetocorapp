@@ -22,7 +22,7 @@ function callEspecialidades(callback, token) {
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
-        imageUrl: "img/load.gif",
+        imageUrl: "img/icon-aguarde.gif",
         icon: "info",
         button: {
             text: "...",
@@ -53,7 +53,7 @@ function callEstados(callback, token) {
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
-        imageUrl: "img/load.gif",
+        imageUrl: "img/icon-aguarde.gif",
         icon: "info",
         button: {
             text: "...",
@@ -84,7 +84,7 @@ function callCidade(callback, token, uf) {
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
-        imageUrl: "img/load.gif",
+        imageUrl: "img/icon-aguarde.gif",
         icon: "info",
         button: {
             text: "...",
@@ -114,7 +114,7 @@ function callBairro(callback, token, uf, codigoCidade) {
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
-        imageUrl: "img/load.gif",
+        imageUrl: "img/icon-aguarde.gif",
         icon: "info",
         button: {
             text: "...",
@@ -187,7 +187,7 @@ function callRedeCredenciada(callback, token, CodBeneficiario, uf, codigoEspecia
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
-        imageUrl: "img/load.gif",
+        imageUrl: "img/icon-aguarde.gif",
         icon: "info",
         button: {
             text: "...",
