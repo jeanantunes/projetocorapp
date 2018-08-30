@@ -1,20 +1,31 @@
 function callLogin(callback, token, login, password) {
 
+    var metodoRest = "POST";
+    var metodoUrl = "/corretorservicos/1.0/login";
+    var jsonRequest = {
+        "usuario": login,
+        "senha": password
+    }
+
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/login",
-        method: "POST",
+        url: URLBase + metodoUrl,
+        method: metodoRest,
         headers: {
             "Content-Type": "application/json",
             "Cache-Control": "no-cache",
             "Authorization": "Bearer " + token
         },
         processData: false,
-        data: "{\r\n\"usuario\": \"" + login + "\",\r\n\"senha\": \"" + password + "\"\r\n}\r\n\r\n ",
+        data: JSON.stringify(jsonRequest),
         success: function (resp) {
             callback(resp)
         },
         error: function (xhr) {
+
+            var stringErro = "[" + metodoRest + "  " + URLBase + metodoUrl + " - Status: " + xhr.status + "]";
+
+            
 
             if (xhr.status == 403) {
                 swal("Ops!", "Login ou senha inválida.", "error");
@@ -22,8 +33,8 @@ function callLogin(callback, token, login, password) {
                 $("#erroLogin").html("CPF ou senha inválida.");
 
                 return;
-            } else if (xhr.status == 0) {
-
+            } else {
+                gerarLog(stringErro);
                 swal("Ops!", "Erro na conexão, tente novamente.", "error");
                 return;
             }
