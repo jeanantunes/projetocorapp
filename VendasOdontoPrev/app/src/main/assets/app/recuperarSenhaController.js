@@ -41,7 +41,7 @@ function callRecuperarSenha(callback, token, cpf) {
         title: "Aguarde",
         text: 'Estamos buscando seu CPF',
         content: "input",
-        imageUrl: "img/load.gif",
+        imageUrl: "img/icon-aguarde.gif",
         showCancelButton: false,
         showConfirmButton: false,
         icon: "info",

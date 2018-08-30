@@ -47,7 +47,7 @@
             title: "Aguarde",
             text: 'Estamos atualizando seus dados',
             content: "input",
-            imageUrl: "img/load.gif",
+            imageUrl: "img/icon-aguarde.gif",
             showCancelButton: false,
             showConfirmButton: false,
             icon: "info",

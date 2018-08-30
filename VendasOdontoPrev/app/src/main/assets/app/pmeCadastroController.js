@@ -225,7 +225,7 @@ function callSerasaPme(callback, tokenSerasa, cnpj) {
         title: "Aguarde",
         text: 'Estamos buscando os dados',
         content: "input",
-        imageUrl: "img/load.gif",
+        imageUrl: "img/icon-aguarde.gif",
         showCancelButton: false,
         showConfirmButton: false,
         icon: "info",
