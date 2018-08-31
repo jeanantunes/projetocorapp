@@ -4,7 +4,25 @@
         //let min = Math.floor(Math.random() * (4 - 200 + 1)) + 5;
         //ob.compartilharPdf(base64, "dsadsadsad" + min.toString());
         if (possuiBoletos) {
+
+            let parcela = $('input[type=radio]:checked').attr("data-parcela");
+
+            if (parcela == undefined) {
+
+                $("#baixarBoleto").addClass("disabled");
+                $("#baixarBoleto").removeClass("background-color-azul");
+                $("#baixarBoleto").addClass("background-color-cinza");
+
+            } else {
+
+                $("#baixarBoleto").removeClass("disabled");
+                $("#baixarBoleto").removeClass("background-color-cinza");
+                $("#baixarBoleto").addClass("background-color-azul");
+
+            }
+
             $("#modalBoleto").modal("show");
+
         } else swal("", "Este cliente não possui boletos em aberto", "success");
     });
 
@@ -24,6 +42,8 @@
 
         $("#myModal").modal("show");
     });
+
+
 
     $("#baixarBoleto").click(function () {
 
@@ -102,6 +122,14 @@ function carregarFichaFinanceira() {
 
                         }
                     }
+
+                });
+
+                $('.competencia').click(function () {
+
+                    $("#baixarBoleto").removeClass("disabled");
+                    $("#baixarBoleto").removeClass("background-color-cinza");
+                    $("#baixarBoleto").addClass("background-color-azul");
 
                 });
 
