@@ -201,7 +201,7 @@ function carregarListaOnlineAtualizarProposta() {
 
     swal({
         title: "Aguarde",
-        text: 'Estamos buscando e atualizando buscando suas propostas',
+        text: 'Estamos buscando e atualizando suas propostas',
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
