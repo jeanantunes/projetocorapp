@@ -205,6 +205,8 @@ function carregarListaOnlineAtualizarProposta() {
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
+        allowEscapeKey: false,
+        allowOutsideClick: false,
         imageUrl: "img/icon-aguarde.gif",
         icon: "info",
         button: {
@@ -584,6 +586,8 @@ function sincronizarPropostaPME(cnpjProposta) {
                 imageUrl: "img/icon-aguarde.gif",
                 showCancelButton: false,
                 showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
                 icon: "info",
                 button: {
                     text: "...",
@@ -635,7 +639,9 @@ function sincronizarPropostaPME(cnpjProposta) {
                             title: "Proposta enviada com sucesso!",
                             text: "Vamos atualizar a sua lista de propostas",
                             type: "success",
-                            closeOnConfirm: true
+                            closeOnConfirm: true,
+                            allowEscapeKey: false,
+                            allowOutsideClick: false
                         }, function () {
                             // Redirect the user
                             window.location.href = "lista_proposta.html";
@@ -691,6 +697,8 @@ function sincronizarPropostaPF(cpfProposta) {
                 imageUrl: "img/icon-aguarde.gif",
                 showCancelButton: false,
                 showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
                 icon: "info",
                 button: {
                     text: "...",
@@ -754,6 +762,8 @@ function verDetalheProposta(dataId, dataStatus) {
         content: "input",
         showCancelButton: false,
         showConfirmButton: false,
+        allowEscapeKey: false,
+        allowOutsideClick: false,
         imageUrl: "img/icon-aguarde.gif",
         icon: "info",
         button: {
