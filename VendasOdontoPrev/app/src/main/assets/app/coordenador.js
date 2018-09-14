@@ -1694,6 +1694,8 @@ function enviarPropostaPf() {
             imageUrl: "img/icon-aguarde.gif",
             showCancelButton: false,
             showConfirmButton: false,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
             icon: "info",
             button: {
                 text: "...",
