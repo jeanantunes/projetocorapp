@@ -1,7 +1,31 @@
 ﻿var preenchidos = false;
+emRequisicao = false;
 
 $(document).ready(function () {
+
     buscarPlanosSelecionados();
+
+    $("#pagarComBoleto").click(function () {
+
+        if (emRequisicao) return;
+
+        emRequisicao = true;
+
+        if ($(this).is(":disabled")) return;
+
+        $('#irParaDebito').prop('disabled', true);
+        $('#pagarComBoleto').prop('disabled', true);
+
+        pagarComBoleto();
+
+    });
+
+    $("#irParaDebito").click(function () {
+
+        window.location.href = "cartao_pf_debito.html";
+
+    });
+
 });
 
 function buscarPlanosSelecionados() {

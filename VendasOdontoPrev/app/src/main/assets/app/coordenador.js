@@ -1687,21 +1687,26 @@ function enviarPropostaPf() {
 
     if (proposta != null) {
 
-        swal({
-            title: "Aguarde",
-            text: 'Estamos enviando a sua proposta',
-            content: "input",
-            imageUrl: "img/icon-aguarde.gif",
-            showCancelButton: false,
-            showConfirmButton: false,
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            icon: "info",
-            button: {
-                text: "...",
-                closeModal: false,
-            },
-        });
+        setTimeout(function () {
+
+            swal({
+                title: "Aguarde",
+                text: 'Estamos enviando a sua proposta',
+                content: "input",
+                imageUrl: "img/icon-aguarde.gif",
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                icon: "info",
+                button: {
+                    text: "...",
+                    closeModal: false,
+                },
+            });
+
+        }, 250);
+
 
         if (proposta.status == "PRONTA") {
 
@@ -1725,10 +1730,14 @@ function enviarPropostaPf() {
                 if (dataProposta.id != undefined) {
 
                     if (dataProposta.id == 0) {
-
+                    
                         proposta.status = "CRITICADA";
                         atualizarPessoas(proposta);
                         console.log("Erro");
+                        $('#irParaDebito').prop('disabled', false);
+                        $('#pagarComBoleto').prop('disabled', false);
+                        $('#continuarPfDebito').prop('disabled', false);
+                        emRequisicao = false;
 
                     } else {
 
@@ -1752,7 +1761,17 @@ function enviarPropostaPf() {
                     atualizarProposta.status = "PRONTA";
                     put("propostaPf", JSON.stringify(atualizarProposta));
                     atualizarPessoas(atualizarProposta);
-                    swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error")
+
+                    setTimeout(function () {
+
+                        swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error");
+                        $('#irParaDebito').prop('disabled', false);
+                        $('#pagarComBoleto').prop('disabled', false);
+                        $('#continuarPfDebito').prop('disabled', false);
+                        emRequisicao = false;
+
+                    }, 500);
+
                 }
 
                 atualizarDashBoard();
