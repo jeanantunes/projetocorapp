@@ -1,4 +1,5 @@
 ﻿var preenchidos = false;
+var emRequisicao = false;
 
 $(document).ready(function () {
 
@@ -336,7 +337,7 @@ function carregarListaOnlineAtualizarProposta() {
                 status = "Proposta incompleta";
                 css = "colorCirc1";
                 acao = "ver detalhes";
-                link = 'href="venda_pf_editar.html?cpf=' + item.cpf +'"';
+                link = 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
 
@@ -544,10 +545,13 @@ function buscarDetalheProposta(callback, token, cdVenda) {
             callback(xhr);
         }
     });
-        
+
 }
 
 function sincronizarPropostaPME(cnpjProposta) {
+
+    if (emRequisicao) return;
+    emRequisicao = true;
 
     let propostasASincronizarPme = get("empresas");
     let beneficiariosASincronizar = get("beneficiarios");
@@ -557,12 +561,33 @@ function sincronizarPropostaPME(cnpjProposta) {
 
     if (!navigator.onLine) {
         swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
+        emRequisicao = false;
         return;
     }
 
     if (propostaPmeSelecionada != null && beneficiariosDaProposta != null) {
 
         if (propostaPmeSelecionada[0].status == "PRONTA") {
+
+            setTimeout(function () {
+
+                swal({
+                    title: "Aguarde",
+                    text: 'Estamos enviando a sua proposta',
+                    content: "input",
+                    imageUrl: "img/icon-aguarde.gif",
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    icon: "info",
+                    button: {
+                        text: "...",
+                        closeModal: false,
+                    },
+                });
+
+            }, 250);
 
             let propostasDiferentesPme = propostasASincronizarPme.filter(function (x) { return x.cnpj != propostaPmeSelecionada[0].cnpj });
             let beneficiariosDiferentesPme = beneficiariosASincronizar.filter(function (x) { return x.cnpj != propostaPmeSelecionada[0].cnpj });
@@ -579,22 +604,6 @@ function sincronizarPropostaPME(cnpjProposta) {
 
             put("empresas", JSON.stringify(propostasASincronizarPme));
 
-            swal({
-                title: "Aguarde",
-                text: 'Estamos enviando a sua proposta',
-                content: "input",
-                imageUrl: "img/icon-aguarde.gif",
-                showCancelButton: false,
-                showConfirmButton: false,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                icon: "info",
-                button: {
-                    text: "...",
-                    closeModal: false,
-                },
-            });
-
             var parametroEmpresa = [];
             parametroEmpresa.push(propostaPmeSelecionada[0]);
 
@@ -605,56 +614,64 @@ function sincronizarPropostaPME(cnpjProposta) {
 
                     propostaPmeSelecionada[0].status = "PRONTA";
                     atualizarEmpresas(propostaPmeSelecionada[0]);
-                    swal("Ops!", "Erro na consulta do CNPJ, mas sua proposta está salva.\n\nTente envia-la mais tarde.", "error");
+                    setTimeout(function () {
+                        swal("Ops!", "Erro na consulta do CNPJ, mas sua proposta está salva.\n\nTente envia-la mais tarde.", "error");
+                        emRequisicao = false;
+                    }, 250);
+                    
                     return;
+                    
                 }
+
+                
 
                 propostaPmeSelecionada[0] = dataProposta;
 
                 var parametroEmpresa = [];
                 parametroEmpresa.push(propostaPmeSelecionada[0]);
 
-            sincronizarPME(function (dataVendaPme) {
+                sincronizarPME(function (dataVendaPme) {
 
-                if (dataVendaPme.id != undefined) {
+                    if (dataVendaPme.id != undefined) {
 
-                    if (dataVendaPme.id == 0) {
-                        propostaPmeSelecionada[0].status = "CRITICADA";
+                        if (dataVendaPme.id == 0) {
+                            propostaPmeSelecionada[0].status = "CRITICADA";
+                            atualizarEmpresas(propostaPmeSelecionada[0]);
+                        }
+                        else {
+
+                            var empresas = get("empresas");
+                            var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != propostaPmeSelecionada[0].cnpj });
+
+                            propostaPmeSelecionada[0].status = "ENVIADA";
+
+                            todosExcetoExclusao.push(propostaPmeSelecionada[0]);
+
+                            put("empresas", JSON.stringify(todosExcetoExclusao));
+
+                            atualizarDashBoard();
+
+                            swal({
+                                title: "Proposta enviada com sucesso!",
+                                text: "Vamos atualizar a sua lista de propostas",
+                                type: "success",
+                                closeOnConfirm: true,
+                                allowEscapeKey: false,
+                                allowOutsideClick: false
+                            }, function () {
+                                // Redirect the user
+                                window.location.href = "lista_proposta.html";
+                            });
+
+                        }
+
+                    } else {
+
+                        propostaPmeSelecionada[0].status = "PRONTA";
                         atualizarEmpresas(propostaPmeSelecionada[0]);
+                        swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error");
+                        emRequisicao = false;
                     }
-                    else {
-
-                        var empresas = get("empresas");
-                        var todosExcetoExclusao = empresas.filter(function (x) { return x.cnpj != propostaPmeSelecionada[0].cnpj });
-
-                        propostaPmeSelecionada[0].status = "ENVIADA";
-
-                        todosExcetoExclusao.push(propostaPmeSelecionada[0]);
-
-                        put("empresas", JSON.stringify(todosExcetoExclusao));
-
-                        atualizarDashBoard();
-
-                        swal({
-                            title: "Proposta enviada com sucesso!",
-                            text: "Vamos atualizar a sua lista de propostas",
-                            type: "success",
-                            closeOnConfirm: true,
-                            allowEscapeKey: false,
-                            allowOutsideClick: false
-                        }, function () {
-                            // Redirect the user
-                            window.location.href = "lista_proposta.html";
-                        });
-
-                    }
-
-                } else {
-
-                    propostaPmeSelecionada[0].status = "PRONTA";
-                    atualizarEmpresas(propostaPmeSelecionada[0]);
-                    swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error");
-                }
                 }, parametroEmpresa, beneficiariosDaProposta);
 
             }, propostaPmeSelecionada[0]);
@@ -664,17 +681,40 @@ function sincronizarPropostaPME(cnpjProposta) {
 
 function sincronizarPropostaPF(cpfProposta) {
 
+    if (emRequisicao) return;
+    emRequisicao = true;
     let propostasASincronizar = get("pessoas");
     let enviarProposta = propostasASincronizar.filter(function (x) { return x.cpf == cpfProposta });
 
     if (!navigator.onLine) {
         swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
+        emRequisicao = false;
         return;
     }
 
     if (enviarProposta != null) {
 
         if (enviarProposta[0].status == "PRONTA") {
+
+            setTimeout(function () {
+
+                swal({
+                    title: "Aguarde",
+                    text: 'Estamos enviando a sua proposta',
+                    content: "input",
+                    imageUrl: "img/icon-aguarde.gif",
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    icon: "info",
+                    button: {
+                        text: "...",
+                        closeModal: false,
+                    },
+                });
+
+            }, 250);
 
             var propostasDiferentes = propostasASincronizar.filter(function (x) { return x.cpf != enviarProposta[0].cpf });
 
@@ -690,22 +730,6 @@ function sincronizarPropostaPF(cpfProposta) {
 
             put("pessoas", JSON.stringify(propostasASincronizar));
 
-            swal({
-                title: "Aguarde",
-                text: 'Estamos enviando a sua proposta',
-                content: "input",
-                imageUrl: "img/icon-aguarde.gif",
-                showCancelButton: false,
-                showConfirmButton: false,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                icon: "info",
-                button: {
-                    text: "...",
-                    closeModal: false,
-                },
-            });
-
             sincronizarPf(function (dataProposta) {
 
                 if (dataProposta.id != undefined) {
@@ -714,6 +738,7 @@ function sincronizarPropostaPF(cpfProposta) {
 
                         enviarProposta[0].status = "CRITICADA";
                         atualizarPessoas(enviarProposta[0]);
+                        emRequisicao = false;
                         console.log("Erro");
 
                     } else {
@@ -725,24 +750,36 @@ function sincronizarPropostaPF(cpfProposta) {
                         console.log(todosExcetoExclusao);
                         put("pessoas", JSON.stringify(todosExcetoExclusao));
 
-                        swal({
-                            title: "Proposta enviada com sucesso!",
-                            text: "Vamos atualizar a sua lista de propostas",
-                            type: "success",
-                            closeOnConfirm: true
-                        }, function () {
-                            // Redirect the user
-                            window.location.href = "lista_proposta.html";
-                        });
+                        setTimeout(function () {
 
-                        
+                            emRequisicao = false;
+                            
+                            swal({
+                                title: "Proposta enviada com sucesso!",
+                                text: "Vamos atualizar a sua lista de propostas",
+                                type: "success",
+                                closeOnConfirm: true
+                            }, function () {
+                                // Redirect the user
+                                window.location.href = "lista_proposta.html";
+                            });
+
+                        }, 250);
+
+
+
                     }
                 }
                 else {
-
+                    
                     enviarProposta[0].status = "PRONTA";
                     atualizarPessoas(enviarProposta[0]);
-                    swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error")
+                    emRequisicao = false;
+
+                    setTimeout(function () {
+                        swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error")
+                    }, 250);
+                    
                 }
 
                 atualizarDashBoard();

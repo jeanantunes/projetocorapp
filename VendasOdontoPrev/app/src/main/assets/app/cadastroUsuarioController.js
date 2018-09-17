@@ -96,6 +96,7 @@ $(document).ready(function () {
                         console.log(dataDadosUsuario);
                         $("#celOdont").removeClass("hide");
                         $("#cpfOdont").addClass("hide");
+                        put("dadosUsuario", JSON.stringify(dataDadosUsuario));
                         $("#nomePreCadastrado").val(dataDadosUsuario.nome);
                         $("#celularPreCadastrado").val(dataDadosUsuario.celular);
                         $("#emailPreCadastrado").val(dataDadosUsuario.email);
