@@ -12,9 +12,32 @@ $(document).ready(function () {
         return;
     }
 
-    carregarListaOnlineAtualizarProposta();
-    localStorage.removeItem("resumoStatusPropostaPf");
-    localStorage.removeItem('detalheBeneficiario');
+    validarForcaVenda(function (retornoForcaVenda) {
+
+        if (retornoForcaVenda != 403) {
+
+            carregarListaOnlineAtualizarProposta();
+            localStorage.removeItem("resumoStatusPropostaPf");
+            localStorage.removeItem('detalheBeneficiario');
+
+        } else {
+
+            var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+
+            swal({
+                title: fraseCorretoraBloqueada.title,
+                text: fraseCorretoraBloqueada.descricao,
+                type: fraseCorretoraBloqueada.tipo,
+                closeOnConfirm: false
+            }, function () {
+                carregarListaOnlineAtualizarProposta();
+                localStorage.removeItem("resumoStatusPropostaPf");
+                localStorage.removeItem('detalheBeneficiario');
+            });
+        }
+
+
+    });
 });
 
 function callDashBoardPF(callback, Token) {
@@ -553,6 +576,31 @@ function sincronizarPropostaPME(cnpjProposta) {
     if (emRequisicao) return;
     emRequisicao = true;
 
+    validarForcaVenda(function (retornoForcaVenda) {
+
+        emRequisicao = false;
+        if (retornoForcaVenda != 403) {
+
+            enviarPropostaPme(cnpjProposta);
+
+        } else {
+
+            var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+
+            swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
+            emRequisicao = false;
+            return;
+        }
+
+    });
+
+}
+
+function enviarPropostaPme(cnpjProposta) {
+
+    if (emRequisicao) return;
+    emRequisicao = true;
+
     let propostasASincronizarPme = get("empresas");
     let beneficiariosASincronizar = get("beneficiarios");
 
@@ -623,8 +671,6 @@ function sincronizarPropostaPME(cnpjProposta) {
                     
                 }
 
-                
-
                 propostaPmeSelecionada[0] = dataProposta;
 
                 var parametroEmpresa = [];
@@ -635,8 +681,25 @@ function sincronizarPropostaPME(cnpjProposta) {
                     if (dataVendaPme.id != undefined) {
 
                         if (dataVendaPme.id == 0) {
-                            propostaPmeSelecionada[0].status = "CRITICADA";
-                            atualizarEmpresas(propostaPmeSelecionada[0]);
+
+                            if (dataVendaPme.temBloqueio) {
+
+                                var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+
+                                swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
+                                propostaPmeSelecionada[0].status = "PRONTA";
+                                atualizarEmpresas(propostaPmeSelecionada[0]);
+                                emRequisicao = false;
+
+                            } else {
+
+                                swal.close();
+                                propostaPmeSelecionada[0].status = "CRITICADA";
+                                atualizarEmpresas(propostaPmeSelecionada[0]);
+                                emRequisicao = false;
+
+                            }
+
                         }
                         else {
 
@@ -680,6 +743,31 @@ function sincronizarPropostaPME(cnpjProposta) {
 }
 
 function sincronizarPropostaPF(cpfProposta) {
+
+    if (emRequisicao) return;
+    emRequisicao = true;
+
+    validarForcaVenda(function (retornoForcaVenda) {
+
+        emRequisicao = false;
+        if (retornoForcaVenda != 403) {
+
+            enviarPropostaPf(cpfProposta);
+
+        } else {
+
+            var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+            swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
+            emRequisicao = false;
+            return;
+        }
+
+    });
+
+
+}
+
+function enviarPropostaPf(cpfProposta) {
 
     if (emRequisicao) return;
     emRequisicao = true;
