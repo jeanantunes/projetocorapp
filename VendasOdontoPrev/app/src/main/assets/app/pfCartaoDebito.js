@@ -99,5 +99,24 @@ function cadastrarConta() {
     proposta.status = "PRONTA";
     atualizarPessoas(proposta);
     put("propostaPf", JSON.stringify(proposta));
-    enviarPropostaPf();
+
+    validarForcaVenda(function (retornoForcaVenda) {
+
+        if (retornoForcaVenda != 403) {
+
+            enviarPropostaPf();
+
+        } else {
+
+            var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+
+            swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
+            $("#continuarPfDebito").prop('disabled', false);
+            emRequisicao = false;
+            return;
+        }
+
+
+    });
+
 }

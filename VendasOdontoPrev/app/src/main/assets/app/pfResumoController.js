@@ -84,5 +84,25 @@ function pagarComBoleto()
     atualizarPessoas(atualizarPropostaParaPronta);
     put("propostaPf", JSON.stringify(atualizarPropostaParaPronta));
 
-    enviarPropostaPf(); 
+    validarForcaVenda(function (retornoForcaVenda) {
+
+        if (retornoForcaVenda != 403) {
+
+            enviarPropostaPf();
+
+        } else {
+
+            var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+
+            swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
+            $('#irParaDebito').prop('disabled', false);
+            $('#pagarComBoleto').prop('disabled', false);
+            emRequisicao = false;
+            return;
+        }
+
+
+    });
+
+    
 }
