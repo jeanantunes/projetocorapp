@@ -1730,14 +1730,28 @@ function enviarPropostaPf() {
                 if (dataProposta.id != undefined) {
 
                     if (dataProposta.id == 0) {
-                    
-                        proposta.status = "CRITICADA";
-                        atualizarPessoas(proposta);
-                        console.log("Erro");
-                        $('#irParaDebito').prop('disabled', false);
-                        $('#pagarComBoleto').prop('disabled', false);
-                        $('#continuarPfDebito').prop('disabled', false);
-                        emRequisicao = false;
+
+                        if (dataProposta.temBloqueio) {
+
+                            swal("Ops!", "Corretora bloqueada", "error");
+                            proposta.status = "PRONTA";
+                            atualizarPessoas(proposta);
+                            $('#irParaDebito').prop('disabled', false);
+                            $('#pagarComBoleto').prop('disabled', false);
+                            $('#continuarPfDebito').prop('disabled', false);
+                            emRequisicao = false;
+
+                        } else {
+
+                            proposta.status = "CRITICADA";
+                            atualizarPessoas(proposta);
+                            $('#irParaDebito').prop('disabled', false);
+                            $('#pagarComBoleto').prop('disabled', false);
+                            $('#continuarPfDebito').prop('disabled', false);
+                            emRequisicao = false;
+
+                        }
+
 
                     } else {
 

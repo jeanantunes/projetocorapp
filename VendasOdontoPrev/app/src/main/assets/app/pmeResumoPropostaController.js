@@ -15,7 +15,24 @@ $(document).ready(function () {
         $("#enviarPropostaPme").prop('disabled', true);
         emRequisicao = true;
 
-        enviarPropostaPme();
+        validarForcaVenda(function (retornoForcaVenda) {
+
+            if (retornoForcaVenda != 403) {
+
+                enviarPropostaPme();
+
+            } else {
+
+                var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+
+                swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
+                $("#enviarPropostaPme").prop('disabled', false);
+                emRequisicao = false;
+                return;
+            }
+
+
+        });
 
     });
 
@@ -388,11 +405,26 @@ function enviarPropostaPme() {
 
                 if (dataVendaPme.id == 0) {
 
-                    proposta.status = "CRITICADA";
-                    atualizarEmpresas(proposta);
+                    if (dataVendaPme.temBloqueio) {
 
-                    emRequisicao = false;
-                    $("#enviarPropostaPme").prop('disabled', false);
+                        swal("Ops!", "Corretora temporariamente bloqueada, pendente de atualização contratual com a OdontoPrev." +
+                            "Suas vendas ficarão salvas na Lista de Propostas, por favor tente reenviar após resolução.", "info");
+                        proposta.status = "PRONTA";
+                        atualizarEmpresas(proposta);
+
+                        emRequisicao = false;
+                        $("#enviarPropostaPme").prop('disabled', false);
+
+                    } else {
+
+                        swal.close();
+                        proposta.status = "CRITICADA";
+                        atualizarEmpresas(proposta);
+
+                        emRequisicao = false;
+                        $("#enviarPropostaPme").prop('disabled', false);
+
+                    }
 
                 }
                 else {
