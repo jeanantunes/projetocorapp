@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     carregarDadosUsuario();
     validarStatusUsuario();
-
+    validarForcaIndex();
     validarVersaoApp();
     atualizarDashBoard(); 
     resyncPropostasPME();

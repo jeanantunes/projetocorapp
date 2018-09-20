@@ -42,45 +42,6 @@
 
 }
 
-function validarForcaIndex() {
-
-    callTokenVendas(function (dataToken) {
-
-        if (dataToken.status == undefined) {
-
-            var dadosUsuario = get("dadosUsuario");
-            var cpfForcaVenda = undefined;
-
-            getForcaVendaBloqueado(dadosUsuario.codigo, cpfForcaVenda, dataToken.access_token,
-
-                function (dataUsuarioSucess) {
-
-                    if (dataUsuarioSucess != undefined) {
-
-                        if (dataUsuarioSucess.temBloqueio) {
-
-                            var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
-
-                            swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
-                            return;
-                        }
-
-                    }
-
-                },
-                function (dataUsuarioError) {
-
-                }
-
-            )
-
-        }
-
-    });
-
-}
-
-
 function getForcaVendaBloqueado(cdForcaVenda, cpfForcaVenda, accessToken, callbackSucess, callbackError) {
 
     var url;
@@ -118,4 +79,40 @@ function getForcaVendaBloqueado(cdForcaVenda, cpfForcaVenda, accessToken, callba
 
 }
 
+function validarForcaIndex() {
 
+    callTokenVendas(function (dataToken) {
+
+        if (dataToken.status == undefined) {
+
+            var dadosUsuario = get("dadosUsuario");
+            var cpfForcaVenda = undefined;
+
+            getForcaVendaBloqueado(dadosUsuario.codigo, cpfForcaVenda, dataToken.access_token,
+
+                function (dataUsuarioSucess) {
+
+                    if (dataUsuarioSucess != undefined) {
+
+                        if (dataUsuarioSucess.temBloqueio) {
+
+                            var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+
+                            swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
+                            return;
+                        }
+
+                    }
+
+                },
+                function (dataUsuarioError) {
+
+                }
+
+            )
+
+        }
+
+    });
+
+}
