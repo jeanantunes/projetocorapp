@@ -580,8 +580,8 @@ function callForcaVenda(callback, token, cpf) {
 
     $.ajax({
         async: true,
-        //url: URLBase + "/corretorservicos/1.0/forcavenda/" + cpf,
-        url: "http://localhost:8090" + "/forcavenda/" + cpf, //201809201718 - teste
+        url: URLBase + "/corretorservicos/1.0/forcavenda/" + cpf,
+        //url: "http://localhost:8090" + "/forcavenda/" + cpf, //201809201718 - teste
         method: "GET",
         headers: {
             "Content-Type": "application/json",
