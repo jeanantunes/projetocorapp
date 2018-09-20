@@ -1,4 +1,8 @@
 ﻿$(document).ready(function () {
+
+    if (navigator.onLine) {
+        validarForcaIndex();
+    }
     setIdPlano();
 });
 

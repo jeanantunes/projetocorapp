@@ -407,8 +407,9 @@ function enviarPropostaPme() {
 
                     if (dataVendaPme.temBloqueio) {
 
-                        swal("Ops!", "Corretora temporariamente bloqueada, pendente de atualização contratual com a OdontoPrev." +
-                            "Suas vendas ficarão salvas na Lista de Propostas, por favor tente reenviar após resolução.", "info");
+                        var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+
+                        swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
                         proposta.status = "PRONTA";
                         atualizarEmpresas(proposta);
 
