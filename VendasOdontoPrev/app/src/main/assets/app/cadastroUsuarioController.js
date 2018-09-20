@@ -69,6 +69,7 @@ $(document).ready(function () {
         if (TestaCPF(cpfValidado)) {
 
             callTokenProd(function (dataToken) {
+                
                 callForcaVenda(function (dataDadosUsuario) {
 
                     if (dataDadosUsuario.statusForcaVenda == "Aguardando Aprovação") {
@@ -90,21 +91,35 @@ $(document).ready(function () {
                     }
                     // || dataDadosUsuario.statusForcaVenda.toUpperCase() == "INATIVO" || dataDadosUsuario.statusForcaVenda.toUpperCase() == "REPROVADO"
 
-                    if (dataDadosUsuario.cdForcaVenda != null && dataDadosUsuario.statusForcaVenda.toUpperCase() == "PRÉ-CADASTRO") {
+                    if (
+                        dataDadosUsuario.cdForcaVenda != null 
+                        && 
+                        dataDadosUsuario.statusForcaVenda.toUpperCase() == "PRÉ-CADASTRO"
+                    ) {
 
-                        swal.close();
                         console.log(dataDadosUsuario);
-                        $("#celOdont").removeClass("hide");
-                        $("#cpfOdont").addClass("hide");
-                        put("dadosUsuario", JSON.stringify(dataDadosUsuario));
-                        $("#nomePreCadastrado").val(dataDadosUsuario.nome);
-                        $("#celularPreCadastrado").val(dataDadosUsuario.celular);
-                        $("#emailPreCadastrado").val(dataDadosUsuario.email);
 
-  
+                        //201809201609 - esert/yalm - COR-796 : APP - Block Modal Pre-Cadastro Consulta CPF
+                        if (dataDadosUsuario.login.temBloqueio) {
+
+                            var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+
+                            swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
+                            
+                            //return false;
+    
+                        } else {
+
+                            swal.close();
+                            $("#celOdont").removeClass("hide");
+                            $("#cpfOdont").addClass("hide");
+                            put("dadosUsuario", JSON.stringify(dataDadosUsuario));
+                            $("#nomePreCadastrado").val(dataDadosUsuario.nome);
+                            $("#celularPreCadastrado").val(dataDadosUsuario.celular);
+                            $("#emailPreCadastrado").val(dataDadosUsuario.email);
+                        }
 
                     }
-
                     else if (dataDadosUsuario.cdForcaVenda != null && (dataDadosUsuario.statusForcaVenda.toUpperCase() == "INATIVO" || dataDadosUsuario.statusForcaVenda.toUpperCase() == "REPROVADO")) {
 
                         swal.close();
@@ -554,6 +569,8 @@ function callForcaVenda(callback, token, cpf) {
         imageUrl: "img/icon-aguarde.gif",
         showCancelButton: false,
         showConfirmButton: false,
+        allowEscapeKey: false, //201809201740 - yalm
+        allowOutsideClick: false, //201809201740 - yalm
         icon: "info",
         button: {
             text: "...",
@@ -563,7 +580,8 @@ function callForcaVenda(callback, token, cpf) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/forcavenda/" + cpf,
+        //url: URLBase + "/corretorservicos/1.0/forcavenda/" + cpf,
+        url: "http://localhost:8090" + "/forcavenda/" + cpf, //201809201718 - teste
         method: "GET",
         headers: {
             "Content-Type": "application/json",
