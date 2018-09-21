@@ -7,6 +7,7 @@ var URLBaseToken = ""; //201809202112 - esert - COR-793 : APP - Block Modal sem 
 var apiGateway = ""; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
 var Token = "";
 var conexao;
+var isDeviceMobile = true; //default true //201809211506 - esert - COR-793
 
 $(document).ready(function () {
 
@@ -110,11 +111,13 @@ function deslogarDoAplicativo() {
 
 function deleteTokenLogout(callback, token, tokenDeviceFirebase, cdForcaVenda) {
 
-    console.log(URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase);
+    //console.log(URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase);
+    console.log(URLBase + apiGateway + "/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase); //201809211124 - esert/yalm - teste - COR-793
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase,
+        //url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase,
+        url: URLBase + apiGateway + "/devicetoken/forcavenda/" + cdForcaVenda + "?token=" + tokenDeviceFirebase, //201809211124 - esert/yalm - teste - COR-793
         method: "DELETE",
         headers: {
             "Authorization": "Bearer " + token,
@@ -356,6 +359,7 @@ function defineConexao() {
         URLBaseToken = conexao.producaoURL;
         apiGateway = conexao.apiGateway; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         Token = conexao.chaveProd;
+        isDeviceMobile = true; //201809211506 - esert - COR-793
         setPlanosProd();
     }
     else 
@@ -363,12 +367,13 @@ function defineConexao() {
         URLBase = conexao.homologacaoURL;
         console.log("URLBase:[" + URLBase + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         URLBaseToken = conexao.tokenURL; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
-        console.log("URLBaseToken:[" + URLBase + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+        console.log("URLBaseToken:[" + URLBaseToken + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         apiGateway = ""; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         console.log("apiGateway:[" + apiGateway + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         Token = conexao.chaveHomolog;
         setPlanosProd();
         //setPlanosHml();
+        isDeviceMobile = false; //201809211506 - esert - COR-793
     }
 }
 
@@ -492,7 +497,8 @@ function postDeviceToken(callback, token, cdForcaVenda, tokenDevice, modeloCelul
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda,
+        //url: URLBase + "/corretorservicos/1.0/devicetoken/forcavenda/" + cdForcaVenda,
+        url: URLBase + apiGateway + "/devicetoken/forcavenda/" + cdForcaVenda, //201809211124 - esert/yalm - teste - COR-793
         //url: "http://172.16.244.162:8090/devicetoken/forcavenda/" + cdForcaVenda,
         method: "POST",
         headers: {
