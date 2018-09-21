@@ -1,5 +1,5 @@
 {
-  "producaoURL": "https://api.odontoprev.com.br:8243",
+  "producaoURL": "",
   "homologacaoURL": "http://localhost:8090",
   "tokenURL": "https://api-it3.odontoprev.com.br:8243",
   "apiGateway": "",
