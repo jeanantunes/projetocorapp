@@ -3,6 +3,8 @@ var jsonName = "";
 var pdata = "";
 var compName = "";
 var URLBase = "";
+var URLBaseToken = ""; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+var apiGateway = ""; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
 var Token = "";
 var conexao;
 
@@ -351,12 +353,19 @@ function defineConexao() {
 
     if (conexao.producaoLigado) {
         URLBase = conexao.producaoURL;
+        URLBaseToken = conexao.producaoURL;
+        apiGateway = conexao.apiGateway; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         Token = conexao.chaveProd;
         setPlanosProd();
     }
-    else {
+    else 
+    {
         URLBase = conexao.homologacaoURL;
-        console.log(URLBase);
+        console.log("URLBase:[" + URLBase + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+        URLBaseToken = conexao.tokenURL; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+        console.log("URLBaseToken:[" + URLBase + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+        apiGateway = ""; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+        console.log("apiGateway:[" + apiGateway + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         Token = conexao.chaveHomolog;
         setPlanosProd();
         //setPlanosHml();
@@ -416,7 +425,7 @@ function callTokenProd(callback) {
 
     $.ajax({
         async: true,
-        url: URLBase + metodoUrl,
+        url: URLBaseToken + metodoUrl, //201809202112 - esert - URLBaseToken - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         method: "POST",
         headers: {
             "Authorization": "Basic " + Token,
@@ -446,7 +455,7 @@ function callTokenVendas(callback) {
 
     $.ajax({
         async: true,
-        url: URLBase + metodoUrl,
+        url: URLBaseToken + metodoUrl, //201809202112 - esert - URLBaseToken - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         method: metodoRest,
         headers: {
             "Authorization": "Basic " + Token,
@@ -510,7 +519,7 @@ function callTokenProdSemMsgErro(callback) {
 
     $.ajax({
         async: true,
-        url: URLBase + metodoUrl,
+        url: URLBaseToken + metodoUrl, //201809202112 - esert - URLBaseToken - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         method: metodoRest,
         headers: {
             "Authorization": "Basic " + Token,

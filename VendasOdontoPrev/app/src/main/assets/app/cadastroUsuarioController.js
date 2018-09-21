@@ -69,6 +69,7 @@ $(document).ready(function () {
         if (TestaCPF(cpfValidado)) {
 
             callTokenProd(function (dataToken) {
+                
                 callForcaVenda(function (dataDadosUsuario) {
 
                     if (dataDadosUsuario.statusForcaVenda == "Aguardando Aprovação") {
@@ -90,22 +91,42 @@ $(document).ready(function () {
                     }
                     // || dataDadosUsuario.statusForcaVenda.toUpperCase() == "INATIVO" || dataDadosUsuario.statusForcaVenda.toUpperCase() == "REPROVADO"
 
-                    if (dataDadosUsuario.cdForcaVenda != null && dataDadosUsuario.statusForcaVenda.toUpperCase() == "PRÉ-CADASTRO") {
+                    if (
+                        dataDadosUsuario.cdForcaVenda != null 
+                        && 
+                        dataDadosUsuario.statusForcaVenda.toUpperCase() == "PRÉ-CADASTRO"
+                    ) {
 
-                        swal.close();
                         console.log(dataDadosUsuario);
-                        $("#celOdont").removeClass("hide");
-                        $("#cpfOdont").addClass("hide");
-                        put("dadosUsuario", JSON.stringify(dataDadosUsuario));
-                        $("#nomePreCadastrado").val(dataDadosUsuario.nome);
-                        $("#celularPreCadastrado").val(dataDadosUsuario.celular);
-                        $("#emailPreCadastrado").val(dataDadosUsuario.email);
 
-  
+                        //201809201609 - esert/yalm - COR-796 : APP - Block Modal Pre-Cadastro Consulta CPF
+                        if (dataDadosUsuario.login.temBloqueio) {
+                            console.log("dataDadosUsuario.login.temBloqueio");
+
+                            var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+                            swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
+
+                            //return false;
+    
+                        } else {
+
+                            swal.close();
+                            $("#celOdont").removeClass("hide");
+                            $("#cpfOdont").addClass("hide");
+                            put("dadosUsuario", JSON.stringify(dataDadosUsuario));
+                            $("#nomePreCadastrado").val(dataDadosUsuario.nome);
+                            $("#celularPreCadastrado").val(dataDadosUsuario.celular);
+                            $("#emailPreCadastrado").val(dataDadosUsuario.email);
+                        }
 
                     }
-
-                    else if (dataDadosUsuario.cdForcaVenda != null && (dataDadosUsuario.statusForcaVenda.toUpperCase() == "INATIVO" || dataDadosUsuario.statusForcaVenda.toUpperCase() == "REPROVADO")) {
+                    else if (dataDadosUsuario.cdForcaVenda != null 
+                            && (
+                                dataDadosUsuario.statusForcaVenda.toUpperCase() == "INATIVO" 
+                                || 
+                                dataDadosUsuario.statusForcaVenda.toUpperCase() == "REPROVADO"
+                                )
+                            ) {
 
                         swal.close();
                         put("reCadastro", true);
@@ -140,11 +161,29 @@ $(document).ready(function () {
 
             callCorretora(function (dataCorretora) {
 
+                //swal.close(); //201809201955 - esert - teste - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+                //swal.close(); //201809202012 - esert - teste 2o close - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+
                 if (dataCorretora.cdCorretora == 0) {
                     console.log("Corretora nao encontrada");
                     $("#myModal").modal();
 
                     return;
+                }
+
+                //201809201925 - esert/yalm - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+                if (dataCorretora.login.temBloqueio) {
+                    console.log("dataCorretora.login.temBloqueio");
+
+                    $("#myModalCorBloq").modal(); //201809202051 - esert - teste modal - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+
+                    //var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+                    //swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
+
+                    //swal.close(); //201809202034 - esert - teste 2o close - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+                    
+                    return;
+
                 }
 
                 //$("#termoOdontNCadastrado").removeClass('hide');
@@ -554,6 +593,8 @@ function callForcaVenda(callback, token, cpf) {
         imageUrl: "img/icon-aguarde.gif",
         showCancelButton: false,
         showConfirmButton: false,
+        allowEscapeKey: false, //201809201740 - yalm
+        allowOutsideClick: false, //201809201740 - yalm
         icon: "info",
         button: {
             text: "...",
@@ -563,7 +604,8 @@ function callForcaVenda(callback, token, cpf) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/forcavenda/" + cpf,
+        url: URLBase + apiGateway + "/forcavenda/" + cpf, //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+        //url: "http://localhost:8090" + "/forcavenda/" + cpf, //201809201718 - teste
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -701,6 +743,8 @@ function callCorretora(callback, token, cnpj) {
         imageUrl: "img/icon-aguarde.gif",
         showCancelButton: false,
         showConfirmButton: false,
+        allowEscapeKey: false, //201809202033 - esert/yalm
+        allowOutsideClick: false, //201809202033 - esert/yalm
         icon: "info",
         button: {
             text: "...",
@@ -710,7 +754,8 @@ function callCorretora(callback, token, cnpj) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/corretora/" + cnpj,
+        url: URLBase + apiGateway + "/corretora/" + cnpj, //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+        //url: "http://localhost:8090" + "/corretora/" + cnpj, //201809201841 - esert - teste
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -719,8 +764,7 @@ function callCorretora(callback, token, cnpj) {
         },
         success: function (resp) {
             callback(resp);
-            swal.close();
-
+            swal.close(); //201809202004 - esert - teste - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         },
         error: function (xhr) {
 
