@@ -374,12 +374,15 @@ function enviarPropostaPme() {
 
     put("empresas", JSON.stringify(todosExcetoExclusao));
 
-
+    var propostaConsultouSerasa = true;
 
     consultarSerasa(function (dataProposta) {
 
+        propostaConsultouSerasa = true;
 
         if (dataProposta == "error") {
+
+            propostaConsultouSerasa = false;
 
             setTimeout(function () {
                 swal("Ops!", "Erro na consulta do CNPJ, mas sua proposta está salva.\n\nTente envia-la mais tarde.", "error");
@@ -391,8 +394,10 @@ function enviarPropostaPme() {
                 
             }, 250);
 
-            return;
+            
         };
+
+        if (!propostaConsultouSerasa) return;
 
         proposta = dataProposta;
 
