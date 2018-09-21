@@ -1,0 +1,9 @@
+{
+  "producaoURL": "https://api.odontoprev.com.br:8243",
+  "homologacaoURL": "http://localhost:8090",
+  "tokenURL": "https://api-it3.odontoprev.com.br:8243",
+  "apiGateway": "",
+  "chaveHomolog": "UEhYX3JQNDJsVzlJRjMxQnR1aDhvejB5OFp3YTpPeGxzdTlNT1JmRGc3UE80cVhSa1ZnMElUcklh",
+  "chaveProd": "",
+  "producaoLigado": false
+}
