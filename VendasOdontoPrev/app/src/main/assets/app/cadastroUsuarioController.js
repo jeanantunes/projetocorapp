@@ -161,9 +161,6 @@ $(document).ready(function () {
 
             callCorretora(function (dataCorretora) {
 
-                //swal.close(); //201809201955 - esert - teste - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
-                //swal.close(); //201809202012 - esert - teste 2o close - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
-
                 if (dataCorretora.cdCorretora == 0) {
                     console.log("Corretora nao encontrada");
                     $("#myModal").modal();
@@ -175,15 +172,10 @@ $(document).ready(function () {
                 if (dataCorretora.login.temBloqueio) {
                     console.log("dataCorretora.login.temBloqueio");
 
-                    $("#myModalCorBloq").modal(); //201809202051 - esert - teste modal - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
-
-                    //var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
-                    //swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
-
-                    //swal.close(); //201809202034 - esert - teste 2o close - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+                    var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+                    swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
                     
                     return;
-
                 }
 
                 //$("#termoOdontNCadastrado").removeClass('hide');
@@ -202,15 +194,15 @@ $(document).ready(function () {
 
                     callInputForcaVenda(function (dataForcaVenda) {
 
-                        var tokenDevice = getTokenDevice();
-                        var modelDevice = getModelDevice();
+                        let min = Math.floor(Math.random() * (4 - 200 + 1)) + 5;
+                        let max = Math.floor(Math.random() * (4 - 200 + 1)) + 5;
+                        var tokenDevice = "das" + min.toString();
+                        var modelDevice = "dasd" + max.toString();
+                        if(isDeviceMobile){ //201809211505 - esert - COR-793
+                            tokenDevice = getTokenDevice();
+                            modelDevice = getModelDevice();
+                        }
                         var sistemaOperacional = "ANDROID";
-
-                        //let min = Math.floor(Math.random() * (4 - 200 + 1)) + 5
-                        //let max = Math.floor(Math.random() * (4 - 200 + 1)) + 5
-                        //var tokenDevice = "das" + min.toString();
-                        //var modelDevice = "dasd" + max.toString();
-                        //var sistemaOperacional = "ANDROID";
 
                         console.log("MeuLog: Token Device: " + tokenDevice);
                         console.log("MeuLog: Model Device: " + modelDevice);
@@ -218,6 +210,8 @@ $(document).ready(function () {
                          
                             $("#infoCorretora").addClass('hide');
                             $("#cadastroSucessoCorretora").removeClass("hide");
+
+                            swal.close(); //201809211133 - esert/yalm - COR-793
 
                         }, dataToken.access_token, dataForcaVenda.id, tokenDevice, modelDevice, sistemaOperacional);
 
@@ -237,15 +231,16 @@ $(document).ready(function () {
                     var dataNascimento = "12/09/2002";
 
                     callPutSenhaForcaVenda(function () {
-                        var tokenDevice = getTokenDevice();
-                        var modelDevice = getModelDevice();
-                        var sistemaOperacional = "ANDROID";
 
-                        //let min = Math.floor(Math.random() * (4 - 200 + 1)) + 5
-                        //let max = Math.floor(Math.random() * (4 - 200 + 1)) + 5
-                        //var tokenDevice = "das" + min.toString();
-                        //var modelDevice = "dasd" + max.toString();
-                        //var sistemaOperacional = "ANDROID";
+                        let min = Math.floor(Math.random() * (4 - 200 + 1)) + 5;
+                        let max = Math.floor(Math.random() * (4 - 200 + 1)) + 5;
+                        var tokenDevice = "das" + min.toString();
+                        var modelDevice = "dasd" + max.toString();
+                        if(isDeviceMobile){ //201809211505 - esert - COR-793
+                            tokenDevice = getTokenDevice();
+                            modelDevice = getModelDevice();
+                        }
+                        var sistemaOperacional = "ANDROID";
 
                         console.log("MeuLog: Token Device: " + tokenDevice);
                         console.log("MeuLog: Model Device: " + modelDevice);
@@ -253,6 +248,8 @@ $(document).ready(function () {
                          
                             $("#infoCorretora").addClass('hide');
                             $("#cadastroSucessoCorretora").removeClass("hide");
+
+                            swal.close(); //201809211133 - esert/yalm - COR-793
 
                         }, dataToken.access_token, dadosUsuario.cdForcaVenda, tokenDevice, modelDevice, sistemaOperacional);
 
@@ -378,7 +375,9 @@ $(document).ready(function () {
 
                     put("dadosUsuario", JSON.stringify(forca));
 
-                    login.salvarDadosUsuario(JSON.stringify(forca));
+                    if(isDeviceMobile){ //201809211505 - esert - COR-793
+                        login.salvarDadosUsuario(JSON.stringify(forca));
+                    }
 
                     $("#termoOdont").addClass("hide")
                     $("#cadastroSucesso").removeClass("hide")
@@ -654,7 +653,8 @@ function callInputForcaVenda(callback, token, cpf, celular, email, corretora, no
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/forcavenda/",
+        //url: URLBase + "/corretorservicos/1.0/forcavenda/",
+        url: URLBase + apiGateway + "/forcavenda/", //201809211109 - esert/yalm - teste - COR-793
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -680,7 +680,8 @@ function callPutForcaVenda(callback, token, codForca, nome, celular, email, senh
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/forcavenda/login",
+        //url: URLBase + "/corretorservicos/1.0/forcavenda/login",
+        url: URLBase + apiGateway + "/forcavenda/login", //201809211109 - esert/yalm - teste - COR-793
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -716,7 +717,8 @@ function callPutSenhaForcaVenda(callback, token, codForca, nome, celular, email,
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/forcavenda",
+        //url: URLBase + "/corretorservicos/1.0/forcavenda",
+        url: URLBase + apiGateway + "/forcavenda", //201809211109 - esert/yalm - teste - COR-793
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -764,7 +766,7 @@ function callCorretora(callback, token, cnpj) {
         },
         success: function (resp) {
             callback(resp);
-            swal.close(); //201809202004 - esert - teste - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+            //swal.close(); //201809202004 - esert - teste - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         },
         error: function (xhr) {
 

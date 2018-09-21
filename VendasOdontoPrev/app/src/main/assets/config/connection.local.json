@@ -5,5 +5,6 @@
   "apiGateway": "",
   "chaveHomolog": "UEhYX3JQNDJsVzlJRjMxQnR1aDhvejB5OFp3YTpPeGxzdTlNT1JmRGc3UE80cVhSa1ZnMElUcklh",
   "chaveProd": "",
-  "producaoLigado": false
+  "producaoLigado": false,
+  "isDeviceMobile": false
 }
