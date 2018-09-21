@@ -1748,7 +1748,9 @@ function enviarPropostaPf() {
 
                         if (dataProposta.temBloqueio) {
 
-                            swal("Ops!", "Corretora bloqueada", "error");
+                            var fraseCorretoraBloqueada = getRepository("fraseCorretoraBloqueada");
+
+                            swal(fraseCorretoraBloqueada.title, fraseCorretoraBloqueada.descricao, fraseCorretoraBloqueada.tipo);
                             proposta.status = "PRONTA";
                             atualizarPessoas(proposta);
                             $('#irParaDebito').prop('disabled', false);
