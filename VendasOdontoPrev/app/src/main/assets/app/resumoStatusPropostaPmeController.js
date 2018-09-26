@@ -1,5 +1,9 @@
-﻿$(document).ready(function () {
+﻿var cdEmpresa = "";
+var memoriaInputEmail = "";
 
+$(document).ready(function () {
+
+    cdEmpresa = getUrlParameter("cdEmpresa");
     let carregarPrimeiraPag = 0;
     $("#mostrarMais").attr("data-contador", carregarPrimeiraPag);
     popularCamposProposta();
@@ -134,6 +138,124 @@
 
     });
 
+    $("#btnEditarEmail").click(function () {
+
+        memoriaInputEmail = $("#inputEmail").val();
+        $(this).hide();
+        $("#inputEmail").removeAttr('disabled');
+        $("#inputEmail").removeClass("input-email-gray");
+        $("#inputEmail").removeClass("input-email-red");
+        $("#inputEmail").addClass("input-email-blue");
+        $("#btnConfirmarVerde").hide();
+        $("#btnConfirmarCinza").show();
+        $("#btnCancelar").show();
+        $("#divErroEmail").hide();
+    });
+
+    $("#inputEmail").blur(function () {
+
+        if ($(this).val() == memoriaInputEmail) {
+            $("#inputEmail").removeAttr('disabled');
+            $("#inputEmail").removeClass("input-email-gray");
+            $("#inputEmail").removeClass("input-email-red");
+            $("#inputEmail").addClass("input-email-blue");
+            $("#btnConfirmarVerde").hide();
+            $("#btnConfirmarCinza").show();
+            $("#btnCancelar").show();
+            $("#divErroEmail").hide();
+            return;
+        }
+
+        if (validateEmail($(this).val())
+        ) {
+            $(this).removeClass("input-email-red");
+            $(this).removeClass("input-email-gray");
+            $(this).addClass("input-email-blue");
+            $("#btnConfirmarCinza").hide();
+            $("#btnConfirmarVerde").show();
+            $("#divErroEmail").hide();
+        } else {
+
+            $(this).removeClass("input-email-gray");
+            $(this).removeClass("input-email-blue");
+            $(this).addClass("input-email-red");
+            $("#btnConfirmarVerde").hide();
+            $("#btnConfirmarCinza").show();
+            $("#divErroEmail").show();
+        }
+
+    });
+
+    $("#inputEmail").keyup(function () {
+
+        if ($(this).val() == memoriaInputEmail) {
+            $("#inputEmail").removeAttr('disabled');
+            $("#inputEmail").removeClass("input-email-gray");
+            $("#inputEmail").removeClass("input-email-red");
+            $("#inputEmail").addClass("input-email-blue");
+            $("#btnConfirmarVerde").hide();
+            $("#btnConfirmarCinza").show();
+            $("#btnCancelar").show();
+            $("#divErroEmail").hide();
+            return;
+        }
+
+        if (validateEmail($(this).val())) {
+
+            $(this).removeClass("input-email-red");
+            $(this).removeClass("input-email-gray");
+            $(this).addClass("input-email-blue");
+            $("#btnConfirmarCinza").hide();
+            $("#btnConfirmarVerde").show();
+            $("#divErroEmail").hide();
+        } else {
+
+            $("#btnConfirmarVerde").hide();
+            $("#btnConfirmarCinza").show();
+
+        }
+
+    });
+
+    $("#inputEmail").focus(function () {
+        $(this).removeClass("input-email-gray");
+        $(this).removeClass("input-email-red");
+        $(this).addClass("input-email-blue");
+        $("#divErroEmail").hide();
+    });
+
+    $("#btnCancelar").click(function () {
+
+        $("#inputEmail").val(memoriaInputEmail);
+        $("#inputEmail").removeClass("input-email-blue");
+        $("#inputEmail").removeClass("input-email-red");
+        $("#inputEmail").addClass("input-email-gray");
+        $("#btnConfirmarVerde").hide();
+        $("#btnConfirmarCinza").hide();
+        $(this).hide();
+        $("#btnEditarEmail").show();
+        $("#inputEmail").attr('disabled', 'disabled');
+        $("#divErroEmail").hide();
+    });
+
+    $("#btnConfirmarVerde").click(function () {
+
+        swal({
+            title: "Aguarde",
+            text: 'Estamos atualizando o email da venda',
+            content: "input",
+            showCancelButton: false,
+            showConfirmButton: false,
+            imageUrl: "../../img/icon-aguarde.gif",
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            icon: "info",
+            button: {
+                text: "...",
+                closeModal: false,
+            },
+        });
+    })
 
 });
 
@@ -243,6 +365,18 @@ function popularCamposProposta() {
 
             }
 
+            if (dataEmpresa.cdStatusVenda == 1 || dataEmpresa.cdStatusVenda == 4) {
+
+                $("#divLabelEmailEmpresa").hide();
+                $("#inputEmail").val(dataEmpresa.email);
+
+            } else {
+
+                $("#divInputEmailContatoEmpresa").hide();
+                $("#emailEmpresa").val(dataEmpresa.email);
+
+            }
+
             $("#dataMovimentacaoEmpresa").html(dataEmpresa.dataMovimentacao);
             $("#dataVigenciaEmpresa").html(dataEmpresa.dataVigencia);
 
@@ -299,8 +433,6 @@ function popularCamposProposta() {
 
 
     });
-
-
 
 }
 
@@ -373,6 +505,35 @@ function downloadContratoPdf(callback, token, cdEmpresa) {
         },
         error: function (xhr) {
             callback(xhr);
+        }
+    });
+
+}
+
+function putEmailVenda(access_token, callbackSuccess, callbackError) {
+
+    var emailVenda = $("#inputEmail").val();
+    var jsonRequest = {
+        "cdEmpresa": cdEmpresa,
+        "email": emailVenda
+    }
+
+    $.ajax({
+        async: true,
+        url: "http://localhost:8090/empresa",
+        //url: URLBase + "/corretorservicos/1.0/empresa,
+        method: "PUT",
+        data: JSON.stringify(jsonRequest),
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache"
+        },
+        success: function (resp) {
+            callbackSuccess(resp);
+        },
+        error: function (xhr) {
+            callbackError(xhr);
         }
     });
 
