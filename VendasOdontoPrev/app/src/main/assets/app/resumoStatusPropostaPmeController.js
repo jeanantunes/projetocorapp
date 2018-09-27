@@ -99,7 +99,7 @@ $(document).ready(function () {
 
                 if (dataListBeneficiarios.status != undefined) {
 
-                    swal("Ops!", "Erro no carregamento de beneficiarios, tente novamente.");
+                    swal("Ops!", "Erro no carregamento de beneficiarios, tente novamente.", "error");
                     return;
 
                 }
@@ -246,7 +246,7 @@ $(document).ready(function () {
             content: "input",
             showCancelButton: false,
             showConfirmButton: false,
-            imageUrl: "../../img/icon-aguarde.gif",
+            imageUrl: "img/icon-aguarde.gif",
             allowEscapeKey: false,
             allowOutsideClick: false,
             icon: "info",
@@ -255,6 +255,132 @@ $(document).ready(function () {
                 closeModal: false,
             },
         });
+
+        callTokenVendas(function (dataToken) {
+
+            if (dataToken.status != undefined) {
+
+                swal("Ops!", "Erro na atualização do email", "error");
+                return;
+            }
+
+            putEmailVenda(dataToken.access_token,
+
+                function (dataEmailSuccess) {
+
+                    if (dataEmailSuccess == undefined) {
+
+                        swal("Ops!", "Erro na atualização do email", "error");
+                        return;
+
+                    }
+
+                    swal({
+                        title: "Email alterado com sucesso",
+                        text: "Deseja reenviar o email de aceite?",
+                        type: "success",
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonColor: "#1974CE",
+                        confirmButtonText: "Sim",
+                        cancelButtonText: "Não",
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+
+                        if (isConfirm) {
+
+                            swal({
+                                title: "Aguarde",
+                                text: 'Estamos enviando o email da venda',
+                                content: "input",
+                                showCancelButton: false,
+                                showConfirmButton: false,
+                                imageUrl: "img/icon-aguarde.gif",
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                icon: "info",
+                                button: {
+                                    text: "...",
+                                    closeModal: false,
+                                },
+                            });
+
+                            callTokenVendas(function (dataToken) {
+
+                                if (dataToken.status != undefined) {
+
+                                    swal("Ops!", "Erro no reenvio do email", "error");
+                                    return;
+                                }
+
+                                postEmailVenda(dataToken.access_token,
+
+                                    function (dataReenvioEmailSucess) {
+
+                                        if (dataReenvioEmailSucess == undefined) {
+
+                                            swal("Ops!", "Erro no reenvio do email", "error");
+                                            return;
+                                        }
+
+                                        swal("Email enviado com sucesso", "", "success");
+
+                                        memoriaInputEmail = $("#inputEmail").val();
+                                        $("#inputEmail").val(memoriaInputEmail);
+                                        $("#inputEmail").removeClass("input-email-blue");
+                                        $("#inputEmail").removeClass("input-email-red");
+                                        $("#inputEmail").addClass("input-email-gray");
+                                        $("#btnConfirmarVerde").hide();
+                                        $("#btnConfirmarCinza").hide();
+                                        $("#btnCancelar").hide();
+                                        $("#btnEditarEmail").show();
+                                        $("#inputEmail").attr('disabled', 'disabled');
+                                        $("#divErroEmail").hide();
+
+                                    },
+                                    function (dataEmailError) {
+
+                                        swal("Ops!", "Erro no reenvio do email", "error");
+                                    }
+
+                                )
+
+                            });
+
+
+                        } else {
+
+                            memoriaInputEmail = $("#inputEmail").val();
+                            $("#inputEmail").val(memoriaInputEmail);
+                            $("#inputEmail").removeClass("input-email-blue");
+                            $("#inputEmail").removeClass("input-email-red");
+                            $("#inputEmail").addClass("input-email-gray");
+                            $("#btnConfirmarVerde").hide();
+                            $("#btnConfirmarCinza").hide();
+                            $("#btnCancelar").hide();
+                            $("#btnEditarEmail").show();
+                            $("#inputEmail").attr('disabled', 'disabled');
+                            $("#divErroEmail").hide();
+                            swal.close();
+
+                        }
+                    })
+
+
+                },
+                function (dataEmailError) {
+
+                }
+            )
+
+
+        })
+
+
     })
 
 });
@@ -441,7 +567,7 @@ function callDadosEmpresa(callback, token, cdEmpresa) {
     $.ajax({
         async: true,
         //url: "https://6a428f33-b87b-43d0-92ef-7fdc244530ea.mock.pstmn.io" + "/empresa/" + cdEmpresa,
-        url: URLBase + "/corretorservicos/1.0/empresa/" + cdEmpresa,
+        url: URLBase + apiGateway + "/empresa/" + cdEmpresa,
         //url: "http://localhost:8090/empresa/" + cdEmpresa,
         method: "GET",
         headers: {
@@ -463,7 +589,7 @@ function callBeneficiariosList(callback, token, cdEmpresa, numeroDaPagina, taman
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/beneficiarios/empresa/" + cdEmpresa + "?tampag=" + tamanhoDaPagina + "&numpag=" + numeroDaPagina,
+        url: URLBase + apiGateway + "/beneficiarios/empresa/" + cdEmpresa + "?tampag=" + tamanhoDaPagina + "&numpag=" + numeroDaPagina,
         //url: "http://localhost:8090/beneficiarios/empresa/" + cdEmpresa + "?tampag=" + tamanhoDaPagina + "&numpag=" + numeroDaPagina,
         method: "GET",
         headers: {
@@ -493,7 +619,7 @@ function downloadContratoPdf(callback, token, cdEmpresa) {
     $.ajax({
         async: true,
         //url: "http://172.16.244.137:8090/arquivocontratacao/empresa/" + cdEmpresa + "/json",
-        url: URLBase + "/corretorservicos/1.0/arquivocontratacao/empresa/" + cdEmpresa + "/json",
+        url: URLBase + apiGateway + "/arquivocontratacao/empresa/" + cdEmpresa + "/json",
         method: "GET",
         headers: {
             "Authorization": "Bearer " + token,
@@ -520,9 +646,34 @@ function putEmailVenda(access_token, callbackSuccess, callbackError) {
 
     $.ajax({
         async: true,
-        url: "http://localhost:8090/empresa",
-        //url: URLBase + "/corretorservicos/1.0/empresa,
+        url: URLBase + apiGateway + "/empresa",
         method: "PUT",
+        data: JSON.stringify(jsonRequest),
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache"
+        },
+        success: function (resp) {
+            callbackSuccess(resp);
+        },
+        error: function (xhr) {
+            callbackError(xhr);
+        }
+    });
+
+}
+
+function postEmailVenda(access_token, callbackSuccess, callbackError) {
+
+    var jsonRequest = {
+        "cdEmpresa": cdEmpresa
+    }
+
+    $.ajax({
+        async: true,
+        url: URLBase + apiGateway + "/empresa-emailaceite",
+        method: "POST",
         data: JSON.stringify(jsonRequest),
         headers: {
             "Authorization": "Bearer " + token,
