@@ -48,7 +48,7 @@ function callDashBoardPF(callback, Token) {
     $.ajax({
         async: true,
         //url: "http://localhost:8090/dashboardPropostaPF/" + statusTodasPropostas + "/"  + dadosForca.cpf,
-        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        url: URLBase + apiGateway + "/dashboardPropostaPF/" + statusTodasPropostas + "/" + dadosForca.cpf,
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -70,7 +70,7 @@ function callDashBoardPME(callback, Token) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
+        url: URLBase + apiGateway + "/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         //url: "http://172.16.244.160:8090/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         //url: "http://localhost:8090" + "/dashboardPropostaPME/" + statusTodasPropostas + "/" + dadosForca.cpf,
         method: "GET",
