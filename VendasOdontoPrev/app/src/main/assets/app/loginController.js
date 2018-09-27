@@ -1,7 +1,7 @@
 function callLogin(callback, token, login, password) {
 
     var metodoRest = "POST";
-    var metodoUrl = "/corretorservicos/1.0/login";
+    var metodoUrl = "/login";
     var jsonRequest = {
         "usuario": login,
         "senha": password
@@ -9,7 +9,7 @@ function callLogin(callback, token, login, password) {
 
     $.ajax({
         async: true,
-        url: URLBase + metodoUrl,
+        url: URLBase + apiGateway + metodoUrl, //201809271726 - esert/yalm - COR-832 : APP - Adicionar Botao Reenvio
         method: metodoRest,
         headers: {
             "Content-Type": "application/json",
@@ -66,7 +66,8 @@ function callDadosForcaVenda(callback, token, cpf) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/corretorservicos/1.0/forcavenda/" + cpf,
+        //url: URLBase + "/corretorservicos/1.0/forcavenda/" + cpf,
+        url: URLBase + apiGateway + "/forcavenda/" + cpf, //201809271726 - esert/yalm - COR-832 : APP - Adicionar Botao Reenvio
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -251,8 +252,10 @@ function logarETrazerDadosUsuario() {
 
                 put("dadosUsuario", JSON.stringify(forca));
 
-                //Marcelo
-                ob.salvarDadosUsuario(JSON.stringify(forca));
+                if(isDeviceMobile){ //208109271730 - yalm/esert - COR-832 : APP - Adicionar Botao Reenvio
+                    //Marcelo
+                    ob.salvarDadosUsuario(JSON.stringify(forca));
+                }
 
                 swal.close();
                 window.location = "logado.html";

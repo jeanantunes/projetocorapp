@@ -61,6 +61,59 @@ $(document).ready(function () {
 
     });
 
+    //201809271803 - esert/yalm - COR-832 : APP - Adicionar Botao Reenvio
+    $("#reenviarEmailAceitePME").click(function () {
+
+        var cdEmpresa = getUrlParameter("cdEmpresa");
+
+        swal({
+            title: "Aguarde",
+            text: 'Estamos reen viado o e-mail de azeite',
+            content: "input",
+            imageUrl: "img/icon-aguarde.gif",
+            showCancelButton: false,
+            showConfirmButton: false,
+            icon: "info",
+            button: {
+                text: "...",
+                closeModal: false,
+            },
+        });
+
+        callTokenVendas(function (dataToken) {
+
+            if (dataToken.status != undefined) {
+                swal("Ops!", "Algo deu errado no reenvio do email de aceite, por favor tente novamente.", "error");
+                return;
+            }
+
+            postEmailVenda(
+                dataToken.access_token
+                ,function (dataEmailAceiteSuccess) {
+
+                    if (dataEmailAceiteSuccess == undefined) {
+                        swal("Ops!", "Algo deu errado no reenvio do email de aceite, por favor tente novamente.", "error");
+                        return;
+                    } else if (dataEmailAceiteSuccess.status != undefined) {
+                        swal("Ops!", "Algo deu errado no reenvio do email de aceite, por favor tente novamente.", "error");
+                        return;
+                    } else {
+                        swal("Sucesso", "E-mail de aceite reenvio com sucesso.", "success");
+                    }
+
+                    // swal.close();
+                }
+                ,function (dataEmailAceiteError){
+                    swal("Ops!", "Algo deu errado no reenvio do email de aceite, por favor tente novamente.", "error");
+                    return;
+                }
+                
+            );
+
+        });
+
+    });
+
     $('#mostrarMais').bind('click', function () {
 
         callTokenVendas(function (dataToken) {
@@ -508,7 +561,7 @@ function popularCamposProposta() {
             //Preenchimento das datas operacionais
             $("#vencimentoEmpresa").html(dataEmpresa.vencimentoFatura);
 
-            if (dataEmpresa.cdStatusVenda == 5) {
+            if (dataEmpresa.cdStatusVenda == 5) { //Proposta Aguardando aceite PME
 
                 $("#labelDataVigencia").html("Previsão de Início da Vigência:");
 
@@ -518,13 +571,17 @@ function popularCamposProposta() {
 
             }
 
-            if (dataEmpresa.cdStatusVenda == 1 || dataEmpresa.cdStatusVenda == 4) {
+            if (dataEmpresa.cdStatusVenda == 1 //Proposta enviada para a OdontoPrev
+                || 
+                dataEmpresa.cdStatusVenda == 4 //Proposta enviada para a OdontoPrev
+            ) {
 
                 $("#divLabelEmailEmpresa").hide();
                 $("#inputEmail").val(dataEmpresa.email);
 
             } else {
 
+                $("#divReenviarEmailAceitePME").hide(); //201809271752 - esert/yalm - COR-832 : APP - Adicionar Botao Reenvio
                 $("#divInputEmailContatoEmpresa").hide();
                 $("#emailEmpresa").val(dataEmpresa.email);
 
