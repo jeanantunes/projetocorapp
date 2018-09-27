@@ -1,7 +1,10 @@
 ﻿var cdEmpresa = "";
 var memoriaInputEmail = "";
+var dadosUsuario;
 
 $(document).ready(function () {
+
+    dadosUsuario = get("dadosUsuario");
 
     cdEmpresa = getUrlParameter("cdEmpresa");
     let carregarPrimeiraPag = 0;
@@ -154,6 +157,18 @@ $(document).ready(function () {
 
     $("#inputEmail").blur(function () {
 
+        if ($(this).val() == dadosUsuario.email) {
+            $("#inputEmail").removeAttr('disabled');
+            $("#inputEmail").removeClass("input-email-gray");
+            $("#inputEmail").removeClass("input-email-red");
+            $("#inputEmail").addClass("input-email-blue");
+            $("#btnConfirmarVerde").hide();
+            $("#btnConfirmarCinza").show();
+            $("#btnCancelar").show();
+            $("#divErroEmail").hide();
+            return;
+        }
+        
         if ($(this).val() == memoriaInputEmail) {
             $("#inputEmail").removeAttr('disabled');
             $("#inputEmail").removeClass("input-email-gray");
@@ -187,6 +202,18 @@ $(document).ready(function () {
     });
 
     $("#inputEmail").keyup(function () {
+
+        if ($(this).val() == dadosUsuario.email) {
+            $("#inputEmail").removeAttr('disabled');
+            $("#inputEmail").removeClass("input-email-gray");
+            $("#inputEmail").removeClass("input-email-red");
+            $("#inputEmail").addClass("input-email-blue");
+            $("#btnConfirmarVerde").hide();
+            $("#btnConfirmarCinza").show();
+            $("#btnCancelar").show();
+            $("#divErroEmail").hide();
+            return;
+        }
 
         if ($(this).val() == memoriaInputEmail) {
             $("#inputEmail").removeAttr('disabled');
