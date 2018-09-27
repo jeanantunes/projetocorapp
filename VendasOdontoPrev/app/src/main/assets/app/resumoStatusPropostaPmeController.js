@@ -256,9 +256,9 @@ $(document).ready(function () {
             },
         });
 
-        callTokenVendas(function (dataToken) {
+        callTokenVendas(function (dataToken) { 
 
-            if (dataToken.status != undefined) {
+            if (dataToken.status != undefined) { 
 
                 swal("Ops!", "Erro na atualização do email", "error");
                 return;
@@ -266,7 +266,7 @@ $(document).ready(function () {
 
             putEmailVenda(dataToken.access_token,
 
-                function (dataEmailSuccess) {
+                function (dataEmailSuccess) { 
 
                     if (dataEmailSuccess == undefined) {
 
@@ -275,7 +275,7 @@ $(document).ready(function () {
 
                     }
 
-                    swal({
+                    swal({ 
                         title: "Email alterado com sucesso",
                         text: "Deseja reenviar o email de aceite?",
                         type: "success",
@@ -289,9 +289,9 @@ $(document).ready(function () {
                         closeOnConfirm: false,
                         closeOnCancel: false
                     },
-                    function (isConfirm) {
+                    function (isConfirm) { 
 
-                        if (isConfirm) {
+                        if (isConfirm) { 
 
                             swal({
                                 title: "Aguarde",
@@ -309,9 +309,9 @@ $(document).ready(function () {
                                 },
                             });
 
-                            callTokenVendas(function (dataToken) {
+                            callTokenVendas(function (dataToken) { 
 
-                                if (dataToken.status != undefined) {
+                                if (dataToken.status != undefined) { 
 
                                     swal("Ops!", "Erro no reenvio do email", "error");
                                     return;
@@ -319,7 +319,7 @@ $(document).ready(function () {
 
                                 postEmailVenda(dataToken.access_token,
 
-                                    function (dataReenvioEmailSucess) {
+                                    function (dataReenvioEmailSucess) { 
 
                                         if (dataReenvioEmailSucess == undefined) {
 
@@ -365,14 +365,14 @@ $(document).ready(function () {
                             $("#btnEditarEmail").show();
                             $("#inputEmail").attr('disabled', 'disabled');
                             $("#divErroEmail").hide();
-                            swal.close();
+                            swal.close(); 
 
                         }
                     })
 
 
                 },
-                function (dataEmailError) {
+                function (dataEmailError) { 
 
                 }
             )
