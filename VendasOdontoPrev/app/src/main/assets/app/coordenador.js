@@ -557,11 +557,15 @@ function gerarLog(stringErro) {
 
     if (dadosUsuarios != undefined) {
 
-        crashlyticsLogs.logException(stringErro, dadosUsuarios.nome, dadosUsuarios.email, dadosUsuarios.codigo.toString());
+        if(isDeviceMobile){ //201809271714 - esert - COR-832 : APP - Adicionar Botao Reenvio
+            crashlyticsLogs.logException(stringErro, dadosUsuarios.nome, dadosUsuarios.email, dadosUsuarios.codigo.toString());
+        }
 
     } else {
 
-        crashlyticsLogs.logException(stringErro);
+        if(isDeviceMobile){ //201809271714 - esert - COR-832 : APP - Adicionar Botao Reenvio
+            crashlyticsLogs.logException(stringErro);
+        }
 
     }
     
