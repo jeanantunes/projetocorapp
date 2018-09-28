@@ -52,11 +52,11 @@ function getForcaVendaBloqueado(cdForcaVenda, cpfForcaVenda, accessToken, callba
 
     } else if (cdForcaVenda != undefined) {
 
-        url = "http://localhost:8090/forcavenda/bloqueio?cdForcaVenda=" + cdForcaVenda;
+        url = URLBase + apiGateway + "/forcavenda/bloqueio?cdForcaVenda=" + cdForcaVenda;
 
     } else {
 
-        url = "http://localhost:8090/forcavenda/bloqueio?cpfForcaVenda=" + cpfForcaVenda;
+        url = URLBase + apiGateway + "/forcavenda/bloqueio?cpfForcaVenda=" + cpfForcaVenda;
     }
 
     $.ajax({
