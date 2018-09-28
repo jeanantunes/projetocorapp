@@ -454,6 +454,9 @@ $(document).ready(function () {
                 },
                 function (dataEmailError) { 
 
+                    swal("Ops!", "Erro na atualização do email", "error");
+                    return;
+
                 }
             )
 
