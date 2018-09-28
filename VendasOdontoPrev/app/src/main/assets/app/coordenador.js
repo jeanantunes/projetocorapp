@@ -354,10 +354,11 @@ function defineConexao() {
         }
     });
 
+    apiGateway = conexao.apiGateway; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+
     if (conexao.producaoLigado) {
         URLBase = conexao.producaoURL;
         URLBaseToken = conexao.producaoURL;
-        apiGateway = conexao.apiGateway; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         Token = conexao.chaveProd;
         isDeviceMobile = conexao.isDeviceMobile; //201809211544 - esert - COR-793
         setPlanosProd();
@@ -368,7 +369,6 @@ function defineConexao() {
         console.log("URLBase:[" + URLBase + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         URLBaseToken = conexao.tokenURL; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         console.log("URLBaseToken:[" + URLBaseToken + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
-        apiGateway = ""; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         console.log("apiGateway:[" + apiGateway + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         Token = conexao.chaveHomolog;
         isDeviceMobile = conexao.isDeviceMobile; //201809211544 - esert - COR-793
