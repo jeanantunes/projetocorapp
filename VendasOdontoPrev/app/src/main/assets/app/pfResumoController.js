@@ -80,6 +80,11 @@ function buscarPlanosSelecionados() {
 function pagarComBoleto()
 {
     let atualizarPropostaParaPronta = get("propostaPf");
+
+    atualizarPropostaParaPronta.dadosBancarios.agencia = "";
+    atualizarPropostaParaPronta.dadosBancarios.codigoBanco = "";
+    atualizarPropostaParaPronta.dadosBancarios.conta = "";
+    atualizarPropostaParaPronta.dadosBancarios.tipoConta = "";
     atualizarPropostaParaPronta.status = "PRONTA";
     atualizarPessoas(atualizarPropostaParaPronta);
     put("propostaPf", JSON.stringify(atualizarPropostaParaPronta));
