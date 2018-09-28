@@ -68,7 +68,7 @@ $(document).ready(function () {
 
         swal({
             title: "Aguarde",
-            text: 'Estamos reen viado o e-mail de azeite',
+            text: 'Estamos reenviando o e-mail de aceite',
             content: "input",
             imageUrl: "img/icon-aguarde.gif",
             showCancelButton: false,
