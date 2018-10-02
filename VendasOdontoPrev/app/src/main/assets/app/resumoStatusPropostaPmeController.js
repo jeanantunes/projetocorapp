@@ -574,9 +574,7 @@ function popularCamposProposta() {
 
             }
 
-            if (dataEmpresa.cdStatusVenda == 1 //Proposta enviada para a OdontoPrev
-                || 
-                dataEmpresa.cdStatusVenda == 4 //Proposta enviada para a OdontoPrev
+            if (dataEmpresa.cdStatusVenda == 5 //Proposta enviada para a OdontoPrev
             ) {
 
                 $("#divLabelEmailEmpresa").hide();
@@ -737,7 +735,7 @@ function putEmailVenda(access_token, callbackSuccess, callbackError) {
         method: "PUT",
         data: JSON.stringify(jsonRequest),
         headers: {
-            "Authorization": "Bearer " + token,
+            "Authorization": "Bearer " + access_token,
             "Content-Type": "application/json",
             "Cache-Control": "no-cache"
         },
@@ -763,7 +761,7 @@ function postEmailVenda(access_token, callbackSuccess, callbackError) {
         method: "POST",
         data: JSON.stringify(jsonRequest),
         headers: {
-            "Authorization": "Bearer " + token,
+            "Authorization": "Bearer " + access_token,
             "Content-Type": "application/json",
             "Cache-Control": "no-cache"
         },
