@@ -574,7 +574,7 @@ function popularCamposProposta() {
 
             }
 
-            if (dataEmpresa.cdStatusVenda == 5 //Proposta enviada para a OdontoPrev
+            if (dataEmpresa.cdStatusVenda == 5 //Proposta Aguardando aceite PME
             ) {
 
                 $("#divLabelEmailEmpresa").hide();
