@@ -283,7 +283,7 @@ function sincronizarPf(callback, pessoa) {
         }
 
         var metodoRest = "POST";
-        var metodoUrl = "/corretorservicos/1.0/vendapf";
+        var metodoUrl = apiGateway + "/vendapf";
 
         $.ajax({
             async: true,
