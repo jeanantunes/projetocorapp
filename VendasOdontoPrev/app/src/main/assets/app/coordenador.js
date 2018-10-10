@@ -2187,11 +2187,11 @@ function sincronizarPME(callback, proposta, beneficiarios) {
             return;
         }
 
-        var metodoUrl = "/corretorservicos/1.0/vendapme";
+        var metodoUrl = "/vendapme";
         var metodoRest = "POST";
 
         $.ajax({
-            url: URLBase + metodoUrl,
+            url: URLBase + apiGateway + metodoUrl,
             type: metodoRest,
             data: json,
             dataType: "json",

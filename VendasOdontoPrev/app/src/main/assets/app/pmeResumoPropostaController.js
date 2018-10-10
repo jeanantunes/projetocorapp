@@ -421,12 +421,25 @@ function enviarPropostaPme() {
                         emRequisicao = false;
                         $("#enviarPropostaPme").prop('disabled', false);
 
+                    } else if (dataVendaPme.temErro) {
+
+                        setTimeout(function () {
+                            swal("E-mail inválido",
+                                "Não é permitido colocar o e-mail do vendedor ou da corretora na venda. Por favor, informe o e-mail do cliente.",
+                                "error"
+                            );
+                        }, 250);
+
+                        proposta.status = "PRONTA";
+                        atualizarEmpresas(proposta);
+                        emRequisicao = false;
+                        $("#enviarPropostaPme").prop('disabled', false);
+
                     } else {
 
                         swal.close();
                         proposta.status = "CRITICADA";
                         atualizarEmpresas(proposta);
-
                         emRequisicao = false;
                         $("#enviarPropostaPme").prop('disabled', false);
 
