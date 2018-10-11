@@ -691,6 +691,28 @@ function enviarPropostaPme(cnpjProposta) {
                                 atualizarEmpresas(propostaPmeSelecionada[0]);
                                 emRequisicao = false;
 
+                            } else if (dataVendaPme.temErro) {
+
+                                setTimeout(function () {
+                                    swal({
+                                        title: "E-mail inválido",
+                                        text: "Não é permitido colocar o e-mail do vendedor ou da corretora na venda. Por favor, informe o e-mail do cliente.",
+                                        type: "error",
+                                        closeOnConfirm: true,
+                                        allowEscapeKey: false,
+                                        allowOutsideClick: false
+                                    }, function () {
+                                        // Redirect the user
+                                        window.location.href = "lista_proposta.html";
+                                    });
+
+
+                                }, 250);
+
+                                propostaPmeSelecionada[0].status = "DIGITANDO";
+                                atualizarEmpresas(propostaPmeSelecionada[0]);
+                                emRequisicao = false;
+
                             } else {
 
                                 swal.close();

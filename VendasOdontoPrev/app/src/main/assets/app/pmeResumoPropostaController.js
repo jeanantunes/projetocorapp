@@ -430,7 +430,7 @@ function enviarPropostaPme() {
                             );
                         }, 250);
 
-                        proposta.status = "PRONTA";
+                        proposta.status = "DIGITANDO";
                         atualizarEmpresas(proposta);
                         emRequisicao = false;
                         $("#enviarPropostaPme").prop('disabled', false);
