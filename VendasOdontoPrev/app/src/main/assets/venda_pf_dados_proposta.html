@@ -79,7 +79,7 @@
                     <label class="label-email labelOdontBlur">E-mail</label>
                 </div>
                 <div>
-                    <input type="email" class="email inputLabelBlur" maxlength="50">
+                    <input type="email" class="email inputLabelBlur text-lowercase" id="email" maxlength="50">
                 </div>
                 <div>
                     <label class="label-celular labelOdontBlur">Celular</label>
@@ -134,10 +134,10 @@
                         <input type="text" class="nome-responsavel inputLabelBlur nomeRegex" id="nomeResponsavel" maxlength="100">
                     </div>
                     <div>
-                        <label class="email-representante-legal labelOdontBlur">E-mail</label>
+                        <label class="email-representante-legal labelOdontBlur label-email-representante">E-mail</label>
                     </div>
                     <div>
-                        <input type="email" class="email-representante-legal inputLabelBlur" id="emailRepresentanteLegal" maxlength="50">
+                        <input type="email" class="email-representante-legal inputLabelBlur input-email-representante-legal" id="emailRepresentanteLegal" maxlength="50">
                     </div>
                     <div>
                         <label class="label-celular-representante-legal labelOdontBlur">Celular</label>
@@ -248,6 +248,7 @@
     <script src="js/sweetalert.min.js"></script>
     <script src="app/coordenador.js"></script>
     <script src="app/pfCadastroController.js"></script>
+    <script type="text/javascript" src="providers/getEmailForcaCorretoraProvider.js"></script>
     <script src="js/moment.js"></script>
 </body>
 </html>

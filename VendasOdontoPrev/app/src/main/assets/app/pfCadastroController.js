@@ -249,6 +249,7 @@ $(document).ready(function () {
 
     });
 
+
     $("#rua").blur(function () {
 
         if ($("#cpf").val() != "" && TestaCPF($("#cpf").val())) {
@@ -431,7 +432,161 @@ $(document).ready(function () {
         }
     });
 
+
+    $("#email").blur(function () {
+
+        var emailDigitado = $(this).val();
+
+        if (!validateEmail(emailDigitado)){
+
+            return;
+
+        }
+
+        if (navigator.onLine) {
+
+            var arrayEmails = [];
+            arrayEmails.push(emailDigitado);
+
+            validarEmailForcaCorretora(arrayEmails,
+                function () {
+
+                    swal.close();
+                    $(".label-email").css("color", "#1974CE");
+                    $(".email").css("color", "#1974CE");
+                    $(".email").css("border-color", "#1974CE");
+
+                },
+                function (error) {
+
+                    if (error != 500) {
+                        $(".label-email").css("color", "#FF4141");
+                        $(".email").css("color", "#FF4141");
+                        $(".email").css("border-color", "#FF4141");
+                    }else {
+                        swal.close();
+                    }
+                }
+            )
+
+        }
+
+    })
+
+    $("#emailRepresentanteLegal").blur(function () {
+
+        var emailDigitado = $(this).val();
+
+        if (!validateEmail(emailDigitado)){
+
+            return;
+
+        }
+
+        if (navigator.onLine) {
+
+            var arrayEmails = [];
+            arrayEmails.push(emailDigitado);
+
+            validarEmailForcaCorretora(arrayEmails,
+                function () {
+
+                    swal.close();
+                    $(".label-email-representante").css("color", "#1974CE");
+                    $(".input-email-representante-legal").css("color", "#1974CE");
+                    $(".input-email-representante-legal").css("border-color", "#1974CE");
+
+                },
+                function (error) {
+
+                    if (error != 500) {
+                        $(".label-email-representante").css("color", "#FF4141");
+                        $(".input-email-representante-legal").css("color", "#FF4141");
+                        $(".input-email-representante-legal").css("border-color", "#FF4141");
+                    }else {
+                        swal.close();
+                    }
+                }
+            )
+
+        }
+
+    })
+
 });
+
+function validarEmailForcaCorretora(arrayEmail, callbackSuccess, callbackError) {
+
+    swal({
+        title: "Aguarde",
+        text: '',
+        content: "input",
+        imageUrl: "img/icon-aguarde.gif",
+        showCancelButton: false,
+        showConfirmButton: false,
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        icon: "info",
+        button: {
+            text: "...",
+            closeModal: false
+        }
+    });
+
+
+    callTokenVendas(function (dataToken) {
+
+        if (dataToken.status != undefined) {
+            callbackError(500);
+            return;
+        }
+
+        var dadosUsuario = get("dadosUsuario");
+        var codigoUsuario = dadosUsuario.codigo;
+
+        getEmailForcaCorretora(dataToken.access_token, codigoUsuario,
+            function (dataEmailForcaCorretora) {
+
+                if (dataEmailForcaCorretora != undefined) {
+
+                    var emailCorretora = dataEmailForcaCorretora.emailCorretora;
+                    var emailForcaVenda = dataEmailForcaCorretora.emailForcaVenda;
+                    var possuiErros = false;
+
+                    $.each(arrayEmail, function (index, value) {
+
+                        if (value == emailCorretora || value == emailForcaVenda) {
+
+                            swal(
+                                "E-mail inválido",
+                                "Não é permitido colocar o e-mail do vendedor" +
+                                " ou da corretora na venda. Por favor, informe o e-mail do cliente.",
+                                "error"
+                            );
+
+                            possuiErros = true;
+                        }
+
+                    });
+
+                    if (possuiErros) {
+                        callbackError(403);
+                        return;
+                    }
+
+                    callbackSuccess();
+                    return;
+                }
+            },
+            function (dataError) {
+                callbackError(500);
+                return;
+            }
+        )
+
+    })
+
+}
 
 function limparCamposResponsavelLegal() {
 
