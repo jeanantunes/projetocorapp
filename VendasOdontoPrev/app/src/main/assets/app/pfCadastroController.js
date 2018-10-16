@@ -1,4 +1,5 @@
 ﻿var preenchidos = false;
+emRequisicao = false;
 
 $(document).ready(function () {
 
@@ -1383,17 +1384,57 @@ function salvarRascunho() {
     }
 
 
-    //var currentYear = (new Date).getFullYear();
-    //var idade = $(".nascimento").val().split("/");
-    //var menor = currentYear - idade[2];
-    //
-    //if (menor < 18) {
-    //    swal("Ops!", "O Titular não pode ser menor de idade", "error");
-    //    return false;
-    //}
+    var emailPrincipal = $("#email").val();
+    var emailSegundoContato = $("#emailRepresentanteLegal").val();
+    var arrayEmails = [];
+    arrayEmails.push(emailPrincipal);
 
-    salvarRascunhoMemoria();
-    window.location.href = "resumo_pf_proposta.html";
+    var dateNascimentoTitular = toDate($("#dataNascimentoTitular").val());
+
+    if (!isMaiorDeIdade(dateNascimentoTitular)) {
+
+        arrayEmails.push(emailSegundoContato);
+
+    }
+
+    if (navigator.onLine) {
+
+        emRequisicao = true;
+        $("#continuarPropostaPf").prop('disabled', true);
+
+        validarEmailForcaCorretora(arrayEmails,
+            function () {
+
+                emRequisicao = false;
+                $("#continuarPropostaPf").prop('disabled', emRequisicao);
+                salvarRascunhoMemoria();
+                window.location.href = "resumo_pf_proposta.html";
+
+            },
+            function (error) {
+
+                if (error != 500) {
+
+                    emRequisicao = false;
+                    $("#continuarPropostaPf").prop('disabled', emRequisicao);
+
+                } else {
+
+                    emRequisicao = false;
+                    $("#continuarPropostaPf").prop('disabled', emRequisicao);
+                    salvarRascunhoMemoria();
+                    window.location.href = "resumo_pf_proposta.html";
+                }
+            }
+        )
+    } else {
+
+        emRequisicao = false;
+        $("#continuarPropostaPf").prop('disabled', emRequisicao);
+        salvarRascunhoMemoria();
+        window.location.href = "resumo_pf_proposta.html";
+    }
+
 }
 
 function salvarRascunhoMemoria() {
