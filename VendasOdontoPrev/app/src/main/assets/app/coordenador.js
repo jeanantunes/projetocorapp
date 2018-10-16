@@ -1762,6 +1762,24 @@ function enviarPropostaPf() {
                             $('#continuarPfDebito').prop('disabled', false);
                             emRequisicao = false;
 
+                        } else if (dataProposta.temErro) {
+
+                            var fraseEmailInvalido = getRepository("fraseEmailInvalido");
+
+                            setTimeout(function () {
+                                swal(fraseEmailInvalido.title,
+                                    fraseEmailInvalido.descricao,
+                                    fraseEmailInvalido.tipo
+                                );
+                            }, 250);
+
+                            proposta.status = "PRONTA";
+                            atualizarPessoas(proposta);
+                            $('#irParaDebito').prop('disabled', false);
+                            $('#pagarComBoleto').prop('disabled', false);
+                            $('#continuarPfDebito').prop('disabled', false);
+                            emRequisicao = false;
+
                         } else {
 
                             proposta.status = "CRITICADA";

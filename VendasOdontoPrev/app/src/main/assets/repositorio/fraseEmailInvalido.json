@@ -1,0 +1,5 @@
+﻿{
+  "title": "E-mail inválido",
+  "descricao": "Não é permitido colocar o e-mail do vendedor ou da corretora na venda. Por favor, informe o e-mail do cliente.",
+  "tipo": "error"
+}
