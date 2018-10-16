@@ -355,6 +355,18 @@ $(document).ready(function () {
 
                     }
 
+                    if (dataEmailSuccess.id == 400){
+                        var fraseEmailInvalido = getRepository("fraseEmailInvalido");
+
+                        setTimeout(function () {
+                            swal(fraseEmailInvalido.title,
+                                fraseEmailInvalido.descricao,
+                                fraseEmailInvalido.tipo
+                            );
+                        }, 250);
+                        return;
+                    }
+
                     swal({ 
                         title: "Email alterado com sucesso",
                         text: "Deseja reenviar o email de aceite?",
