@@ -666,9 +666,9 @@ function enviarPropostaPme(cnpjProposta) {
                         swal("Ops!", "Erro na consulta do CNPJ, mas sua proposta está salva.\n\nTente envia-la mais tarde.", "error");
                         emRequisicao = false;
                     }, 250);
-                    
+
                     return;
-                    
+
                 }
 
                 propostaPmeSelecionada[0] = dataProposta;
@@ -846,10 +846,36 @@ function enviarPropostaPf(cpfProposta) {
 
                     if (dataProposta.id == 0) {
 
-                        enviarProposta[0].status = "CRITICADA";
-                        atualizarPessoas(enviarProposta[0]);
-                        emRequisicao = false;
-                        console.log("Erro");
+                        if (dataProposta.temBloqueio) {
+
+                            swal("Corretora Bloqueada", "Sua corretora possui uma pendência de atualização contratual com a OdontoPrev, por favor tente refazer as vendas após resolução.", "info");
+                            enviarProposta[0].status = "PRONTA";
+                            atualizarPessoas(enviarProposta[0]);
+                            emRequisicao = false;
+
+                        } else if (dataProposta.temErro) {
+
+                            var fraseEmailInvalido = getRepository("fraseEmailInvalido");
+
+                            setTimeout(function () {
+                                swal(fraseEmailInvalido.title,
+                                    fraseEmailInvalido.descricao,
+                                    fraseEmailInvalido.tipo
+                                );
+                            }, 250);
+
+                            enviarProposta[0].status = "PRONTA";
+                            atualizarPessoas(enviarProposta[0]);
+                            emRequisicao = false;
+
+                        } else {
+
+                            enviarProposta[0].status = "CRITICADA";
+                            atualizarPessoas(enviarProposta[0]);
+                            emRequisicao = false;
+                            console.log("Erro");
+
+                        }
 
                     } else {
 
@@ -863,7 +889,7 @@ function enviarPropostaPf(cpfProposta) {
                         setTimeout(function () {
 
                             emRequisicao = false;
-                            
+
                             swal({
                                 title: "Proposta enviada com sucesso!",
                                 text: "Vamos atualizar a sua lista de propostas",
@@ -881,7 +907,7 @@ function enviarPropostaPf(cpfProposta) {
                     }
                 }
                 else {
-                    
+
                     enviarProposta[0].status = "PRONTA";
                     atualizarPessoas(enviarProposta[0]);
                     emRequisicao = false;
@@ -889,7 +915,7 @@ function enviarPropostaPf(cpfProposta) {
                     setTimeout(function () {
                         swal("Ops!", "Algo deu errado. Por favor, tente enviar outra vez a proposta.", "error")
                     }, 250);
-                    
+
                 }
 
                 atualizarDashBoard();
