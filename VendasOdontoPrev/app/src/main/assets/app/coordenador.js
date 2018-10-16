@@ -159,9 +159,6 @@ function sincronizarPf(callback, pessoa) {
 
     var date = toDate(pessoa.dataNascimento);
 
-
-
-
     if (!isMaiorDeIdade(date)) {
         var json = {
             "cdForcaVenda": forcaVenda.codigo,
@@ -272,8 +269,6 @@ function sincronizarPf(callback, pessoa) {
     }
 
     json = JSON.stringify(json);
-
-    console.log(json);
 
     callTokenVendas(function (dataToken) {
 
