@@ -85,12 +85,23 @@ $(document).ready(function () {
 
         var date = toDate($("#dataNascimentoTitular").val());
 
+        var planosInfantisJson = getRepository("planosInfantis"); // variaveis utilizada para verificar se nascimento do beneficiario 
+        var planosInfantis = [];                                  // estah de acordo com as regras do plano
+
+        $.each(planosInfantisJson, function (indicePlano, itemPlano) {
+
+            planosInfantis.push(itemPlano);
+
+        });
+
+        var propostaPf = get("propostaPf");
+
         if (isMaiorDeIdade(date)) {
 
             $(".representanteContratual").addClass('hide');
+
             if ($("#cpf").val() != "" && TestaCPF($("#cpf").val())) {
 
-                var propostaPf = get("propostaPf");
                 propostaPf.responsavelContratual.nome = "";
                 propostaPf.responsavelContratual.cpf = "";
                 propostaPf.responsavelContratual.nomeMae = "";
@@ -102,6 +113,29 @@ $(document).ready(function () {
                 atualizarPessoas(propostaPf);
 
             }
+
+            $.each(propostaPf.planos, function (i, item) {
+
+                var planoInfantil = planosInfantis.filter(function (x) { return x == item.cdPlano });
+
+                if (planoInfantil.length > 0) {
+
+                    if (planoInfantil[0] == planosInfantisJson.dentalJuriorMensal || planoInfantil[0] == planosInfantisJson.dentalJuriorAnual) {
+
+                        var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
+                        swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+
+                    } else if (planoInfantil[0] == planosInfantisJson.dentalDenteDeLeiteMensal || planoInfantil[0] == planosInfantisJson.dentalDenteDeLeiteAnual) {
+
+                        var fraseSwal = getRepository("fraseMaiorDeIdadePlanoDenteLeite");
+                        swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+
+                    }
+
+                }
+
+            })
+
 
             return false;
         }
@@ -115,6 +149,30 @@ $(document).ready(function () {
             atualizarPessoas(propostaPf);
 
         }
+
+        $.each(propostaPf.planos, function (i, item) {
+
+            if (item.cdPlano == planosInfantisJson.dentalDenteDeLeiteMensal || item.cdPlano == planosInfantisJson.dentalDenteDeLeiteAnual) {
+
+                if (!menorQueOitoAnos(date)) {
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoDenteLeite");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+
+                }
+
+            } else if (item.cdPlano == planosInfantisJson.dentalJuriorMensal || item.cdPlano == planosInfantisJson.dentalJuriorAnual) {
+
+                if (menorQueOitoAnos(date) || isMaiorDeIdade(date)) {
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+
+                }
+
+            }
+
+        })
 
     });
 
@@ -885,7 +943,7 @@ function addDependente() {
 
 
 
-    if (!menorQueSeteAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
+    if (!menorQueOitoAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
 
         swal("Ops!", "No plano dente de leite o titular deve ter menos que 7 anos", "error");
         return false;
@@ -1159,7 +1217,7 @@ function validarCampos() {
 
 
 
-    if (!menorQueSeteAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
+    if (!menorQueOitoAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
 
         swal("Ops!", "No plano dente de leite o titular deve ter menos que 7 anos", "error");
         return false;
@@ -1236,13 +1294,6 @@ function salvarRascunho() {
         return false;
     }
 
-    if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
-
-        $("#cpf").focus();
-        swal("Ops!", "Preencha o CPF", "error");
-        return false;
-    }
-
     if ($(".nascimento").val() == "") {
         swal("Ops!", "Preencha a Data de Nascimento", "error");
         return false;
@@ -1252,6 +1303,10 @@ function salvarRascunho() {
         swal("Ops!", "Preencha uma data de nascimento correta", "error");
         return false;
     }
+
+    var validacaoNascimento = validarNascimentoBeneficiario();
+
+    if (!validacaoNascimento) return;
 
     if ($("#radio-1").is(":checked") == false && $("#radio-2").is(":checked") == false) {
         swal("Ops!", "Selecione o Sexo", "error");
@@ -1339,10 +1394,8 @@ function salvarRascunho() {
 
     var planos = get("CodPlanos");
     var plano = planos.filter(function (x) { return x.cdPlano == proposta.planos[0].cdPlano });
-
-
-
-    if (!menorQueSeteAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
+    
+    if (!menorQueOitoAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
 
         swal("Ops!", "No plano dente de leite o titular deve ter menos que 7 anos", "error");
         return false;
@@ -1434,6 +1487,93 @@ function salvarRascunho() {
         salvarRascunhoMemoria();
         window.location.href = "resumo_pf_proposta.html";
     }
+
+}
+
+function validarNascimentoBeneficiario() {
+
+    if ($("#dataNascimentoTitular").val() == "") return false;
+
+    var date = toDate($("#dataNascimentoTitular").val());
+
+    var planosInfantisJson = getRepository("planosInfantis"); // variaveis utilizada para verificar se nascimento do beneficiario 
+    var planosInfantis = [];                                  // estah de acordo com as regras do plano
+
+    $.each(planosInfantisJson, function (indicePlano, itemPlano) {
+
+        planosInfantis.push(itemPlano);
+
+    });
+
+    var propostaPf = get("propostaPf");
+
+    if (isMaiorDeIdade(date)) {
+
+        $.each(propostaPf.planos, function (i, item) {
+
+            var planoInfantil = planosInfantis.filter(function (x) { return x == item.cdPlano });
+
+            if (planoInfantil.length > 0) {
+
+                if (planoInfantil[0] == planosInfantisJson.dentalJuriorMensal || planoInfantil[0] == planosInfantisJson.dentalJuriorAnual) {
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    return false;
+
+                } else if (planoInfantil[0] == planosInfantisJson.dentalDenteDeLeiteMensal || planoInfantil[0] == planosInfantisJson.dentalDenteDeLeiteAnual) {
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoDenteLeite");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    return false;
+
+                }
+
+            } else if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+
+                $("#cpf").focus();
+                swal("Ops!", "Preencha o CPF", "error");
+                return false;
+            }
+
+        })
+
+    } else {
+
+        $.each(propostaPf.planos, function (i, item) {
+
+            if (item.cdPlano == planosInfantisJson.dentalDenteDeLeiteMensal || item.cdPlano == planosInfantisJson.dentalDenteDeLeiteAnual) {
+
+                if (!menorQueOitoAnos(date)) {
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoDenteLeite");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    return false;
+
+                }
+
+            } else if (item.cdPlano == planosInfantisJson.dentalJuriorMensal || item.cdPlano == planosInfantisJson.dentalJuriorAnual) {
+
+                if (menorQueOitoAnos(date) || isMaiorDeIdade(date)) {
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    return false;
+
+                }
+
+            } else if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+
+                $("#cpf").focus();
+                swal("Ops!", "Preencha o CPF", "error");
+                return false;
+            }
+
+        })
+
+    }
+
+    return true;
 
 }
 

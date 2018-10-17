@@ -832,7 +832,7 @@ function setPlanosProd() {
     // PLANOS JUNIOR
 
     plano = getRepository("plano");
-    plano.cdPlano = 25;
+    plano.cdPlano = 86;
     plano.nome = "JÚNIOR DE 8 A 17 ANOS";
     plano.valor = "27";
     plano.centavo = "99";
@@ -842,7 +842,7 @@ function setPlanosProd() {
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 26;
+    plano.cdPlano = 87;
     plano.nome = "JÚNIOR DE 8 A 17 ANOS";
     plano.valor = "149";
     plano.centavo = "80";
@@ -1002,12 +1002,12 @@ function setPlanosProdCod() {
     // PLANOS JUNIOR
 
     var plano = new Object();
-    plano.cdPlano = 25;
+    plano.cdPlano = 86;
     plano.nome = "JUNIOR MENSAL";
     planos.push(plano);
 
     var plano = new Object();
-    plano.cdPlano = 26;
+    plano.cdPlano = 87;
     plano.nome = "JUNIOR ANUAL";
     planos.push(plano);
 
@@ -1440,9 +1440,9 @@ function isMaiorDeIdade(date) {
     return false;
 }
 
-function menorQueSeteAnos(date) {
+function menorQueOitoAnos(date) {
 
-    var eightYearsAgo = moment().subtract(7, "years");
+    var eightYearsAgo = moment().subtract(8, "years");
     var birthday = moment(date);
 
     if (!birthday.isValid()) {
