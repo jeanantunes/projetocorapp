@@ -55,11 +55,19 @@ function setIdPlano() {
 
     /////////////////////// DENTE DE LEITE //////////////////
 
-    //var plano = planos.filter(function (x) { if (x.nome == "DENTE DE LEITE MENSAL") { return x.nome; } });
-    //$("#denteDeLeiteMensal").attr("data-id", plano[0].cdPlano);
-    //
-    //var plano = planos.filter(function (x) { if (x.nome == "DENTE DE LEITE ANUAL") { return x.nome; } });
-    //$("#denteDeLeiteAnual").attr("data-id", plano[0].cdPlano);
+    var plano = planos.filter(function (x) { if (x.nome == "DENTE DE LEITE MENSAL") { return x.nome; } });
+    $("#denteDeLeiteMensal").attr("data-id", plano[0].cdPlano);
+    
+    var plano = planos.filter(function (x) { if (x.nome == "DENTE DE LEITE ANUAL") { return x.nome; } });
+    $("#denteDeLeiteAnual").attr("data-id", plano[0].cdPlano);
+
+    /////////////////////// PLANO JUNIOR //////////////////
+
+    var plano = planos.filter(function (x) { if (x.nome == "JUNIOR MENSAL") { return x.nome; } });
+    $("#planoJuniorMensal").attr("data-id", plano[0].cdPlano);
+
+    var plano = planos.filter(function (x) { if (x.nome == "JUNIOR ANUAL") { return x.nome; } });
+    $("#planoJuniorAnual").attr("data-id", plano[0].cdPlano);
 
     ///////////////////////// DENTAL ORTO ////////////////////////
 

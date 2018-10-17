@@ -64,7 +64,7 @@ function callEspecialidades(callback, token) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/redecredenciada/1.0/especialidades",
+        url: URLRedeCredenciada + "/redecredenciada/1.0/especialidades",
         method: "GET",
         headers: {
             "Authorization": "Bearer " + token,
@@ -95,7 +95,7 @@ function callEstados(callback, token) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/cep/1.1/estados",
+        url: URLRedeCredenciada + "/cep/1.1/estados",
         method: "GET",
         headers: {
             "Authorization": "Bearer " + token,
@@ -126,7 +126,7 @@ function callCidade(callback, token, uf) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/cep/1.1/cidades/uf?uf=" + uf,
+        url: URLRedeCredenciada + "/cep/1.1/cidades/uf?uf=" + uf,
         method: "GET",
         headers: {
             "Authorization": "Bearer " + token,
@@ -158,7 +158,7 @@ function callBairro(callback, token, uf, codigoCidade) {
 
     $.ajax({
         async: true,
-        url: URLBase + "/cep/1.1/bairros?uf=" + uf + "&codigoCidade=" + codigoCidade + "&codigoBeneficiario=" + codigoBeneficiario,
+        url: URLRedeCredenciada + "/cep/1.1/bairros?uf=" + uf + "&codigoCidade=" + codigoCidade + "&codigoBeneficiario=" + codigoBeneficiario,
         method: "GET",
         headers: {
             "Content-Type": "application/json",

@@ -3,6 +3,7 @@ var jsonName = "";
 var pdata = "";
 var compName = "";
 var URLBase = "";
+var URLRedeCredenciada = "";
 var URLBaseToken = ""; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
 var apiGateway = ""; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
 var Token = "";
@@ -354,6 +355,7 @@ function defineConexao() {
     if (conexao.producaoLigado) {
         URLBase = conexao.producaoURL;
         URLBaseToken = conexao.producaoURL;
+        URLRedeCredenciada = conexao.urlRedeCredenciada;
         Token = conexao.chaveProd;
         isDeviceMobile = conexao.isDeviceMobile; //201809211544 - esert - COR-793
         setPlanosProd();
@@ -364,11 +366,13 @@ function defineConexao() {
         console.log("URLBase:[" + URLBase + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         URLBaseToken = conexao.tokenURL; //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         console.log("URLBaseToken:[" + URLBaseToken + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
-        console.log("apiGateway:[" + apiGateway + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+        URLRedeCredenciada = conexao.urlRedeCredenciada;
+        console.log("URLRedeCredenciada:[" + URLRedeCredenciada + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
         Token = conexao.chaveHomolog;
         isDeviceMobile = conexao.isDeviceMobile; //201809211544 - esert - COR-793
         setPlanosProd();
-        //setPlanosHml();
+        console.log("apiGateway:[" + apiGateway + "]"); //201809202112 - esert - COR-793 : APP - Block Modal sem Pre-Cadastro ao Associar Com Corretora
+
     }
 }
 
@@ -808,45 +812,47 @@ function setPlanosProd() {
 
 
     plano = getRepository("plano");
-    plano.cdPlano = 11;
+    plano.cdPlano = 63;
     plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
     plano.valor = "14";
     plano.centavo = "98";
     plano.desc = "Mensal";
     plano.css = "colorSlick2";
-
     planos.push(plano);
 
     plano = getRepository("plano");
-    plano.cdPlano = 12;
+    plano.cdPlano = 64;
     plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
     plano.valor = "149";
     plano.centavo = "80";
     plano.desc = "Anual";
     plano.css = "colorSlick2";
+    planos.push(plano);
+
+    // PLANOS JUNIOR
+
+    plano = getRepository("plano");
+    plano.cdPlano = 25;
+    plano.nome = "JÚNIOR DE 8 A 17 ANOS";
+    plano.valor = "27";
+    plano.centavo = "99";
+    plano.desc = "Mensal";
+    plano.css = "colorSlick8Junior";
 
     planos.push(plano);
 
-    //plano = getRepository("plano");
-    //plano.cdPlano = 6;
-    //plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
-    //plano.valor = "14";
-    //plano.centavo = "98";
-    //plano.desc = "Mensal";
-    //plano.css = "colorSlick2";
-    //
-    //planos.push(plano);
-    //
-    //plano = getRepository("plano");
-    //plano.cdPlano = 7;
-    //plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
-    //plano.valor = "149";
-    //plano.centavo = "80";
-    //plano.desc = "Anual";
-    //plano.css = "colorSlick2";
-    //
-    //planos.push(plano);
+    plano = getRepository("plano");
+    plano.cdPlano = 26;
+    plano.nome = "JÚNIOR DE 8 A 17 ANOS";
+    plano.valor = "149";
+    plano.centavo = "80";
+    plano.desc = "Anual";
+    plano.css = "colorSlick8Junior";
 
+    // END PLANOS JUNIOR
+
+    planos.push(plano);
+        
     plano = getRepository("plano");
     plano.cdPlano = 74;
     plano.nome = "DENTAL ESTÉTICA";
@@ -981,14 +987,28 @@ function setPlanosProdCod() {
     plano.nome = "DENTAL BEM-ESTAR ANUAL S/CARENCIA Principal";
     planos.push(plano);
 
+    // PLANOS DENTE DE LEITE
+
     var plano = new Object();
-    plano.cdPlano = 11;
+    plano.cdPlano = 63;
     plano.nome = "DENTE DE LEITE MENSAL";
     planos.push(plano);
 
     var plano = new Object();
-    plano.cdPlano = 12;
+    plano.cdPlano = 64;
     plano.nome = "DENTE DE LEITE ANUAL";
+    planos.push(plano);
+
+    // PLANOS JUNIOR
+
+    var plano = new Object();
+    plano.cdPlano = 25;
+    plano.nome = "JUNIOR MENSAL";
+    planos.push(plano);
+
+    var plano = new Object();
+    plano.cdPlano = 26;
+    plano.nome = "JUNIOR ANUAL";
     planos.push(plano);
 
     // PLANOS BEM ESTAR COPA
