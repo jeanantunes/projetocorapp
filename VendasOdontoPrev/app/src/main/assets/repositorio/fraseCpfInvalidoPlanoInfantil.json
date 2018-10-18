@@ -1,0 +1,5 @@
+﻿{
+  "title": "Ops!",
+  "descricao": "CPF Inválido. Para os planos Dente de Leite e Júnior o CPF náo é obrigatório.",
+  "tipo": "error"
+}
