@@ -79,37 +79,13 @@ function SalvarDependente() {
         return;
     }
 
-    var dateNascimento = toDate($(".nascimento").val());
+    var validacaoNascimento = validarNascimentoBeneficiario();
 
-    if (isMaiorDeIdade(dateNascimento)) {
-
-        if ($("#cpf").val() == "") {
-
-            swal("Ops!", "CPF Obrigatório para maiores de idade", "error");
-            $("#cpf").focus();
-            return;
-
-        }
-
-        if (!TestaCPF($("#cpf").val())) {
-
-            swal("Ops!", "CPF inválido", "error");
-            $("#cpf").focus();
-            return;
-
-        }
-
-    }
+    if (!validacaoNascimento) return false;
 
     var proposta = get("propostaPf");
     var planos = get("CodPlanos");
     var plano = planos.filter(function (x) { return x.cdPlano == proposta.planos[0].cdPlano });
-
-    if (!menorQueSeteAnos(date) && plano[0].nome.indexOf("DENTE DE LEITE") !== -1) {
-
-        swal("Ops!", "No plano dente de leite o dependente deve ter menos que 7 anos", "error");
-        return false;
-    }
 
     if ($(".nome-mae").val() == "") {
         swal("Ops!", "Preencha o Nome da Mãe", "error");
@@ -269,4 +245,151 @@ function salvarEVoltar() {
 
     if (problema == false)
         window.location.href = 'venda_pf_dados_proposta.html';
+}
+
+function validarNascimentoBeneficiario() {
+
+    if ($(".nascimento").val() == "") return false;
+
+    var date = toDate($(".nascimento").val());
+
+    var planosInfantisJson = getRepository("planosInfantis"); // variaveis utilizada para verificar se nascimento do beneficiario 
+    var planosInfantis = [];                                  // estah de acordo com as regras do plano
+
+    $.each(planosInfantisJson, function (indicePlano, itemPlano) {
+
+        planosInfantis.push(itemPlano);
+
+    });
+
+    var possuiErros = false;
+    var propostaPf = get("propostaPf");
+
+    if (isMaiorDeIdade(date)) {
+
+        $.each(propostaPf.planos, function (i, item) {
+
+            var planoInfantil = planosInfantis.filter(function (x) { return x == item.cdPlano });
+
+            if (planoInfantil.length > 0) {
+
+                if (planoInfantil[0] == planosInfantisJson.dentalJuriorMensal || planoInfantil[0] == planosInfantisJson.dentalJuriorAnual) {
+
+                    if ($(".cpf").val() != "" && !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+
+                        $("#cpf").focus();
+                        exibirSwalCpfInvalidoInfantil();
+                        possuiErros = true;
+                        return;
+
+                    }
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    possuiErros = true;
+                    return;
+
+                } else if (planoInfantil[0] == planosInfantisJson.dentalDenteDeLeiteMensal || planoInfantil[0] == planosInfantisJson.dentalDenteDeLeiteAnual) {
+
+                    if ($(".cpf").val() != "" && !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+
+                        $("#cpf").focus();
+                        exibirSwalCpfInvalidoInfantil();
+                        possuiErros = true;
+                        return;
+
+                    }
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoDenteLeite");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    possuiErros = true;
+                    return;
+
+                }
+
+            } else if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+
+                $("#cpf").focus();
+                swal("Ops!", "CPF inválido", "error");
+                possuiErros = true;
+                return;
+            }
+
+        })
+
+        if (possuiErros) return false;
+
+    } else {
+
+        $.each(propostaPf.planos, function (i, item) {
+
+            if (item.cdPlano == planosInfantisJson.dentalDenteDeLeiteMensal || item.cdPlano == planosInfantisJson.dentalDenteDeLeiteAnual) {
+
+                if ($(".cpf").val() != "" && !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+
+                    $("#cpf").focus();
+                    exibirSwalCpfInvalidoInfantil();
+                    possuiErros = true;
+                    return;
+                }
+
+                if (!menorQueOitoAnos(date)) {
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoDenteLeite");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    possuiErros = true;
+                    return;
+
+                }
+
+            } else if (item.cdPlano == planosInfantisJson.dentalJuriorMensal || item.cdPlano == planosInfantisJson.dentalJuriorAnual) {
+
+                if ($(".cpf").val() != "" && !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+
+                    $("#cpf").focus();
+                    exibirSwalCpfInvalidoInfantil();
+                    possuiErros = true;
+                    return;
+                }
+
+                if (menorQueOitoAnos(date) || isMaiorDeIdade(date)) {
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    possuiErros = true;
+                    return;
+
+                }
+
+            } else if ($("#cpf").val() == "") {
+
+                swal("Ops!", "CPF Obrigatório para maiores de idade", "error");
+                $("#cpf").focus();
+                possuiErros = true;
+                return;
+
+            } else if (!TestaCPF($("#cpf").val())) {
+
+                swal("Ops!", "CPF inválido", "error");
+                $("#cpf").focus();
+                possuiErros = true;
+                return;
+
+            }
+
+        })
+
+        if (possuiErros) return false;
+
+    }
+
+    return true;
+
+}
+
+function exibirSwalCpfInvalidoInfantil() {
+
+    var fraseSwal = getRepository("fraseCpfInvalidoPlanoInfantil");
+    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+
 }
