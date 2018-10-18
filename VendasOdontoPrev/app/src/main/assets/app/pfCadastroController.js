@@ -3,6 +3,99 @@ emRequisicao = false;
 
 $(document).ready(function () {
 
+    $(".infoIcon").click(function () {
+        $(".tooltiptext").removeClass('hide');
+        $(".infoIcon").prop("src", "img/info_icon2.png").show();
+        $(".tooltiptext").show();
+        $(".tooltiptext").css("background-color", "#da497f");
+        $(".tooltiptext").css("color", "#FFFFFF");
+        $(".tooltiptext").css("padding", "18px");
+        $(".tooltiptext").css("font-size", "12px");
+        $(".tooltiptext").css("border-bottom", "0px solid #da497f");
+        $(".tooltiptext").css("border-left", "10px solid #da497f");
+        $(".tooltiptext").css("max-width", "260px");
+        $(".tooltiptext").css("margin-top", "-50px");
+        $(".tooltiptext").css("margin-left", "-9px");
+        $(".infoIcon").css("margin-top", "-10px");
+        $(".infoIcon").css("z-index", "9999");
+    });
+
+    $(".infoIcon").blur(function () {
+        $(".tooltiptext").addClass('hide');
+        $(".infoIcon").prop("src", "img/info_icon1.png").show();
+        $(".infoIcon").css("margin-top", "-10px");
+    });
+
+    $(".email").click(function () {
+        $(".tooltiptext").show();
+        $(".tooltiptext").removeClass('hide');
+        $(".tooltiptext").css("background-color", "#da497f");
+        $(".tooltiptext").css("color", "#FFFFFF");
+        $(".tooltiptext").css("padding", "18px");
+        $(".tooltiptext").css("font-size", "12px");
+        $(".tooltiptext").css("border-bottom", "0px solid #da497f");
+        $(".tooltiptext").css("border-left", "10px solid #da497f");
+        $(".tooltiptext").css("max-width", "260px");
+        $(".tooltiptext").css("margin-top", "-50px");
+        $(".tooltiptext").css("margin-left", "-9px");
+        $(".infoIcon").css("margin-top", "-10px");
+        $(".infoIcon").css("z-index", "9999");
+        $(".infoIcon").prop("src", "img/info_icon2.png").show();
+    });
+
+    $(".email").blur(function () {
+        $(".tooltiptext").hide();
+        $(".infoIcon").prop("src", "img/info_icon2.png").hide();
+        $(".infoIcon").prop("src", "img/info_icon1.png").show();
+    });
+
+
+    $("#emailRepresentanteLegal").click(function () {
+        $(".tooltiptext2").show();
+        $(".tooltiptext2").removeClass('hide');
+        $(".tooltiptext2").css("background-color", "#da497f");
+        $(".tooltiptext2").css("color", "#FFFFFF");
+        $(".tooltiptext2").css("padding", "18px");
+        $(".tooltiptext2").css("font-size", "12px");
+        $(".tooltiptext2").css("border-bottom", "0px solid #da497f");
+        $(".tooltiptext2").css("border-left", "10px solid #da497f");
+        $(".tooltiptext2").css("max-width", "260px");
+        $(".tooltiptext2").css("margin-top", "-50px");
+        $(".tooltiptext2").css("margin-left", "-9px");
+        $(".infoIcon2").css("margin-top", "-10px");
+        $(".infoIcon2").css("z-index", "9999");
+        $(".infoIcon2").prop("src", "img/info_icon2.png").show();
+    });
+
+    $("#emailRepresentanteLegal").blur(function () {
+        $(".tooltiptext2").hide();
+        $(".infoIcon2").prop("src", "img/info_icon2.png").hide();
+        $(".infoIcon2").prop("src", "img/info_icon1.png").show();
+    });
+
+    $(".infoIcon2").click(function () {
+        $(".tooltiptext2").removeClass('hide');
+        $(".infoIcon2").prop("src", "img/info_icon2.png").show();
+        $(".tooltiptext2").show();
+        $(".tooltiptext2").css("background-color", "#da497f");
+        $(".tooltiptext2").css("color", "#FFFFFF");
+        $(".tooltiptext2").css("padding", "18px");
+        $(".tooltiptext2").css("font-size", "12px");
+        $(".tooltiptext2").css("border-bottom", "0px solid #da497f");
+        $(".tooltiptext2").css("border-left", "10px solid #da497f");
+        $(".tooltiptext2").css("max-width", "260px");
+        $(".tooltiptext2").css("margin-top", "-50px");
+        $(".tooltiptext2").css("margin-left", "-9px");
+        $(".infoIcon2").css("margin-top", "-10px");
+        $(".infoIcon2").css("z-index", "9999");
+    });
+
+    $(".infoIcon2").blur(function () {
+        $(".tooltiptext2").addClass('hide');
+        $(".infoIcon2").prop("src", "img/info_icon1.png").show();
+        $(".infoIcon2").css("margin-top", "-10px");
+    });
+
     buscarPlanosSelecionados();
     carregarProposta();
     localStorage.removeItem("dependentePfEmEdicao");
