@@ -335,7 +335,18 @@ function carregarListaOnlineAtualizarProposta() {
     var qtdPessoas = 0;
     var qtdEmpresas = 0;
 
+    var planosInfantisJson = getRepository("planosInfantis"); // variaveis utilizadas para verificar se nascimento do beneficiario 
+    var planosInfantis = [];                                  // estah de acordo com as regras do plano
+
+    $.each(planosInfantisJson, function (indicePlano, itemPlano) {
+
+        planosInfantis.push(itemPlano);
+
+    });
+
     $.each(pessoas, function (i, item) {
+
+        var planoInfantil = planosInfantis.filter(function (x) { return x == item.planos[0].cdPlano });
 
         if (item.status != "ENVIADA"
             && item.status != "Aprovado"
@@ -355,12 +366,11 @@ function carregarListaOnlineAtualizarProposta() {
             var acaoseta = "";
             var onClick = "";
 
-
             if (item.status == "DIGITANDO") {
                 status = "Proposta incompleta";
                 css = "colorCirc1";
                 acao = "ver detalhes";
-                link = 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
+                link = planoInfantil.length > 0 ? 'href="venda_pf_editar.html?cpf=' + item.responsavelContratual.cpf + '"' : 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
 
