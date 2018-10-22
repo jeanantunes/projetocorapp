@@ -1490,6 +1490,24 @@ function atualizarPessoas(proposta) {
     put("propostaPf", JSON.stringify(proposta));
 }
 
+function atualizarPropostasPfById(proposta) {
+
+    var pessoas = get("pessoas"); // lista de propostas pf
+
+    var propostas = [];
+
+    if (pessoas != undefined) {
+
+        propostas = pessoas.filter(function (x) { return x.idProposta != proposta.idProposta });
+
+    }
+
+    propostas.push(proposta);
+
+    put("pessoas", JSON.stringify(propostas));
+    put("propostaPf", JSON.stringify(proposta));
+}
+
 function atualizarEmpresas(proposta) {
     var empresas = get("empresas");
     var propostas = empresas.filter(function (x) { return x.cnpj != proposta.cnpj });
