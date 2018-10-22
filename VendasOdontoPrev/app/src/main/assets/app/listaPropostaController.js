@@ -125,13 +125,14 @@ function carregarListaOffline() {
             status = "Proposta incompleta";
             css = "colorCirc1";
             acao = "ver detalhes";
-            link = 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
+            link = 'href="venda_pf_editar.html?id=' + item.idProposta + '"';
             acaoseta = "";
         } else if (item.status == "PRONTA") {
-            status = "Aguardando envio";
-            css = "colorCirc4";
-            acao = "sincronizar";
-            link = "logado.html";
+            status = "Proposta com envio pendente";
+            css = "colorCirc8";
+            acao = "enviar proposta";
+            link = "";
+            onClick = "onclick='" + "sincronizarPropostaPF" + '("' + item.idProposta + '")' + "'"
             acaoseta = "";
         }
 
@@ -369,7 +370,6 @@ function carregarListaOnlineAtualizarProposta() {
                 css = "colorCirc1";
                 acao = "ver detalhes";
                 link = 'href="venda_pf_editar.html?id=' + item.idProposta + '"';
-                //link = planoInfantil.length > 0 ? 'href="venda_pf_editar.html?cpfResponsavel=' + item.responsavelContratual.cpf + '"' : 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
 
@@ -377,7 +377,7 @@ function carregarListaOnlineAtualizarProposta() {
                 css = "colorCirc8";
                 acao = "enviar proposta";
                 link = "";
-                onClick = "onclick='" + "sincronizarPropostaPF" + '("' + item.cpf + '")' + "'"
+                onClick = "onclick='" + "sincronizarPropostaPF" + '("' + item.idProposta + '")' + "'"
                 acaoseta = "";
 
 
@@ -773,9 +773,17 @@ function enviarPropostaPme(cnpjProposta) {
     }
 }
 
-function sincronizarPropostaPF(cpfProposta) {
+function sincronizarPropostaPF(idProposta) {
 
     if (emRequisicao) return;
+
+    if (!navigator.onLine) {
+
+        swal("Ops!", "É necessário estar conectado à internet para enviar a proposta", "info");
+        return;
+
+    }
+
     emRequisicao = true;
 
     validarForcaVenda(function (retornoForcaVenda) {
@@ -783,7 +791,7 @@ function sincronizarPropostaPF(cpfProposta) {
         emRequisicao = false;
         if (retornoForcaVenda != 403) {
 
-            enviarPropostaPf(cpfProposta);
+            enviarPropostaPf(idProposta);
 
         } else {
 
@@ -798,12 +806,12 @@ function sincronizarPropostaPF(cpfProposta) {
 
 }
 
-function enviarPropostaPf(cpfProposta) {
+function enviarPropostaPf(idProposta) {
 
     if (emRequisicao) return;
     emRequisicao = true;
     let propostasASincronizar = get("pessoas");
-    let enviarProposta = propostasASincronizar.filter(function (x) { return x.cpf == cpfProposta });
+    let enviarProposta = propostasASincronizar.filter(function (x) { return x.idProposta == idProposta });
 
     if (!navigator.onLine) {
         swal("Você está sem Internet", "Não se preocupe, você pode acessar a tela inicial e enviar esta proposta depois.", "info");
@@ -835,19 +843,9 @@ function enviarPropostaPf(cpfProposta) {
 
             }, 250);
 
-            var propostasDiferentes = propostasASincronizar.filter(function (x) { return x.cpf != enviarProposta[0].cpf });
-
-            propostasASincronizar = []; //limpar
-
-            $.each(propostasDiferentes, function (i, item) {
-                propostasASincronizar.push(item);
-            });
-
             enviarProposta[0].status = "SYNC";
             enviarProposta[0].horaSync = new Date();
-            propostasASincronizar.push(enviarProposta[0]);
-
-            put("pessoas", JSON.stringify(propostasASincronizar));
+            atualizarPropostasPfById(enviarProposta[0])
 
             sincronizarPf(function (dataProposta) {
 
@@ -859,7 +857,7 @@ function enviarPropostaPf(cpfProposta) {
 
                             swal("Corretora Bloqueada", "Sua corretora possui uma pendência de atualização contratual com a OdontoPrev, por favor tente refazer as vendas após resolução.", "info");
                             enviarProposta[0].status = "PRONTA";
-                            atualizarPessoas(enviarProposta[0]);
+                            atualizarPropostasPfById(enviarProposta[0]);
                             emRequisicao = false;
 
                         } else if (dataProposta.temErro) {
@@ -874,13 +872,13 @@ function enviarPropostaPf(cpfProposta) {
                             }, 250);
 
                             enviarProposta[0].status = "PRONTA";
-                            atualizarPessoas(enviarProposta[0]);
+                            atualizarPropostasPfById(enviarProposta[0]);
                             emRequisicao = false;
 
                         } else {
 
                             enviarProposta[0].status = "CRITICADA";
-                            atualizarPessoas(enviarProposta[0]);
+                            atualizarPropostasPfById(enviarProposta[0]);
                             emRequisicao = false;
                             console.log("Erro");
 
@@ -889,10 +887,7 @@ function enviarPropostaPf(cpfProposta) {
                     } else {
 
                         var pessoas = get("pessoas");
-                        var todosExcetoExclusao = pessoas.filter(function (x) { return x.cpf != enviarProposta[0].cpf });
-                        //todosExcetoExclusao.push(proposta);
-
-                        console.log(todosExcetoExclusao);
+                        var todosExcetoExclusao = pessoas.filter(function (x) { return x.idProposta != enviarProposta[0].idProposta });
                         put("pessoas", JSON.stringify(todosExcetoExclusao));
 
                         setTimeout(function () {
@@ -918,7 +913,7 @@ function enviarPropostaPf(cpfProposta) {
                 else {
 
                     enviarProposta[0].status = "PRONTA";
-                    atualizarPessoas(enviarProposta[0]);
+                    atualizarPropostasPfById(enviarProposta[0]);
                     emRequisicao = false;
 
                     setTimeout(function () {

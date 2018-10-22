@@ -378,8 +378,8 @@ function resyncPropostasPF() {
     $.each(propostasPF, function (i, item) {
 
 
-        var o = propostasPF.filter(function (x) { return x.cpf == item.cpf });
-        var propostas = propostasPF.filter(function (x) { return x.cpf != item.cpf });
+        var o = propostasPF.filter(function (x) { return x.idProposta == item.idProposta });
+        var propostas = propostasPF.filter(function (x) { return x.idProposta != item.idProposta });
 
         var salvarPropostas = []; //limpar
 
@@ -515,7 +515,7 @@ function checkStatusPropostas() {
                 {
                     proposta.dataAtualizacao = new Date();
 
-                    var propostas = propostasPf.filter(function (x) { return x.cpf != item.cpf });
+                    var propostas = propostasPf.filter(function (x) { return x.idProposta != item.idProposta });
 
                     propostasPf = []; //limpar
 
@@ -542,7 +542,7 @@ function checkStatusPropostas() {
 
                 proposta.dataAtualizacao = new Date();
 
-                var propostas = propostasPf.filter(function (x) { return x.cpf != item.cpf });
+                var propostas = propostasPf.filter(function (x) { return x.idProposta != item.idProposta });
 
                 propostasPf = []; //limpar
 
