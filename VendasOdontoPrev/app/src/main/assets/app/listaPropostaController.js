@@ -346,8 +346,6 @@ function carregarListaOnlineAtualizarProposta() {
 
     $.each(pessoas, function (i, item) {
 
-        var planoInfantil = planosInfantis.filter(function (x) { return x == item.planos[0].cdPlano });
-
         if (item.status != "ENVIADA"
             && item.status != "Aprovado"
             && item.status != "Proposta enviada para a OdontoPrev"
