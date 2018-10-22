@@ -2,18 +2,55 @@
 
 $(document).ready(function () {
 
+    configurarPropostasPf();
     carregarDadosUsuario();
     validarStatusUsuario();
     validarForcaIndex();
     validarVersaoApp();
-    atualizarDashBoard(); 
+    atualizarDashBoard();
     resyncPropostasPME();
     resyncPropostasPF();
     checkStatusPropostas();
-
     atualizarPropostaComApiDash();
     atualizarTokenDevice();
+
 });
+
+function configurarPropostasPf() {
+
+    // funcao para configurar propostas que nao possuiam id
+    var propostasPf = get("pessoas");
+
+    // verificando se possui o forca possui alguma proposta
+    if (propostasPf == undefined) return;
+
+    // filtrando todas as propostas que nao possuem id e que possuem id
+    var propostasNaoConfiguradas = propostasPf.filter(function (x) { return x.idProposta == undefined });
+
+    if (propostasNaoConfiguradas.length > 0) {
+
+        // Buscando todas as propostas configuradas
+        var propostasConfiguradas = propostasPf.filter(function (x) { return x.idProposta != undefined });
+        var propostasQueSeraoSalvas = [];
+
+        $.each(propostasNaoConfiguradas, function (i, item) {
+
+            // Gerando ID unico para propostas nao configuradas e salvando
+            item.idProposta = generateUUID();
+            propostasQueSeraoSalvas.push(item);
+
+        });
+
+        $.each(propostasConfiguradas, function (i, item) {
+
+            propostasQueSeraoSalvas.push(item);
+
+        });
+
+        put("pessoas", JSON.stringify(propostasQueSeraoSalvas));
+
+    }
+}
 
 function carregarDadosUsuario() {
 
@@ -27,8 +64,7 @@ function carregarDadosUsuario() {
 
 }
 
-function validarVersaoApp()
-{
+function validarVersaoApp() {
     callTokenProdSemMsgErro(function (dataToken) {
 
         getVersaoApp(function (dataVersao) {
@@ -42,7 +78,7 @@ function validarVersaoApp()
                     type: "warning",
                     closeOnConfirm: false
                 }, function () {
-                   // Redirect the user
+                    // Redirect the user
                     window.location = "market://details?id=com.vendaodonto.vendasodontoprev";
                 });
             }
@@ -70,11 +106,11 @@ function atualizarTokenDevice() {
         postDeviceToken(function (dataDeviceToken) {
 
             if (dataDeviceToken.status != undefined) {
-                   console.log("Erro postDeviceToken");
+                console.log("Erro postDeviceToken");
             }
 
             console.log("Executou postDeviceToken");
-  //          swal("Erro", dataDeviceToken);
+            //          swal("Erro", dataDeviceToken);
 
         }, dataToken.access_token, dadosUsuario.codigo, tokenDevice, modelDevice, sistemaOperacional);
 
@@ -202,8 +238,8 @@ function getVersaoApp(callback, token) {
 }
 
 function deslogar() {
-    
-    ob.deslogar();  
+
+    ob.deslogar();
     window.location = "index.html";
 }
 
@@ -478,44 +514,44 @@ function checkStatusPropostas() {
                 if (proposta.dataAtualizacao == undefined) // Checa se o registro nao contem data de atualizacao, caso nao tenha sera setado uma data no registro
                 {
                     proposta.dataAtualizacao = new Date();
-                
+
                     var propostas = propostasPf.filter(function (x) { return x.cpf != item.cpf });
-                
+
                     propostasPf = []; //limpar
-                
+
                     $.each(propostas, function (i, item) {
                         propostasPf.push(item);
                     });
-                
+
                     propostasPf.push(proposta);
-                
+
                     put("pessoas", JSON.stringify(propostasPf));
-                
+
                     return;
                 }
 
                 var now = new Date(proposta.dataAtualizacao);
-                
+
                 var date = new Date();
-                
+
                 var olderDate = moment(date).subtract(time.timeUpdate, 'days').toDate();
-                
+
                 if (!(olderDate > now)) return;
 
                 proposta.status = propostaDash.statusVenda;
-                
+
                 proposta.dataAtualizacao = new Date();
-                
+
                 var propostas = propostasPf.filter(function (x) { return x.cpf != item.cpf });
-                
+
                 propostasPf = []; //limpar
-                
+
                 $.each(propostas, function (i, item) {
                     propostasPf.push(item);
                 });
-                
+
                 propostasPf.push(proposta);
-                
+
                 put("pessoas", JSON.stringify(propostasPf));
             });
 
