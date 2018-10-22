@@ -86,8 +86,7 @@ function pagarComBoleto()
     atualizarPropostaParaPronta.dadosBancarios.conta = "";
     atualizarPropostaParaPronta.dadosBancarios.tipoConta = "";
     atualizarPropostaParaPronta.status = "PRONTA";
-    atualizarPessoas(atualizarPropostaParaPronta);
-    put("propostaPf", JSON.stringify(atualizarPropostaParaPronta));
+    atualizarPropostasPfById(atualizarPropostaParaPronta);
 
     validarForcaVenda(function (retornoForcaVenda) {
 

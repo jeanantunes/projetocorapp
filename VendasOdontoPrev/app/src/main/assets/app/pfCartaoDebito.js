@@ -97,8 +97,7 @@ function cadastrarConta() {
     proposta.dadosBancarios.conta = $("#contaDebito").val();
     proposta.dadosBancarios.tipoConta = "CC";
     proposta.status = "PRONTA";
-    atualizarPessoas(proposta);
-    put("propostaPf", JSON.stringify(proposta));
+    atualizarPropostasPfById(proposta);
 
     validarForcaVenda(function (retornoForcaVenda) {
 

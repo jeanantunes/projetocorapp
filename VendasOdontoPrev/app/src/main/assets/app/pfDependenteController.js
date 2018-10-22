@@ -151,9 +151,8 @@ function SalvarDependente() {
     }
 
     proposta.dependentes.push(dependente);
-    put("propostaPf", JSON.stringify(proposta));
 
-    atualizarPessoas(proposta);
+    atualizarPropostasPfById(proposta);
 }
 
 $(".cpf").focusout(function () {
