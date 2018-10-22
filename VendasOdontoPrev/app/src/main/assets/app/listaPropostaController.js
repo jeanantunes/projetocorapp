@@ -370,7 +370,8 @@ function carregarListaOnlineAtualizarProposta() {
                 status = "Proposta incompleta";
                 css = "colorCirc1";
                 acao = "ver detalhes";
-                link = planoInfantil.length > 0 ? 'href="venda_pf_editar.html?cpf=' + item.responsavelContratual.cpf + '"' : 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
+                link = 'href="venda_pf_editar.html?id=' + item.idProposta + '"';
+                //link = planoInfantil.length > 0 ? 'href="venda_pf_editar.html?cpfResponsavel=' + item.responsavelContratual.cpf + '"' : 'href="venda_pf_editar.html?cpf=' + item.cpf + '"';
                 acaoseta = "";
             } else if (item.status == "PRONTA") {
 
