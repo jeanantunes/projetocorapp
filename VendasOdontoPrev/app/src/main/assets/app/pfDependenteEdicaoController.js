@@ -361,13 +361,6 @@ function validarNascimentoBeneficiario() {
 
                 }
 
-            } else if ($("#cpf").val() == "") {
-
-                swal("Ops!", "CPF Obrigatório para maiores de idade", "error");
-                $("#cpf").focus();
-                possuiErros = true;
-                return;
-
             } else if (!TestaCPF($("#cpf").val())) {
 
                 swal("Ops!", "CPF inválido", "error");
