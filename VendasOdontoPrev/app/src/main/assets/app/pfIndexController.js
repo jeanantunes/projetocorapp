@@ -95,22 +95,24 @@ function setIdPlano() {
 function iniciarProposta(cdPlano) {
 
     var proposta = get("propostaPf");
-
-    if (proposta == null) {
-
-        proposta = getRepository("propostaPf");
-        proposta.idProposta = generateUUID();
-
-    }
-
     plano = getRepository("plano");
     plano.cdPlano = cdPlano;
 
-    proposta.planos = [];
-    proposta.planos.push(plano);
-    
+    if (proposta == null) { // Caso seja um proposta iniciada, sera gerado um id e salvo apenas no localstorage propostaPf
 
-    put("propostaPf", JSON.stringify(proposta));
+        proposta = getRepository("propostaPf");
+        proposta.idProposta = generateUUID();
+        proposta.planos = [];
+        proposta.planos.push(plano);
+        put("propostaPf", JSON.stringify(proposta));
+
+    } else { // se nao, o id ira ser reaproveitado e a proposta sera atualizada
+
+        proposta.planos = [];
+        proposta.planos.push(plano);
+        atualizarPropostasPfById(proposta);
+
+    }
 
     window.location.href = "venda_pf_dados_proposta.html";
     
