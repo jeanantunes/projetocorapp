@@ -6,8 +6,6 @@
     
     setIdPlano();
 
-
-
 });
 
 function setIdPlano() {
@@ -98,14 +96,19 @@ function iniciarProposta(cdPlano) {
 
     var proposta = get("propostaPf");
 
-    if (proposta == null)
+    if (proposta == null) {
+
         proposta = getRepository("propostaPf");
+        proposta.idProposta = generateUUID();
+
+    }
 
     plano = getRepository("plano");
     plano.cdPlano = cdPlano;
 
     proposta.planos = [];
     proposta.planos.push(plano);
+    
 
     put("propostaPf", JSON.stringify(proposta));
 
