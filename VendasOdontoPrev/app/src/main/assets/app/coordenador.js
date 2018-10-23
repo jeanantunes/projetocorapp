@@ -1440,6 +1440,18 @@ function isMaiorDeIdade(date) {
     return false;
 }
 
+function isMaiorQueDezessete(date) {
+
+    var eightYearsAgo = moment().subtract(17, "years");
+    var birthday = moment(date);
+
+    if (!birthday.isValid()) {
+        // INVALID DATE
+    } else if (eightYearsAgo.isAfter(birthday)) return true;
+
+    return false;
+}
+
 function menorQueOitoAnos(date) {
 
     var eightYearsAgo = moment().subtract(8, "years");

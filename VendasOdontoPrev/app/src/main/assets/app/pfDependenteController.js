@@ -5,13 +5,13 @@ $(document).ready(function () {
     $('.nascimento').mask('00/00/0000');
     $('.cpf').mask('000.000.000-00');
     $('.cpf').off('blur').on();
+
 });
 
 function SalvarDependente() {
 
     var currentYear = (new Date).getFullYear();
     var idade = $(".nascimento").val().split("/");
-    var menor = currentYear - idade[2];
 
     if ($(".nome").val() == "") {
         swal("Ops!", "Preencha o Nome", "error");
@@ -49,10 +49,6 @@ function SalvarDependente() {
         return;
     }
 
-    var validacaoNascimento = validarNascimentoBeneficiario();
-
-    if (!validacaoNascimento) return false;
-
     if ($(".nascimento").val() == "") {
         swal("Ops!", "Preencha a data de nascimento", "error");
         return;
@@ -62,6 +58,10 @@ function SalvarDependente() {
         swal("Ops!", "Preencha uma data de nascimento correta", "error");
         return;
     }
+
+    var validacaoNascimento = validarNascimentoBeneficiario();
+
+    if (!validacaoNascimento) return false;
 
     var dateNascimento = toDate($(".nascimento").val());
 
@@ -237,7 +237,7 @@ function validarNascimentoBeneficiario() {
     var possuiErros = false;
     var propostaPf = get("propostaPf");
 
-    if (isMaiorDeIdade(date)) {
+    if (isMaiorQueDezessete(date)) {
 
         $.each(propostaPf.planos, function (i, item) {
 
@@ -279,10 +279,64 @@ function validarNascimentoBeneficiario() {
 
                 }
 
-            } else if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+            } else if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
 
                 $("#cpf").focus();
-                swal("Ops!", "CPF inválido", "error");
+                swal("Ops!", "Preencha o CPF", "error");
+                possuiErros = true;
+                return;
+            }
+
+        })
+
+        if (possuiErros) return false;
+
+    } else if (isMaiorQueDezessete(date)) {
+
+        $.each(propostaPf.planos, function (i, item) {
+
+            var planoInfantil = planosInfantis.filter(function (x) { return x == item.cdPlano });
+
+            if (planoInfantil.length > 0) {
+
+                if (planoInfantil[0] == planosInfantisJson.dentalJuriorMensal || planoInfantil[0] == planosInfantisJson.dentalJuriorAnual) {
+
+                    if ($(".cpf").val() != "" && !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+
+                        $("#cpf").focus();
+                        exibirSwalCpfInvalidoInfantil();
+                        possuiErros = true;
+                        return;
+
+                    }
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    possuiErros = true;
+                    return;
+
+                } else if (planoInfantil[0] == planosInfantisJson.dentalDenteDeLeiteMensal || planoInfantil[0] == planosInfantisJson.dentalDenteDeLeiteAnual) {
+
+                    if ($(".cpf").val() != "" && !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+
+                        $("#cpf").focus();
+                        exibirSwalCpfInvalidoInfantil();
+                        possuiErros = true;
+                        return;
+
+                    }
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoDenteLeite");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    possuiErros = true;
+                    return;
+
+                }
+
+            } else if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+
+                $("#cpf").focus();
+                swal("Ops!", "Preencha o CPF", "error");
                 possuiErros = true;
                 return;
             }
@@ -324,7 +378,7 @@ function validarNascimentoBeneficiario() {
                     return;
                 }
 
-                if (menorQueOitoAnos(date) || isMaiorDeIdade(date)) {
+                if (menorQueOitoAnos(date) || isMaiorQueDezessete(date)) {
 
                     var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
                     swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
@@ -333,13 +387,12 @@ function validarNascimentoBeneficiario() {
 
                 }
 
-            } else if (!TestaCPF($("#cpf").val())) {
+            } else if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
 
-                swal("Ops!", "CPF inválido", "error");
                 $("#cpf").focus();
+                swal("Ops!", "Preencha o CPF", "error");
                 possuiErros = true;
                 return;
-
             }
 
         })

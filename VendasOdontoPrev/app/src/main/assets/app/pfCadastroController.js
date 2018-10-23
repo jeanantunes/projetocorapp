@@ -197,6 +197,14 @@ $(document).ready(function () {
 
             }
 
+        } else {
+
+            $(".representanteContratual").removeClass('hide');
+
+        }
+
+        if (isMaiorQueDezessete(date)) {
+
             $.each(propostaPf.planos, function (i, item) {
 
                 var planoInfantil = planosInfantis.filter(function (x) { return x == item.cdPlano });
@@ -222,8 +230,6 @@ $(document).ready(function () {
             return false;
         }
 
-        $(".representanteContratual").removeClass('hide');
-
         var propostaPf = get("propostaPf");
         propostaPf.status = "DIGITANDO";
         propostaPf.dataNascimento = $("#dataNascimentoTitular").val().trim();
@@ -242,7 +248,7 @@ $(document).ready(function () {
 
             } else if (item.cdPlano == planosInfantisJson.dentalJuriorMensal || item.cdPlano == planosInfantisJson.dentalJuriorAnual) {
 
-                if (menorQueOitoAnos(date) || isMaiorDeIdade(date)) {
+                if (menorQueOitoAnos(date) || isMaiorQueDezessete(date)) {
 
                     var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
                     swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
@@ -868,10 +874,6 @@ function addDependente() {
         return false;
     }
 
-    var validacaoNascimento = validarNascimentoBeneficiario();
-
-    if (!validacaoNascimento) return false;
-
     if (!validarData($(".nascimento").val())) {
         swal("Ops!", "Preencha uma data de nascimento válida", "error");
         return false;
@@ -881,6 +883,10 @@ function addDependente() {
         swal("Ops!", "Preencha a Data de Nascimento", "error");
         return false;
     }
+
+    var validacaoNascimento = validarNascimentoBeneficiario();
+
+    if (!validacaoNascimento) return false;
 
     var date = toDate($("#dataNascimentoTitular").val());
 
@@ -1486,7 +1492,7 @@ function validarDependentes() {
 
                 if (planoInfantil[0] == planosInfantisJson.dentalJuriorMensal || planoInfantil[0] == planosInfantisJson.dentalJuriorAnual) {
 
-                    if (menorQueOitoAnos(date) || isMaiorDeIdade(date)) {
+                    if (menorQueOitoAnos(date) || isMaiorQueDezessete(date)) {
 
                         var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
                         swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
@@ -1538,7 +1544,61 @@ function validarNascimentoBeneficiario() {
     var possuiErros = false;
     var propostaPf = get("propostaPf");
 
-    if (isMaiorDeIdade(date)) {
+    if (isMaiorQueDezessete(date)) {
+
+        $.each(propostaPf.planos, function (i, item) {
+
+            var planoInfantil = planosInfantis.filter(function (x) { return x == item.cdPlano });
+
+            if (planoInfantil.length > 0) {
+
+                if (planoInfantil[0] == planosInfantisJson.dentalJuriorMensal || planoInfantil[0] == planosInfantisJson.dentalJuriorAnual) {
+
+                    if ($(".cpf").val() != "" && !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+
+                        $("#cpf").focus();
+                        exibirSwalCpfInvalidoInfantil();
+                        possuiErros = true;
+                        return;
+
+                    }
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    possuiErros = true;
+                    return;
+
+                } else if (planoInfantil[0] == planosInfantisJson.dentalDenteDeLeiteMensal || planoInfantil[0] == planosInfantisJson.dentalDenteDeLeiteAnual) {
+
+                    if ($(".cpf").val() != "" && !TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+
+                        $("#cpf").focus();
+                        exibirSwalCpfInvalidoInfantil();
+                        possuiErros = true;
+                        return;
+
+                    }
+
+                    var fraseSwal = getRepository("fraseMaiorDeIdadePlanoDenteLeite");
+                    swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
+                    possuiErros = true;
+                    return;
+
+                }
+
+            } else if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+
+                $("#cpf").focus();
+                swal("Ops!", "Preencha o CPF", "error");
+                possuiErros = true;
+                return;
+            }
+
+        })
+
+        if (possuiErros) return false;
+
+    } else if (isMaiorQueDezessete(date)) {
 
         $.each(propostaPf.planos, function (i, item) {
 
@@ -1625,7 +1685,7 @@ function validarNascimentoBeneficiario() {
                     return;
                 }
 
-                if (menorQueOitoAnos(date) || isMaiorDeIdade(date)) {
+                if (menorQueOitoAnos(date) || isMaiorQueDezessete(date)) {
 
                     var fraseSwal = getRepository("fraseMaiorDeIdadePlanoJunior");
                     swal(fraseSwal.title, fraseSwal.descricao, fraseSwal.tipo);
