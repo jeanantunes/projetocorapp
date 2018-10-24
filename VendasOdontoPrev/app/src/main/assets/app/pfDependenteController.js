@@ -237,7 +237,7 @@ function validarNascimentoBeneficiario() {
     var possuiErros = false;
     var propostaPf = get("propostaPf");
 
-    if (isMaiorQueDezessete(date)) {
+    if (isMaiorDeIdade(date)) {
 
         $.each(propostaPf.planos, function (i, item) {
 
@@ -333,12 +333,17 @@ function validarNascimentoBeneficiario() {
 
                 }
 
-            } else if ($(".cpf").val() == "" || !TestaCPF($("#cpf").val().replace().replace(/\D/g, ''))) {
+            } else if ($(".cpf").val() != "") {
 
-                $("#cpf").focus();
-                swal("Ops!", "Preencha o CPF", "error");
-                possuiErros = true;
-                return;
+                if (!TestaCPF($("#cpf").val().replace(/\D/g, ''))) {
+
+                    $("#cpf").focus();
+                    swal("Ops!", "Preencha um CPF válido", "error");
+                    possuiErros = true;
+                    return;
+
+                }
+
             }
 
         })
