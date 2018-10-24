@@ -6,6 +6,12 @@
 
 /*****************************************/
 
+.icone-menu {
+    width: 20px; 
+    margin-left:4px; 
+    margin-right: 8px;
+}
+
 .background-color-azul {
     background-color: #1974CE !important;
 }
