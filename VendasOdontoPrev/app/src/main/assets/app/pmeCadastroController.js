@@ -196,6 +196,18 @@ $(document).ready(function () {
 
 function continuarProposta() {
 
+    if ($(".cnpj").val() == "") {
+        swal("Ops!", "Preencha o cnpj", "error");
+        return;
+    }
+
+    if (!validaCnpj($(".cnpj").val())) {
+
+        swal("Ops!", "Preencha um CNPJ válido", "error");
+        return false;
+
+    }
+
     if (navigator.onLine) {
 
         var emailPrincipal = $("#email").val();
@@ -332,11 +344,19 @@ function validarEmailForcaCorretora(arrayEmail, callbackSuccess, callbackError) 
 }
 
 function addBenef() {
+
     if ($(".cnpj").val() == "") {
         swal("Ops!", "Preencha o cnpj", "error");
-
         return;
     }
+
+    if (!validaCnpj($(".cnpj").val())) {
+
+        swal("Ops!", "Preencha um CNPJ válido", "error");
+        return false;
+
+    }
+
     salvarRascunhoMemoria();
     window.location = "venda_pme_beneficiarios_lista.html";
 }
@@ -795,9 +815,16 @@ function desbloqCampos() {
 
 function salvarRascunho() {
 
-    if ($("#cnpjEmpresa").val() == "") {
-        swal("Ops!", "Preencha o CNPJ", "error");
+    if ($(".cnpj").val() == "") {
+        swal("Ops!", "Preencha o cnpj", "error");
         return;
+    }
+
+    if (!validaCnpj($(".cnpj").val())) {
+
+        swal("Ops!", "Preencha um CNPJ válido", "error");
+        return;
+
     }
 
     if ($("#cnae").val().length < 7) {
@@ -1023,6 +1050,13 @@ function validarProposta() {
     if ($(".cnpj").val() == "") {
         swal("Ops!", "Preencha o cnpj", "error");
         return;
+    }
+
+    if (!validaCnpj($(".cnpj").val())) {
+
+        swal("Ops!", "Preencha um CNPJ válido", "error");
+        return false;
+
     }
 
     if ($("#razao-social").val() == "") {
