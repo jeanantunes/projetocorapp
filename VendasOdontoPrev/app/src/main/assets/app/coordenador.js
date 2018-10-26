@@ -844,8 +844,8 @@ function setPlanosProd() {
     plano = getRepository("plano");
     plano.cdPlano = 87;
     plano.nome = "JÚNIOR DE 8 A 16 ANOS";
-    plano.valor = "149";
-    plano.centavo = "80";
+    plano.valor = "279";
+    plano.centavo = "90";
     plano.desc = "Anual";
     plano.css = "colorSlick8Junior";
 
