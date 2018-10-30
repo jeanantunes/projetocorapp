@@ -16,15 +16,18 @@ import android.webkit.WebView;
 
 public class CustomWebView extends WebView {
 
+    Context context;
+
     public CustomWebView(Context context) {
         super(context);
+        this.context = context;
         initView(context);
     }
 
     public CustomWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         initView(context);
-
     }
 
     private void initView(Context context){
