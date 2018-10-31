@@ -814,8 +814,8 @@ function setPlanosProd() {
     plano = getRepository("plano");
     plano.cdPlano = 63;
     plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
-    plano.valor = "14";
-    plano.centavo = "98";
+    plano.valor = "23";
+    plano.centavo = "99";
     plano.desc = "Mensal";
     plano.css = "colorSlick2";
     planos.push(plano);
@@ -823,8 +823,8 @@ function setPlanosProd() {
     plano = getRepository("plano");
     plano.cdPlano = 64;
     plano.nome = "DENTE DE LEITE DE 0 A 7 ANOS";
-    plano.valor = "149";
-    plano.centavo = "80";
+    plano.valor = "287";
+    plano.centavo = "88";
     plano.desc = "Anual";
     plano.css = "colorSlick2";
     planos.push(plano);
@@ -844,8 +844,8 @@ function setPlanosProd() {
     plano = getRepository("plano");
     plano.cdPlano = 87;
     plano.nome = "JÚNIOR DE 8 A 16 ANOS";
-    plano.valor = "279";
-    plano.centavo = "90";
+    plano.valor = "335";
+    plano.centavo = "88";
     plano.desc = "Anual";
     plano.css = "colorSlick8Junior";
 
