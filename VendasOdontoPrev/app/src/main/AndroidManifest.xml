@@ -54,6 +54,8 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".ActionReceiver" />
+
         <activity android:name=".GaleriaActivity"></activity>
 
         <!-- [START firebase_service] -->

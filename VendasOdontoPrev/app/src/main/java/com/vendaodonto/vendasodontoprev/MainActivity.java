@@ -47,82 +47,52 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-
-
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null)
-            {
-                //Cry about not being clicked on
-            }
-            else if (extras.getBoolean("NotiClick"))
-            {
-                openFolder();
-            }
-
-        }
-
         ctx = this;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         MyFirebaseInstanceIDService oToken = new MyFirebaseInstanceIDService();
-
         oToken.getTokenDevice();
 
         db = new DataBase(this);
-
-        //String teste = BuildConfig.TokenApi;
-
-        //Log.d("MeuLog", teste);
-
-        setContentView(R.layout.activity_main);
-        String urlAssets = "file:///android_asset/";
-
         checkPermission();
 
         myWebView = (CustomWebView) this.findViewById(R.id.webView);
         myWebView.setWebViewClient(new CustomWebViewClient(ctx));
 
-        getSupportActionBar().hide();
-
-        int qt = 0;
-
         try {
 
-            Log.e("MeuLog", "======================");
-            AssetManager assetManager = this.getAssets();
-            InputStream stream = assetManager.open("index.html");
-            BufferedReader r = new BufferedReader(new InputStreamReader(stream));
-            StringBuilder total = new StringBuilder();
-            String line;
-
-            while ((line = r.readLine()) != null) {
-                total.append(line).append("\n");
-                qt ++;
-            }
+            Log.d("MeuLog", "======================");
 
             ForcaVenda forcaLogin = buscar(1);
 
-            tableLogin tb = new tableLogin(this);
+            if (savedInstanceState == null) {
 
-            if(forcaLogin != null)
-            {
-                myWebView.loadUrl("file:///android_asset/anteriorLogado.html");
+                Bundle extras = getIntent().getExtras();
+
+                if(extras == null) {
+
+                    if(forcaLogin != null)
+                    {
+                        myWebView.loadUrl("file:///android_asset/anteriorLogado.html");
+                    }
+                    else
+                    {
+                        Log.d("MeuLog", "Nâo existe cadastro salvo");
+                        myWebView.loadUrl("file:///android_asset/index.html");
+                    }
+
+                } else {
+
+                }
+
             }
-            else
-            {
-                Log.d("MeuLog", "Nâo existe cadastro salvo");
-                myWebView.loadUrl("file:///android_asset/index.html");
-           }
-
-            //myWebView.loadDataWithBaseURL("file:///android_asset/", total.toString(), "text/html", "UTF-8", null);
 
             Log.d("MeuLog", "Classe instanciada");
 
-
-
-        } catch (Exception xxx) {
-            Log.e("MeuLog", "Load assets ", xxx);
+        } catch (Exception error) {
+            Log.e("MeuLog", "Load assets ", error);
         }
 
     }

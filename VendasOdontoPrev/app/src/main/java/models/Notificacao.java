@@ -1,17 +1,16 @@
 package models;
 
-import java.util.Date;
 
-/**
- * Created by Treinamento6 on 14/05/2018.
- */
+import java.util.Date;
 
 public class Notificacao {
 
     private String titulo;
-    private String descricao;
+    private String mensagem;
     private Date dataNoficacao;
-    private String tipoNotificacao;
+    private String tipoIntencao;
+    private String nomeView;
+    private String parametro;
 
     public String getTitulo() {
         return titulo;
@@ -21,12 +20,12 @@ public class Notificacao {
         this.titulo = titulo;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getMensagem() {
+        return mensagem;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
     }
 
     public Date getDataNoficacao() {
@@ -37,11 +36,39 @@ public class Notificacao {
         this.dataNoficacao = dataNoficacao;
     }
 
-    public String getTipoNotificacao() {
-        return tipoNotificacao;
+    public String getTipoIntencao() {
+        return tipoIntencao;
     }
 
-    public void setTipoNotificacao(String tipoNotificacao) {
-        this.tipoNotificacao = tipoNotificacao;
+    public void setTipoIntencao(String tipoIntencao) {
+        this.tipoIntencao = tipoIntencao;
+    }
+
+    public String getNomeView() {
+        return nomeView;
+    }
+
+    public void setNomeView(String nomeView) {
+        this.nomeView = nomeView;
+    }
+
+    public String getParametro() {
+        return parametro;
+    }
+
+    public void setParametro(String parametro) {
+        this.parametro = parametro;
+    }
+
+    @Override
+    public String toString() {
+        return "Notificacao{" +
+                "titulo='" + titulo + '\'' +
+                ", mensagem='" + mensagem + '\'' +
+                ", dataNoficacao=" + dataNoficacao +
+                ", tipoIntencao='" + tipoIntencao + '\'' +
+                ", nomeView='" + nomeView + '\'' +
+                ", parametro='" + parametro + '\'' +
+                '}';
     }
 }

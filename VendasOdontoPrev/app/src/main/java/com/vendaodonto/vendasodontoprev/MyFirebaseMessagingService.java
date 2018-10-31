@@ -1,6 +1,5 @@
 package com.vendaodonto.vendasodontoprev;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -8,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -18,9 +16,11 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 
-import java.io.File;
 import java.util.Date;
+
+import models.Notificacao;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -33,17 +33,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         try {
 
-            Log.d("MeuLog", "Titulo recebida: " + message.getNotification().getTitle());
-            Log.d("MeuLog", "Mensagem recebida: " + message.getNotification().getBody());
-
-            sendMyNotification(message.getNotification().getTitle() ,message.getNotification().getBody());
+            Log.d("MeuLog", "Titulo recebido: " + message.getData().get("titulo"));
+            Log.d("MeuLog", "Mensagem recebida: " + message.getData().get("mensagem"));
+            Gson gson = new Gson();
+            String notificacaoJson = gson.toJson(message.getData());
+            Notificacao notificacao = gson.fromJson(notificacaoJson, Notificacao.class);
+            this.sendMyNotification(notificacao);
 
         } catch (Exception e){
             Log.d("MeuLog", e.toString());
         }
+
     }
 
-    public void sendMyNotification(String title,String message) {
+    public void sendMyNotification(Notificacao notificacao) {
 
         int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
 
@@ -55,14 +58,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             NotificationCompat.Builder builder;
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, ActionReceiver.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent;
             int importance = NotificationManager.IMPORTANCE_HIGH;
             if (mChannel == null) {
                 mChannel = new NotificationChannel
-                        ("0", title, importance);
-                mChannel.setDescription(message);
+                        ("0", notificacao.getTitulo(), importance);
+                mChannel.setDescription(notificacao.getMensagem());
                 mChannel.enableVibration(true);
                 notifManager.createNotificationChannel(mChannel);
             }
@@ -70,11 +73,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                     Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(this, m, intent, PendingIntent.FLAG_ONE_SHOT);
-            builder.setContentTitle(title)
+            pendingIntent = PendingIntent.getBroadcast(this, m, intent, PendingIntent.FLAG_ONE_SHOT);
+            builder.setContentTitle(notificacao.getTitulo())
                     .setSmallIcon(getNotificationIcon()) // required
-                    .setContentText(message)  // required
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                    .setContentText(notificacao.getMensagem())  // required
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(notificacao.getMensagem()))
                     .setAutoCancel(true)
                     .setLargeIcon(BitmapFactory.decodeResource
                             (getResources(), R.drawable.icon_status_bar))
@@ -87,23 +90,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         } else {
 
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, ActionReceiver.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = null;
 
-            pendingIntent = PendingIntent.getActivity(this, m, intent, PendingIntent.FLAG_ONE_SHOT);
+            pendingIntent = PendingIntent.getBroadcast(this, m, intent, PendingIntent.FLAG_ONE_SHOT);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                    .setContentTitle(notificacao.getTitulo())
+                    .setContentText(notificacao.getMensagem())
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(notificacao.getMensagem()))
                     .setAutoCancel(true)
                     .setColor(ContextCompat.getColor(getBaseContext(), R.color.common_google_signin_btn_text_dark))
                     .setSound(defaultSoundUri)
                     .setSmallIcon(getNotificationIcon())
                     .setContentIntent(pendingIntent)
-                    .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).bigText(message));
+                    .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(notificacao.getTitulo()).bigText(notificacao.getMensagem()));
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
