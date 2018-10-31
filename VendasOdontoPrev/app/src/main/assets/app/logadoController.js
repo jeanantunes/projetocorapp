@@ -71,7 +71,7 @@ function validarVersaoApp() {
 
             var versao = dataVersao.versao;
 
-            if (versao != '8') {
+            if (versao != '9') {
                 swal({
                     title: "Ops",
                     text: "Sua versão do aplicativo está desatualizada, atualize na Play Store",
